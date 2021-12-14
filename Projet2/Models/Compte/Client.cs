@@ -8,7 +8,6 @@ namespace Projet2.Models.Compte
     {
         public int Id { get; set; }
         public int adresseIP { get; set; }
-
         public virtual List<Personne> Personnes { get; set; }
 
     }

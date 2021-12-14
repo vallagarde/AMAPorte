@@ -23,8 +23,8 @@ namespace Projet2.Models
         public DbSet<Entreprise> Entreprises { get; set; }
         public DbSet<Personne> Personnes { get; set; }
         public DbSet<Paiement> Paiements { get; set; }
-
-
+        public DbSet<Identifiant> Identifiants { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
