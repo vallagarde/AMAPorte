@@ -1,0 +1,50 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Page Producteur";
+}
+<h1>@ViewData["Title"]</h1>
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Liste des articles</h1>
+            <div class="justify-center">
+                <table border="1">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Description</th>
+                        <th>Stock</th>
+                        <th>PrixTTC</th>
+                    </tr>
+
+                    @foreach (Projet2.Models.Article article in @Model.Boutiques.Articles as List<Projet2.Models.Article>)
+                    {
+                <tr>
+                    <td>@article.Id</td>
+                    <td>@article.Nom</td>
+                    <td>@article.Prix</td>
+                    <td>@article.Description</td>
+                    <td>@article.Stock</td>
+                    <td>@article.PrixTTC</td>
+                    <td>
+                        @Html.ActionLink("Modifier", "ModifierArticle", "Boutique", new { @Id = article.Id }))
+
+                    </td>
+                    <td>
+                        @Html.ActionLink("Accueil", "Index")
+
+                    </td>
+                </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

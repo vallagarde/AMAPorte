@@ -1,0 +1,17 @@
+﻿body {
+}
+
+#coupe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#navcontainer {
+    width: fit-content;
+}
+
+#test{
+    color:aquamarine;
+}

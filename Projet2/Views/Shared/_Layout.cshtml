@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Appliweb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site2.css" />
+
+</head>
+<body>
+
+    <header>
+        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container flex-grow">
+                <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="Images/Logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+                <div class="navbar-collapse collapse d-sm-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav d-flex">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark w-100" asp-area="" asp-controller="Home" asp-action="Index"  >Menu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Boutique" asp-action="AfficherBoutique">Boutique</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Producteur">Producteurs</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Activites">Activites</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inscription">Inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Boutique" asp-action="AjouterArticle">AjouterArticle</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container flex-shrink">
+                <div class="w-100">
+                    <div class="navbar-collapse collapse dual-collapse2 flex-sm-row-reverse">
+
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-blue" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Connexion
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">Utilisateur</a>
+                                <a class="dropdown-item" href="#">Producteur</a>
+                                <a class="dropdown-item" href="#">Administrateur</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navbar-collapse collapse dual-collapse2 flex-sm-row-reverse">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+
+                </div>
+            </div>
+            
+        </nav>
+
+    </header>
+
+        
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+
+        
+        <div class="container" id="azerty">
+            <div class="col">123</div>
+        </div>
+    
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - Appliweb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+
+    
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

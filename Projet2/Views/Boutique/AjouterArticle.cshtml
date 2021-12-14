@@ -1,0 +1,49 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Ajouter Article";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center"><h1>Ajouter un article</h1></div>
+    </div>
+
+    <form method="post" asp-controller="Boutique" asp-action="AjouterArticle">
+        <div class="row g-3">
+            <div class="col">
+                <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+                <input id="nom" type="text" class="form-control" name="nom">
+            </div>
+            <div class="col">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <input id="description" type="text" class="form-control" name="Description">
+            </div>
+
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <label for="prix" class="col-sm-2 col-form-label">Prix</label>
+                <input id="prix" type="number" class="form-control" name="prix">
+            </div>
+            <div class="col">
+                <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+                <input id="stock" type="number" class="form-control" name="Stock">
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <label for="prixTTC" class="col-sm-2 col-form-label">PrixTTC</label>
+                <input id="prixTTC" type="number" class="form-control" name="prixTTC">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit" value="Submit">Ajouter</button>
+            </div>
+        </div>
+    </form>
+</div>

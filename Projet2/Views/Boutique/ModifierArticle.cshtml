@@ -1,0 +1,53 @@
+﻿@model Projet2.Models.Article
+
+@{
+    ViewData["Title"] = "Modifier Article";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center"><h1>Modifier un article</h1></div>
+    </div>
+
+    <form method="post" asp-controller="Boutique" asp-action="ModifierArticle">
+       
+        <div class="row g-3">
+            <div class="col">
+                <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+                <input id="nom" type="text" class="form-control" name="nom" value="@Model.Nom">
+            </div>
+            <div class="col">
+                <label for="description" class="col-sm-2 col-form-label">Description</label>
+                <input id="description" type="text" class="form-control" name="Description" value="@Model.Description">
+            </div>
+
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <label for="prix" class="col-sm-2 col-form-label">Prix</label>
+                <!--
+    <input id="prix" type="number" class="form-control" name="prix">
+        -->
+                @Html.TextBoxFor(m => m.Prix, new {@type="number", @class="form-control" })
+            </div>
+            <div class="col">
+                <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+                @Html.TextBoxFor(m => m.Stock, new { @type = "number", @class = "form-control" })
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col">
+                <label for="prixTTC" class="col-sm-2 col-form-label">PrixTTC</label>
+                @Html.TextBoxFor(m => m.PrixTTC, new { @type = "number", @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+   
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary" type="submit" value="Modifier">Modifier</button>
+            </div>
+        </div>
+    </form>
+</div>
