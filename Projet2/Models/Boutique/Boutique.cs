@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Projet2.Models
+namespace Projet2.Models.Boutique
 {
     public class Boutiques
     {

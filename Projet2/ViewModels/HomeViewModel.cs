@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Projet2.Models;
+using Projet2.Models.Boutique;
 
 namespace Projet2.ViewModels
 {

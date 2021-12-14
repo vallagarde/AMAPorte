@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
+using Projet2.Models.Boutique;
 
 namespace Projet2.Models
 {

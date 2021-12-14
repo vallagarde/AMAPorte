@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Projet2.Models
+namespace Projet2.Models.Boutique
 {
     public class LignePanierBoutique
     {

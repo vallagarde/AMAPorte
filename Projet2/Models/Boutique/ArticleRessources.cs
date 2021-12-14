@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Projet2.Models
+namespace Projet2.Models.Boutique
 {
     public class ArticleRessources : IArticleRessources
     {
