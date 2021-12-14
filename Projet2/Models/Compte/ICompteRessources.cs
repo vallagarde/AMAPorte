@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Projet2.Models.Compte
 {
-    public interface IDal : IDisposable
+    public interface ICompteRessources : IDisposable
     {
         void DeleteCreateDatabase();
         List<Personne> ObtientToutesLesPersonnes();
@@ -15,14 +15,15 @@ namespace Projet2.Models.Compte
 
         void ModifierPersonne(Personne personne);
 
-        //SUPPRIMER
+        void SupprimerPersonne(int Id);
+
+
 
         // Authentification functions
-
-        int AjouterPersonne(string nom, string password);
-        Personne  Authentifier(string nom, string password);
-        Personne ObtenirPersonne(int id);
-        Personne ObtenirPersonne(string idStr);
+        int AjouterIdentifiant(string userName, string password);
+        Identifiant Authentifier(string userName, string password);
+        Identifiant ObtenirIdentifiant(int id);
+        Identifiant ObtenirIdentifiant(string idStr);
 
     }
 }
