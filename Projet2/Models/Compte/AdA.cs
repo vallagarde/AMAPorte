@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Projet2.Models
+namespace Projet2.Models.Compte
 {
     public class AdA
     {

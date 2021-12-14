@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Projet2.Models;
 using Projet2.Models.Boutique;
 using Projet2.ViewModels;
 

@@ -5,7 +5,7 @@ using Projet2.Models.Compte;
 using System;
 using System.Linq;
 
-namespace Projet2.Models
+namespace Projet2.Models.Compte
 {
     public class Dal : IDal
     {
