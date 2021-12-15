@@ -61,5 +61,21 @@ namespace Projet2.Controllers
             return View(hvm);
 
         }
+
+        public IActionResult Article(int id)
+        {
+            ArticleRessources ctx = new ArticleRessources();
+            Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                Article = article
+
+            };
+            return View(hvm);
+
+        }
+
     }
 }
