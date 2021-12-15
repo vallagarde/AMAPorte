@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Projet2.Models.Compte;
 
-namespace ChoixSejour.Controllers
+namespace Projet2.Controllers
 {
     public class LoginController : Controller
     {
-        private CompteRessources cptressource;
+        private CompteServices cptressource;
         public LoginController()
         {
-            cptressource = new CompteRessources();
+            cptressource = new CompteServices();
         }
         public IActionResult Index()
         {
@@ -30,7 +30,7 @@ namespace ChoixSejour.Controllers
         {
             if (ModelState.IsValid)
             {
-                Identifiant identifiant = cptressource.Authentifier(viewModel.Identifiant.UserName, viewModel.Identifiant.MotDePasse);
+                Identifiant identifiant = cptressource.Authentifier(viewModel.Identifiant.AdresseMail, viewModel.Identifiant.MotDePasse);
                 if (identifiant != null)
                 {
                     var userClaims = new List<Claim>()
@@ -48,36 +48,9 @@ namespace ChoixSejour.Controllers
 
                     return Redirect("/");
                 }
-                ModelState.AddModelError("Identifiant.UserName", "Prénom et/ou mot de passe incorrect(s)");
+                ModelState.AddModelError("Identifiant.AdresseMail", "Mail et/ou mot de passe incorrect(s)");
             }
             return View(viewModel);
-        }
-
-        public IActionResult CreationIdentifiantProvisoire()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult CreationIdentifiantProvisoire(Identifiant identifiant)
-        {
-            if (ModelState.IsValid)
-            {
-                int id = cptressource.AjouterIdentifiant(identifiant.UserName, identifiant.MotDePasse);
-
-                var userClaims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.Name, id.ToString()),
-                };
-
-                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
-
-                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                HttpContext.SignInAsync(userPrincipal);
-
-                return Redirect("/");
-            }
-            return View(identifiant);
         }
 
         public ActionResult Deconnexion()

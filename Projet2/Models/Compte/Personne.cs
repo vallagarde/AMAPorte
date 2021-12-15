@@ -8,8 +8,8 @@ namespace Projet2.Models.Compte
     public class Personne
     {
         public int Id { get; set; }
-
-        public Identifiant identifiant { get; set; }
+        public Identifiant Identifiant { get; set; }
+        public int IdentifiantId { get; set; }
 
         [Display(Name = "Nom")]
         [Required(ErrorMessage = "Vous devez insérer un nom.")]
@@ -22,26 +22,21 @@ namespace Projet2.Models.Compte
         [Display(Name = "Date de Naissance")]
         [Required(ErrorMessage = "La date de naissance ne peut pas être null.")]
         [DataType(DataType.Date)]
-        public DateTime? DateNaissance { get; set; }
-
-        [Display(Name = "Adresse Mail")]
-        [Required, RegularExpression(@"/^w+[+.w-]*@([w -]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i", ErrorMessage = "Le mail ne peut pas être null.")] 
-        public string AdresseMail { get; set; }
+        public DateTime DateNaissance { get; set; }
 
         [Display(Name = "Téléphone")]
         [Required, RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
-        public int? NTelephone { get; set; }
+        public int NTelephone { get; set; }
 
-        public virtual List<AdA>? AdAs { get; set; }
 
-        public virtual List<AdP>? AdPs { get; set; }
+        public Adresse Adresse { get; set; }
+        public int AdresseId { get; set; }
 
-        public virtual List<Paiement>? Paiements { get; set; }
 
+        [Display(Name = "J'accepte les conditions générales et la politique de confidentialité")]
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
         public bool EstEnAccord { get; set; }
-        public bool? EstAboAnnuel { get; set; }
-        public bool? EstAboSemestre { get; set; }
+
 
     }
 }

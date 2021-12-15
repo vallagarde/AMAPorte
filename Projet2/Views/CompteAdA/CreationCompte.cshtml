@@ -1,0 +1,103 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Creation Compte</title>
+</head>
+<body>
+        
+     <h1>Formulaire Adhérent Acheteur : </h1>
+
+    @using (Html.BeginForm())
+    {
+        <h2> Identifiant </h2>
+    <br />
+    <div>
+        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
+        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
+        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+    </div>
+         <div>
+        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
+        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
+        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+    </div>
+
+    <br />
+
+    <h2> Personne </h2>
+        <div>
+        @Html.LabelFor(m => Model.Personne.Nom) :
+        @Html.TextBoxFor(m => Model.Personne.Nom)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Personne.Prenom) :
+        @Html.TextBoxFor(m => Model.Personne.Prenom)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Personne.DateNaissance) :
+        @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:1990-01-01}", new { @type = "date"})    </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Personne.NTelephone) :
+        @Html.TextBoxFor(m => Model.Personne.NTelephone)
+    </div>
+
+    <br />
+    <h2> Adresse </h2>
+    <div>
+        @Html.LabelFor(m => Model.Adresse.Numero) :
+        @Html.TextBoxFor(m => Model.Adresse.Numero)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Adresse.Voie) :
+        @Html.TextBoxFor(m => Model.Adresse.Voie)
+    </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Adresse.CodePostal) :
+        @Html.TextBoxFor(m => Model.Adresse.CodePostal)    
+    </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Adresse.Ville) :
+        @Html.TextBoxFor(m => Model.Adresse.Ville)
+    </div>
+    <div>
+        @Html.LabelFor(m => Model.Adresse.Pays) :
+        @Html.TextBoxFor(m => Model.Adresse.Pays)
+    </div>
+
+        <div>
+        Paiement en :
+       <!–– Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) ––>
+        </div>
+
+    <div>
+        @Html.LabelFor(m => Model.Personne.EstEnAccord) : 
+        @Html.CheckBoxFor(m => Model.Personne.EstEnAccord)
+    </div>
+    <div>
+    <input type="submit" value="Créer" />
+    </div>
+    }
+
+    <br /><br />  
+    <div>
+    @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+    </div>
+
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</body>
+</html>
+

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 
 namespace Projet2.ViewModels
 {
@@ -9,6 +10,16 @@ namespace Projet2.ViewModels
         public Boutiques Boutiques = new Boutiques();
         public Article Article = new Article();
 
+        //Pour Comptes + Authorisation
+        public Personne Personne = new Personne();
+        public Identifiant Identifiant = new Identifiant();
+        public Adresse Adresse = new Adresse();
+
+        public AdP Producteur = new AdP();
+        public Entreprise Entreprise = new Entreprise();
+
+        public Paiement Paiement = new Paiement();
+        public bool Authentifie { get; set; }
 
     }
 }
