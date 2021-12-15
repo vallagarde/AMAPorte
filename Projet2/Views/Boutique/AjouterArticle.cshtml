@@ -4,12 +4,13 @@
     ViewData["Title"] = "Ajouter Article";
 }
 
+
 <div class="container">
     <div class="row">
         <div class="col-12 text-center"><h1>Ajouter un article</h1></div>
     </div>
 
-    <form method="post" asp-controller="Boutique" asp-action="AjouterArticle">
+    <form enctype="multipart/form-data" method="post" asp-controller="Boutique" asp-action="AjouterArticle">
         <div class="row g-3">
             <div class="col">
                 <label for="nom" class="col-sm-2 col-form-label">Nom</label>
@@ -39,7 +40,10 @@
         </div>
         <div class="row">
             <div class="col-12">
-
+                <dl>
+                   
+                </dl>
+                <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" />
             </div>
             <div class="col-12">
                 <button class="btn btn-primary" type="submit" value="Submit">Ajouter</button>

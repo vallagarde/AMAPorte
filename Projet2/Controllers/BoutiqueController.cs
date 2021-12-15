@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Models.Boutique;
+using Projet2.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -48,7 +49,16 @@ namespace Projet2.Controllers
 
         public IActionResult AfficherBoutique()
         {
-            return View();
+            ArticleRessources ctx = new ArticleRessources();
+            List<Article> articles = ctx.ObtientTousLesArticles();
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                Boutiques = new Boutiques() { Articles = articles, NombreArticle = articles.Count },
+
+            };
+            return View(hvm);
 
         }
     }

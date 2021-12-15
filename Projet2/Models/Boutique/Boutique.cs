@@ -7,6 +7,7 @@ namespace Projet2.Models.Boutique
     {
         public int Id { get; set; }
         public int NombreArticle { get; set; }
+
         public virtual List<Article> Articles { get; set; }
 
     }
