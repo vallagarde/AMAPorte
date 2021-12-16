@@ -72,8 +72,7 @@ namespace Projet2.Models.Compte
         //Fonctions AdA
         public AdA CreerAdA(Personne personne, Identifiant identifiant, Adresse adresse)
         {
-            CreerAdresse(adresse);
-            
+            CreerAdresse(adresse);           
             personne.AdresseId = adresse.Id;
             CreerPersonne(personne);
             AdA adA = new AdA();
@@ -88,10 +87,6 @@ namespace Projet2.Models.Compte
             if (adaAModifier.Id != 0)
             {
                 _bddContext.AdAs.Update(adaAModifier);
-                Personne personneAModifier = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
-                ModifierAdresse(personneASupprimer.AdresseId);
-                ModifierIdentifiant(personneASupprimer.IdentifiantId);
-                ModifierPersonne(personneASupprimer.Id);
                 _bddContext.SaveChanges();
                 return adaAModifier;
             }
@@ -238,8 +233,6 @@ namespace Projet2.Models.Compte
             string motDePasseSel = "AMAPorte" + motDePasse + "ASP.NET MVC";
             return BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(ASCIIEncoding.Default.GetBytes(motDePasseSel)));
         }
-
-
 
     }
 }
