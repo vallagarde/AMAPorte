@@ -12,12 +12,14 @@
   <ItemGroup>
     <Content Remove="wwwroot\Images\" />
     <Content Remove="Views\Home\Producteurs.cshtml" />
+    <Content Remove="wwwroot\ImageArticle\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Models\Boutique\" />
     <Folder Include="Views\Boutique\" />
+    <Folder Include="wwwroot\ImageArticle\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="bootstrap" />

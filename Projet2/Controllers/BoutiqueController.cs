@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Models.Boutique;
+using Projet2.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,7 +21,7 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC)
+        public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC,IFormFile FileToUpload)
         {
             ArticleRessources ctx = new ArticleRessources();
             ctx.CreerArticle(nom, description, prix, stock, prixTTC);
@@ -48,8 +50,49 @@ namespace Projet2.Controllers
 
         public IActionResult AfficherBoutique()
         {
-            return View();
+            ArticleRessources ctx = new ArticleRessources();
+            List<Article> articles = ctx.ObtientTousLesArticles();
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                Boutiques = new Boutiques() { Articles = articles, NombreArticle = articles.Count },
+
+            };
+            return View(hvm);
 
         }
+
+        public IActionResult Article(int id)
+        {
+            ArticleRessources ctx = new ArticleRessources();
+            Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                Article = article
+
+            };
+            return View(hvm);
+
+        }
+
+        public IActionResult Panier(int id)
+        {
+            ArticleRessources ctx = new ArticleRessources();
+            Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                Article = article
+
+            };
+            return View(hvm);
+
+        }
+
+
     }
 }

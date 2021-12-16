@@ -12,6 +12,9 @@ namespace Projet2.Models.Boutique
         public int Stock { get; set; }
         public decimal PrixTTC { get; set; }
 
+        public int? AssortimentId { get; set; }
+        public Assortiment assortiment { get; set; }
+
         public virtual List<Avis> Avis { get; set; }
 
         public int? LignePanierBoutiqueId { get; set; }
