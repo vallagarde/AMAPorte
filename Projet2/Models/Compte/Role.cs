@@ -4,15 +4,15 @@
     {
         public int Id { get; set; }
 
-        public bool EstGCCQ { get; set; }
+        public static bool EstGCCQ { get; set; }
 
-        public bool EstGCRA { get; set; }
+        public static bool EstGCRA { get; set; }
 
-        public bool EstDSI { get; set; }
+        public static bool EstDSI { get; set; }
 
-        public bool EstAdA { get; set; }
-        public bool EstCE { get; set; }
-        public bool EstAdP { get; set; }
+        public static bool EstAdA { get; set; }
+        public static bool EstCE { get; set; }
+        public static bool EstAdP { get; set; }
 
 
     }

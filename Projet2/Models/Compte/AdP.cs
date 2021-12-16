@@ -11,10 +11,13 @@ namespace Projet2.Models.Compte
         public int Siren { get; set; }
         public string Name { get; set; }
         public string Description { get; set; } = " ";
-
         public Assortiment AssortimentBoutique { get; set; }
-
+        public int AssortimentId { get; set; }
         //public List<?> PanierDuMoment { get; set; }
+
+        public Personne Personne { get; set; }
+        public int PersonneId { get; set; }
+
 
 
 

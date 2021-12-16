@@ -1,0 +1,26 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+}
+
+    <div class=" container">
+        <div class="col-7">
+            <div class="row">
+                <img src="~/Images/pommes.jpg" />
+            </div>
+            <div class="row">
+                @Model.Article.Nom
+
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="col-12">
+                <input id="Quantite" type="number" class="form-control" name="Quantite">
+            </div>
+            <div class="col-12">
+                @Html.ActionLink("Ajouter au Panier", "Panier", "Boutique", new { @id = Model.Article.Id })
+
+            </div>
+        </div>
+    </div>
+  

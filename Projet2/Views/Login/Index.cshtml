@@ -1,24 +1,26 @@
 ﻿@model Projet2.ViewModels.UtilisateurViewModel
 
+
 @if (Model.Authentifie)
 {
     <h3>
         Vous êtes déjà authentifié avec le login :
-        @Model.Identifiant.UserName
+        @Model.Identifiant.AdresseMail
     </h3>
     @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
 }
 else
 {
+
     <p>
         Veuillez vous authentifier :
     </p>
-    using (Html.BeginForm())
+    @using (Html.BeginForm())
     {
         <div>
-            @Html.LabelFor(m => m.Identifiant.UserName)
-            @Html.TextBoxFor(m => m.Identifiant.UserName)
-            @Html.ValidationMessageFor(m => m.Identifiant.UserName)
+            @Html.LabelFor(m => m.Identifiant.AdresseMail)
+            @Html.TextBoxFor(m => m.Identifiant.AdresseMail)
+            @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
         </div>
         <div>
             @Html.LabelFor(m => m.Identifiant.MotDePasse)
@@ -27,6 +29,7 @@ else
         </div>
         <input type="submit" value="Se connecter" />
         <br />
-        @Html.ActionLink("Créer un identifiant", "CreationIdentifiantProvisoire")
-    }
+        @Html.ActionLink("Créer un compte", "Inscription", "Home")
+    
+        }
 }
