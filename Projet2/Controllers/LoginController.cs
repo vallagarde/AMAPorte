@@ -10,6 +10,7 @@ namespace Projet2.Controllers
     public class LoginController : Controller
     {
         private CompteServices cptressource;
+        private HomeViewModel hvm = new HomeViewModel();
         public LoginController()
         {
             cptressource = new CompteServices();
@@ -45,6 +46,15 @@ namespace Projet2.Controllers
 
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                         return Redirect(returnUrl);
+
+                    hvm.Identifiant = identifiant;
+                    hvm.Personne = cptressource.ObtenirPersonneParIdentifiant(identifiant.Id);
+                    hvm.AdA = cptressource.ObtenirAdAParPersonne(hvm.Personne.Id);
+
+                    if (hvm.AdA != null)
+                    {
+                        return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                    }
 
                     return Redirect("/");
                 }

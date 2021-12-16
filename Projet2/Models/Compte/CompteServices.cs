@@ -40,10 +40,37 @@ namespace Projet2.Models.Compte
             return _bddContext.AdAs.ToList();
         }
 
+        //Obtenir une personne
+        public Personne ObtenirPersonne(int id)
+        {
+            Personne personne = _bddContext.Personnes.Find(id);
+            return personne;
+        }
 
+        public Personne ObtenirPersonneParIdentifiant(int id)
+        {
+            var query = from personne in _bddContext.Personnes where personne.IdentifiantId == id select personne;
+            var personnes = query.ToList();
+            foreach(Personne personne in personnes)
+            {
+                return personne;
+            }
+            return null;
+        }
+
+        public AdA ObtenirAdAParPersonne(int id)
+        {
+            var query = from ada in _bddContext.AdAs where ada.PersonneId == id select ada;
+            var adas = query.ToList();
+            foreach (AdA ada in adas)
+            {
+                return ada;
+            }
+            return null;
+        }
 
         //Fonctions AdA
-        public void CreerAdA(Personne personne, Identifiant identifiant, Adresse adresse)
+        public AdA CreerAdA(Personne personne, Identifiant identifiant, Adresse adresse)
         {
             CreerAdresse(adresse);
             
@@ -53,15 +80,22 @@ namespace Projet2.Models.Compte
             adA.PersonneId = personne.Id;
             _bddContext.AdAs.Add(adA);
             _bddContext.SaveChanges();
+            return adA;
         }
 
-        public void ModifierAdA(AdA ada)
-        {
-            if (ada.Id != 0)
+        public AdA ModifierAdA(AdA adaAModifier)
+        {   
+            if (adaAModifier.Id != 0)
             {
-                _bddContext.AdAs.Update(ada);
+                _bddContext.AdAs.Update(adaAModifier);
+                Personne personneAModifier = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
+                ModifierAdresse(personneASupprimer.AdresseId);
+                ModifierIdentifiant(personneASupprimer.IdentifiantId);
+                ModifierPersonne(personneASupprimer.Id);
                 _bddContext.SaveChanges();
+                return adaAModifier;
             }
+            return null;
         }
 
         public void SupprimerAdA(int Id)
@@ -69,16 +103,22 @@ namespace Projet2.Models.Compte
             AdA adaASupprimer = _bddContext.AdAs.Find(Id);
             if (adaASupprimer != null)
             {
+                _bddContext.AdAs.Remove(adaASupprimer);
                 Personne personneASupprimer = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
                 SupprimerAdresse(personneASupprimer.AdresseId);
                 SupprimerIdentifiant(personneASupprimer.IdentifiantId);
-                SupprimerPersonne(adaASupprimer.PersonneId);
-                _bddContext.AdAs.Remove(adaASupprimer);
+                SupprimerPersonne(personneASupprimer.Id);          
                 _bddContext.SaveChanges();
             }
         }
 
         //Fonctions Adresse
+
+        public Adresse ObtenirAdresse(int id)
+        {
+            Adresse adresse = _bddContext.Adresses.Find(id);
+            return adresse;
+        }
         public int CreerAdresse(Adresse adresse)
         {
             _bddContext.Adresses.Add(adresse);
@@ -86,13 +126,15 @@ namespace Projet2.Models.Compte
             return adresse.Id;
         }
 
-        public void ModifierAdresse(Adresse adresse)
+        public Adresse ModifierAdresse(Adresse adresse)
         {
             if (adresse.Id != 0)
             {
                 _bddContext.Adresses.Update(adresse);
                 _bddContext.SaveChanges();
+                return adresse;
             }
+            return null;
         }
 
         public void SupprimerAdresse(int Id)
@@ -113,13 +155,15 @@ namespace Projet2.Models.Compte
             return personne.Id;
         }
 
-        public void ModifierPersonne(Personne personne)
+        public Personne ModifierPersonne(Personne personne)
         {
             if (personne.Id != 0)
             {
                 _bddContext.Personnes.Update(personne);
                 _bddContext.SaveChanges();
+                return personne;
             }
+            return null;
         }
 
         public void SupprimerPersonne(int Id)
@@ -144,7 +188,7 @@ namespace Projet2.Models.Compte
             return identifiant.Id;
         }
 
-        public void ModifierIdentifiant(Identifiant identifiant)
+        public Identifiant ModifierIdentifiant(Identifiant identifiant)
         {
             if (identifiant.Id != 0)
             {
@@ -152,7 +196,9 @@ namespace Projet2.Models.Compte
                 identifiant.MotDePasse = motDePasse;
                 this._bddContext.Identifiants.Update(identifiant);
                 this._bddContext.SaveChanges();
+                return identifiant;
             }
+            return identifiant;
         }
 
         public void SupprimerIdentifiant(int Id)
