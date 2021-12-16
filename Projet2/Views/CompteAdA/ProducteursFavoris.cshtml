@@ -1,0 +1,28 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Producteurs Favoris</title>
+</head>
+<body>
+    <div>
+        Bonjour @Model.Personne.Prenom
+
+        <br />
+        Ma Liste de Producteurs :
+        @*
+
+        *@
+        <br />
+        @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteAdA", @Model.AdA)
+        @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteAdA", @Model.AdA)
+        @Html.ActionLink("Mon Compte", "Index", "CompteAdA", @Model.AdA)
+    </div>
+
+
+</body>
+</html>

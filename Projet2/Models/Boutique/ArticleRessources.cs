@@ -55,5 +55,6 @@ namespace Projet2.Models.Boutique
             
                 return article.Id;
         }
+
     }
 }
