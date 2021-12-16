@@ -8,5 +8,7 @@ namespace Projet2.Models.Boutique
         public int Id { get; set; }
 
         public virtual List<LignePanierBoutique> LignePanierBoutiques{ get; set; }
+
+        public decimal? Total { get; set; }
     }
 }
