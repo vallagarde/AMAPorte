@@ -12,6 +12,16 @@ namespace Projet2.ViewModels
 
         //Pour Comptes + Authorisation
         public Personne Personne = new Personne();
+
+        public string ReturnDateForDisplay
+        {
+            get
+            {
+                return this.Personne.DateNaissance.ToString("d");
+            }
+        }
+
+        public AdA AdA = new AdA();
         public Identifiant Identifiant = new Identifiant();
         public Adresse Adresse = new Adresse();
 
