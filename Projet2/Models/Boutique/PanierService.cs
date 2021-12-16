@@ -13,6 +13,16 @@ namespace Projet2.Models.Boutique
             _bddContext = new BddContext();
         }
 
+        public List<PanierBoutique> ObtientTousLesPaniers()
+        {
+            return _bddContext.PanierBoutique.ToList();
+        }
+
+        public List<LignePanierBoutique> ObtientTousLesLignes()
+        {
+            return _bddContext.LignePanierBoutique.ToList();
+        }
+
         public int CreerLigne(int quantite, Article article, decimal sousTotal)
         {
             LignePanierBoutique ligne = new LignePanierBoutique() { Article=article, Quantite=quantite, SousTotal=sousTotal };
