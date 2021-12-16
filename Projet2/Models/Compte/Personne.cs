@@ -4,33 +4,33 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Projet2.Models.Compte
 {
+    //ajout photo profil ?
     public class Personne
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Vous devez insérer un nom.")]
-        [Display(Name = "Nom")]
-        public string? Nom { get; set; }
+        public Identifiant identifiant { get; set; }
 
-        [Required(ErrorMessage = "Vous devez insérer un prénom.")]
+        [Display(Name = "Nom")]
+        [Required(ErrorMessage = "Vous devez insérer un nom.")]
+        public string Nom { get; set; }
+
         [Display(Name = "Prénom")]
+        [Required(ErrorMessage = "Vous devez insérer un prénom.")]
         public string Prenom { get; set; }
 
-        [Required(ErrorMessage = "La date de naissance ne peut pas être null.")]
         [Display(Name = "Date de Naissance")]
+        [Required(ErrorMessage = "La date de naissance ne peut pas être null.")]
         [DataType(DataType.Date)]
         public DateTime? DateNaissance { get; set; }
 
-        [Required(ErrorMessage = "Le mail ne peut pas être null.")]
         [Display(Name = "Adresse Mail")]
-        public string? AdresseMail { get; set; }
+        [Required, RegularExpression(@"/^w+[+.w-]*@([w -]+.)*w+[w-]*.([a-z]{2,4}|d+)$/i", ErrorMessage = "Le mail ne peut pas être null.")] 
+        public string AdresseMail { get; set; }
 
         [Display(Name = "Téléphone")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
+        [Required, RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
         public int? NTelephone { get; set; }
-
-        public string? MotDePasse { get; set; }
-
 
         public virtual List<AdA>? AdAs { get; set; }
 
@@ -39,7 +39,7 @@ namespace Projet2.Models.Compte
         public virtual List<Paiement>? Paiements { get; set; }
 
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
-        public bool? EstEnAccord { get; set; }
+        public bool EstEnAccord { get; set; }
         public bool? EstAboAnnuel { get; set; }
         public bool? EstAboSemestre { get; set; }
 

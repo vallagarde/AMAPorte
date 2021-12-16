@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public int NombreUtilisateur { get; set; }
         public int Siren { get; set; }
-        ContactComiteEntreprise? ContactComiteEntreprise { get; set; }
+        ContactComiteEntreprise ContactComiteEntreprise { get; set; }
     
     }
 }
