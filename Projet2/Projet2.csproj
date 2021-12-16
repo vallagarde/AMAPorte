@@ -14,9 +14,7 @@
     <Content Remove="Views\Home\Producteurs.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\PanierSaisonniers\" />
     <Folder Include="wwwroot\Images\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Models\Boutique\" />
     <Folder Include="Views\Boutique\" />
     <Folder Include="wwwroot\ImagesPaniers\" />
@@ -32,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.2.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.15">
