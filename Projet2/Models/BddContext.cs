@@ -35,28 +35,6 @@ namespace Projet2.Models
         {
             this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
-            this.Personnes.AddRange(
-                new Personne
-                {
-                    Id = 1,
-                    Nom = "Bernard",
-                    Prenom = "Hugo",
-                    DateNaissance = new System.DateTime(1984, 09, 28),
-                    AdresseMail = "hugobernard@mail.com",
-                    NTelephone = 1111111111,
-                },
-                new Personne
-                {
-                    Id = 2,
-                    Nom = "Levi",
-                    Prenom = "Alexandre",
-                    DateNaissance = new System.DateTime(1990, 09, 10),
-                    AdresseMail = "alexandrelevi@mail.com",
-                    NTelephone = 1111111111,
-                }
-            );
-
-            this.SaveChanges();
         }
     }
 }

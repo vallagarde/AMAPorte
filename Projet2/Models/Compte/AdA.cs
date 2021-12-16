@@ -5,7 +5,17 @@ namespace Projet2.Models.Compte
     public class AdA
     {
         public int Id { get; set; }
-        public virtual List<ContactComiteEntreprise>? ContactComiteEntreprises { get; set; }
+
+        public bool EstAdA { get; set; }
+
+        public Personne Personne { get; set; }
+        public int PersonneId { get; set; }
+
+        public bool EstAboAnnuel { get; set; }
+        public bool EstAboSemestre { get; set; }
+
+        public Paiement Paiement { get; set; }
+        public int? PaiementId { get; set; }
 
         public List<AdP> ProducteursFavoris { get; set; }
 
@@ -16,6 +26,10 @@ namespace Projet2.Models.Compte
         //public List<Commande> CommandesBoutiqueEffectues { get; set; }
 
         //public List<?> CommandesPanierEffectues { get; set; }
+        public AdA()
+        {
+            EstAdA = true;
+        }
 
     }
 }
