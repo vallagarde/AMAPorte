@@ -9,7 +9,7 @@ namespace Projet2.Models.Boutique
         public int SousTotal { get; set; }
 
 
-        public int PanierBoutiqueId { get; set; }
+        public int? PanierBoutiqueId { get; set; }
         public PanierBoutique PanierBoutique { get; set; }
     }
 }

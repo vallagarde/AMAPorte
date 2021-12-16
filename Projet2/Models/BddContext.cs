@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 
 namespace Projet2.Models
 {
@@ -25,6 +26,12 @@ namespace Projet2.Models
         public DbSet<Paiement> Paiements { get; set; }
         public DbSet<Identifiant> Identifiants { get; set; }
         public DbSet<Role> Roles { get; set; }
+
+        //context panierSaisonnier
+        public DbSet<Produit> Produits { get; set; }
+        public DbSet<PanierSaisonnier> PaniersSaisonniers { get; set; }
+        public DbSet<CataloguePanier> CataloguesPaniers { get; set; }
+        public DbSet<LignePanierSaisonnier> LignePaniersSaisonniers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
