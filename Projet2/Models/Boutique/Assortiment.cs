@@ -10,7 +10,5 @@ namespace Projet2.Models.Boutique
 
         public List<Article> Articles { get; set; }
 
-        public int? AdPId{ get; set; }
-        public AdP adP { get; set; }
     }
 }
