@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.ViewModels;
 
@@ -78,76 +79,44 @@ namespace Projet2.Controllers
             return View(hvm);
 
         }
-        /*[HttpPost]
-        public IActionResult Article(int id, int Quantite )
+        [HttpPost]
+        public IActionResult Article( int id, int Quantite)
         {
-           PanierService ctx = new PanierService();
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
 
-            HttpContext context = HttpContext.Current;
-            if (HttpContext.Session == null)
-            {
-                PanierBoutique panier = ctx.CreerPanier();
-                HttpContext.Session = panier.Id;
-            }
+            PanierService ctx = new PanierService();
             ArticleRessources ctxarticle = new ArticleRessources();
+
             Article article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
 
-            LignePanierBoutique ligne = new LignePanierBoutique() { Article = article, Quantite = Quantite, SousTotal = article.PrixTTC * Quantite };
+            //LignePanierBoutique ligne = new LignePanierBoutique() { Article = article, Quantite = Quantite, SousTotal = article.PrixTTC * Quantite };
 
-            PanierBoutique panier = ctx.ObtientTousLesPaniers().Where(/* session est celle en cours  *);
-            
-            if (panier == null) // SI le panier n'existe pas on le crée
+
+            if (panierId == 0) // Le panier n'existe pas dans la session
             {
-                HttpContext.Session
+                panierId = ctx.CreerPanier();
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "panierId", panierId);
+                ctx.AjouterArticle(panierId, id, Quantite);
+
             }
-            else // Sinon
+            else // Sinon Le panier existe deja :
             {
-                LignePanierBoutique lignePanier = ctx.ObtientTousLesLignes().Where(b => b.ArticleId == article.Id , c => c.PanierId == panier.Id);
-                if (lignePanier.count != 0) // Si cet article est deja dans le panier:
-                {
-
-                    ctx.ModifierLigne(lignePanier.Id, lignePanier.Quantite + Quantite, lignePanier.Article, lignePanier.SousTotal+ (article.PrixTTC*Quantite));
-
-                    ctx.ModifierPanier(panier.Id,);
-                }
-                else
-                {
-                    ctx.CreerLigne(Quantite, article, article.PrixTTC*Quantite);
-                    ctx.
-                }
-
+                //PanierBoutique panier = ctx.ObientPanier(panierId);
+                ctx.AjouterArticle(panierId, id, Quantite);
             }
 
 
-            ctx.ModifierPanier(Quantite, line);
-            LignePanierBoutique ligne = ctx
+            return RedirectToAction("Panier", new { @panierId = panierId });
 
-            HomeViewModel hvm = new HomeViewModel
-            {
-
-                Article = article
-
-            };
-            return View(hvm);
-
-        }*/
+        }
 
 
-        public IActionResult Panier(int id , int Quantite)
+        public IActionResult Panier(int panierId)
         {
-            ArticleRessources ctxarticle = new ArticleRessources();
-            Article article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
-
-            LignePanierBoutique ligne = new LignePanierBoutique() { Article = article, Quantite = Quantite, SousTotal = article.PrixTTC * Quantite };
-
-           
-            HomeViewModel hvm = new HomeViewModel
-            {
-
-                Article = article
-
-            };
-            return View(hvm);
+            PanierService ctx = new PanierService();
+            PanierBoutique panier = ctx.ObientPanier(panierId);
+            List < LignePanierBoutique > liste = panier.LignePanierBoutiques ;
+            return View(panier);
 
         }
 

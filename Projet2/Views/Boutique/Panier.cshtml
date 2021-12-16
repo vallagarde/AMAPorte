@@ -1,4 +1,4 @@
-﻿@model Projet2.Models.Boutique.PanierBoutique;
+﻿@model Projet2.Models.Boutique.PanierBoutique
 
 
 @*
@@ -10,4 +10,14 @@
 
 <div class="container">
 
+    @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.LignePanierBoutiques)
+    {
+
+
+        <p> @ligne.Article.Nom</p>
+        <p>@ligne.Article.PrixTTC.</p>
+        <p>@ligne.Quantite</p>
+        <p>@ligne.SousTotal</p>
+
+    }
 </div>

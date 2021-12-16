@@ -13,14 +13,20 @@
 
             </div>
         </div>
-        <div class="col-5">
-            <div class="col-12">
-                <input id="Quantite" type="number" class="form-control" name="Quantite">
+        <form method="post">
+            <div class="col-5">
+                <div class="col">
+                    <label for="prix" class="col-sm-2 col-form-label">Prix</label>
+                    <input id="prix" type="number" class="form-control" name="id">
+                </div>
+                <div class="col">
+                    <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+                    <input id="stock" type="number" class="form-control" name="Quantite">
+                </div>
+                <div class="col-12">
+                    <button type="submit">ajouter Panier</button>
+                </div>
             </div>
-            <div class="col-12">
-                @Html.ActionLink("Ajouter au Panier", "Panier", "Boutique", new { @id = Model.Article.Id })
-
-            </div>
-        </div>
+        </form>
     </div>
   

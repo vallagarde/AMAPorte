@@ -20,6 +20,7 @@
     <Folder Include="Models\Boutique\" />
     <Folder Include="Views\Boutique\" />
     <Folder Include="wwwroot\ImageArticle\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="bootstrap" />
@@ -29,6 +30,7 @@
     <None Remove="ViewModels\" />
     <None Remove="Models\Boutique\" />
     <None Remove="Views\Article\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
