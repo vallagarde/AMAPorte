@@ -100,11 +100,15 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult ModificationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdA ada)
         {
+                
+                hvm.Adresse = cs.ModifierAdresse(adresse);
+                hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
+                personne.AdresseId = hvm.Adresse.Id;
+                personne.IdentifiantId = hvm.Identifiant.Id;
+                hvm.Personne = cs.ModifierPersonne(personne);
+                ada.PersonneId = hvm.Personne.Id;
+                hvm.AdA = cs.ModifierAdA(ada);
 
-            hvm.AdA = cs.ModifierAdA(ada);
-            hvm.Personne = cs.ModifierPersonne(cs.ObtenirPersonne(hvm.AdA.PersonneId));
-            hvm.Adresse = cs.ModifierAdresse(cs.ObtenirAdresse(hvm.Personne.Adresse.Id));
-            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
             return View("Index", hvm);
         }
 

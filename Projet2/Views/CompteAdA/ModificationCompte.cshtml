@@ -16,6 +16,10 @@
     {
 <fieldset>
     <h2> Identifiant </h2>
+        @Html.HiddenFor(m => Model.AdA.Id)
+        @Html.HiddenFor(m => Model.Personne.Id)
+        @Html.HiddenFor(m => Model.Identifiant.Id)
+        @Html.HiddenFor(m => Model.Adresse.Id)
     <br />
         @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
         @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
@@ -54,11 +58,12 @@
         @Html.LabelFor(m => Model.Adresse.Pays) :
         @Html.TextBoxFor(m => Model.Adresse.Pays)
      <br />
+     
         @* Paiement en :
         @Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) *@
 </fieldset>
      <br />
-        <input type="submit" value="Modifier" />
+        <input type="submit" value="Modification" />
     }
 
     <br /><br />  
