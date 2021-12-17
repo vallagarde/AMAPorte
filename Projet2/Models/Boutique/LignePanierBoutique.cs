@@ -12,7 +12,7 @@ namespace Projet2.Models.Boutique
         public decimal SousTotal { get; set; }
 
 
-        public int PanierBoutiqueId { get; set; }
+        public int? PanierBoutiqueId { get; set; }
         public PanierBoutique PanierBoutique { get; set; }
     }
 }
