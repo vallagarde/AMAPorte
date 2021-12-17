@@ -1,4 +1,6 @@
 ﻿using Projet2.Models.Boutique;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace Projet2.Models.Compte
 {
@@ -8,11 +10,21 @@ namespace Projet2.Models.Compte
     public class AdP
     {
         public int Id { get; set; }
+
+        [Display(Name = "Numéro SIREN")]
+        [Required(ErrorMessage = "Vous devez insérer un numéro SIREN.")]
         public int Siren { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; } = " ";
-        public Assortiment AssortimentBoutique { get; set; }
-        public int AssortimentId { get; set; }
+
+        [Display(Name = "Nom de la Production")]
+        [Required(ErrorMessage = "Vous devez insérer un nom.")]
+        public string NomProducteur { get; set; }
+
+        [Display(Name = "Ecrivez quelques mot sur votre production")]
+        public string Description { get; set; }
+
+
+        //public Assortiment AssortimentBoutique { get; set; }
+        //public int AssortimentId { get; set; }
         //public List<?> PanierDuMoment { get; set; }
 
         public Personne Personne { get; set; }

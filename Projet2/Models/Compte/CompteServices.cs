@@ -9,6 +9,7 @@ namespace Projet2.Models.Compte
     public class CompteServices : ICompteServices
     {
         private readonly BddContext _bddContext;
+
         public CompteServices()
         {
             _bddContext = new BddContext();
@@ -25,39 +26,11 @@ namespace Projet2.Models.Compte
         }
 
 
-        //Listes
-        public List<Personne> ObtientToutesLesPersonnes()
-        {
-            return _bddContext.Personnes.ToList();
-        }
-
-        public List<Adresse> ObtientToutesLesAdresses()
-        {
-            return _bddContext.Adresses.ToList();
-        }
+        //Obtenir AdA
         public List<AdA> ObtientTousLesAdAs()
         {
             return _bddContext.AdAs.ToList();
         }
-
-        //Obtenir une personne
-        public Personne ObtenirPersonne(int id)
-        {
-            Personne personne = _bddContext.Personnes.Find(id);
-            return personne;
-        }
-
-        public Personne ObtenirPersonneParIdentifiant(int id)
-        {
-            var query = from personne in _bddContext.Personnes where personne.IdentifiantId == id select personne;
-            var personnes = query.ToList();
-            foreach(Personne personne in personnes)
-            {
-                return personne;
-            }
-            return null;
-        }
-
         public AdA ObtenirAdAParPersonne(int id)
         {
             var query = from ada in _bddContext.AdAs where ada.PersonneId == id select ada;
@@ -75,11 +48,11 @@ namespace Projet2.Models.Compte
             CreerAdresse(adresse);           
             personne.AdresseId = adresse.Id;
             CreerPersonne(personne);
-            AdA adA = new AdA();
-            adA.PersonneId = personne.Id;
-            _bddContext.AdAs.Add(adA);
+            AdA ada = new AdA();
+            ada.PersonneId = personne.Id;
+            _bddContext.AdAs.Add(ada);
             _bddContext.SaveChanges();
-            return adA;
+            return ada;
         }
 
         public AdA ModifierAdA(AdA adaAModifier)
@@ -107,13 +80,73 @@ namespace Projet2.Models.Compte
             }
         }
 
-        //Fonctions Adresse
+        //Obtenir AdP
+        public List<AdP> ObtientTousLesAdPs()
+        {
+            return _bddContext.AdPs.ToList();
+        }
+
+        public AdP ObtenirAdPParPersonne(int id)
+        {
+            var query = from adp in _bddContext.AdPs where adp.PersonneId == id select adp;
+            var adps = query.ToList();
+            foreach (AdP adp in adps)
+            {
+                return adp;
+            }
+            return null;
+        }
+
+        //Fonctions AdA
+        public AdP CreerAdP(Personne personne, Identifiant identifiant, Adresse adresse, AdP adp)
+        {
+            personne.Adresse = adresse;
+            CreerAdresse(adresse);
+            CreerPersonne(personne);
+            adp.PersonneId = personne.Id;
+            _bddContext.AdPs.Add(adp);
+            _bddContext.SaveChanges();
+            return adp;
+        }
+
+        public AdP ModifierAdP(AdP adpAModifier)
+        {
+            if (adpAModifier.Id != 0)
+            {
+                _bddContext.AdPs.Update(adpAModifier);
+                _bddContext.SaveChanges();
+                return adpAModifier;
+            }
+            return null;
+        }
+
+        public void SupprimerAdP(int Id)
+        {
+            AdP adpASupprimer = _bddContext.AdPs.Find(Id);
+            if (adpASupprimer != null)
+            {
+                _bddContext.AdPs.Remove(adpASupprimer);
+                Personne personneASupprimer = _bddContext.Personnes.Find(adpASupprimer.PersonneId);
+                SupprimerAdresse(personneASupprimer.AdresseId);
+                SupprimerIdentifiant(personneASupprimer.IdentifiantId);
+                SupprimerPersonne(personneASupprimer.Id);
+                _bddContext.SaveChanges();
+            }
+        }
+
+        //Obtenir Adresse
+        public List<Adresse> ObtientToutesLesAdresses()
+        {
+            return _bddContext.Adresses.ToList();
+        }
 
         public Adresse ObtenirAdresse(int id)
         {
             Adresse adresse = _bddContext.Adresses.Find(id);
             return adresse;
         }
+
+        //Fonctions Adresse
         public int CreerAdresse(Adresse adresse)
         {
             _bddContext.Adresses.Add(adresse);
@@ -140,6 +173,29 @@ namespace Projet2.Models.Compte
                 _bddContext.Adresses.Remove(adresseASupprimer);
                 _bddContext.SaveChanges();
             }
+        }
+
+        
+
+        //Obtenir de personne
+        public List<Personne> ObtientToutesLesPersonnes()
+        {
+            return _bddContext.Personnes.ToList();
+        }
+        public Personne ObtenirPersonne(int id)
+        {
+            Personne personne = _bddContext.Personnes.Find(id);
+            return personne;
+        }
+        public Personne ObtenirPersonneParIdentifiant(int id)
+        {
+            var query = from personne in _bddContext.Personnes where personne.IdentifiantId == id select personne;
+            var personnes = query.ToList();
+            foreach (Personne personne in personnes)
+            {
+                return personne;
+            }
+            return null;
         }
 
         //Fonctions Personne
