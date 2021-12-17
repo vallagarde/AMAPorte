@@ -15,5 +15,6 @@ namespace Projet2.Models.PanierSaisonniers
 
         public int ContactComiteEntrepriseId { get; set; }
         public ContactComiteEntreprise ContactComiteEntreprise { get; set; }
+
     }
 }

@@ -1,5 +1,56 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Projet2.Models.PanierSaisonniers.PanierSaisonnier>
 @{
+    Layout = null;
 }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AfficherPaniers</title>
+</head>
+<body>
+    <div> Liste des Paniers saisonniers :  </div>
+    <br />
+    <table border="1">
+        <tr>
+            <th>
+                Produits
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Nom Producteur
+            </th>
+            <th>
+                Prix
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+
+        @foreach (Projet2.Models.PanierSaisonniers.PanierSaisonnier panier in Model)
+        {
+            <tr>
+                <td>@panier.ProduitsProposes</td>
+                <td>@panier.NomProducteur</td>
+                <td>@panier.Description</td>
+                <td>@panier.Prix</td>
+                <td>
+                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", new { @id = panier.Id }),
+                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", new { @id = panier.Id })
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.ActionLink("Ajouter un Panier", "AjouterPanier", "Panier")
+
+    <div>
+        @Html.ActionLink("Un changement?", "ModifierPanier", "Panier")
+    </div>
+
+</body>
+</html>

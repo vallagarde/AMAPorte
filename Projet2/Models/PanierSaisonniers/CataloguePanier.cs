@@ -11,6 +11,5 @@ namespace Projet2.Models.PanierSaisonniers
         public String NomCatalogue { get; set; }
         public int NombrePaniers { get; set; }
         public virtual List<PanierSaisonnier> PanierSaisonniers { get; set; }
-
     }
 }
