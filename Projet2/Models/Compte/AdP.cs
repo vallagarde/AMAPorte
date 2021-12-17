@@ -26,11 +26,15 @@ namespace Projet2.Models.Compte
         //public Assortiment AssortimentBoutique { get; set; }
         //public int AssortimentId { get; set; }
         //public List<?> PanierDuMoment { get; set; }
+        public static bool EstAdP { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
 
-
+        public AdP()
+        {
+            EstAdP = true;
+        }
 
 
     }

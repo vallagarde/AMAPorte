@@ -97,7 +97,7 @@ namespace Projet2.Models.Compte
             return null;
         }
 
-        //Fonctions AdA
+        //Fonctions AdP
         public AdP CreerAdP(Personne personne, Identifiant identifiant, Adresse adresse, AdP adp)
         {
             personne.Adresse = adresse;
@@ -177,7 +177,7 @@ namespace Projet2.Models.Compte
 
         
 
-        //Obtenir de personne
+        //Obtenir Personne
         public List<Personne> ObtientToutesLesPersonnes()
         {
             return _bddContext.Personnes.ToList();

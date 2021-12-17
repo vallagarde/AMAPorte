@@ -26,7 +26,7 @@ namespace Projet2.Models
         public DbSet<Personne> Personnes { get; set; }
         public DbSet<Paiement> Paiements { get; set; }
         public DbSet<Identifiant> Identifiants { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Admin> Roles { get; set; }
 
         //context panierSaisonnier
         public DbSet<Produit> Produits { get; set; }

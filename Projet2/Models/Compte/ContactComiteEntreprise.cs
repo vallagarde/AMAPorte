@@ -20,6 +20,8 @@ namespace Projet2.Models.Compte
         public bool EstAboAnnuel { get; set; }
         public bool EstAboSemestre { get; set; }
 
+        public static bool EstCE { get; set; }
+
         public Paiement Paiement { get; set; }
         public int? PaiementId { get; set; }
 
@@ -32,6 +34,11 @@ namespace Projet2.Models.Compte
         //public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
 
         //public virtual List<?> CommandesPanierEffectues { get; set; }
+
+        public ContactComiteEntreprise()
+        {
+            EstCE = true;
+        }
 
     }
 }
