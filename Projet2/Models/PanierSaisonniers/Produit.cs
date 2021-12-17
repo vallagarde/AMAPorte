@@ -10,8 +10,8 @@ namespace Projet2.Models.PanierSaisonniers
         public int Id { get; set; }
         public string NomProduit { get; set; }
 
-        //public int? PanierSaisonnierId { get; set; }
-        //public PanierSaisonnier PanierSaisonnier { get; set; }
+        public int? PanierSaisonnierId { get; set; }
+        public PanierSaisonnier PanierSaisonnier { get; set; }
 
 
     }

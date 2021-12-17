@@ -57,19 +57,16 @@ namespace Projet2.Controllers
         {
             PanierSaisonnierService ctx = new PanierSaisonnierService();
             ctx.ModifierPanierSaisonnier(id, produitsProposes, description, nomProducteur, prix);
-            return RedirectToAction("ModifierPanier", new { @Id = id });
+            return RedirectToAction("AfficherPaniers", new { @Id = id });
 
         }
 
-        public IActionResult AfficherPanier()
+        public IActionResult SupprimerPanier(int id)
         {
-            return View();
-
+            PanierSaisonnierService ctx = new PanierSaisonnierService();
+            ctx.SupprimerPanierSaisonnier(id);
+            return RedirectToAction("AfficherPaniers");
         }
-
-
-
-
 
 
     }

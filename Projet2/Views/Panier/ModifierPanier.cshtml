@@ -1,0 +1,41 @@
+﻿@model Projet2.Models.PanierSaisonniers.PanierSaisonnier
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ModifierPanier</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+    <fieldset>
+        <legend>Modifier un Panier : </legend>
+        @Html.LabelFor(m => Model.ProduitsProposes)
+        @*@foreach (var p in Model.ProduitsProposes)
+        {
+            <div>@p.NomProduit</div>
+        }*@
+        
+        @*@Html.TextBoxFor(m => @item)*@
+        @*@Html.TextBoxFor(m => Model.ProduitsProposes)*@
+        @Html.ValidationMessageFor(m => Model.ProduitsProposes)
+        <br />
+        @Html.LabelFor(m => Model.Description)
+        @Html.TextBoxFor(m => Model.Description)
+        <br />
+        @Html.LabelFor(m => Model.NomProducteur)
+        @Html.TextBoxFor(m => Model.NomProducteur)
+        <br />
+        @Html.LabelFor(m => Model.Prix)
+        @Html.TextBoxFor(m => Model.Prix)
+        <br />
+        <input type="submit" value="Modifier" />
+    </fieldset>
+    }
+</body>
+</html>

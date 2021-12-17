@@ -14,16 +14,16 @@ namespace Projet2.Models.PanierSaisonniers
         public string NomProducteur { get; set; }
         public decimal Prix { get; set; }
 
-        //public int? CataloguePanierId { get; set; }
-        //public CataloguePanier CataloguePanier { get; set; }
 
         //public int? AdPId { get; set; }
         //public AdP AdP { get; set; }
 
         //public int? AdAId { get; set; }
         //public AdP AdA { get; set; }
+        public int? CataloguePanierId { get; set; }
+        public CataloguePanier CataloguePanier { get; set; }
 
-        //public int? LignePanierSaisonnierId { get; set; }
-        //public LignePanierSaisonnier  LignePanierSaisonnier { get; set; }
+        public int? LignePanierSaisonnierId { get; set; }
+        public LignePanierSaisonnier  LignePanierSaisonnier { get; set; }
     }
 }
