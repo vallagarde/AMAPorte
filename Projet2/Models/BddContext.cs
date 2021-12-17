@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 
 namespace Projet2.Models
 {
@@ -26,6 +28,12 @@ namespace Projet2.Models
         public DbSet<Identifiant> Identifiants { get; set; }
         public DbSet<Role> Roles { get; set; }
 
+        //context panierSaisonnier
+        public DbSet<Produit> Produits { get; set; }
+        public DbSet<PanierSaisonnier> PaniersSaisonniers { get; set; }
+        public DbSet<CataloguePanier> CataloguesPaniers { get; set; }
+        public DbSet<LignePanierSaisonnier> LignePaniersSaisonniers { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;user id=root;password=nitnelave;database=AmaPorte");
@@ -35,6 +43,24 @@ namespace Projet2.Models
         {
             this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
+<<<<<<< HEAD
+            this.PaniersSaisonniers.AddRange(
+
+            new PanierSaisonnier { 
+                Id = 1, 
+                ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Pomme" }, new Produit() { NomProduit = "Orange" }, new Produit() { NomProduit = "Avocat" }, new Produit() { NomProduit = "Raisin" } },
+                Description = "Produits de saisons", 
+                NomProducteur = "Jean Charles",
+                Prix = 17.450M },
+            new PanierSaisonnier{Id = 2, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "30 oeufs" }, new Produit() { NomProduit = "poulets" } }, Description = "Elévés en plein air", NomProducteur = "Louis Ferrand", Prix = 10.50M},
+            new PanierSaisonnier{Id = 3, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Haut de dinde" }, new Produit() { NomProduit = "Poirreaux" }, new Produit() { NomProduit = "Tommates" }, new Produit() { NomProduit = "Poivrons" } }, Description = "Bio", NomProducteur = "Jeanne Dasilva", Prix = 15.90M},
+            new PanierSaisonnier{Id = 4, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Potiron" }, new Produit() { NomProduit = "Pomme de terre" }, new Produit() { NomProduit = "Melon" } }, Description = "Bio", NomProducteur = "Richard Laurant", Prix = 16.90M}
+
+            );
+
+            this.SaveChanges();
+=======
+>>>>>>> 3cbf43c6898b2b408746d508589c13f84fc7b372
         }
     }
 }

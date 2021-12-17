@@ -1,6 +1,6 @@
 ﻿@model Projet2.ViewModels.UtilisateurViewModel
 
-@*
+
 @if (Model.Authentifie)
 {
     <h3>
@@ -11,7 +11,7 @@
 }
 else
 {
-*@
+
     <p>
         Veuillez vous authentifier :
     </p>
@@ -32,3 +32,4 @@ else
         @Html.ActionLink("Créer un compte", "Inscription", "Home")
     
         }
+}

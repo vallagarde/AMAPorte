@@ -10,10 +10,22 @@ namespace Projet2.Controllers
     public class CompteAdAController : Controller
     {
         CompteServices cs = new CompteServices();
-
-        public IActionResult Index()
+        HomeViewModel hvm = new HomeViewModel();
+        public IActionResult Index(AdA ada)
         {
-            return View();
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+            hvm.AdA = ada;
+            if (hvm.Personne == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                //View("ArticlesFavoris", hvm);
+                return View(hvm);
+            }
         }
 
         [HttpGet]
@@ -43,12 +55,67 @@ namespace Projet2.Controllers
 
                 personne.IdentifiantId = id;
 
-                cs.CreerAdA(personne, identifiant, adresse);
-                //normally redirected to an overview but not the modify function
-                return RedirectToAction("Index", new { @id = personne.Id });
+                hvm.AdA = cs.CreerAdA(personne, identifiant, adresse);
+                hvm.Personne = personne;
+                hvm.Adresse = adresse;
+                hvm.Identifiant = identifiant;
+
+                return View("Index", hvm);
             }
             return View();
 
+        }
+
+        public IActionResult ArticlesFavoris(AdA ada)
+        {
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = ada;
+            return View(hvm);        
+        }
+
+        public IActionResult AteliersFavoris(AdA ada)
+        {
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+
+        public IActionResult ProducteursFavoris(AdA ada)
+        {
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+
+        [HttpGet]
+        public IActionResult ModificationCompte(AdA ada)
+        {
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult ModificationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdA ada)
+        {
+                
+                hvm.Adresse = cs.ModifierAdresse(adresse);
+                hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
+                personne.AdresseId = hvm.Adresse.Id;
+                personne.IdentifiantId = hvm.Identifiant.Id;
+                hvm.Personne = cs.ModifierPersonne(personne);
+                ada.PersonneId = hvm.Personne.Id;
+                hvm.AdA = cs.ModifierAdA(ada);
+
+            return View("Index", hvm);
+        }
+
+        public IActionResult SuppressionCompte(AdA ada)
+        {
+            cs.SupprimerAdA(ada.Id);
+            return View();
         }
 
     }

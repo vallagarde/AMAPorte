@@ -1,5 +1,79 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Projet2.ViewModels.HomeViewModel
+
 @{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Modifier Compte</title>
+</head>
+<body> 
+<h1>Formulaire Modification Adhérent Acheteur : </h1>
+
+    @using (Html.BeginForm())
+    {
+<fieldset>
+    <h2> Identifiant </h2>
+        @Html.HiddenFor(m => Model.AdA.Id)
+        @Html.HiddenFor(m => Model.Personne.Id)
+        @Html.HiddenFor(m => Model.Identifiant.Id)
+        @Html.HiddenFor(m => Model.Adresse.Id)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
+        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
+        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
+        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
+        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+    <br />
+    <h2> Personne </h2>
+    <br />
+        @Html.LabelFor(m => Model.Personne.Nom) :
+        @Html.TextBoxFor(m => Model.Personne.Nom)
+    <br />
+        @Html.LabelFor(m => Model.Personne.Prenom) :
+        @Html.TextBoxFor(m => Model.Personne.Prenom)
+    <br />
+        @Html.LabelFor(m => Model.Personne.DateNaissance) :
+        @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date"})
+    <br />
+        @Html.LabelFor(m => Model.Personne.NTelephone) :
+        @Html.TextBoxFor(m => Model.Personne.NTelephone)
+    <br />
+        @Html.LabelFor(m => Model.Adresse.Numero) :
+        @Html.TextBoxFor(m => Model.Adresse.Numero)
+     <br />
+        @Html.LabelFor(m => Model.Adresse.Voie) :
+        @Html.TextBoxFor(m => Model.Adresse.Voie)
+     <br />
+        @Html.LabelFor(m => Model.Adresse.CodePostal) :
+        @Html.TextBoxFor(m => Model.Adresse.CodePostal)   
+     <br />
+        @Html.LabelFor(m => Model.Adresse.Ville) :
+        @Html.TextBoxFor(m => Model.Adresse.Ville)
+     <br />
+        @Html.LabelFor(m => Model.Adresse.Pays) :
+        @Html.TextBoxFor(m => Model.Adresse.Pays)
+     <br />
+     
+        @* Paiement en :
+        @Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) *@
+</fieldset>
+     <br />
+        <input type="submit" value="Modification" />
+    }
+
+    <br /><br />  
+    <div>
+    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAda", @Model.AdA)
+    </div>
+
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+</body>
+</html>

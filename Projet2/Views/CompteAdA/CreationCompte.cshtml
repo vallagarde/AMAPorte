@@ -9,86 +9,61 @@
     <title>Creation Compte</title>
 </head>
 <body>
-        
-     <h1>Formulaire Adhérent Acheteur : </h1>
+       
+    
+<h1>Formulaire Creation Adhérent Acheteur : </h1>
 
     @using (Html.BeginForm())
     {
-        <h2> Identifiant </h2>
+<fieldset>
+    <h2> Identifiant </h2>
     <br />
-    <div>
         @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
         @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
         @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
-    </div>
-         <div>
+    <br />
         @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
         @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
         @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
-    </div>
-
     <br />
-
     <h2> Personne </h2>
-        <div>
+    <br />
         @Html.LabelFor(m => Model.Personne.Nom) :
         @Html.TextBoxFor(m => Model.Personne.Nom)
-    </div>
-
-    <div>
+    <br />
         @Html.LabelFor(m => Model.Personne.Prenom) :
         @Html.TextBoxFor(m => Model.Personne.Prenom)
-    </div>
-
-    <div>
+    <br />
         @Html.LabelFor(m => Model.Personne.DateNaissance) :
-        @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:1990-01-01}", new { @type = "date"})    </div>
-
-    <div>
+        @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date"})
+    <br />
         @Html.LabelFor(m => Model.Personne.NTelephone) :
         @Html.TextBoxFor(m => Model.Personne.NTelephone)
-    </div>
-
     <br />
-    <h2> Adresse </h2>
-    <div>
         @Html.LabelFor(m => Model.Adresse.Numero) :
         @Html.TextBoxFor(m => Model.Adresse.Numero)
-    </div>
-
-    <div>
+     <br />
         @Html.LabelFor(m => Model.Adresse.Voie) :
         @Html.TextBoxFor(m => Model.Adresse.Voie)
-    </div>
-
-    <div>
+     <br />
         @Html.LabelFor(m => Model.Adresse.CodePostal) :
-        @Html.TextBoxFor(m => Model.Adresse.CodePostal)    
-    </div>
-
-    <div>
+        @Html.TextBoxFor(m => Model.Adresse.CodePostal)   
+     <br />
         @Html.LabelFor(m => Model.Adresse.Ville) :
         @Html.TextBoxFor(m => Model.Adresse.Ville)
-    </div>
-    <div>
+     <br />
         @Html.LabelFor(m => Model.Adresse.Pays) :
         @Html.TextBoxFor(m => Model.Adresse.Pays)
-    </div>
-
-        <div>
-        Paiement en :
-       <!–– Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) ––>
-        </div>
-
-    <div>
+     <br />
+        @* Paiement en :
+        @Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) *@
+     <br />
         @Html.LabelFor(m => Model.Personne.EstEnAccord) : 
         @Html.CheckBoxFor(m => Model.Personne.EstEnAccord)
-    </div>
-    <div>
-    <input type="submit" value="Créer" />
-    </div>
+</fieldset>
+     <br />
+        <input type="submit" value="Créer"/>
     }
-
     <br /><br />  
     <div>
     @Html.ActionLink("Retour sur la page principale", "Index", "Home")

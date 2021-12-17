@@ -7,27 +7,31 @@ namespace Projet2.Models.Compte
     public interface ICompteServices : IDisposable
     {
         void DeleteCreateDatabase();
-        List<Personne> ObtientToutesLesPersonnes();
-        List<Adresse> ObtientToutesLesAdresses();
+
+        //AdA functions
         List<AdA> ObtientTousLesAdAs();
-
-
-        void CreerAdA(Personne personne, Identifiant identifiant, Adresse adresse);
-        void ModifierAdA(AdA ada);
+        AdA CreerAdA(Personne personne, Identifiant identifiant, Adresse adresse);
+        AdA ModifierAdA(AdA ada);
         void SupprimerAdA(int Id);
 
+        //Adresse functions
+        List<Adresse> ObtientToutesLesAdresses();
+        Adresse ObtenirAdresse(int id);
         int CreerAdresse(Adresse adresse);
-        void ModifierAdresse(Adresse adresse);
+        Adresse ModifierAdresse(Adresse adresse);
         void SupprimerAdresse(int Id);
 
+        //Personne functions
+        List<Personne> ObtientToutesLesPersonnes();
+        Personne ObtenirPersonne(int id);
         int CreerPersonne(Personne personne);
-        void ModifierPersonne(Personne personne);
+        Personne ModifierPersonne(Personne personne);
         void SupprimerPersonne(int Id);
 
 
         // Authentification functions
         int AjouterIdentifiant(string userName, string password);
-        void ModifierIdentifiant(Identifiant identifiant);
+        Identifiant ModifierIdentifiant(Identifiant identifiant);
         void SupprimerIdentifiant(int Id);
         Identifiant Authentifier(string userName, string password);
         Identifiant ObtenirIdentifiant(int id);
