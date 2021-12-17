@@ -70,6 +70,7 @@ namespace Projet2
 
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

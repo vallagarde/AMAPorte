@@ -131,7 +131,5 @@ namespace Projet2.Controllers
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
-
-
     }
 }
