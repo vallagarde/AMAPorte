@@ -79,6 +79,7 @@ namespace Projet2.Controllers
             return View(hvm);
 
         }
+
         [HttpPost]
         public IActionResult Article( int id, int Quantite)
         {
@@ -117,6 +118,17 @@ namespace Projet2.Controllers
             PanierBoutique panier = ctx.ObientPanier(panierId);
             List < LignePanierBoutique > liste = panier.LignePanierBoutiques ;
             return View(panier);
+
+        }
+
+        public IActionResult ViderPanier()
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierService ctx = new PanierService();
+            PanierBoutique panier = ctx.ObientPanier(panierId);
+            ctx.ViderPanier(panier);
+
+            return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
 
