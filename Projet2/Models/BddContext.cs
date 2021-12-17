@@ -43,7 +43,7 @@ namespace Projet2.Models
         {
             this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
-<<<<<<< HEAD
+
             this.PaniersSaisonniers.AddRange(
 
             new PanierSaisonnier { 
@@ -59,8 +59,7 @@ namespace Projet2.Models
             );
 
             this.SaveChanges();
-=======
->>>>>>> 3cbf43c6898b2b408746d508589c13f84fc7b372
+
         }
     }
 }
