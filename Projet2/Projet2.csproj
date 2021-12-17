@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
@@ -18,6 +18,8 @@
     <Folder Include="wwwroot\Images\" />
     <Folder Include="Models\Boutique\" />
     <Folder Include="Views\Boutique\" />
+    <Folder Include="wwwroot\ImageArticle\" />
+    <Folder Include="Helpers\" />
     <Folder Include="wwwroot\ImagesPaniers\" />
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +30,7 @@
     <None Remove="ViewModels\" />
     <None Remove="Models\Boutique\" />
     <None Remove="Views\Article\" />
+    <None Remove="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
@@ -86,4 +89,4 @@
     </PackageReference>
   </ItemGroup>
 </Project>
->>>>>>> 3cbf43c6898b2b408746d508589c13f84fc7b372
+

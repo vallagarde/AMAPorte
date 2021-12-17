@@ -18,8 +18,6 @@ namespace Projet2.Models.Boutique
 
         public virtual List<Avis> Avis { get; set; }
 
-        public virtual List<LignePanierBoutique> LignePanierBoutique { get; set; }
-
         public int? BoutiquesId { get; set; }
         public Boutiques Boutiques { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace Projet2.Models.Boutique
 {
@@ -23,27 +23,56 @@ namespace Projet2.Models.Boutique
             return _bddContext.LignePanierBoutique.ToList();
         }
 
-        public int CreerLigne(int quantite, Article article, decimal sousTotal)
+        public int CreerLigne(int quantite, int ArticleId, decimal sousTotal)
         {
-            LignePanierBoutique ligne = new LignePanierBoutique() { Article=article, Quantite=quantite, SousTotal=sousTotal };
+            
+            LignePanierBoutique ligne = new LignePanierBoutique() { ArticleId=ArticleId, Quantite=quantite, SousTotal=sousTotal };
             _bddContext.LignePanierBoutique.Add(ligne);
             _bddContext.SaveChanges();
             return ligne.Id;
 
         }
-        public int CreerPanier( List<LignePanierBoutique> liste)
+        public int CreerPanier()
         {
-            decimal Total = 0;
-
-            foreach (LignePanierBoutique ligne in liste)
-            {
-                Total += ligne.SousTotal;
-            }
-            PanierBoutique panier = new PanierBoutique() { LignePanierBoutiques= liste, Total=Total };
+            PanierBoutique panier = new PanierBoutique() { LignePanierBoutiques = new List<LignePanierBoutique>() };
             _bddContext.PanierBoutique.Add(panier);
             _bddContext.SaveChanges();
             return panier.Id;
 
+        }
+        public PanierBoutique ObientPanier(int panierId)
+        {
+
+            return _bddContext.PanierBoutique.Include(c => c.LignePanierBoutiques).ThenInclude(it => it.Article).Where(c => c.Id == panierId).FirstOrDefault();
+        }
+
+        public void AjouterArticle(int PanierId, int ArticleId, int quantite)
+        {
+            ArticleRessources ctxarticle = new ArticleRessources();
+            Article article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == ArticleId).FirstOrDefault();
+            List<LignePanierBoutique> list = _bddContext.LignePanierBoutique.Where(a => a.ArticleId == ArticleId && a.PanierBoutiqueId == PanierId).ToList();
+            int ligneId = 0;
+
+            if (list.Count == 0)
+            {
+                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC);
+
+            }
+            else
+            {
+                LignePanierBoutique ligne = _bddContext.LignePanierBoutique.Where(a => a.ArticleId == ArticleId).Where(c => c.PanierBoutiqueId == PanierId).FirstOrDefault();
+
+
+                ligneId = ModifierLigne(ligne.Id ,quantite,article, quantite * article.PrixTTC);
+            }
+            //LignePanierBoutique ligne = _bddContext.LignePanierBoutique.
+            LignePanierBoutique ligneFinal = _bddContext.LignePanierBoutique.Find(ligneId);
+            PanierBoutique panier = _bddContext.PanierBoutique.Find(PanierId);
+            ligneFinal.PanierBoutiqueId = panier.Id;
+                
+             
+
+            _bddContext.SaveChanges();
         }
 
         public void Dispose()
@@ -59,8 +88,8 @@ namespace Projet2.Models.Boutique
             {
 
                 ligne.Id = id;
-                ligne.Quantite = quantite;
-                ligne.SousTotal = sousTotal;
+                ligne.Quantite += quantite ;
+                ligne.SousTotal += sousTotal;
 
                 _bddContext.SaveChanges();
             }

@@ -31,5 +31,6 @@ namespace Projet2.ViewModels
         public Paiement Paiement = new Paiement();
         public bool Authentifie { get; set; }
 
+        public LignePanierBoutique LignePanierBoutique= new LignePanierBoutique();
     }
 }

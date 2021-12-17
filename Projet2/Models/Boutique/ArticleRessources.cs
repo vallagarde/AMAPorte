@@ -30,7 +30,7 @@ namespace Projet2.Models.Boutique
 
         public int CreerArticle(string nom, string description, int prix, int stock, int prixTTC)
         {
-            Article article = new Article() { Nom= nom, Description=description, Prix=prix, PrixTTC=prixTTC, Stock=stock};
+            Article article = new Article() { Nom = nom, Description=description, Prix=prix, PrixTTC=prixTTC, Stock=stock};
             _bddContext.Article.Add(article);
             _bddContext.SaveChanges();
             return article.Id;
