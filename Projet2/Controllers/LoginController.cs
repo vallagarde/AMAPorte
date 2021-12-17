@@ -50,10 +50,15 @@ namespace Projet2.Controllers
                     hvm.Identifiant = identifiant;
                     hvm.Personne = cptressource.ObtenirPersonneParIdentifiant(identifiant.Id);
                     hvm.AdA = cptressource.ObtenirAdAParPersonne(hvm.Personne.Id);
-
+                    hvm.AdP = cptressource.ObtenirAdPParPersonne(hvm.Personne.Id);
                     if (hvm.AdA != null)
                     {
                         return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                    }
+
+                    if (hvm.AdP != null)
+                    {
+                        return RedirectToAction("Index", "CompteAdP", hvm.AdP);
                     }
 
                     return Redirect("/");

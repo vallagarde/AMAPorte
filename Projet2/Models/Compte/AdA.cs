@@ -17,7 +17,7 @@ namespace Projet2.Models.Compte
         public Paiement Paiement { get; set; }
         public int? PaiementId { get; set; }
 
-        public List<AdP> ProducteursFavoris { get; set; }
+        //public List<AdP> ProducteursFavoris { get; set; }
 
         //public List<Atelier> AteliersFavoris { get; set; }
 

@@ -12,7 +12,6 @@ namespace Projet2.ViewModels
 
         //Pour Comptes + Authorisation
         public Personne Personne = new Personne();
-
         public string ReturnDateForDisplay
         {
             get
@@ -20,13 +19,13 @@ namespace Projet2.ViewModels
                 return this.Personne.DateNaissance.ToString("d");
             }
         }
-
         public AdA AdA = new AdA();
         public Identifiant Identifiant = new Identifiant();
         public Adresse Adresse = new Adresse();
-
-        public AdP Producteur = new AdP();
+        public AdP AdP = new AdP();
         public Entreprise Entreprise = new Entreprise();
+        public ContactComiteEntreprise ContactComiteEntreprise = new ContactComiteEntreprise();
+        public Admin Admin = new Admin();
 
         public Paiement Paiement = new Paiement();
         public bool Authentifie { get; set; }
