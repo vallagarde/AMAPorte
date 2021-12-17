@@ -106,7 +106,6 @@ namespace Projet2.Controllers
                 ctx.AjouterArticle(panierId, id, Quantite);
             }
 
-
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
@@ -131,7 +130,5 @@ namespace Projet2.Controllers
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
-
-
     }
 }

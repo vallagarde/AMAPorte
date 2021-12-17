@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Projet2.Models.Compte;
 
 namespace Projet2.Models.Boutique
 {
@@ -11,10 +12,10 @@ namespace Projet2.Models.Boutique
         public decimal Prix { get; set; }
         public int Stock { get; set; }
         public decimal PrixTTC { get; set; }
-        
 
-        public int? AssortimentId { get; set; }
-        public Assortiment assortiment { get; set; }
+
+        public int? AdPId { get; set; }
+        public AdP AdP { get; set; }
 
         public virtual List<Avis> Avis { get; set; }
 

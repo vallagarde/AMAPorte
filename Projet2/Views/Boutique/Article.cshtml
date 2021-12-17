@@ -13,11 +13,11 @@
 
             </div>
         </div>
-        <form method="post">
             <div class="col-5">
+                @using (Html.BeginForm())
+                {
                 <div class="col">
-                    <label for="prix" class="col-sm-2 col-form-label">Prix</label>
-                    <input id="prix" type="number" class="form-control" name="id">
+                    @Html.HiddenFor(m => Model.Article.Id)
                 </div>
                 <div class="col">
                     <label for="stock" class="col-sm-2 col-form-label">Stock</label>
@@ -26,7 +26,7 @@
                 <div class="col-12">
                     <button type="submit">ajouter Panier</button>
                 </div>
+                }
             </div>
-        </form>
     </div>
   
