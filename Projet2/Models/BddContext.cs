@@ -34,6 +34,7 @@ namespace Projet2.Models
         public DbSet<CataloguePanier> CataloguesPaniers { get; set; }
         public DbSet<LignePanierSaisonnier> LignePaniersSaisonniers { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("server=localhost;user id=root;password=nitnelave;database=AmaPorte");

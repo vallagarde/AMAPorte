@@ -14,6 +14,5 @@ namespace Projet2.Models.PanierSaisonniers
         int ModifierPanierSaisonnier(int Id, List<Produit> produitsProposes, string description, string nomProducteur, decimal prix);
         int ModifierPanierSaisonnier(PanierSaisonnier panierSaisonnier);
         void SupprimerPanierSaisonnier(int Id);
-
     }
 }

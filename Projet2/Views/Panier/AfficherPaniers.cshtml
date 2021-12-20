@@ -1,56 +1,43 @@
 ﻿@model List<Projet2.Models.PanierSaisonniers.PanierSaisonnier>
 @{
-    Layout = null;
+    ViewData["Title"] = "AfficherPaniers";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AfficherPaniers</title>
-</head>
-<body>
-    <div> Liste des Paniers saisonniers :  </div>
-    <br />
-    <table border="1">
-        <tr>
-            <th>
-                Produits
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Nom Producteur
-            </th>
-            <th>
-                Prix
-            </th>
-            <th>
-                Actions
-            </th>
-        </tr>
+<div> Liste des Paniers saisonniers :  </div>
+<br />
+<div class="row">
+    @foreach (Projet2.Models.PanierSaisonniers.PanierSaisonnier panier in Model)
+    {
+        <div class="col m-4">
+            <div class="card" style="width: 18rem;">
+                @*<img src="..." class="card-img-top" alt="...">*@
+                <div class="card-body">
+                    <h5 class="card-title"> Produits </h5>
+                    @foreach (var item in panier.ProduitsProposes)
+                        {
+                            <div>@item.NomProduit</div>
+                        }
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@panier.NomProducteur</li>
+                    <li class="list-group-item">@panier.Description</li>
+                    <li class="list-group-item">@panier.Prix</li>
+                </ul>
+                <div class="card-body">
+                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", new { @id = panier.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", new { @id = panier.Id }, new { @class = "card-link" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
-        @foreach (Projet2.Models.PanierSaisonniers.PanierSaisonnier panier in Model)
-        {
-            <tr>
-                <td>@panier.ProduitsProposes</td>
-                <td>@panier.NomProducteur</td>
-                <td>@panier.Description</td>
-                <td>@panier.Prix</td>
-                <td>
-                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", new { @id = panier.Id }),
-                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", new { @id = panier.Id })
-                </td>
-            </tr>
-        }
-    </table>
+
+<div>
     @Html.ActionLink("Ajouter un Panier", "AjouterPanier", "Panier")
+</div>
 
-    <div>
-        @Html.ActionLink("Un changement?", "ModifierPanier", "Panier")
-    </div>
-
-</body>
-</html>
+<div>
+    @Html.ActionLink("Un changement?", "ModifierPanier", "Panier")
+</div>

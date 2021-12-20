@@ -1,26 +1,25 @@
 ﻿@model Projet2.Models.PanierSaisonniers.PanierSaisonnier
 @{
-    Layout = null;
+    ViewData["Title"] ="ModifierPanier";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ModifierPanier</title>
-</head>
 <body>
     @using (Html.BeginForm())
     {
     <fieldset>
         <legend>Modifier un Panier : </legend>
         @Html.LabelFor(m => Model.ProduitsProposes)
+
+        @foreach (var item in Model.ProduitsProposes)
+        {
+            @Html.TextBoxFor(m => @item.NomProduit)
+        }
         @*@foreach (var p in Model.ProduitsProposes)
         {
             <div>@p.NomProduit</div>
         }*@
-        
+
         @*@Html.TextBoxFor(m => @item)*@
         @*@Html.TextBoxFor(m => Model.ProduitsProposes)*@
         @Html.ValidationMessageFor(m => Model.ProduitsProposes)
@@ -38,4 +37,3 @@
     </fieldset>
     }
 </body>
-</html>
