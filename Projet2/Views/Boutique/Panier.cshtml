@@ -1,40 +1,56 @@
 ﻿@model Projet2.Models.Boutique.PanierBoutique
+    @*
+        For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    *@
+    @{
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-
-}
+    }
 
 <div class="container">
-    <table border="1">
-        <tr>
-            <th>Nom</th>
-            <th>Quantite</th>
-            <th>Prix Unitaire</th>
-            <th>Sous-Total</th>
-            <th></th>
-            <th></th>
-        </tr>
-
-        @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.LignePanierBoutiques)
-        {
-    <tr>
 
 
-        <td class="col-3"> @ligne.Article.Nom</td>
-        <td>
-            @Html.TextBoxFor(m => ligne.Quantite, new { @type = "number", @class = "form-control" })
-        </td>
-        <td class="col-3">@ligne.Article.PrixTTC</td>
-        <td class="col-3">@ligne.SousTotal</td>
+    <div class="row">
+        <div class="col-2">Nom</div>
+        <div class="col-3">Quantite</div>
+        <div class="col-2">Prix Unitaire</div>
+        <div class="col-3">Sous-Total</div>
+        <div class="col-2"></div>
+    </div>
 
-        <td></td>
-    </tr>
-        }
+    @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.LignePanierBoutiques)
+    {
 
-    </table>
+        var prixTTC = Decimal.Round(ligne.Article.PrixTTC, 2);
+        var SousTotal = Decimal.Round(ligne.SousTotal, 2);
+
+        <form method="post" asp-controller="Boutique" asp-action="ModifierPanier">
+
+
+            <div class="row">
+
+
+                <div class="col-2"> @ligne.Article.Nom</div>
+                <div class="col-2">
+                    <input type="number" class="form-control" name="quantite" value="@ligne.Quantite" />
+                    <input type="hidden" name="Id" value="@ligne.Id" />
+                </div>
+                <div class="col-2">@prixTTC</div>
+                <div class="col-2">@SousTotal</div>
+
+                <div class="col-2"><button class="btn btn-primary" type="submit">Modifier</button></div>
+
+
+            </div>
+
+        </form>
+        <form method="post" asp-controller="Boutique" asp-action="SupprimerLigne">
+            <input type="hidden" name="Id" value="@ligne.Id" />
+
+            <div class="col-2"><button class="btn btn-primary" type="submit">Supprimer</button></div>
+        </form>
+
+    }
+
 
 </div>
-<button class="btn btn-primary" type="button" asp-controller="Boutique" asp-action="ViderPanier">Vider le Panier</button>
+    <a class="btn btn-primary" type="button" asp-area="" asp-controller="Boutique" asp-action="ViderPanier">Vider le Panier</a>

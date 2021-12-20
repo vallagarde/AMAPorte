@@ -30,6 +30,7 @@
     <None Remove="Models\Boutique\" />
     <None Remove="Views\Article\" />
     <None Remove="Helpers\" />
+    <None Remove="Stripe.net" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
@@ -40,5 +41,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Stripe.net" Version="39.83.0" />
   </ItemGroup>
 </Project>
