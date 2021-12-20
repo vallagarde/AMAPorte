@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,11 @@ namespace Projet2.Models.PanierSaisonniers
 
         public List<PanierSaisonnier> ObtientTousLesPaniers()
         {
-            return _bddContext.PaniersSaisonniers.ToList();
+            return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
+        }
+        public List<Produit> ObtientTousLesProduits()
+        {
+            return _bddContext.Produits.ToList();
         }
 
         public void Dispose()
@@ -82,12 +87,43 @@ namespace Projet2.Models.PanierSaisonniers
         {
 
             PanierSaisonnier panierSaisonnier = _bddContext.PaniersSaisonniers.Find(Id);
+            //List<Produit> produits = ObtientTousLesProduits;
             if (panierSaisonnier != null)
             {
                 _bddContext.PaniersSaisonniers.Remove(panierSaisonnier);
+
+
+
+
+
+
+
+                SupprimerProduitPropose(panierSaisonnier.ProduitsProposes);
                 _bddContext.SaveChanges();
             }
 
         }
+
+        public void SupprimerProduitPropose (List<Produit> list)
+        {
+
+            Produit produitpropose = _bddContext.Produits.Find();
+            if (produitpropose != null)
+            {
+                _bddContext.Produits.Remove(produitpropose);
+                _bddContext.SaveChanges();
+            }
+        }
+        //public void ChercherProduit(string id)
+        //{
+        //    Produit produit = _bddContext().Produits.ToList();
+        //    Personne personneASupprimer = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
+
+        //    if (produit != null)
+        //    {
+        //        _bddContext.Produits.Remove(produit);
+        //        _bddContext.SaveChanges();
+        //    }
+        //}
     }
 }
