@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Projet2.Models;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 
@@ -9,6 +10,7 @@ namespace Projet2.ViewModels
     {
         public Boutiques Boutiques = new Boutiques();
         public Article Article = new Article();
+        public Upload Upload = new Upload();
 
         //Pour Comptes + Authorisation
         public Personne Personne = new Personne();

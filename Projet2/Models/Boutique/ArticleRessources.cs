@@ -28,9 +28,9 @@ namespace Projet2.Models.Boutique
             _bddContext.Dispose();
         }
 
-        public int CreerArticle(string nom, string description, int prix, int stock, int prixTTC)
+        public int CreerArticle(string nom, string description, int prix, int stock, int prixTTC, String imageNom)
         {
-            Article article = new Article() { Nom = nom, Description=description, Prix=prix, PrixTTC=prixTTC, Stock=stock};
+            Article article = new Article() { Nom = nom, Description=description, Prix=prix, PrixTTC=prixTTC, Stock=stock, Image= imageNom};
             _bddContext.Article.Add(article);
             _bddContext.SaveChanges();
             return article.Id;

@@ -1,7 +1,8 @@
-﻿using Projet2.Models.Boutique;
+using Projet2.Models.Boutique;
 using Projet2.Models.PanierSaisonniers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace Projet2.Models.Compte
 {
@@ -13,6 +14,7 @@ namespace Projet2.Models.Compte
         public int Siren { get; set; }
         public Adresse Adresse { get; set; }
         public int AdresseId { get; set; }
+
 
         public virtual List<ContactComiteEntreprise> ListeContact {get; set;}
 
@@ -36,6 +38,14 @@ namespace Projet2.Models.Compte
         [Display(Name = "J'accepte les conditions générales et la politique de confidentialité")]
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
         public bool EstEnAccord { get; set; }
+
+
+        public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
+
+
+        public int AvisId { get; set; }
+        public Avis Avis { get; set; }
+
 
     }
 }

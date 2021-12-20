@@ -21,9 +21,9 @@
                     <div class="col ">
                         <div class="card h-100">
                             @{
-                                String filepath = "~/ImageArticle/"; // + article.image;
-                              }
-                            <img src="~/Images/pommes.jpg" class="card-img-top" alt="...">
+                                String filepath = "~/ImageArticle/" + @article.Image;
+                            }
+                            <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..." />
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
@@ -34,5 +34,5 @@
                 }
             </div>
         </div>
-    </div>
-</div>
+    </div>https://localhost:5001/Boutique/~/ImageArticle/pommes.jpg
+</div>https://localhost:5001/ImageArticle/pommes.jpg
