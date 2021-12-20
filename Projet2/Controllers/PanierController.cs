@@ -24,9 +24,8 @@ namespace Projet2.Controllers
         public IActionResult AjouterPanier(List<Produit> produitsProposes, string description, string nomProducteur, decimal prix)
         {
             PanierSaisonnierService ctx = new PanierSaisonnierService();
-            ctx.CreerPanierSaisonnier(produitsProposes, description, nomProducteur, prix);
-            return View();
-
+            ctx.CreerPanierSaisonnier(produitsProposes, description,nomProducteur,prix);
+            return RedirectToAction("AfficherPaniers");
         }
 
         [HttpGet]
@@ -47,9 +46,7 @@ namespace Projet2.Controllers
             //return View("Error");
             PanierSaisonnierService ctx = new PanierSaisonnierService();
             PanierSaisonnier panierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
-
             return View(panierSaisonnier);
-
         }
 
         [HttpPost]
@@ -58,7 +55,6 @@ namespace Projet2.Controllers
             PanierSaisonnierService ctx = new PanierSaisonnierService();
             ctx.ModifierPanierSaisonnier(id, produitsProposes, description, nomProducteur, prix);
             return RedirectToAction("AfficherPaniers", new { @Id = id });
-
         }
 
         public IActionResult SupprimerPanier(int id)
@@ -66,13 +62,6 @@ namespace Projet2.Controllers
             PanierSaisonnierService ctx = new PanierSaisonnierService();
             ctx.SupprimerPanierSaisonnier(id);
             return RedirectToAction("AfficherPaniers");
-
         }
-
-
-
-
-
-
     }
 }
