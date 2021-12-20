@@ -1,6 +1,7 @@
-﻿using Projet2.Models.Boutique;
+using Projet2.Models.Boutique;
 using Projet2.Models.PanierSaisonniers;
 using System.Collections.Generic;
+
 
 namespace Projet2.Models.Compte
 {
@@ -27,7 +28,14 @@ namespace Projet2.Models.Compte
 
         public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
 
+
         public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
+
+
+        //public List<?> CommandesPanierEffectues { get; set; }
+
+        public int AvisId { get; set; }
+        public Avis Avis { get; set; }
 
         public AdA()
         {

@@ -1,4 +1,4 @@
-﻿using Projet2.Models.Compte;
+using Projet2.Models.Compte;
 using System;
 using System.Collections.Generic;
 
@@ -7,6 +7,7 @@ namespace Projet2.Models.Compte
     public interface ICompteServices : IDisposable
     {
         void DeleteCreateDatabase();
+
 
         //Admin functions 
         List<Admin> ObtenirTousLesAdmins();

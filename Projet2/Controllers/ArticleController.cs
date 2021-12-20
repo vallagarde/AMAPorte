@@ -23,7 +23,7 @@ namespace Projet2.Controllers
         public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC)
         {
             ArticleRessources ctx = new ArticleRessources();
-            ctx.CreerArticle(nom, description, prix, stock, prixTTC);
+            //ctx.CreerArticle(nom, description, prix, stock, prixTTC, );
             return View();
 
         }
