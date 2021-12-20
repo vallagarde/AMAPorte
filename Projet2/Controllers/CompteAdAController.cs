@@ -55,7 +55,7 @@ namespace Projet2.Controllers
 
                 personne.IdentifiantId = id;
 
-                hvm.AdA = cs.CreerAdA(personne, identifiant, adresse);
+                hvm.AdA = cs.CreerAdA(personne, adresse);
                 hvm.Personne = personne;
                 hvm.Adresse = adresse;
                 hvm.Identifiant = identifiant;
@@ -90,7 +90,8 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult ModificationCompte(AdA ada)
         {
-            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = cs.ObtenirAdAParId(ada.Id);
+            hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
             hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
             hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
             hvm.AdA = ada;
@@ -115,6 +116,7 @@ namespace Projet2.Controllers
         public IActionResult SuppressionCompte(AdA ada)
         {
             cs.SupprimerAdA(ada.Id);
+            HttpContext.SignOutAsync();
             return View();
         }
 

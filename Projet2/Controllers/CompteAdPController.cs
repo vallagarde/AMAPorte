@@ -55,7 +55,7 @@ namespace Projet2.Controllers
 
                 personne.IdentifiantId = id;
 
-                hvm.AdP = cs.CreerAdP(personne, identifiant, adresse, adp);
+                hvm.AdP = cs.CreerAdP(personne, adresse, adp);
 
                 hvm.Personne = personne;
                 hvm.Adresse = adresse;
@@ -96,6 +96,7 @@ namespace Projet2.Controllers
         public IActionResult SuppressionCompte(AdP adp)
         {
             cs.SupprimerAdP(adp.Id);
+            HttpContext.SignOutAsync();
             return View();
         }
 

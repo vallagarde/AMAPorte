@@ -8,31 +8,51 @@ namespace Projet2.Models.Compte
     {
         void DeleteCreateDatabase();
 
-        void Dispose();
+        //Admin functions 
+        List<Admin> ObtenirTousLesAdmins();
+        Admin ObtenirAdminParIdentifiant(int id);
+        Admin CreerAdmin(Admin admin);
+        Admin ModifierAdmin(Admin admin);
+        void SupprimerAdmin(int Id);
 
         //AdA functions
-        List<AdA> ObtientTousLesAdAs();
+        List<AdA> ObtenirTousLesAdAs();
         AdA ObtenirAdAParPersonne(int id);
-        AdA CreerAdA(Personne personne, Identifiant identifiant, Adresse adresse);
+        AdA CreerAdA(Personne personne, Adresse adresse);
         AdA ModifierAdA(AdA ada);
         void SupprimerAdA(int Id);
 
         //AdP functions
-        List<AdP> ObtientTousLesAdPs();
+        List<AdP> ObtenirTousLesAdPs();
         AdP ObtenirAdPParPersonne(int id);
-        AdP CreerAdP(Personne personne, Identifiant identifiant, Adresse adresse, AdP adp);
+        AdP CreerAdP(Personne personne, Adresse adresse, AdP adp);
         AdP ModifierAdP(AdP adpAModifier);
         void SupprimerAdP(int Id);
 
+        //CE functions
+        List<ContactComiteEntreprise> ObtenirTousLesCCEs();
+        ContactComiteEntreprise ObtenirCCEParIdentifiant(int id);
+        List<ContactComiteEntreprise> ObtenirCCEsParEntreprise(int id);
+        ContactComiteEntreprise CreerCCE(ContactComiteEntreprise cce, Entreprise entreprise, Adresse adresse);
+        ContactComiteEntreprise ModifierCCE(ContactComiteEntreprise cce);
+        void SupprimerCCE(int Id);
+
+        //Entreprise functions
+        List<Entreprise> ObtenirTousLesEntreprises();
+        Entreprise ObtenirEntreprise(int id);
+        int CreerEntreprise(Entreprise entreprise, Adresse adresse);
+        Entreprise ModifierEntreprise(Entreprise entreprise);
+        void SupprimerEntreprise(int Id);
+
         //Adresse functions
-        List<Adresse> ObtientToutesLesAdresses();
+        List<Adresse> ObtenirToutesLesAdresses();
         Adresse ObtenirAdresse(int id);
         int CreerAdresse(Adresse adresse);
         Adresse ModifierAdresse(Adresse adresse);
         void SupprimerAdresse(int Id);
 
         //Personne functions
-        List<Personne> ObtientToutesLesPersonnes();
+        List<Personne> ObtenirToutesLesPersonnes();
         Personne ObtenirPersonne(int id);
         Personne ObtenirPersonneParIdentifiant(int id);
         int CreerPersonne(Personne personne);

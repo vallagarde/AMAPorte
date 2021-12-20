@@ -1,5 +1,28 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Projet2.ViewModels.HomeViewModel
 @{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Producteurs Favoris</title>
+</head>
+<body>
+    <div>
+        Bonjour @Model.ContactComiteEntreprise.Prenom
+
+        <br />
+        Ma Liste de Producteurs :
+        @*
+
+        *@
+        <br />
+        @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteCE", @Model.ContactComiteEntreprise)
+        @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteCE", @Model.ContactComiteEntreprise)
+        @Html.ActionLink("Mon Compte", "Index", "CompteCE", @Model.ContactComiteEntreprise)
+    </div>
+
+
+</body>
+</html>

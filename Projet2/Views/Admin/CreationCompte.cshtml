@@ -1,0 +1,50 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Creation Compte</title>
+</head>
+<body>
+       
+    
+<h1>Formulaire Creation Admin : </h1>
+
+    @using (Html.BeginForm())
+    {
+<fieldset>
+    <h2> Identifiant </h2>
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
+        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
+        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
+        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
+        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+    <br />
+    <h2> Admin </h2>
+    <br />
+        @Html.Label("Role", "Creer Un Compte DSI")
+        @Html.RadioButtonFor(m => @Model.Admin.Role, "DSI")
+     <br />
+        @Html.Label("Role", "Creer Un Compte GCCQ")
+        @Html.RadioButtonFor(m => @Model.Admin.Role, "GCCQ")
+     <br />
+        @Html.Label("Role", "Creer Un Compte GCRA")
+        @Html.RadioButtonFor(m => @Model.Admin.Role, "GCRA")
+     <br />
+</fieldset>
+     <br />
+        <input type="submit" value="Créer"/>
+    }
+    <br /><br />  
+    <div>
+    @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+    </div>
+</body>
+</html>
+
