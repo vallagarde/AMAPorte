@@ -1,0 +1,38 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Comptes AMAPorte</title>
+</head>
+<body>
+    @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
+
+<br/>
+<div>
+    <p>Comptes AdA </p>
+    <table border="1">
+        @if(@Model.ListeComptesAdA.Count != 0){                       
+            @foreach (var adA in @Model.ListeComptesAdA)
+            {
+             <tr>
+                <td>@adA.Id</td>
+                <td>@adA.Personne.Nom</td>
+                <td>@adA.Personne.Prenom</td>
+                <td>@adA.Personne.Identifiant.AdresseMail</td>
+                <td>
+                    @Html.ActionLink("Modifier", "ModificationCompte", "CompteAdA", new { @id = adA.Id }),
+                    @Html.ActionLink("Supprimer", "SuppressionCompte", "CompteAdA", new { @id = adA.Id })
+                </td>
+            </tr>
+            }  
+           
+       }
+       </table>
+</div>
+       
+</body>
+</html>

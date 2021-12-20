@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.ViewModels;
 
@@ -13,6 +16,14 @@ namespace Projet2.Controllers
 {
     public class BoutiqueController : Controller
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public BoutiqueController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
+
         // GET: /<controller>/
         public IActionResult AjouterArticle()
         {
@@ -21,13 +32,36 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC,IFormFile FileToUpload)
+        public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC, IFormFile FileToUpload)
         {
             // mettre le file dans le dossier
             ArticleRessources ctx = new ArticleRessources();
-            ctx.CreerArticle(nom, description, prix, stock, prixTTC /*, FileToUpload.FileName*/ );
-            return View();
+            ctx.CreerArticle(nom, description, prix, stock, prixTTC, FileToUpload.FileName);
 
+
+            var FileDic = "Files";
+
+            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
+
+            if (!Directory.Exists(FilePath))
+
+                Directory.CreateDirectory(FilePath);
+
+            var fileName = FileToUpload.FileName;
+
+            var filePath = Path.Combine(FilePath, fileName);
+
+
+
+            using (FileStream fs = System.IO.File.Create(filePath))
+
+            {
+
+                FileToUpload.CopyTo(fs);
+
+                return View();
+
+            }
         }
 
         [HttpGet]
@@ -78,79 +112,56 @@ namespace Projet2.Controllers
             return View(hvm);
 
         }
-        /*[HttpPost]
-        public IActionResult Article(int id, int Quantite )
-        {
-           PanierService ctx = new PanierService();
 
-            HttpContext context = HttpContext.Current;
-            if (HttpContext.Session == null)
-            {
-                PanierBoutique panier = ctx.CreerPanier();
-                HttpContext.Session = panier.Id;
-            }
+        [HttpPost]
+        public IActionResult Article( int id, int Quantite)
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+            PanierService ctx = new PanierService();
             ArticleRessources ctxarticle = new ArticleRessources();
+
             Article article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
 
-            LignePanierBoutique ligne = new LignePanierBoutique() { Article = article, Quantite = Quantite, SousTotal = article.PrixTTC * Quantite };
+            //LignePanierBoutique ligne = new LignePanierBoutique() { Article = article, Quantite = Quantite, SousTotal = article.PrixTTC * Quantite };
 
-            PanierBoutique panier = ctx.ObtientTousLesPaniers().Where(/* session est celle en cours  *);
-            
-            if (panier == null) // SI le panier n'existe pas on le crée
+
+            if (panierId == 0) // Le panier n'existe pas dans la session
             {
-                HttpContext.Session
-            }
-            else // Sinon
-            {
-                LignePanierBoutique lignePanier = ctx.ObtientTousLesLignes().Where(b => b.ArticleId == article.Id , c => c.PanierId == panier.Id);
-                if (lignePanier.count != 0) // Si cet article est deja dans le panier:
-                {
-
-                    ctx.ModifierLigne(lignePanier.Id, lignePanier.Quantite + Quantite, lignePanier.Article, lignePanier.SousTotal+ (article.PrixTTC*Quantite));
-
-                    ctx.ModifierPanier(panier.Id,);
-                }
-                else
-                {
-                    ctx.CreerLigne(Quantite, article, article.PrixTTC*Quantite);
-                    ctx.
-                }
+                panierId = ctx.CreerPanier();
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "panierId", panierId);
+                ctx.AjouterArticle(panierId, id, Quantite);
 
             }
-
-
-            ctx.ModifierPanier(Quantite, line);
-            LignePanierBoutique ligne = ctx
-
-            HomeViewModel hvm = new HomeViewModel
+            else // Sinon Le panier existe deja :
             {
+                //PanierBoutique panier = ctx.ObientPanier(panierId);
+                ctx.AjouterArticle(panierId, id, Quantite);
+            }
 
-                Article = article
-
-            };
-            return View(hvm);
-
-        }*/
-
-
-        public IActionResult Panier(int id , int Quantite)
-        {
-            ArticleRessources ctxarticle = new ArticleRessources();
-            Article article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
-
-            LignePanierBoutique ligne = new LignePanierBoutique() { Article = article, Quantite = Quantite, SousTotal = article.PrixTTC * Quantite };
-
-           
-            HomeViewModel hvm = new HomeViewModel
-            {
-
-                Article = article
-
-            };
-            return View(hvm);
+            return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
 
 
+        public IActionResult Panier(int panierId)
+        {
+            PanierService ctx = new PanierService();
+            PanierBoutique panier = ctx.ObientPanier(panierId);
+            List < LignePanierBoutique > liste = panier.LignePanierBoutiques ;
+            return View(panier);
+
+        }
+
+        public IActionResult ViderPanier()
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierService ctx = new PanierService();
+            PanierBoutique panier = ctx.ObientPanier(panierId);
+            ctx.ViderPanier(panier);
+
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
     }
 }

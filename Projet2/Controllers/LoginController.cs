@@ -48,15 +48,41 @@ namespace Projet2.Controllers
                         return Redirect(returnUrl);
 
                     hvm.Identifiant = identifiant;
-                    hvm.Personne = cptressource.ObtenirPersonneParIdentifiant(identifiant.Id);
-                    hvm.AdA = cptressource.ObtenirAdAParPersonne(hvm.Personne.Id);
+                    hvm.Personne = cptressource.ObtenirPersonneParIdentifiant(hvm.Identifiant.Id);           
+                    hvm.ContactComiteEntreprise = cptressource.ObtenirCCEParIdentifiant(hvm.Identifiant.Id);
+                    hvm.Admin = cptressource.ObtenirAdminParIdentifiant(hvm.Identifiant.Id);
 
-                    if (hvm.AdA != null)
+                    if (hvm.Personne != null)
                     {
-                        return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                        hvm.AdA = cptressource.ObtenirAdAParPersonne(hvm.Personne.Id);
+                        hvm.AdP = cptressource.ObtenirAdPParPersonne(hvm.Personne.Id);
+
+                        if (hvm.AdA.Id != 0)
+                        {
+                            return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                        }
+
+                        else if (hvm.AdP.Id != 0)
+                        {
+                            return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                        }
+
+                    }
+                    else if (hvm.ContactComiteEntreprise != null)
+                    {
+                        hvm.Entreprise = cptressource.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                        return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                    }
+                    else if(hvm.Admin.Id != 0) 
+                    {
+                        return RedirectToAction("Index", "Admin", hvm.Admin);
+                    }
+                    else
+                    {
+                        return Redirect("/");
                     }
 
-                    return Redirect("/");
+                   
                 }
                 ModelState.AddModelError("Identifiant.AdresseMail", "Mail et/ou mot de passe incorrect(s)");
             }

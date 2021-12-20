@@ -11,10 +11,13 @@
 <body>
 
     <header>
-        <nav class="navbar sticky-top navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container flex-grow">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="Images/Logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                <div class="navbar-collapse collapse d-sm-flex flex-sm-row-reverse">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav d-flex">
                         <li class="nav-item">
                             <a class="nav-link text-dark w-100" asp-area="" asp-controller="Home" asp-action="Index">Menu</a>
@@ -32,6 +35,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inscription">Inscription</a>
                         </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Panier" asp-action="AfficherPaniers">Vos paniers</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Panier" asp-action="AfficherPaniers">Vos paniers</a>
                         </li>
@@ -39,20 +45,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Boutique" asp-action="AjouterArticle">AjouterArticle</a>
                         </li>
                     </ul>
+
                 </div>
             </div>
-            <div class="container flex-shrink">
+            <div class="container">
                 <div class="w-100">
                     <div class="navbar-collapse collapse dual-collapse2 flex-sm-row-reverse">
 
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown button
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                <li><a class="dropdown-item" href="#">Utilisateur</a></li>
-                                <li><a class="dropdown-item" href="#">Producteur</a></li>
-                                <li><a class="dropdown-item" href="#">Administrateur</a></li>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Connexion
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item">Action</a></li>
+                                <li><a class="dropdown-item" >Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item">Something else here</a></li>
                             </ul>
                         </div>
                     </div>
@@ -63,17 +71,15 @@
 
                 </div>
             </div>
-            
         </nav>
-
     </header>
-
-        
+    <div class="container">
+    </div>  
             <main role="main" class="pb-3">
                 @RenderBody()
             </main>
 
-        
+    
         <div class="container" id="azerty">
             <div class="col">123</div>
         </div>

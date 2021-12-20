@@ -6,21 +6,27 @@
     <div class=" container">
         <div class="col-7">
             <div class="row">
-                <img src="~/Images/pommes.jpg" />
+                <img src="~/ImageArticle/@Model.Article.Image" />
             </div>
             <div class="row">
                 @Model.Article.Nom
 
             </div>
         </div>
-        <div class="col-5">
-            <div class="col-12">
-                <input id="Quantite" type="number" class="form-control" name="Quantite">
+            <div class="col-5">
+                @using (Html.BeginForm())
+                {
+                <div class="col">
+                    @Html.HiddenFor(m => Model.Article.Id)
+                </div>
+                <div class="col">
+                    <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+                    <input id="stock" type="number" class="form-control" name="Quantite">
+                </div>
+                <div class="col-12">
+                    <button type="submit">ajouter Panier</button>
+                </div>
+                }
             </div>
-            <div class="col-12">
-                @Html.ActionLink("Ajouter au Panier", "Panier", "Boutique", new { @id = Model.Article.Id })
-
-            </div>
-        </div>
     </div>
   

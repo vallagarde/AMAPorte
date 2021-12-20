@@ -3,14 +3,12 @@
     ViewData["Title"] ="ModifierPanier";
 }
 
-
 <body>
     @using (Html.BeginForm())
     {
     <fieldset>
         <legend>Modifier un Panier : </legend>
         @Html.LabelFor(m => Model.ProduitsProposes)
-
         @foreach (var item in Model.ProduitsProposes)
         {
             @Html.TextBoxFor(m => @item.NomProduit)

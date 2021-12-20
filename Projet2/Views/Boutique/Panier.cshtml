@@ -1,5 +1,4 @@
-﻿@model Projet2.Models.Boutique.PanierBoutique;
-
+﻿@model Projet2.Models.Boutique.PanierBoutique
 
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,5 +8,33 @@
 }
 
 <div class="container">
+    <table border="1">
+        <tr>
+            <th>Nom</th>
+            <th>Quantite</th>
+            <th>Prix Unitaire</th>
+            <th>Sous-Total</th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.LignePanierBoutiques)
+        {
+    <tr>
+
+
+        <td class="col-3"> @ligne.Article.Nom</td>
+        <td>
+            @Html.TextBoxFor(m => ligne.Quantite, new { @type = "number", @class = "form-control" })
+        </td>
+        <td class="col-3">@ligne.Article.PrixTTC</td>
+        <td class="col-3">@ligne.SousTotal</td>
+
+        <td></td>
+    </tr>
+        }
+
+    </table>
 
 </div>
+<button class="btn btn-primary" type="button" asp-controller="Boutique" asp-action="ViderPanier">Vider le Panier</button>

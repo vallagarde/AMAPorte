@@ -63,7 +63,5 @@ namespace Projet2.Controllers
             ctx.SupprimerPanierSaisonnier(id);
             return RedirectToAction("AfficherPaniers");
         }
-
-
     }
 }

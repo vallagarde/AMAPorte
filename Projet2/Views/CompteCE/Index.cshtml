@@ -9,7 +9,75 @@
     <title>Mon Compte</title>
 </head>
 <body>
+    <div>
+        Bonjour @Model.ContactComiteEntreprise.Prenom 
 
+        <br/>
+        Mon Compte : 
+        <br/>
+        Nom : @Model.ContactComiteEntreprise.Nom
+        <br/>
+        Prenom: @Model.ContactComiteEntreprise.Prenom
+        <br/>
+        Téléphone: @Model.ContactComiteEntreprise.NTelephone
+        <br/>
+        Adresse Mail: @Model.ContactComiteEntreprise.AdresseMail
+        <br/>
+        Nom de l'entreprise : @Model.Entreprise.NomEntreprise
+        <br/>
+        Numéro SIREN : @Model.Entreprise.Siren
+        <br/>
+        Nombre Collaborateurs inscrits au service: @Model.Entreprise.NombreUtilisateur
+        <br/>
+        <br/>
+        @if(@Model.Entreprise.ListeContact.Count != 1){
+            <div> 
+            <p>Autres Collaborateurs ayant accés au compte de l'entreprise : </p>
+            @foreach (var contactComiteEntreprise in @Model.Entreprise.ListeContact)
+            {
+                @if (@contactComiteEntreprise.Id != @Model.ContactComiteEntreprise.Id)
+                {
+                        <div>    
+                 @contactComiteEntreprise.Nom
+                 <br/>
+                @contactComiteEntreprise.Prenom
+                 <br/>
+                @contactComiteEntreprise.NTelephone
+                 <br/>
+                @contactComiteEntreprise.AdresseMail
+                 <br/>
+                </div>
+                }
+            }  
+           </div>
+       }
+       
+        <br/>
+        <br/>
+        Adresse : 
+        <br/>
+        @Model.Adresse.Numero @Model.Adresse.Voie
+        <br/>
+        @Model.Adresse.CodePostal @Model.Adresse.Ville
+        <br/>
+        @Model.Adresse.Pays
+
+        <br />
+        <br />
+        @Html.ActionLink("Mes Producteurs Favoris", "ProducteursFavoris", "CompteCE", @Model.ContactComiteEntreprise)
+        <br/>
+        @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteCE", @Model.ContactComiteEntreprise)
+        <br/>
+        @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteCE", @Model.ContactComiteEntreprise)
+        <br/>
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteCE", @Model.ContactComiteEntreprise)
+        <br/>
+        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteCE", @Model.ContactComiteEntreprise)
+        <br/>
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+        <br/>
+        @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+    </div>
 
 
 </body>

@@ -10,10 +10,41 @@
 </head>
 <body>
     <div>
+    <br />
     @Html.ActionLink("Creation Compte AdA", "CreationCompte", "CompteAdA")
     <br />
+    <br />
+    @Html.ActionLink("Creation Compte AdP", "CreationCompte", "CompteAdP")
+    <br />
+    <br />
+    @Html.ActionLink("Creation Compte CE", "CreationCompte", "CompteCE")
+    <br />
+    <br />
+    @Html.ActionLink("Creation Compte Admin", "CreationCompte", "Admin")
+    <br />
+    <br />
+        @if(@Model != null)
+        {
+            @if (@Model.ContactComiteEntreprise.Id != 0)
+            {
+            <p>
+             @Html.ActionLink("Mon Compte CE", "Index", "CompteCE", @Model.ContactComiteEntreprise)
+            </p>
+            }
 
+        }
+        
+    <br />
+    <br />
+    @Html.ActionLink("Mon Compte AdP", "Index", "CompteAdP")
+    <br />
+    <br />
+    @Html.ActionLink("Mon Compte AdA", "Index", "CompteAdA")
+    <br />
+    <br />
     @Html.ActionLink("Login", "Index", "Login")
+    <br />
+    @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion", "Login")
     </div>
 </body>
 </html>

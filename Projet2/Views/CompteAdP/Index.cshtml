@@ -9,7 +9,54 @@
     <title>Mon Compte</title>
 </head>
 <body>
+    <div>
+        Bonjour @Model.Personne.Prenom 
 
+        Mon Compte : 
+        <br/>
+        Nom Producteur : @Model.AdP.NomProducteur
+        <br/>
+        Description : @Model.AdP.Description
+        <br/>
+        Numéro SIREN : @Model.AdP.Siren
+        <br/>
+        <br/>
+        Nom : @Model.Personne.Nom
+        <br/>
+        Prenom: @Model.Personne.Prenom
+        <br/>
+        Date de Naissance : @Model.ReturnDateForDisplay
+        <br/>
+        Numéro Téléphone : @Model.Personne.NTelephone
+        <br/>
+        <br/>
+
+        Adresse : 
+        <br/>
+        @Model.Adresse.Numero @Model.Adresse.Voie
+        <br/>
+        @Model.Adresse.CodePostal @Model.Adresse.Ville
+        <br/>
+        @Model.Adresse.Pays
+
+        <br />
+        <br />
+        @*
+        @Html.ActionLink("Mes Producteurs Favoris", "ProducteursFavoris", "CompteAdA", @Model.Producteur)
+        <br/>
+        @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteAdA", @Model.Producteur)
+        <br/>
+        @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteAdA", @Model.Producteur)
+        <br/>
+        *@
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+        <br/>
+        @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+    </div>
 
 
 </body>
