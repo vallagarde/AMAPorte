@@ -7,7 +7,7 @@ namespace Projet2.Models.Boutique
     {
         void DeleteCreateDatabase();
         List<Article> ObtientTousLesArticles();
-        int CreerArticle(string nom, string description, int prix, int stock, int prixTTC);
+        int CreerArticle(string nom, string description, int prix, int stock, int prixTTC, String imageNom);
         int ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC);
         
     }

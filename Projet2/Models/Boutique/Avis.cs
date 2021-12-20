@@ -9,5 +9,7 @@ namespace Projet2.Models.Boutique
 
         public int ArticleId { get; set; }
         public Article Article { get; set; }
+
+
     }
 }

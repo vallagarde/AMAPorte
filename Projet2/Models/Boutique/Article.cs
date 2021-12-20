@@ -12,6 +12,7 @@ namespace Projet2.Models.Boutique
         public decimal Prix { get; set; }
         public int Stock { get; set; }
         public decimal PrixTTC { get; set; }
+        public String Image { get; set; }
 
 
         public int? AdPId { get; set; }
