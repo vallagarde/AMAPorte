@@ -1,5 +1,37 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Projet2.ViewModels.HomeViewModel
 @{
+    Layout = null;
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Mon Compte</title>
+</head>
+<body>
+    Mon Compte : 
+        <br/>
+        DSI : @Model.Admin.EstDSI
+        <br/>
+        GCCQ : @Model.Admin.EstGCCQ
+        <br/>
+        GCRA : @Model.Admin.EstGCRA
+        <br/>
+        Identifiant : @Model.Identifiant.AdresseMail
+        <br/>
+        <br/>
+        @Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)
+        <br/>
+        @Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)
+        <br/>
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "Admin", @Model.Admin)
+        <br/>
+        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "Admin", @Model.Admin)
+        <br/>
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+        <br/>
+        @Html.ActionLink("Retour sur la page principale", "Index", "Home", @Model.Admin)
+        <br/>
+
+</body>
+</html>

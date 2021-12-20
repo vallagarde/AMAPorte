@@ -1,0 +1,42 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Modifier Compte</title>
+</head>
+<body> 
+<h1>Formulaire Modification Admin : </h1>
+
+    @using (Html.BeginForm())
+    {
+<fieldset>
+    <h2> Identifiant </h2>
+        @Html.HiddenFor(m => Model.Admin.Id)
+        @Html.HiddenFor(m => Model.Identifiant.Id)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
+        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
+        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
+        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
+        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+    <br />
+</fieldset>
+     <br />
+        <input type="submit" value="Modification" />
+    }
+
+    <br /><br />  
+    <div>
+    @Html.ActionLink("Retour sur le Compte", "Index", "Admin", @Model.Admin)
+    </div>
+
+
+</body>
+</html>

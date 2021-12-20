@@ -18,7 +18,12 @@ namespace Projet2.ViewModels
         {
             get
             {
-                return this.Personne.DateNaissance.ToString("d");
+
+                if (this.Personne != null) 
+                {
+                    return this.Personne.DateNaissance.ToString("d");
+                }
+                return null;
             }
         }
         public AdA AdA = new AdA();
@@ -28,6 +33,9 @@ namespace Projet2.ViewModels
         public Entreprise Entreprise = new Entreprise();
         public ContactComiteEntreprise ContactComiteEntreprise = new ContactComiteEntreprise();
         public Admin Admin = new Admin();
+        public List<AdA> ListeComptesAdA = new List<AdA>();
+        public List<AdP> ListeComptesAdP = new List<AdP>();
+        public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
 
         public Paiement Paiement = new Paiement();
         public bool Authentifie { get; set; }

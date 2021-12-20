@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
 using Projet2.Models.Boutique;
+using Projet2.Models.PanierSaisonniers;
+using System.Collections.Generic;
+
 
 namespace Projet2.Models.Compte
 {
@@ -18,19 +20,22 @@ namespace Projet2.Models.Compte
         public Paiement Paiement { get; set; }
         public int? PaiementId { get; set; }
 
-        //public List<AdP> ProducteursFavoris { get; set; }
+        public virtual List<AdP> ProducteursFavoris { get; set; }
 
         //public List<Atelier> AteliersFavoris { get; set; }
 
-        //public List<Article> ArticlesFavoris { get; set; }
+        public virtual List<Article> ArticlesFavoris { get; set; }
 
         public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
+
+
+        public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
+
 
         //public List<?> CommandesPanierEffectues { get; set; }
 
         public int AvisId { get; set; }
         public Avis Avis { get; set; }
-
 
         public AdA()
         {
