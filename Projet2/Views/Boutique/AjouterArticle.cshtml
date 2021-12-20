@@ -40,10 +40,18 @@
         </div>
         <div class="row">
             <div class="col-12">
-                    <input name="FileToUpload" type="file" value="browse"/>
+                <input name="FileToUpload" type="file" value="browse" />
+            </div>
+            <div>File Name:</div>
+
+            <div>
+
+                @Html.EditorFor(model => model.Upload.Name, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(model => model.Upload.Name, "", new { @class = "text-danger" })
             </div>
             <div class="col-12">
-                <button class="btn btn-primary" type="submit" value="Submit">Ajouter</button>
+                    <button class="btn btn-primary" type="submit" value="Submit">Ajouter</button>
             </div>
         </div>
     </form>

@@ -7,8 +7,7 @@ namespace Projet2.Models.Compte
     public interface ICompteServices : IDisposable
     {
         void DeleteCreateDatabase();
-
-        void Dispose();
+        new void Dispose();
 
         //AdA functions
         List<AdA> ObtientTousLesAdAs();

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
@@ -14,6 +16,14 @@ namespace Projet2.Controllers
 {
     public class BoutiqueController : Controller
     {
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public BoutiqueController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
+
         // GET: /<controller>/
         public IActionResult AjouterArticle()
         {
@@ -22,13 +32,36 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC,IFormFile FileToUpload)
+        public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC, IFormFile FileToUpload)
         {
             // mettre le file dans le dossier
             ArticleRessources ctx = new ArticleRessources();
-            ctx.CreerArticle(nom, description, prix, stock, prixTTC /*, FileToUpload.FileName*/ );
-            return View();
+            ctx.CreerArticle(nom, description, prix, stock, prixTTC, FileToUpload.FileName);
 
+
+            var FileDic = "Files";
+
+            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
+
+            if (!Directory.Exists(FilePath))
+
+                Directory.CreateDirectory(FilePath);
+
+            var fileName = FileToUpload.FileName;
+
+            var filePath = Path.Combine(FilePath, fileName);
+
+
+
+            using (FileStream fs = System.IO.File.Create(filePath))
+
+            {
+
+                FileToUpload.CopyTo(fs);
+
+                return View();
+
+            }
         }
 
         [HttpGet]

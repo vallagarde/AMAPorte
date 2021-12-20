@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Projet2.Models.Boutique;
 
 namespace Projet2.Models.Compte
 {
@@ -23,9 +24,14 @@ namespace Projet2.Models.Compte
 
         //public List<Article> ArticlesFavoris { get; set; }
 
-        //public List<Commande> CommandesBoutiqueEffectues { get; set; }
+        public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
 
         //public List<?> CommandesPanierEffectues { get; set; }
+
+        public int AvisId { get; set; }
+        public Avis Avis { get; set; }
+
+
         public AdA()
         {
             EstAdA = true;
