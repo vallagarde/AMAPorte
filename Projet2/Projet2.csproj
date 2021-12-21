@@ -20,6 +20,8 @@
     <Folder Include="wwwroot\ImageArticle\" />
     <Folder Include="Helpers\" />
     <Folder Include="wwwroot\ImagesPaniers\" />
+    <Folder Include="Data\" />
+    <Folder Include="Views\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="bootstrap" />
@@ -31,6 +33,8 @@
     <None Remove="Views\Article\" />
     <None Remove="Helpers\" />
     <None Remove="Stripe.net" />
+    <None Remove="Data\" />
+    <None Remove="Views\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
