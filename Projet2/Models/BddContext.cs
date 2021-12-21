@@ -42,23 +42,9 @@ namespace Projet2.Models
 
         public void InitializeDb()
         {
-            this.Database.EnsureDeleted();
+            //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
-            this.PaniersSaisonniers.AddRange(
-
-            new PanierSaisonnier { 
-                Id = 1, 
-                ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Pomme" }, new Produit() { NomProduit = "Orange" }, new Produit() { NomProduit = "Avocat" }, new Produit() { NomProduit = "Raisin" } },
-                Description = "Produits de saisons", 
-                NomProducteur = "Jean Charles",
-                Prix = 17.450M },
-            new PanierSaisonnier{Id = 2, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "30 oeufs" }, new Produit() { NomProduit = "poulets" } }, Description = "Elévés en plein air", NomProducteur = "Louis Ferrand", Prix = 10.50M},
-            new PanierSaisonnier{Id = 3, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Haut de dinde" }, new Produit() { NomProduit = "Poirreaux" }, new Produit() { NomProduit = "Tommates" }, new Produit() { NomProduit = "Poivrons" } }, Description = "Bio", NomProducteur = "Jeanne Dasilva", Prix = 15.90M},
-            new PanierSaisonnier{Id = 4, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Potiron" }, new Produit() { NomProduit = "Pomme de terre" }, new Produit() { NomProduit = "Melon" } }, Description = "Bio", NomProducteur = "Richard Laurant", Prix = 16.90M}
-
-            );
-
-            this.SaveChanges();
+            
         }
     }
 }

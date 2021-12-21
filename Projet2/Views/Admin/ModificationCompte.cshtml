@@ -14,17 +14,18 @@
 
     @using (Html.BeginForm())
     {
-<fieldset>
+<fieldset>   
     <h2> Identifiant </h2>
         @Html.HiddenFor(m => Model.Admin.Id)
         @Html.HiddenFor(m => Model.Identifiant.Id)
+        @Html.HiddenFor(m => Model.Admin.Role)
     <br />
         @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
         @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
         @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
     <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
+        @Html.LabelFor(m => Model.Identifiant.MotDePasse) :
+        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {Value=@Model.Identifiant.MotDePasse})
         @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
     <br />
 </fieldset>

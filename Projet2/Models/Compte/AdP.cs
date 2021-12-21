@@ -26,7 +26,7 @@ namespace Projet2.Models.Compte
 
         public virtual List<Article> Assortiment { get; set; }
         //public List<?> PanierDuMoment { get; set; }
-        public static bool EstAdP { get; set; }
+        public bool EstAdP { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }

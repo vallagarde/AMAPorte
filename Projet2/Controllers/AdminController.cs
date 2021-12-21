@@ -11,6 +11,11 @@ namespace Projet2.Controllers
     {
 
         //TOUS LES VUES LIE A GESTION : GCRA; GCCQ; DSI
+        //CRUD pour le compte Admin > OK, , warning avant suppression compte
+        //Afficher tous les comptes OK > recherche dans les tableaux a implementer, ajouter des données dans le tableau 
+        //Afficher et Valider (ou envoyer des retours sur) les propositions d'articles et panier des producteurs 
+        //Ajouter des Articles ou Paniers ou Ateliers pour un producteur 
+
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(Admin admin)
@@ -41,7 +46,20 @@ namespace Projet2.Controllers
 
             if (admin != null && identifiant != null)
             {
-                int id = cs.AjouterIdentifiant(identifiant.AdresseMail, identifiant.MotDePasse);
+                if (admin.EstDSI == true)
+                {
+                    identifiant.EstDSI = true;
+                }
+                else if (admin.EstGCRA == true) 
+                {
+                    identifiant.EstGCRA = true;
+                }
+                else
+                {
+                    identifiant.EstGCCQ = true;
+                }
+
+                int id = cs.AjouterIdentifiant(identifiant);
 
                 var userClaims = new List<Claim>()
                 {
@@ -73,6 +91,8 @@ namespace Projet2.Controllers
         public IActionResult GestionComptes(Admin admin)
         {
             hvm.ListeComptesAdA = cs.ObtenirTousLesAdAs();
+            hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
+            hvm.ListeComptesCCEs = cs.ObtenirTousLesCCEs();
             hvm.Admin = admin;
             return View(hvm);
         }

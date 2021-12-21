@@ -9,6 +9,19 @@ namespace Projet2.Controllers
 {
     public class CompteAdAController : Controller
     {
+        //CRUD Compte CE ok, regarder pourquoi la liste des autres CE ne s'affiche pas directement, ajouter quelques attributs (paiement, photo, adresse facturation), warning avant suppression compte
+        //adresse avec base de données ? 
+        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
+        //mettre les informations de son compte dans une vue "Mon Compte" 
+        //BOUTIQUE / PANIERS S. : 
+        //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
+        //voir ses paniers/commandes en boutique en cours dans une vue
+        //voir l'historique de ses commandes panier et boutique, ajouter un seul ! avis par panier ou article
+        //ATELIERS :
+        //avoir access a l'onglet ateliers pour en reserver/favoriser
+        //voir les ateliers a venir sur sa page d'accueil 
+        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(AdA ada)
@@ -40,8 +53,11 @@ namespace Projet2.Controllers
         {
 
             if (personne != null && identifiant != null && adresse != null)
-            { 
-                int id = cs.AjouterIdentifiant(identifiant.AdresseMail, identifiant.MotDePasse);
+            {
+                AdA ada = new AdA() { EstAdA = true };
+                identifiant.EstAdA = ada.EstAdA;
+                
+                int id = cs.AjouterIdentifiant(identifiant);
 
                 var userClaims = new List<Claim>()
                 {
@@ -55,7 +71,7 @@ namespace Projet2.Controllers
 
                 personne.IdentifiantId = id;
 
-                hvm.AdA = cs.CreerAdA(personne, adresse);
+                hvm.AdA = cs.CreerAdA(personne, adresse, ada);
                 hvm.Personne = personne;
                 hvm.Adresse = adresse;
                 hvm.Identifiant = identifiant;
@@ -94,7 +110,7 @@ namespace Projet2.Controllers
             hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
             hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
             hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-            hvm.AdA = ada;
+
             return View(hvm);
         }
 
@@ -110,7 +126,24 @@ namespace Projet2.Controllers
                 ada.PersonneId = hvm.Personne.Id;
                 hvm.AdA = cs.ModifierAdA(ada);
 
-            return View("Index", hvm);
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
+            if (viewModel.Authentifie)
+            {
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdA == true)
+                {
+                    return View("Index", hvm);
+                }
+                else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
+                {
+                    HomeViewModel hvmAdmin = new HomeViewModel();
+                    hvmAdmin.Identifiant = viewModel.Identifiant;
+                    hvmAdmin.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("GestionComptes", "Admin", hvmAdmin.Admin);
+                }
+                return View(hvm);
+            }
+            return Redirect("/");
         }
 
         public IActionResult SuppressionCompte(AdA ada)

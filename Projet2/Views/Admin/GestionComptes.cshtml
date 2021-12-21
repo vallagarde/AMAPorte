@@ -33,6 +33,51 @@
        }
        </table>
 </div>
+
+<div>
+    <p>Comptes AdP </p>
+    <table border="1">
+        @if(@Model.ListeComptesAdP.Count != 0){                       
+            @foreach (var adP in @Model.ListeComptesAdP)
+            {
+             <tr>
+                <td>@adP.Id</td>
+                <td>@adP.Personne.Nom</td>
+                <td>@adP.Personne.Prenom</td>
+                <td>@adP.Personne.Identifiant.AdresseMail</td>
+                <td>
+                    @Html.ActionLink("Modifier", "ModificationCompte", "CompteAdP", new { @id = adP.Id }),
+                    @Html.ActionLink("Supprimer", "SuppressionCompte", "CompteAdP", new { @id = adP.Id })
+                </td>
+            </tr>
+            }  
+           
+       }
+       </table>
+</div>
+
+<div>
+    <p>Comptes CCEs </p>
+    <table border="1">
+        @if(@Model.ListeComptesCCEs.Count != 0){                       
+            @foreach (var cce in @Model.ListeComptesCCEs)
+            {
+             <tr>
+                <td>@cce.Id</td>
+                <td>@cce.Nom</td>
+                <td>@cce.Prenom</td>
+                <td>@cce.AdresseMail</td>
+                <td>@cce.Entreprise.NomEntreprise</td>
+                <td>
+                    @Html.ActionLink("Modifier", "ModificationCompte", "CompteCE", new { @id = cce.Id }),
+                    @Html.ActionLink("Supprimer", "SuppressionCompte", "CompteCE", new { @id = cce.Id })
+                </td>
+            </tr>
+            }  
+           
+       }
+       </table>
+</div>
        
 </body>
 </html>

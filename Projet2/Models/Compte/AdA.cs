@@ -34,7 +34,7 @@ namespace Projet2.Models.Compte
 
         //public List<?> CommandesPanierEffectues { get; set; }
 
-        public int AvisId { get; set; }
+        public int? AvisId { get; set; }
         public Avis Avis { get; set; }
 
         public AdA()
