@@ -9,6 +9,21 @@ namespace Projet2.Controllers
 {
     public class CompteCEController : Controller
     {
+        //View pour paiement 12€/6 mois 
+        //CRUD Compte CE ok, regarder pourquoi la liste des autres CE ne s'affiche pas directement, ajouter quelques attributs (paiement, adresse facturation), warning avant suppression compte
+        //adresse avec base de données ? 
+        //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 
+        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
+        //mettre les informations de son compte dans une vue "Mon Compte" 
+        //BOUTIQUE / PANIERS S. : 
+        //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
+        //voir ses paniers s./commandes en boutique en cours dans une vue
+        //voir l'historique de ses commandes panier s. et boutique, ajouter un seul ! avis par panier ou article
+        //ATELIERS :
+        //avoir access a l'onglet ateliers pour en reserver/favoriser
+        //voir les ateliers a venir sur sa page d'accueil 
+        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
@@ -42,7 +57,9 @@ namespace Projet2.Controllers
 
             if (contactComiteEntreprise != null && identifiant != null && entreprise != null)
             {
-                int id = cs.AjouterIdentifiant(identifiant.AdresseMail, identifiant.MotDePasse);
+                contactComiteEntreprise.EstCE = true;
+                identifiant.EstCE = contactComiteEntreprise.EstCE;
+                int id = cs.AjouterIdentifiant(identifiant);
 
                 var userClaims = new List<Claim>()
                 {
@@ -54,6 +71,7 @@ namespace Projet2.Controllers
                 var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                 HttpContext.SignInAsync(userPrincipal);
 
+                
                 contactComiteEntreprise.IdentifiantId = id;
                 contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
 
@@ -96,10 +114,10 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult ModificationCompte(ContactComiteEntreprise contactComiteEntreprise)
         {
-            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+            hvm.ContactComiteEntreprise = cs.ObtenirCCEParId(contactComiteEntreprise.Id);
+            hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
             hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
-            hvm.Identifiant = cs.ObtenirIdentifiant(contactComiteEntreprise.IdentifiantId);
-            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
             hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
             return View(hvm);
         }
@@ -118,7 +136,24 @@ namespace Projet2.Controllers
             hvm.ContactComiteEntreprise = cs.ModifierCCE(contactComiteEntreprise);
             hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
 
-            return View("Index", hvm);
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
+            if (viewModel.Authentifie)
+            {
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstCE == true)
+                {
+                    return View("Index", hvm);
+                }
+                else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
+                {
+                    HomeViewModel hvmAdmin = new HomeViewModel();
+                    hvmAdmin.Identifiant = viewModel.Identifiant;
+                    hvmAdmin.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("GestionComptes", "Admin", hvmAdmin.Admin);
+                }
+                return View(hvm);
+            }
+            return Redirect("/");
         }
 
         public IActionResult SuppressionCompte(ContactComiteEntreprise contactComiteEntreprise)

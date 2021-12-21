@@ -23,10 +23,10 @@ namespace Projet2.Models.Compte
         [Display(Name = "Ecrivez quelques mot sur votre production")]
         public string Description { get; set; }
 
-
         public virtual List<Article> Assortiment { get; set; }
+
         //public List<?> PanierDuMoment { get; set; }
-        public static bool EstAdP { get; set; }
+        public bool EstAdP { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
@@ -34,6 +34,7 @@ namespace Projet2.Models.Compte
         public AdP()
         {
             EstAdP = true;
+            Assortiment = new List<Article>();
         }
 
 

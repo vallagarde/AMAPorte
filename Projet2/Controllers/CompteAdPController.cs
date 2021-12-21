@@ -9,6 +9,10 @@ namespace Projet2.Controllers
 {
     public class CompteAdPController : Controller
     {
+        //ajouter quelques attributs (RIB, photo), warning avant suppression compte
+        //adresse avec base de données ? 
+        //mettre les informations de son compte dans une vue "Mon Compte" 
+       
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(AdP adp)
@@ -41,7 +45,9 @@ namespace Projet2.Controllers
 
             if (personne != null && identifiant != null)
             {
-                int id = cs.AjouterIdentifiant(identifiant.AdresseMail, identifiant.MotDePasse);
+                adp.EstAdP = true;
+                identifiant.EstAdP = adp.EstAdP;
+                int id = cs.AjouterIdentifiant(identifiant);
 
                 var userClaims = new List<Claim>()
                 {
@@ -71,11 +77,13 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult ModificationCompte(AdP adp)
         {
-            hvm.Personne = cs.ObtenirPersonne(adp.PersonneId);
+            hvm.AdP = cs.ObtenirAdPParId(adp.Id);
+            hvm.Personne = cs.ObtenirPersonne(hvm.AdP.PersonneId);
             hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
             hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-            hvm.AdP = adp;
+
             return View(hvm);
+
         }
 
         [HttpPost]
@@ -90,7 +98,24 @@ namespace Projet2.Controllers
             adp.PersonneId = hvm.Personne.Id;
             hvm.AdP = cs.ModifierAdP(adp);
 
-            return View("Index", hvm);
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
+            if (viewModel.Authentifie)
+            {
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    return View("Index", hvm);
+                }
+                else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
+                {
+                    HomeViewModel hvmAdmin = new HomeViewModel();
+                    hvmAdmin.Identifiant = viewModel.Identifiant;
+                    hvmAdmin.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("GestionComptes", "Admin", hvmAdmin.Admin);
+                }
+                return View(hvm);
+            }
+            return Redirect("/");
         }
 
         public IActionResult SuppressionCompte(AdP adp)
@@ -99,6 +124,8 @@ namespace Projet2.Controllers
             HttpContext.SignOutAsync();
             return View();
         }
+
+
 
     }
 }

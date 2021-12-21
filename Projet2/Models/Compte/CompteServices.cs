@@ -87,6 +87,17 @@ namespace Projet2.Models.Compte
             }
             return AdAList;
         }
+
+        public AdA ObtenirAdAParIdentifiant(int id)
+        {
+            var query = from ada in _bddContext.AdAs where ada.Personne.IdentifiantId == id select ada;
+            var adas = query.ToList();
+            foreach (AdA ada in adas)
+            {
+                return ada;
+            }
+            return null;
+        }
         public AdA ObtenirAdAParPersonne(int id)
         {
             var query = from ada in _bddContext.AdAs where ada.PersonneId == id select ada;
@@ -111,12 +122,11 @@ namespace Projet2.Models.Compte
         }
 
         //Fonctions AdA
-        public AdA CreerAdA(Personne personne, Adresse adresse)
+        public AdA CreerAdA(Personne personne, Adresse adresse, AdA ada)
         {
             CreerAdresse(adresse);           
             personne.AdresseId = adresse.Id;
             CreerPersonne(personne);
-            AdA ada = new AdA();
             ada.PersonneId = personne.Id;
             _bddContext.AdAs.Add(ada);
             _bddContext.SaveChanges();
@@ -151,7 +161,28 @@ namespace Projet2.Models.Compte
         //Obtenir AdP
         public List<AdP> ObtenirTousLesAdPs()
         {
-            return _bddContext.AdPs.ToList();
+            List<AdP> AdPList = _bddContext.AdPs.ToList();
+            foreach (AdP adp in AdPList)
+            {
+                var queryPersonne = from personne in _bddContext.Personnes where personne.Id == adp.PersonneId select personne;
+                adp.Personne = queryPersonne.First();
+                var queryAdresse = from adresse in _bddContext.Adresses where adresse.Id == adp.Personne.AdresseId select adresse;
+                var queryIdentifiant = from identifiant in _bddContext.Identifiants where identifiant.Id == adp.Personne.IdentifiantId select identifiant;
+                adp.Personne.Adresse = queryAdresse.First();
+                adp.Personne.Identifiant = queryIdentifiant.First();
+            }
+            return AdPList;
+        }
+
+        public AdP ObtenirAdPParIdentifiant(int id)
+        {
+            var query = from adp in _bddContext.AdPs where adp.Personne.IdentifiantId == id select adp;
+            var adps = query.ToList();
+            foreach (AdP adp in adps)
+            {
+                return adp;
+            }
+            return null;
         }
 
         public AdP ObtenirAdPParPersonne(int id)
@@ -165,8 +196,19 @@ namespace Projet2.Models.Compte
             return null;
         }
 
-        //Fonctions AdP
-        public AdP CreerAdP(Personne personne, Adresse adresse, AdP adp)
+        public AdP ObtenirAdPParId(int id)
+        {
+            var query = from adp in _bddContext.AdPs where adp.Id == id select adp;
+            var adps = query.ToList();
+            foreach (AdP adp in adps)
+            {
+                return adp;
+            }
+            return null;
+        }
+
+            //Fonctions AdP
+            public AdP CreerAdP(Personne personne, Adresse adresse, AdP adp)
         {
             personne.Adresse = adresse;
             CreerAdresse(adresse);
@@ -206,7 +248,17 @@ namespace Projet2.Models.Compte
         //Obtenir CE
         public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
         {
-            return _bddContext.ContactComiteEntreprises.ToList();
+            List<ContactComiteEntreprise> CCEList = _bddContext.ContactComiteEntreprises.ToList();
+            foreach (ContactComiteEntreprise cce in CCEList)
+            {
+                var queryEntreprise = from entreprise in _bddContext.Entreprises where entreprise.Id == cce.EntrepriseId select entreprise;
+                cce.Entreprise = queryEntreprise.First();
+                var queryAdresse = from adresse in _bddContext.Adresses where adresse.Id == cce.Entreprise.AdresseId select adresse;
+                var queryIdentifiant = from identifiant in _bddContext.Identifiants where identifiant.Id == cce.IdentifiantId select identifiant;
+                cce.Entreprise.Adresse = queryAdresse.First();
+                cce.Identifiant = queryIdentifiant.First();
+            }
+            return CCEList;
 
         }
         public ContactComiteEntreprise ObtenirCCEParIdentifiant(int id)
@@ -226,6 +278,18 @@ namespace Projet2.Models.Compte
             var cces = query.ToList();
             return cces;
 
+        }
+
+
+        public ContactComiteEntreprise ObtenirCCEParId(int id)
+        {
+            var query = from cce in _bddContext.ContactComiteEntreprises where cce.Id == id select cce;
+            var cces = query.ToList();
+            foreach (ContactComiteEntreprise cce in cces)
+            {
+                return cce;
+            }
+            return null;
         }
 
         //Fonctions CE
@@ -428,11 +492,11 @@ namespace Projet2.Models.Compte
         }
 
         //Fonctions Authentification
-        public int AjouterIdentifiant(string adresseMail, string password)
+        public int AjouterIdentifiant(Identifiant identifiant)
         {
-            string motDePasse = EncodeMD5(password);
+            string motDePasse = EncodeMD5(identifiant.MotDePasse);
 
-            Identifiant identifiant = new Identifiant() { AdresseMail = adresseMail, MotDePasse = motDePasse };
+            identifiant.MotDePasse = motDePasse;
             this._bddContext.Identifiants.Add(identifiant);
             this._bddContext.SaveChanges();
             return identifiant.Id;

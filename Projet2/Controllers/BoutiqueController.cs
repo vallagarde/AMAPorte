@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 using Projet2.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,13 +32,27 @@ namespace Projet2.Controllers
 
         }
 
+
         [HttpPost]
         public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC, IFormFile FileToUpload)
         {
-            // mettre le file dans le dossier
             ArticleRessources ctx = new ArticleRessources();
-            ctx.CreerArticle(nom, description, prix, stock, prixTTC, FileToUpload.FileName);
-
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();   
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    AdP adp = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    ctx.CreerArticle(nom, description, prix, stock, prixTTC, FileToUpload.FileName, adp.Id);
+                } 
+            }
+            else
+            {
+                RedirectToAction("Index", "Login");
+            }
+            // mettre le file dans le dossier
 
             var FileDic = "Files";
 
@@ -75,13 +90,16 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC)
+        public IActionResult ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC, AdP adp)
         {
             ArticleRessources ctx = new ArticleRessources();
-            ctx.ModifierArticle(id, nom, description, prix, stock, prixTTC);
+            ctx.ModifierArticle(id, nom, description, prix, stock, prixTTC, adp.Id);
+
             return RedirectToAction("ModifierArticle", new { @Id = id });
 
         }
+
+        
 
         public IActionResult AfficherBoutique()
         {
@@ -152,6 +170,12 @@ namespace Projet2.Controllers
             return View(panier);
 
         }
+        public IActionResult IPanier()
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
 
         public IActionResult ViderPanier()
         {
@@ -159,6 +183,34 @@ namespace Projet2.Controllers
             PanierService ctx = new PanierService();
             PanierBoutique panier = ctx.ObientPanier(panierId);
             ctx.ViderPanier(panier);
+
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
+
+        [HttpPost]
+        public IActionResult ModifierPanier(int quantite, int Id)
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierService ctx = new PanierService();
+            LignePanierBoutique ligne = ctx.ObtientLigne(Id);
+            Article article = ctx.ObtientArticle(ligne.ArticleId);
+
+
+            ctx.ModifierLigneAbsolue(Id, quantite , article, article.PrixTTC*quantite );
+
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
+        [HttpPost]
+        public IActionResult SupprimerLigne(int Id)
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierService ctx = new PanierService();
+            LignePanierBoutique ligne = ctx.ObtientLigne(Id);
+
+
+            ctx.SupprimerLignePanier(ligne);
 
             return RedirectToAction("Panier", new { @panierId = panierId });
 
