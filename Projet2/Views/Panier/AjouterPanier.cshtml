@@ -1,5 +1,4 @@
-﻿@*@model Projet2.Models.PanierSaisonniers.PanierSaisonnier*@
-@model Projet2.ViewModels.HomeViewModel
+﻿@model Projet2.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "AjouterPanier";
 }
@@ -7,12 +6,10 @@
 <body>
     <form enctype="multipart/form-data" method="post" asp-controller="Panier" asp-action="AjouterPanier">
         <fieldset>
+            @Html.HiddenFor(m => Model.AdP.Id)
             <legend>Ajouter un Panier : </legend>
-            @Html.LabelFor(m => Model.PanierSaisonnier)
+            @Html.LabelFor(m => Model.PanierSaisonnier.NomPanier)
             @Html.TextBoxFor(m => Model.PanierSaisonnier.NomPanier)
-            <br />
-            @Html.LabelFor(m => Model.PanierSaisonnier.NomProducteur)
-            @Html.TextBoxFor(m => Model.PanierSaisonnier.NomProducteur)
             <br />
             @Html.LabelFor(m => Model.PanierSaisonnier.ProduitsProposes)
             @Html.TextBoxFor(m => Model.PanierSaisonnier.ProduitsProposes)

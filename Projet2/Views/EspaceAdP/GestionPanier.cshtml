@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Projet2.ViewModels.HomeViewModel
 @{
+    ViewData["Title"] = "Paniers";
 }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Mon Assortiment de Paniers</title>
+</head>
+<body> 
+
+<div class="shadow-sm p-2 mb-5 welcome">
+    <h2>Mon Assortiment de Paniers Saisonniers</h2>
+</div>
+
+<!-- Products -->
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-2 menu-rigth">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+        </div>
+        <div class="col-md-9">
+            <div class="row row-cols-1 row-cols-md-4 g-5">
+                @foreach (var panierSaisonnier in @Model.AdP.AssortimentPanier)
+                {
+                    <div class="col ">
+                        <div class="card h-100">
+                            @{
+                                String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
+                            }
+                            <img src="~/ImageArticle/@panierSaisonnier.Image" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
+                                <p class="card-text">@panierSaisonnier.Description</p>
+                                <p class="card-text">@panierSaisonnier.Prix</p>
+                                @Html.ActionLink("Voir article", "PanierModification", "EspaceAdP", @panierSaisonnier)
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>   
+</div>
+
+</body>
+</html>

@@ -12,16 +12,16 @@ namespace Projet2.Models.PanierSaisonniers
         public string NomPanier { get; set; }
         //public virtual List<Produit> ProduitsProposes { get; set; }
         public virtual string ProduitsProposes { get; set; }
-        public string NomProducteur { get; set; }
+        //public string NomProducteur { get; set; }
         public string Description { get; set; }
         public decimal Prix { get; set; }
         public String Image { get; set; }
 
-        public int? AdPId { get; set; }
+        public int AdPId { get; set; }
         public AdP AdP { get; set; }
 
         public int? AdAId { get; set; }
-        public AdP AdA { get; set; }
+        public AdA AdA { get; set; }
 
         public int? CataloguePanierId { get; set; }
         public CataloguePanier CataloguePanier { get; set; }

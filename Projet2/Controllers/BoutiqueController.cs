@@ -46,37 +46,33 @@ namespace Projet2.Controllers
                 {
                     AdP adp = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
                     ctx.CreerArticle(nom, description, prix, stock, prixTTC, FileToUpload.FileName, adp.Id);
-                } 
-            }
-            else
-            {
-                RedirectToAction("Index", "Login");
-            }
-            // mettre le file dans le dossier
+                
+            
+            
+                    // mettre le file dans le dossier
 
-            var FileDic = "Files";
+                    var FileDic = "Files";
 
-            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
+                    string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
 
-            if (!Directory.Exists(FilePath))
+                    if (!Directory.Exists(FilePath))
 
-                Directory.CreateDirectory(FilePath);
+                        Directory.CreateDirectory(FilePath);
 
-            var fileName = FileToUpload.FileName;
+                    var fileName = FileToUpload.FileName;
 
-            var filePath = Path.Combine(FilePath, fileName);
+                    var filePath = Path.Combine(FilePath, fileName);
 
+                        using (FileStream fs = System.IO.File.Create(filePath))
 
+                        {
 
-            using (FileStream fs = System.IO.File.Create(filePath))
+                            FileToUpload.CopyTo(fs);
+                        }
+                        return RedirectToAction("GestionBoutique", "EspaceAdP", adp);
 
-            {
-
-                FileToUpload.CopyTo(fs);
-
-                return View();
-
-            }
+                        }
+                } return RedirectToAction("Index", "Login");            
         }
 
         [HttpGet]

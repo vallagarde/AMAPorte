@@ -37,6 +37,7 @@ namespace Projet2.Models.Compte
         {
             EstAdP = true;
             Assortiment = new List<Article>();
+            AssortimentPanier = new List<PanierSaisonnier>();
         }
 
 

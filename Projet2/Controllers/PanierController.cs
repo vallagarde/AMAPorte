@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
+using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
+using Projet2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +15,8 @@ namespace Projet2.Controllers
 {
     public class PanierController : Controller
     {
+        private HomeViewModel hvm = new HomeViewModel();
+        private PanierSaisonnierService ctx = new PanierSaisonnierService();
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public PanierController(IWebHostEnvironment webHostEnvironment)
@@ -20,9 +25,9 @@ namespace Projet2.Controllers
         }
 
         public IActionResult AfficherPaniers()
-        {
-            List<PanierSaisonnier> panierSaisonniers = new PanierSaisonnierService().ObtientTousLesPaniers();
-            return View(panierSaisonniers);
+        {           
+            hvm.CataloguePanier.PanierSaisonniers = new PanierSaisonnierService().ObtientTousLesPaniers();
+            return View(hvm);
         }
         public IActionResult AjouterPanier()
         {
@@ -32,24 +37,62 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult AjouterPanier(PanierSaisonnier panierSaisonnier, IFormFile fileToUpload)
         {
-            PanierSaisonnierService ctx = new PanierSaisonnierService();
-            ctx.CreerPanierSaisonnier(panierSaisonnier.NomPanier, panierSaisonnier.NomProducteur, panierSaisonnier.ProduitsProposes, panierSaisonnier.Description, panierSaisonnier.Prix, fileToUpload.FileName);
 
-            var FileDic = "Files";
-
-            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImagesPaniers");
-
-            if (!Directory.Exists(FilePath))
-                Directory.CreateDirectory(FilePath);
-
-            var fileName = fileToUpload.FileName;
-            var filePath = Path.Combine(FilePath, fileName);
-
-            using (FileStream fs = System.IO.File.Create(filePath))
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
             {
-                fileToUpload.CopyTo(fs);
-                return RedirectToAction("AfficherPaniers");
+                CompteServices cs = new CompteServices();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    AdP adp = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    panierSaisonnier.AdPId = adp.Id;
+                    panierSaisonnier.Image = fileToUpload.FileName;
+                    ctx.CreerPanierSaisonnier(panierSaisonnier);
+
+                    // mettre le file dans le dossier
+
+                    var FileDic1 = "Files";
+
+                    string FilePath1 = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
+
+                    if (!Directory.Exists(FilePath1))
+
+                        Directory.CreateDirectory(FilePath1);
+
+                    var fileName1 = fileToUpload.FileName;
+
+                    var filePath1 = Path.Combine(FilePath1, fileName1);
+
+                    using (FileStream fs = System.IO.File.Create(filePath1))
+
+                    {
+
+                        fileToUpload.CopyTo(fs);
+                    }
+                    return RedirectToAction("GestionPanier", "EspaceAdP", adp);
+
+                }
             }
+
+                ctx.CreerPanierSaisonnier(panierSaisonnier.NomPanier, panierSaisonnier.ProduitsProposes, panierSaisonnier.Description, panierSaisonnier.Prix, fileToUpload.FileName);
+
+                var FileDic = "Files";
+
+                string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImagesPaniers");
+
+                if (!Directory.Exists(FilePath))
+                    Directory.CreateDirectory(FilePath);
+
+                var fileName = fileToUpload.FileName;
+                var filePath = Path.Combine(FilePath, fileName);
+
+                using (FileStream fs = System.IO.File.Create(filePath))
+                {
+                    fileToUpload.CopyTo(fs);
+                    return RedirectToAction("AfficherPaniers");
+                }
+          
         }
 
         [HttpGet]
@@ -68,17 +111,16 @@ namespace Projet2.Controllers
             //    }
             //}
             //return View("Error");
-            PanierSaisonnierService ctx = new PanierSaisonnierService();
-            PanierSaisonnier panierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
-            return View(panierSaisonnier);
+            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
+            return View(hvm);
         }
 
         [HttpPost]
-        public IActionResult ModifierPanier(int id, string nomPanier, string nomProducteur, string produitsProposes, string description, decimal prix)
+        public IActionResult ModifierPanier(PanierSaisonnier panierSaisonnier)
         {
-            PanierSaisonnierService ctx = new PanierSaisonnierService();
-            ctx.ModifierPanierSaisonnier(id, nomPanier, nomProducteur, produitsProposes, description, prix);
-            return RedirectToAction("AfficherPaniers", new { @Id = id });
+            
+            ctx.ModifierPanierSaisonnier(panierSaisonnier);
+            return RedirectToAction("AfficherPaniers", panierSaisonnier.Id);
         }
 
         public IActionResult SupprimerPanier(int id)

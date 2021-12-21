@@ -1,4 +1,4 @@
-﻿@model List<Projet2.Models.PanierSaisonniers.PanierSaisonnier>
+﻿@model Projet2.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "AfficherPaniers";
 }
@@ -6,21 +6,21 @@
 <div> Liste des Paniers saisonniers :  </div>
 <br />
 <div class="row row row-cols-1 row-cols-md-4 g-4">
-    @foreach (Projet2.Models.PanierSaisonniers.PanierSaisonnier panier in Model)
+    @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
     {
         <div class="col">
             <div class="card h-100">
                 @{
-                    String filepath = "~/ImagesPaniers/" + @panier.Image;
+                    String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
                 }
-                <img src="~/ImagesPaniers/@panier.Image" class="card-img-top" alt="...">
+                <img src="~/ImagesPaniers/@panierSaisonnier.Image" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">@panier.NomPanier</h5>
-                    <h6 class="card-subtitle my-2">@panier.NomProducteur</h6>
-                    <p class="card-text">@panier.Description</p>
-                    <p class="card-text">@panier.Prix</p>
-                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", new { @id = panier.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", new { @id = panier.Id }, new { @class = "card-link" })
+                    <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
+                    <h6 class="card-subtitle my-2">@panierSaisonnier.AdP.NomProducteur</h6>
+                    <p class="card-text">@panierSaisonnier.Description</p>
+                    <p class="card-text">@panierSaisonnier.Prix</p>
+                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", @panierSaisonnier.Id, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", @panierSaisonnier.Id, new { @class = "card-link" })
                     @Html.ActionLink("Choisir", "PaiementPanier", "Panier")
                 </div>
             </div>
