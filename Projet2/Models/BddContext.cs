@@ -44,7 +44,6 @@ namespace Projet2.Models
         {
             //this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
-            
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Projet2.Models;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 
 namespace Projet2.ViewModels
 {
@@ -11,6 +12,9 @@ namespace Projet2.ViewModels
         public Boutiques Boutiques = new Boutiques();
         public Article Article = new Article();
         public Upload Upload = new Upload();
+
+        //Paniers
+        public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();
 
         //Pour Comptes + Authorisation
         public Personne Personne = new Personne();
