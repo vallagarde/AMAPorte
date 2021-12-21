@@ -1,25 +1,32 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Linq;
 
 namespace Projet2.Controllers
 {
+    [Authorize]
     public class EspaceAdPController : Controller
     {
-        //ajouter des articles à la boutique OK les modifier OK  les supprimer OK, les afficher dans son espace personnel OK
-        //voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
-        //ajouter des paniers s., les modifier, les supprimer (qu'avant une date specifique prennant en compte les commandes en amont) les afficher dans son espace personnel,
-        //voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
-        //ajouter des ateliers, les modifier, les annuler, les afficher dans son espace personnel
-        //(avec informations sur les participants (nom, prenom, telephone, /nom entreprise et nombre participants pour CE))
+        //BOUTIQUE
+        //OK\\ ajouter des articles à la boutique, les modifier,  les supprimer, les afficher dans son espace personnel
+        //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
+        //PANIER
+        //!\\ajouter des paniers s., les modifier, les supprimer (qu'avant une date specifique prennant en compte les commandes en amont) les afficher dans son espace personnel,
+        //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
+        //ATELIER
+        //!\\ajouter des ateliers, les modifier, les annuler, les afficher dans son espace personnel
+        //!\\(avec informations sur les participants (nom, prenom, telephone, /nom entreprise et nombre participants pour CE))
 
-        CompteServices cs = new CompteServices();
-        ArticleRessources ar = new ArticleRessources();
-        HomeViewModel hvm = new HomeViewModel();
+        private CompteServices cs = new CompteServices();
+        private ArticleRessources ar = new ArticleRessources();
+        private PanierSaisonnierService pss = new PanierSaisonnierService();
+        private HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index()
         {
             return View();
@@ -62,8 +69,6 @@ namespace Projet2.Controllers
             return RedirectToAction("Index", "Login");
 
         }
-
-
         public IActionResult SupprimerArticle(Article article)
         {
             ArticleRessources ctx = new ArticleRessources();
@@ -85,11 +90,16 @@ namespace Projet2.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
-
-
         }
 
+
+        //LIAISONS PANIER
+        public IActionResult GestionPanier(AdP adp)
+        {
+            pss.ObtenirPanierParAdP(adp);
+            hvm.AdP = adp;
+            return View(hvm);
+        }
 
     }
 }

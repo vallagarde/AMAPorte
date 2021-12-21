@@ -17,11 +17,11 @@ namespace Projet2.Models.PanierSaisonniers
         public decimal Prix { get; set; }
         public String Image { get; set; }
 
-        //public int? AdPId { get; set; }
-        //public AdP AdP { get; set; }
+        public int? AdPId { get; set; }
+        public AdP AdP { get; set; }
 
-        //public int? AdAId { get; set; }
-        //public AdP AdA { get; set; }
+        public int? AdAId { get; set; }
+        public AdP AdA { get; set; }
 
         public int? CataloguePanierId { get; set; }
         public CataloguePanier CataloguePanier { get; set; }
