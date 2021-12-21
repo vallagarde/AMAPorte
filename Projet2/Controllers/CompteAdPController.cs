@@ -9,11 +9,10 @@ namespace Projet2.Controllers
 {
     public class CompteAdPController : Controller
     {
-        //CRUD Compte CE ok, regarder pourquoi la liste des autres CE ne s'affiche pas directement, ajouter quelques attributs (RIB, photo), warning avant suppression compte
+        //ajouter quelques attributs (RIB, photo), warning avant suppression compte
         //adresse avec base de données ? 
         //mettre les informations de son compte dans une vue "Mon Compte" 
-        //...... 
-
+       
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(AdP adp)
@@ -125,6 +124,8 @@ namespace Projet2.Controllers
             HttpContext.SignOutAsync();
             return View();
         }
+
+
 
     }
 }

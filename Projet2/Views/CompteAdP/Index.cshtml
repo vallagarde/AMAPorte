@@ -38,17 +38,8 @@
         @Model.Adresse.CodePostal @Model.Adresse.Ville
         <br/>
         @Model.Adresse.Pays
-
-        <br />
-        <br />
-        @*
-        @Html.ActionLink("Mes Producteurs Favoris", "ProducteursFavoris", "CompteAdA", @Model.Producteur)
         <br/>
-        @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteAdA", @Model.Producteur)
         <br/>
-        @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteAdA", @Model.Producteur)
-        <br/>
-        *@
         @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)
         <br/>
         @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdP", @Model.AdP)
@@ -56,6 +47,46 @@
         @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
         <br/>
         @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+        <br />
+        <br />
+        <br />
+        Gestion de la Boutique
+        <br />
+        <br />
+        @*AJOUTER UN ARTICLE DOIT SAUVEGARDER LE PRODUCTEUR QUI EN AJOUTE*@
+        @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
+        <br/>
+        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Commandes Boutique A Preparer", "BoutiqueAPreparer", "EspaceAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
+        <br/>
+        <br />
+        <br />
+        Gestion des Paniers Saissoniers
+        <br />
+        <br />
+        @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Gerer mes Paniers", "GestionBoutique", "EspaceAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Commandes Panier A Preparer", "PaniersAPreparer", "EspaceAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Historique des Commandes Panier", "HistoriquePaniers", "EspaceAdP", @Model.AdP)
+        <br/>
+        <br />
+        <br />
+        Gestion des Ateliers
+        <br />
+        @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Gerer mes Ateliers", "GestionAtelier", "EspaceAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
+        <br/>       
     </div>
 
 

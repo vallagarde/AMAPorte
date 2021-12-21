@@ -1,0 +1,61 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Mon Assortiment</title>
+</head>
+<body> 
+    <div class=" container">
+        <div class="col-7">
+            <div class="row">
+                <img src="~/ImageArticle/@Model.Article.Image" />
+            </div>
+            <div class="row">
+            </div>
+        </div>
+            <div class="col-5">
+                @using (Html.BeginForm())
+                {
+                <div class="col">
+                    @Html.HiddenFor(m => Model.Article.Id)
+                    @Html.HiddenFor(m => Model.Article.AdPId)
+                </div>
+                <div class="col">
+                    @Html.LabelFor(m => Model.Article.Nom) :
+                    @Html.TextBoxFor(m => Model.Article.Nom)
+                <br/>
+                    @Html.LabelFor(m => Model.Article.Description) :
+                    @Html.TextBoxFor(m => Model.Article.Description)
+                <br/>
+                    @Html.LabelFor(m => Model.Article.Prix) :
+                    @Html.TextBoxFor(m => Model.Article.Prix)
+                <br/>
+                    @Html.LabelFor(m => Model.Article.Stock) :
+                    @Html.TextBoxFor(m => Model.Article.Stock)
+                <br/>
+                    @Html.LabelFor(m => Model.Article.PrixTTC) :
+                    @Html.TextBoxFor(m => Model.Article.PrixTTC)
+                <br/>
+                @*
+                    <input name="FileToUpload" type="file" value="browse" />
+                    <br/>
+                    @Html.LabelFor(m => Model.Upload.Name) :
+                    @Html.EditorFor(m => Model.Upload.Name)
+                    @Html.ValidationMessageFor(m => Model.Upload.Name, "")
+                *@
+                </div>
+                <div class="col-12">
+                <button type="submit">modifier</button>
+                </div>
+                }
+
+                @Html.ActionLink("Supprimer Article", "SupprimerArticle", "EspaceAdP", @Model.Article)
+            </div>
+    </div>
+  
+</body>
+</html>
