@@ -50,8 +50,7 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult ArticleModification(Article article, AdP adp)
         {
-            ArticleRessources ctx = new ArticleRessources();
-            ctx.ModifierArticle(article.Id, article.Nom, article.Description, article.Prix, article.Stock, article.PrixTTC, adp.Id);
+            ar.ModifierArticle(article.Id, article.Nom, article.Description, article.Prix, article.Stock, article.PrixTTC, adp.Id);
 
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)
@@ -71,8 +70,6 @@ namespace Projet2.Controllers
         }
         public IActionResult SupprimerArticle(Article article)
         {
-            ArticleRessources ctx = new ArticleRessources();
-
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)
             {
@@ -81,7 +78,7 @@ namespace Projet2.Controllers
                 if (viewModel.Identifiant.EstAdP == true)
                 {
                     AdP adp = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
-                    ctx.SupprimerArticle(article.Id);
+                    ar.SupprimerArticle(article.Id);
                     return RedirectToAction("GestionBoutique", "EspaceAdP", adp);
                 }
                 return RedirectToAction("EspacePersonnel", "Home");
@@ -99,6 +96,57 @@ namespace Projet2.Controllers
             pss.ObtenirPanierParAdP(adp);
             hvm.AdP = adp;
             return View(hvm);
+        }
+
+        [HttpGet]
+        public IActionResult PanierModification(PanierSaisonnier panierSaisonnier)
+        {
+            hvm.PanierSaisonnier = panierSaisonnier;
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult PanierModification(PanierSaisonnier panierSaisonnier, AdP adp)
+        {
+            //panierSaisonnier.AdP = adp;
+            pss.ModifierPanierSaisonnier(panierSaisonnier);
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    HomeViewModel hvm = new HomeViewModel();
+                    hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    hvm.PanierSaisonnier.Id = panierSaisonnier.Id;
+                    return RedirectToAction("GestionPanier", "EspaceAdP", hvm.AdP);
+                }
+            }
+            return RedirectToAction("Index", "Login");
+
+        }
+
+        public IActionResult SupprimerPanier(PanierSaisonnier panierSaisonnier)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    AdP adp = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    pss.SupprimerPanierSaisonnier(panierSaisonnier.Id);
+                    return RedirectToAction("GestionPanier", "EspaceAdP", adp);
+                }
+                return RedirectToAction("EspacePersonnel", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
 
     }

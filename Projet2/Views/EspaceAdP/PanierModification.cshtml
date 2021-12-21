@@ -10,6 +10,7 @@
         <legend>Modifier un Panier : </legend>
         @Html.HiddenFor(m => Model.PanierSaisonnier.Id)
         @Html.HiddenFor(m => Model.PanierSaisonnier.AdPId)
+        @Html.HiddenFor(m => Model.AdP.Id)
 
         @Html.LabelFor(m => Model.PanierSaisonnier.NomPanier)
         @Html.TextBoxFor(m => Model.PanierSaisonnier.NomPanier)
@@ -37,4 +38,6 @@
         <input type="submit" value="Modifier" />
     </fieldset>
     }
+    <br/>
+    @Html.ActionLink("Supprimer Panier", "SupprimerPanier", "EspaceAdP", @Model.PanierSaisonnier)
 </div>
