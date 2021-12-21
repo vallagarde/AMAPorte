@@ -22,6 +22,16 @@ namespace Projet2.Models.Boutique
         {
             return _bddContext.LignePanierBoutique.ToList();
         }
+        public LignePanierBoutique ObtientLigne(int Id)
+        {
+            return _bddContext.LignePanierBoutique.Find(Id);
+        }
+
+        public Article ObtientArticle(int Id)
+        {
+            return _bddContext.Article.Find(Id);
+        }
+
 
         public int CreerLigne(int quantite, int ArticleId, decimal sousTotal)
         {
@@ -168,18 +178,28 @@ namespace Projet2.Models.Boutique
         
         public void SupprimerLignePanier(LignePanierBoutique ligne)
         {
-            ligne.PanierBoutiqueId = 0;
-            _bddContext.SaveChanges();
+
+           
+            if (ligne != null)
+            {
+                _bddContext.LignePanierBoutique.Remove(ligne);
+
+                _bddContext.SaveChanges();
+            }
         }
 
         public void ViderPanier(PanierBoutique panier)
         {
-            foreach (LignePanierBoutique ligne in panier.LignePanierBoutiques)
+            int panierId = panier.Id;
+            List<LignePanierBoutique> list = _bddContext.LignePanierBoutique.Where(a => a.PanierBoutiqueId == panierId ).ToList();
+            foreach (LignePanierBoutique ligne in list)
             {
-                ligne.PanierBoutiqueId = 0;
+                SupprimerLignePanier(ligne);
                 
             }
             _bddContext.SaveChanges();
         }
+
+       
     }
 }

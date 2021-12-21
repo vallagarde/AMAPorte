@@ -152,6 +152,12 @@ namespace Projet2.Controllers
             return View(panier);
 
         }
+        public IActionResult IPanier()
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
 
         public IActionResult ViderPanier()
         {
@@ -159,6 +165,34 @@ namespace Projet2.Controllers
             PanierService ctx = new PanierService();
             PanierBoutique panier = ctx.ObientPanier(panierId);
             ctx.ViderPanier(panier);
+
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
+
+        [HttpPost]
+        public IActionResult ModifierPanier(int quantite, int Id)
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierService ctx = new PanierService();
+            LignePanierBoutique ligne = ctx.ObtientLigne(Id);
+            Article article = ctx.ObtientArticle(ligne.ArticleId);
+
+
+            ctx.ModifierLigneAbsolue(Id, quantite , article, article.PrixTTC*quantite );
+
+            return RedirectToAction("Panier", new { @panierId = panierId });
+
+        }
+        [HttpPost]
+        public IActionResult SupprimerLigne(int Id)
+        {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierService ctx = new PanierService();
+            LignePanierBoutique ligne = ctx.ObtientLigne(Id);
+
+
+            ctx.SupprimerLignePanier(ligne);
 
             return RedirectToAction("Panier", new { @panierId = panierId });
 

@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Projet2.Data;
 using Projet2.Models;
+using Stripe;
 
 namespace Projet2
 {
@@ -29,7 +31,9 @@ namespace Projet2
 
             services.AddSession(options =>
             {
+
                 options.IdleTimeout = TimeSpan.FromSeconds(600);
+
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
@@ -41,14 +45,20 @@ namespace Projet2
 
             });
             services.AddControllersWithViews();
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Stripe.StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
+
             using (BddContext ctx = new BddContext())
             {
-               ctx.InitializeDb();
+             //  ctx.InitializeDb();
             }
 
             if (env.IsDevelopment())
