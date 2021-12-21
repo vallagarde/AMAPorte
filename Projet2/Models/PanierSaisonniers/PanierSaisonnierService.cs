@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Projet2.Models.Compte;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,17 @@ namespace Projet2.Models.PanierSaisonniers
         public void Dispose()
         {
             _bddContext.Dispose();
+        }
+
+        public List<PanierSaisonnier> ObtenirArticleParAdP(AdP adp)
+        {
+            var queryPanier = from panier in _bddContext.PaniersSaisonniers where panier.AdPId == adp.Id select panier;
+            var paniers = queryPanier.ToList();
+            foreach (PanierSaisonnier panierSaisonnier in paniers)
+            {
+                adp.AssortimentPanier.Add(panierSaisonnier);
+            }
+            return adp.AssortimentPanier;
         }
 
         public int CreerPanierSaisonnier(string nomPanier, string nomProducteur, string produitsProposes, string description, decimal prix, string imagePanier)

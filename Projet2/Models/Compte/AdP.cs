@@ -1,4 +1,5 @@
 ﻿using Projet2.Models.Boutique;
+using Projet2.Models.PanierSaisonniers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -25,7 +26,8 @@ namespace Projet2.Models.Compte
 
         public virtual List<Article> Assortiment { get; set; }
 
-        //public List<?> PanierDuMoment { get; set; }
+        public virtual List<PanierSaisonnier> AssortimentPanier { get; set; }
+
         public bool EstAdP { get; set; }
 
         public Personne Personne { get; set; }
