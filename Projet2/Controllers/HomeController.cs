@@ -5,8 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Projet2.Helpers;
 using Projet2.Models;
 using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 using Projet2.ViewModels;
 
 namespace Projet2.Controllers
@@ -52,6 +54,35 @@ namespace Projet2.Controllers
 
         public IActionResult Inscription()
         {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification" )};
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                HomeViewModel hvm = new HomeViewModel();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                }
+                else if (viewModel.Identifiant.EstAdA == true)
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                }
+                else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
+                {
+                    HomeViewModel hvmAdmin = new HomeViewModel();
+                    hvmAdmin.Identifiant = viewModel.Identifiant;
+                    hvmAdmin.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Index", "Admin", hvmAdmin.Admin);
+                }               
+            }
             return View();
         }
     }

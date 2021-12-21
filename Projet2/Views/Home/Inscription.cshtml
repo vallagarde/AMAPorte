@@ -20,26 +20,7 @@
     @Html.ActionLink("Creation Compte CE", "CreationCompte", "CompteCE")
     <br />
     <br />
-    @Html.ActionLink("Creation Compte Admin", "CreationCompte", "Admin")
-    <br />
-    <br />
-        @if(@Model != null)
-        {
-            @if (@Model.ContactComiteEntreprise.Id != 0)
-            {
-            <p>
-             @Html.ActionLink("Mon Compte CE", "Index", "CompteCE", @Model.ContactComiteEntreprise)
-            </p>
-            }
-
-        }
-        
-    <br />
-    <br />
-    @Html.ActionLink("Mon Compte AdP", "Index", "CompteAdP")
-    <br />
-    <br />
-    @Html.ActionLink("Mon Compte AdA", "Index", "CompteAdA")
+    @Html.ActionLink("Creation Compte Admin", "CreationCompte", "Admin")  
     <br />
     <br />
     @Html.ActionLink("Login", "Index", "Login")
