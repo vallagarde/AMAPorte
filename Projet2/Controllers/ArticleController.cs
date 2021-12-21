@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,10 +40,10 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC)
+        public IActionResult ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC, AdP adp)
         {
             ArticleRessources ctx = new ArticleRessources();
-            ctx.ModifierArticle(id, nom, description, prix, stock, prixTTC);
+            ctx.ModifierArticle(id, nom, description, prix, stock, prixTTC, adp.Id);
             return RedirectToAction("ModifierArticle", new {@Id = id });
 
         }

@@ -54,7 +54,12 @@ namespace Projet2.Controllers
 
         public IActionResult Inscription()
         {
-            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification" )};
+            return View();
+        }
+
+        public IActionResult EspacePersonnel()
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)
             {
                 CompteServices cs = new CompteServices();
@@ -81,9 +86,10 @@ namespace Projet2.Controllers
                     hvmAdmin.Identifiant = viewModel.Identifiant;
                     hvmAdmin.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
                     return RedirectToAction("Index", "Admin", hvmAdmin.Admin);
-                }               
+                }
             }
-            return View();
+            return RedirectToAction("Index", "Login");
         }
+
     }
 }

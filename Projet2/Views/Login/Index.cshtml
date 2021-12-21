@@ -1,13 +1,16 @@
 ﻿@model Projet2.ViewModels.UtilisateurViewModel
 
 
-@if (Model.Authentifie)
+@if (@Model.Authentifie)
 {
     <h3>
         Vous êtes déjà authentifié avec le login :
         @Model.Identifiant.AdresseMail
     </h3>
-    @Html.ActionLink("Voulez-vous vous déconnecter ?", "Deconnexion")
+    <br />
+    @Html.ActionLink("Aller vers mon compte", "EspacePersonnel", "Home")  
+    <br />
+    @Html.ActionLink("Déconnecter", "Deconnexion")
 }
 else
 {

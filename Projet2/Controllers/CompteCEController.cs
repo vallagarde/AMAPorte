@@ -9,6 +9,7 @@ namespace Projet2.Controllers
 {
     public class CompteCEController : Controller
     {
+        //View pour paiement 12€/6 mois 
         //CRUD Compte CE ok, regarder pourquoi la liste des autres CE ne s'affiche pas directement, ajouter quelques attributs (paiement, adresse facturation), warning avant suppression compte
         //adresse avec base de données ? 
         //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 

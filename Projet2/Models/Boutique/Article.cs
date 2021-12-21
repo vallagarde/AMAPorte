@@ -15,7 +15,7 @@ namespace Projet2.Models.Boutique
         public String Image { get; set; }
 
 
-        public int? AdPId { get; set; }
+        public int AdPId { get; set; }
         public AdP AdP { get; set; }
 
         public virtual List<Avis> Avis { get; set; }
