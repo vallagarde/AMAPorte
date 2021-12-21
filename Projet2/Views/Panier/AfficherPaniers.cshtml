@@ -5,38 +5,35 @@
 
 <div> Liste des Paniers saisonniers :  </div>
 <br />
-<div class="row">
+<div class="row row row-cols-1 row-cols-md-4 g-4">
     @foreach (Projet2.Models.PanierSaisonniers.PanierSaisonnier panier in Model)
     {
-        <div class="col m-4">
-            <div class="card" style="width: 18rem;">
-                @*<img src="..." class="card-img-top" alt="...">*@
+        <div class="col">
+            <div class="card h-100">
+                @{
+                    String filepath = "~/ImagesPaniers/" + @panier.Image;
+                }
+                <img src="~/ImagesPaniers/@panier.Image" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title"> Produits </h5>
-                    @foreach (var item in panier.ProduitsProposes)
-                        {
-                            <div>@item.NomProduit</div>
-                        }
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">@panier.NomProducteur</li>
-                    <li class="list-group-item">@panier.Description</li>
-                    <li class="list-group-item">@panier.Prix</li>
-                </ul>
-                <div class="card-body">
+                    <h5 class="card-title">@panier.NomPanier</h5>
+                    <h6 class="card-subtitle my-2">@panier.NomProducteur</h6>
+                    <p class="card-text">@panier.Description</p>
+                    <p class="card-text">@panier.Prix</p>
                     @Html.ActionLink("Modifier", "ModifierPanier", "Panier", new { @id = panier.Id }, new { @class = "btn btn-primary" })
                     @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", new { @id = panier.Id }, new { @class = "card-link" })
+                    @Html.ActionLink("Choisir", "PaiementPanier", "Panier")
                 </div>
             </div>
         </div>
     }
 </div>
-
-
 <div>
     @Html.ActionLink("Ajouter un Panier", "AjouterPanier", "Panier")
 </div>
 
 <div>
     @Html.ActionLink("Un changement?", "ModifierPanier", "Panier")
+</div>
+<div>
+    @Html.ActionLink("Choisir", "PaiementPanier", "Panier")
 </div>

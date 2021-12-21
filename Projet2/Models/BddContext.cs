@@ -48,14 +48,16 @@ namespace Projet2.Models
 
             new PanierSaisonnier { 
                 Id = 1, 
-                ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Pomme" }, new Produit() { NomProduit = "Orange" }, new Produit() { NomProduit = "Avocat" }, new Produit() { NomProduit = "Raisin" } },
+                //ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Pomme" }, new Produit() { NomProduit = "Orange" }, new Produit() { NomProduit = "Avocat" }, new Produit() { NomProduit = "Raisin" } },
+                NomPanier = "Panier de fruits",
+                ProduitsProposes = "Pomme,Orange,Avocat, Raisin",
                 Description = "Produits de saisons", 
                 NomProducteur = "Jean Charles",
-                Prix = 17.450M },
-            new PanierSaisonnier{Id = 2, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "30 oeufs" }, new Produit() { NomProduit = "poulets" } }, Description = "Elévés en plein air", NomProducteur = "Louis Ferrand", Prix = 10.50M},
-            new PanierSaisonnier{Id = 3, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Haut de dinde" }, new Produit() { NomProduit = "Poirreaux" }, new Produit() { NomProduit = "Tommates" }, new Produit() { NomProduit = "Poivrons" } }, Description = "Bio", NomProducteur = "Jeanne Dasilva", Prix = 15.90M},
-            new PanierSaisonnier{Id = 4, ProduitsProposes =  new List<Produit> { new Produit() { NomProduit = "Potiron" }, new Produit() { NomProduit = "Pomme de terre" }, new Produit() { NomProduit = "Melon" } }, Description = "Bio", NomProducteur = "Richard Laurant", Prix = 16.90M}
-
+                Image = "",
+                Prix = 10.450M },
+            new PanierSaisonnier{Id = 2, NomPanier = "Panier d'oeufs", ProduitsProposes = "20 oeufs", Description = "Origine poules elévées en plein air", NomProducteur = "Louis Ferrand", Prix = 3.50M, Image = "eggs.jpg" },
+            new PanierSaisonnier{Id = 3, NomPanier = "Panier mixte", ProduitsProposes = "Haut de dinde, poulet fermier, Poirreaux, Tommates, Poivrons, Carotte", Description = "Bio", NomProducteur = "Jeanne Dasilva", Prix = 15.90M, Image = "vegetables.jpg" },
+            new PanierSaisonnier{Id = 4, NomPanier = "Panier ensoleillé", ProduitsProposes = "Potiron, Pomme de terre, Melon", Description = "Bio", NomProducteur = "Richard Laurant", Prix = 14.50M, Image = "pumpkins.jpg" }
             );
 
             this.SaveChanges();

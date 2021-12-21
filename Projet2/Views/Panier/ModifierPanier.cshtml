@@ -1,37 +1,41 @@
 ﻿@model Projet2.Models.PanierSaisonniers.PanierSaisonnier
 @{
-    ViewData["Title"] ="ModifierPanier";
+    ViewData["Title"] = "ModifierPanier";
 }
 
-<body>
+<div class="container mt-3">
     @using (Html.BeginForm())
     {
     <fieldset>
         <legend>Modifier un Panier : </legend>
-        @Html.LabelFor(m => Model.ProduitsProposes)
-        @foreach (var item in Model.ProduitsProposes)
-        {
-            @Html.TextBoxFor(m => @item.NomProduit)
-        }
-        @*@foreach (var p in Model.ProduitsProposes)
-        {
-            <div>@p.NomProduit</div>
-        }*@
-
-        @*@Html.TextBoxFor(m => @item)*@
-        @*@Html.TextBoxFor(m => Model.ProduitsProposes)*@
-        @Html.ValidationMessageFor(m => Model.ProduitsProposes)
-        <br />
-        @Html.LabelFor(m => Model.Description)
-        @Html.TextBoxFor(m => Model.Description)
+        [Requiered]
+        @Html.LabelFor(m => Model.NomPanier)
+        @Html.TextBoxFor(m => Model.NomPanier)
         <br />
         @Html.LabelFor(m => Model.NomProducteur)
         @Html.TextBoxFor(m => Model.NomProducteur)
         <br />
+        @Html.LabelFor(m => Model.ProduitsProposes)
+        @Html.TextBoxFor(m => Model.ProduitsProposes)
+        @*@foreach (var item in Model.ProduitsProposes)
+        {
+        }*@
+        @*<ul class=" list-group">
+            @foreach (var item in Model.ProduitsProposes)
+            {
+                <a class="list-group-item list-group-item-action " placeholder="Small input" align-content-start asp-controller="Panier" asp-action="ModifierPanier">@item.NomProduit</a>
+            }
+        </ul>*@
+        @Html.ValidationMessageFor(m => Model.ProduitsProposes)
+        <br />
+        @Html.LabelFor(m => Model.Description)
+        @Html.TextAreaFor(m => Model.Description, new { @class = "resizer" })
+
+        <br />
         @Html.LabelFor(m => Model.Prix)
-        @Html.TextBoxFor(m => Model.Prix)
+        @Html.TextBoxFor(m => Model.Prix, "{0:n2}", new { @type = "number" })
         <br />
         <input type="submit" value="Modifier" />
     </fieldset>
     }
-</body>
+</div>

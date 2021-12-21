@@ -22,21 +22,22 @@ namespace Projet2.Models.PanierSaisonniers
 
         public List<PanierSaisonnier> ObtientTousLesPaniers()
         {
-            return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
+            //return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
+            return _bddContext.PaniersSaisonniers.ToList();
         }
-        public List<Produit> ObtientTousLesProduits()
-        {
-            return _bddContext.Produits.ToList();
-        }
+        //public List<Produit> ObtientTousLesProduits()
+        //{
+        //    return _bddContext.Produits.ToList();
+        //}
 
         public void Dispose()
         {
             _bddContext.Dispose();
         }
 
-        public int CreerPanierSaisonnier(List<Produit> produitsProposes, string description, string nomProducteur, decimal prix)
+        public int CreerPanierSaisonnier(string nomPanier, string nomProducteur, string produitsProposes, string description, decimal prix, string imagePanier)
         {
-            PanierSaisonnier panierSaisonnier = new PanierSaisonnier() { ProduitsProposes = produitsProposes, Description = description, NomProducteur = nomProducteur, Prix = prix};
+            PanierSaisonnier panierSaisonnier = new PanierSaisonnier() { NomPanier = nomPanier, NomProducteur = nomProducteur, ProduitsProposes = produitsProposes, Description = description, Prix = prix, Image = imagePanier};
             _bddContext.PaniersSaisonniers.Add(panierSaisonnier);
             _bddContext.SaveChanges();
             return panierSaisonnier.Id;
@@ -49,7 +50,7 @@ namespace Projet2.Models.PanierSaisonniers
             return panierSaisonnier.Id;
         }
 
-        public int ModifierPanierSaisonnier(int Id, List<Produit> produitsProposes, string description, string nomProducteur, decimal prix)
+        public int ModifierPanierSaisonnier(int Id, string nomPanier, string nomProducteur, string produitsProposes, string description, decimal prix)
         {
 
             PanierSaisonnier panierSaisonnier = _bddContext.PaniersSaisonniers.Find(Id);
@@ -58,10 +59,10 @@ namespace Projet2.Models.PanierSaisonniers
             {
 
                 panierSaisonnier.Id = Id;
- 
+                panierSaisonnier.NomPanier = nomPanier;
+                panierSaisonnier.NomProducteur = nomProducteur;
                 panierSaisonnier.ProduitsProposes = produitsProposes;
                 panierSaisonnier.Description = description;
-                panierSaisonnier.NomProducteur = nomProducteur;
                 panierSaisonnier.Prix = prix;
                 _bddContext.SaveChanges();
             }
@@ -74,7 +75,6 @@ namespace Projet2.Models.PanierSaisonniers
 
             if (panierSaisonnier != null)
             {
-
                 _bddContext.PaniersSaisonniers.Update(panierSaisonnier);
                 _bddContext.SaveChanges();
             }
@@ -91,29 +91,21 @@ namespace Projet2.Models.PanierSaisonniers
             if (panierSaisonnier != null)
             {
                 _bddContext.PaniersSaisonniers.Remove(panierSaisonnier);
-
-
-
-
-
-
-
-                SupprimerProduitPropose(panierSaisonnier.ProduitsProposes);
+                //SupprimerProduitPropose(panierSaisonnier.ProduitsProposes);
                 _bddContext.SaveChanges();
             }
 
         }
 
-        public void SupprimerProduitPropose (List<Produit> list)
-        {
-
-            Produit produitpropose = _bddContext.Produits.Find();
-            if (produitpropose != null)
-            {
-                _bddContext.Produits.Remove(produitpropose);
-                _bddContext.SaveChanges();
-            }
-        }
+        //public void SupprimerProduitPropose (List<Produit> list)
+        //{
+        //    Produit produitpropose = _bddContext.Produits.Find();
+        //    if (produitpropose != null)
+        //    {
+        //        _bddContext.Produits.Remove(produitpropose);
+        //        _bddContext.SaveChanges();
+        //    }
+        //}
         //public void ChercherProduit(string id)
         //{
         //    Produit produit = _bddContext().Produits.ToList();

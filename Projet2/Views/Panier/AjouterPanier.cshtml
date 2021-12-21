@@ -1,27 +1,33 @@
-﻿@model Projet2.Models.PanierSaisonniers.PanierSaisonnier
+﻿@*@model Projet2.Models.PanierSaisonniers.PanierSaisonnier*@
+@model Projet2.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "AjouterPanier";
 }
 
 <body>
-    @using (Html.BeginForm())
-    {
-    <fieldset>
-        <legend>Ajouter un Panier : </legend>
-        @Html.LabelFor(m => Model.ProduitsProposes)
-        @Html.TextBoxFor(m => Model.ProduitsProposes)
-        @Html.ValidationMessageFor(m => Model.ProduitsProposes)
-        <br />
-        @Html.LabelFor(m => Model.Description)
-        @Html.TextBoxFor(m => Model.Description)
-        <br />
-        @Html.LabelFor(m => Model.NomProducteur)
-        @Html.TextBoxFor(m => Model.NomProducteur)
-        <br />
-        @Html.LabelFor(m => Model.Prix)
-        @Html.TextBoxFor(m => Model.Prix)
-        <br />
-        <input type="submit" value="Ajouter" />
-    </fieldset>
-    }
+    <form enctype="multipart/form-data" method="post" asp-controller="Panier" asp-action="AjouterPanier">
+        <fieldset>
+            <legend>Ajouter un Panier : </legend>
+            @Html.LabelFor(m => Model.PanierSaisonnier)
+            @Html.TextBoxFor(m => Model.PanierSaisonnier.NomPanier)
+            <br />
+            @Html.LabelFor(m => Model.PanierSaisonnier.NomProducteur)
+            @Html.TextBoxFor(m => Model.PanierSaisonnier.NomProducteur)
+            <br />
+            @Html.LabelFor(m => Model.PanierSaisonnier.ProduitsProposes)
+            @Html.TextBoxFor(m => Model.PanierSaisonnier.ProduitsProposes)
+            @Html.ValidationMessageFor(m => Model.PanierSaisonnier.ProduitsProposes)
+            <br />
+            @Html.LabelFor(m => Model.PanierSaisonnier.Description)
+            @Html.TextBoxFor(m => Model.PanierSaisonnier.Description)
+            <br />
+            @Html.LabelFor(m => Model.PanierSaisonnier.Prix)
+            @Html.TextBoxFor(m => Model.PanierSaisonnier.Prix, "{0:n2}")
+            <br />
+            <input name="fileToUpload" type="file" value="browse" />
+            @Html.EditorFor(model => model.Upload.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Upload.Name, "", new { @class = "text-danger" })
+            <input type="submit" value="Ajouter" />
+        </fieldset>
+        </form>
 </body>

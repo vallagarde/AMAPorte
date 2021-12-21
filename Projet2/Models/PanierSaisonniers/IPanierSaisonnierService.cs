@@ -9,9 +9,9 @@ namespace Projet2.Models.PanierSaisonniers
     {
         void DeleteCreateDatabase();
         List<PanierSaisonnier> ObtientTousLesPaniers();
-        int CreerPanierSaisonnier(List<Produit> produitsProposes, string description, string nomProducteur, decimal prix);
+        int CreerPanierSaisonnier(string nomPanier, string nomProducteur, string produitsProposes, string description, decimal prix, string image);
         int CreerPanierSaisonnier(PanierSaisonnier panierSaisonnier);
-        int ModifierPanierSaisonnier(int Id, List<Produit> produitsProposes, string description, string nomProducteur, decimal prix);
+        int ModifierPanierSaisonnier(int Id, string nomPanier, string nomProducteur, string produitsProposes, string description, decimal prix);
         int ModifierPanierSaisonnier(PanierSaisonnier panierSaisonnier);
         void SupprimerPanierSaisonnier(int Id);
     }
