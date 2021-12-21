@@ -27,7 +27,7 @@ namespace Projet2.Models.Compte
 
         public string AdresseMail { get; set; }
 
-        public static bool EstCE { get; set; }
+        public bool EstCE { get; set; }
 
 
         public ContactComiteEntreprise()

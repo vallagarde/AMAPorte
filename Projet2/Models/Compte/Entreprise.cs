@@ -39,7 +39,7 @@ namespace Projet2.Models.Compte
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
         public bool EstEnAccord { get; set; }
 
-        public int AvisId { get; set; }
+        public int? AvisId { get; set; }
         public Avis Avis { get; set; }
 
 

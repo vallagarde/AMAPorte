@@ -18,14 +18,18 @@ namespace Projet2.Models.Compte
 
         //AdA functions
         List<AdA> ObtenirTousLesAdAs();
+        AdA ObtenirAdAParIdentifiant(int id);
         AdA ObtenirAdAParPersonne(int id);
-        AdA CreerAdA(Personne personne, Adresse adresse);
+        AdA ObtenirAdAParId(int id);
+        AdA CreerAdA(Personne personne, Adresse adresse, AdA ada);
         AdA ModifierAdA(AdA ada);
         void SupprimerAdA(int Id);
 
         //AdP functions
         List<AdP> ObtenirTousLesAdPs();
+        AdP ObtenirAdPParIdentifiant(int id);
         AdP ObtenirAdPParPersonne(int id);
+        AdP ObtenirAdPParId(int id);
         AdP CreerAdP(Personne personne, Adresse adresse, AdP adp);
         AdP ModifierAdP(AdP adpAModifier);
         void SupprimerAdP(int Id);
@@ -34,6 +38,7 @@ namespace Projet2.Models.Compte
         List<ContactComiteEntreprise> ObtenirTousLesCCEs();
         ContactComiteEntreprise ObtenirCCEParIdentifiant(int id);
         List<ContactComiteEntreprise> ObtenirCCEsParEntreprise(int id);
+        ContactComiteEntreprise ObtenirCCEParId(int id);
         ContactComiteEntreprise CreerCCE(ContactComiteEntreprise cce, Entreprise entreprise, Adresse adresse);
         ContactComiteEntreprise ModifierCCE(ContactComiteEntreprise cce);
         void SupprimerCCE(int Id);
@@ -62,7 +67,7 @@ namespace Projet2.Models.Compte
 
 
         // Authentification functions
-        int AjouterIdentifiant(string userName, string password);
+        int AjouterIdentifiant(Identifiant identifiant);
         Identifiant ModifierIdentifiant(Identifiant identifiant);
         void SupprimerIdentifiant(int Id);
         Identifiant Authentifier(string userName, string password);

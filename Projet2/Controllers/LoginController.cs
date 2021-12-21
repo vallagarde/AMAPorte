@@ -4,10 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Projet2.Models.Compte;
+using Projet2.Helpers;
 
 namespace Projet2.Controllers
 {
     public class LoginController : Controller
+        //ajouter une option mot de passe oublié
+        //ajouter des authentifications sur des espaces member only 
+        //ajouter un identifiant avec un adresse mail (verifier si existe pas encore)
+
     {
         private CompteServices cptressource;
         private HomeViewModel hvm = new HomeViewModel();
@@ -17,7 +22,8 @@ namespace Projet2.Controllers
         }
         public IActionResult Index()
         {
-            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            //UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = HttpContext.User.Identity.IsAuthenticated };
             if (viewModel.Authentifie)
             {
                 viewModel.Identifiant = cptressource.ObtenirIdentifiant(HttpContext.User.Identity.Name);
@@ -44,6 +50,9 @@ namespace Projet2.Controllers
                     var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                     HttpContext.SignInAsync(userPrincipal);
 
+                    bool EstUtilisateur = true; 
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
+
                     if (!string.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                         return Redirect(returnUrl);
 
@@ -56,17 +65,20 @@ namespace Projet2.Controllers
                     {
                         hvm.AdA = cptressource.ObtenirAdAParPersonne(hvm.Personne.Id);
                         hvm.AdP = cptressource.ObtenirAdPParPersonne(hvm.Personne.Id);
-
-                        if (hvm.AdA.Id != 0)
+                        if (hvm.AdA != null)
                         {
-                            return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                            if (hvm.AdA.Id != 0)
+                            {
+                                return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                            }
                         }
-
-                        else if (hvm.AdP.Id != 0)
+                        if (hvm.AdP != null)
                         {
-                            return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                            if (hvm.AdP.Id != 0)
+                            {
+                                return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                            }
                         }
-
                     }
                     else if (hvm.ContactComiteEntreprise != null)
                     {
@@ -82,7 +94,6 @@ namespace Projet2.Controllers
                         return Redirect("/");
                     }
 
-                   
                 }
                 ModelState.AddModelError("Identifiant.AdresseMail", "Mail et/ou mot de passe incorrect(s)");
             }
