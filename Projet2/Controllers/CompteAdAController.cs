@@ -75,6 +75,7 @@ namespace Projet2.Controllers
 
                         int id = cs.AjouterIdentifiant(identifiant);
 
+
                         var userClaims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.Name, id.ToString()),
