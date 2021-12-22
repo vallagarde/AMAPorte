@@ -10,7 +10,7 @@
 }
 
 <div>
-    <form asp-action="Charge" asp-controller="Payment" method="post">
+    <form asp-action="Commande" asp-controller="Payment" method="post">
         <article>
             <label>Amount: @Model.PanierBoutique.Total</label>
             <script src="//checkout.stripe.com/v2/checkout.js"
@@ -18,7 +18,7 @@
                 data-key="@Stripe.Value.PublishableKey"
                 data-locale="auto"
                 data-description="Paiment"
-                data-amount="@Model.PanierBoutique.Total*100"></script>
+                data-amount="@Model.PanierBoutique.Total"></script>
         </article>
     </form>
 </div>

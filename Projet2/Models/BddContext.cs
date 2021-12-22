@@ -15,6 +15,7 @@ namespace Projet2.Models
         public DbSet<Boutiques> Boutiques { get; set; }
         public DbSet<LignePanierBoutique> LignePanierBoutique { get; set; }
         public DbSet<PanierBoutique> PanierBoutique { get; set; }
+        public DbSet<Commande> Commande { get; set; }
 
         //context compte
         public DbSet<AdA> AdAs { get; set; }

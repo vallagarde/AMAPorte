@@ -42,6 +42,7 @@ namespace Projet2.ViewModels
         public Entreprise Entreprise = new Entreprise();
         public ContactComiteEntreprise ContactComiteEntreprise = new ContactComiteEntreprise();
         public Admin Admin = new Admin();
+        public Client Client = new Client();
         public List<AdA> ListeComptesAdA = new List<AdA>();
         public List<AdP> ListeComptesAdP = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();

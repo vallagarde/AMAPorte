@@ -213,6 +213,11 @@ namespace Projet2.Models.Boutique
             _bddContext.SaveChanges();
 
         }
+        public void CreerCommande(Commande commande)
+        {
+            _bddContext.Commande.Add(commande);
+            _bddContext.SaveChanges();
 
+        }
     }
 }
