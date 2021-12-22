@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
@@ -28,20 +29,19 @@ namespace Projet2.Controllers
 
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
-        public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
+        public IActionResult Index(HomeViewModel hvm)
         {
 
-            if (contactComiteEntreprise.Id == 0)
+            if (hvm.ContactComiteEntreprise.Id == 0)
             {
                 return View("Error");
             }
             else
             {
-                hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
                 hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
-                hvm.Identifiant = cs.ObtenirIdentifiant(contactComiteEntreprise.IdentifiantId);
-                hvm.ContactComiteEntreprise = contactComiteEntreprise;
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
                 return View(hvm);
             }
         }
@@ -74,16 +74,17 @@ namespace Projet2.Controllers
 
                 var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                 HttpContext.SignInAsync(userPrincipal);
+                bool EstUtilisateur = true;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
-                
                 contactComiteEntreprise.IdentifiantId = id;
                 contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
 
                 hvm.ContactComiteEntreprise = cs.CreerCCE(contactComiteEntreprise, entreprise, adresse);
-                hvm.Entreprise = entreprise;
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-                hvm.Adresse = adresse;
-                hvm.Identifiant = identifiant;
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
 
                 return View("Index", hvm);
             }
