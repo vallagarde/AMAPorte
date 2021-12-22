@@ -97,10 +97,9 @@ namespace Projet2.Controllers
                 }
                 else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
                 {
-                    HomeViewModel hvmAdmin = new HomeViewModel();
-                    hvmAdmin.Identifiant = viewModel.Identifiant;
-                    hvmAdmin.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
-                    return RedirectToAction("Index", "Admin", hvmAdmin.Admin);
+                    hvm.Identifiant = viewModel.Identifiant;
+                    hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Index", "Admin", hvm.Admin);
                 }
             }
             return RedirectToAction("Index", "Login");

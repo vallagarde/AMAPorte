@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Projet2.Models.PanierSaisonniers;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Projet2.Models.Compte
@@ -29,6 +30,7 @@ namespace Projet2.Models.Compte
 
         public bool EstCE { get; set; }
 
+        public virtual List<LignePanierSaisonnier> CommandesPanierEffectues { get; set; }
 
         public ContactComiteEntreprise()
         {

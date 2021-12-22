@@ -1,4 +1,4 @@
-﻿@model Projet2.Models.PanierSaisonniers.PanierSaisonnier
+﻿@model Projet2.ViewModels.HomeViewModel
 @{
     ViewData["Title"] = "PaiementPanier";
 }
@@ -6,19 +6,19 @@
 <div class="container">
     <div class="col">
         @{
-            String filepath = "~/ImagesPaniers/" + @Model.Image;
+            String filepath = "~/ImagesPaniers/" + @Model.PanierSaisonnier.Image;
         }
-        <img src="~ /ImagesPaniers/@Model.Image" class="card-img-top" alt="...">
+        <img src="~ /ImagesPaniers/@Model.PanierSaisonnier.Image" class="card-img-top" alt="...">
     </div>
 
     <div class="col">
-        <h5 class="">@Model.NomPanier</h5>
-        <h6 class=" my-2">@Model.NomProducteur</h6>
-        <p class="">@Model.Description</p>
-        <p class="">@Model.Prix</p>
+        <h5 class="">@Model.PanierSaisonnier.NomPanier</h5>
+        <h6 class=" my-2">@Model.PanierSaisonnier.AdP.NomProducteur</h6>
+        <p class="">@Model.PanierSaisonnier.Description</p>
+        <p class="">@Model.PanierSaisonnier.Prix</p>
         <p>Durée d'abonnement</p>
-        @Html.ActionLink("Modifier", "PaiementPanier", "Panier", new { @id = Model.Id }, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Annuler", "AfficherPanier", "Panier", new { @id = Model.Id }, new { @class = "card-link" })
+        @Html.ActionLink("Modifier", "PaiementPanier", "Panier", @Model.PanierSaisonnier.Id, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Annuler", "AfficherPanier", "Panier", @Model.PanierSaisonnier.Id, new { @class = "card-link" })
     </div>
 </div>
 

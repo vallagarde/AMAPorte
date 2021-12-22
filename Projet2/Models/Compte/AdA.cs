@@ -28,11 +28,8 @@ namespace Projet2.Models.Compte
 
         public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
 
-
         public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
 
-
-        //public List<?> CommandesPanierEffectues { get; set; }
 
         public int? AvisId { get; set; }
         public Avis Avis { get; set; }

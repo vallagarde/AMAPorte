@@ -60,7 +60,7 @@ namespace Projet2.Models.Boutique
                     article.Prix = prix;
                     article.PrixTTC = prixTTC;
                     article.Stock = stock;
-                    //article.AdPId = adpId;
+                    article.AdPId = adpId;
                     _bddContext.SaveChanges();
                 }          
                 return article.Id;

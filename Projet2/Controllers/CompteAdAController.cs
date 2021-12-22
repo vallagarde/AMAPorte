@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 
 namespace Projet2.Controllers
 {
+    [Authorize]
     public class CompteAdAController : Controller
     {
         //View pour paiement 12€/6 mois 
@@ -42,6 +44,7 @@ namespace Projet2.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult CreationCompte()
         {
@@ -49,6 +52,7 @@ namespace Projet2.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse)
         {

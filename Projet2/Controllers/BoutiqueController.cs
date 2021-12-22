@@ -51,44 +51,35 @@ namespace Projet2.Controllers
                 {
                     AdP adp = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
                     ctx.CreerArticle(nom, description, prix, stock, prixTTC, FileToUpload.FileName, adp.Id);
-                } 
-            }
-            else
-            {
-                RedirectToAction("Index", "Login");
-            }
-            // mettre le file dans le dossier
-
-            var FileDic = "Files";
-
-            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
-
-            if (!Directory.Exists(FilePath))
-
-                Directory.CreateDirectory(FilePath);
-
-            var fileName = FileToUpload.FileName;
-
-            var filePath = Path.Combine(FilePath, fileName);
-
-
-
-            using (FileStream fs = System.IO.File.Create(filePath))
-
-            {
-
-                FileToUpload.CopyTo(fs);
-
                 
+            
+            
+                    // mettre le file dans le dossier
 
-            }
+                    var FileDic = "Files";
 
-            HomeViewModel hvm = new HomeViewModel
-            {
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+                    string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
 
-            };
-            return View(hvm);
+                    if (!Directory.Exists(FilePath))
+
+                        Directory.CreateDirectory(FilePath);
+
+                    var fileName = FileToUpload.FileName;
+
+                    var filePath = Path.Combine(FilePath, fileName);
+
+                        using (FileStream fs = System.IO.File.Create(filePath))
+
+                        {
+
+                            FileToUpload.CopyTo(fs);
+                        }
+                        return RedirectToAction("GestionBoutique", "EspaceAdP", adp);
+
+
+                        }
+                } return RedirectToAction("Index", "Login");            
+
         }
 
         [HttpGet]
