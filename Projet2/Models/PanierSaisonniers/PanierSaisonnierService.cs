@@ -47,9 +47,9 @@ namespace Projet2.Models.PanierSaisonniers
             return adp.AssortimentPanier;
         }
 
-        public int CreerPanierSaisonnier(string nomPanier, string produitsProposes, string description, decimal prix, string imagePanier)
+        public int CreerPanierSaisonnier(string nomPanier, string produitsProposes, string description, decimal prix, string imagePanier, int adpId)
         {
-            PanierSaisonnier panierSaisonnier = new PanierSaisonnier() { NomPanier = nomPanier,  ProduitsProposes = produitsProposes, Description = description, Prix = prix, Image = imagePanier, AdPId = 0};
+            PanierSaisonnier panierSaisonnier = new PanierSaisonnier() { NomPanier = nomPanier,  ProduitsProposes = produitsProposes, Description = description, Prix = prix, Image = imagePanier, AdPId = adpId};
             _bddContext.PanierSaisonniers.Add(panierSaisonnier);
             _bddContext.SaveChanges();
             return panierSaisonnier.Id;

@@ -75,7 +75,8 @@ namespace Projet2.Controllers
                 }
             }
 
-                ctx.CreerPanierSaisonnier(panierSaisonnier.NomPanier, panierSaisonnier.ProduitsProposes, panierSaisonnier.Description, panierSaisonnier.Prix, fileToUpload.FileName);
+                panierSaisonnier.AdPId = 1;
+                ctx.CreerPanierSaisonnier(panierSaisonnier.NomPanier, panierSaisonnier.ProduitsProposes, panierSaisonnier.Description, panierSaisonnier.Prix, fileToUpload.FileName, panierSaisonnier.AdPId);
 
                 var FileDic = "Files";
 

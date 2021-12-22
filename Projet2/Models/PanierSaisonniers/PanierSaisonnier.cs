@@ -12,6 +12,7 @@ namespace Projet2.Models.PanierSaisonniers
         public string NomPanier { get; set; }
         //public virtual List<Produit> ProduitsProposes { get; set; }
         public virtual string ProduitsProposes { get; set; }
+
         //public string NomProducteur { get; set; }
         public string Description { get; set; }
         public decimal Prix { get; set; }
