@@ -17,7 +17,8 @@ namespace Projet2.Controllers
         //OK\\ ajouter des articles à la boutique, les modifier,  les supprimer, les afficher dans son espace personnel
         //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
         //PANIER
-        //!\\ajouter des paniers s., les modifier, les supprimer (qu'avant une date specifique prennant en compte les commandes en amont) les afficher dans son espace personnel,
+        //OK\\ajouter des paniers s., les modifier, les supprimer  les afficher dans son espace personnel,
+        //> A FAIRE (liaison avec une date specifique prennant en compte les commandes en amont)
         //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
         //ATELIER
         //!\\ajouter des ateliers, les modifier, les annuler, les afficher dans son espace personnel
@@ -141,6 +142,7 @@ namespace Projet2.Controllers
                     pss.SupprimerPanierSaisonnier(panierSaisonnier.Id);
                     return RedirectToAction("GestionPanier", "EspaceAdP", adp);
                 }
+
                 return RedirectToAction("EspacePersonnel", "Home");
             }
             else
