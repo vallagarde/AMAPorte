@@ -6,6 +6,8 @@ namespace Projet2.ViewModels
     {
         public Identifiant Identifiant { get; set; }
         public bool Authentifie { get; set; }
+        public int PanierId { get; set; }
+
 
     }
 }

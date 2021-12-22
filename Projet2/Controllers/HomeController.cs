@@ -24,12 +24,22 @@ namespace Projet2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            HomeViewModel hvm = new HomeViewModel
+            {
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            HomeViewModel hvm = new HomeViewModel
+            {
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
         }
         public IActionResult Producteur()
         {
@@ -38,8 +48,8 @@ namespace Projet2.Controllers
 
             HomeViewModel hvm = new HomeViewModel
             {
-               
-                Boutiques = new Boutiques(){ Articles = articles, NombreArticle = articles.Count},
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId"),
+                Boutiques = new Boutiques(){ Articles = articles, NombreArticle = articles.Count}
                 
             };
 
@@ -54,7 +64,12 @@ namespace Projet2.Controllers
 
         public IActionResult Inscription()
         {
-            return View();
+            HomeViewModel hvm = new HomeViewModel
+            {
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
         }
 
         public IActionResult EspacePersonnel()

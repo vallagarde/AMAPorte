@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Projet2.Helpers;
 
 namespace Projet2.Models.Boutique
 {
@@ -12,7 +14,7 @@ namespace Projet2.Models.Boutique
         {
             _bddContext = new BddContext();
         }
-
+        
         public List<PanierBoutique> ObtientTousLesPaniers()
         {
             return _bddContext.PanierBoutique.ToList();
