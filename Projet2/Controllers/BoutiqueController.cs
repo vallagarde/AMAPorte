@@ -180,6 +180,8 @@ namespace Projet2.Controllers
             PanierService ctx = new PanierService();
             PanierBoutique panier = ctx.ObientPanier(panierId);
             List < LignePanierBoutique > liste = panier.LignePanierBoutiques ;
+            ctx.CalculerTotalPanier(panierId);
+
             HomeViewModel hvm = new HomeViewModel
             {
 
@@ -195,6 +197,7 @@ namespace Projet2.Controllers
         public IActionResult IPanier()
         {
             int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }

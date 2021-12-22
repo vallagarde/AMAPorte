@@ -54,5 +54,12 @@
 
 </div>
 <a class="btn btn-primary" type="button" asp-area="" asp-controller="Boutique" asp-action="ViderPanier">Vider le Panier</a>
-<a class="btn btn-primary" type="button" asp-area="" asp-controller="Payment" asp-action="Paiement">Paiment</a>
+<form method="post" asp-controller="Payment" asp-action="EtapePaiement">
+
+    <label for="Total">Total = @Model.PanierBoutique.Total</label>
+
+    <input type="hidden" name="Total" value="@Model.PanierBoutique.Total" />
+
+    <div class="col-2"><button class="btn btn-primary" type="submit">Paiment</button></div>
+</form>
 
