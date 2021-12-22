@@ -56,32 +56,35 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse)
         {
-
-            if (personne != null && identifiant != null && adresse != null)
+            if (personne.EstEnAccord == true)
             {
-                AdA ada = new AdA() { EstAdA = true };
-                identifiant.EstAdA = ada.EstAdA;
-                
-                int id = cs.AjouterIdentifiant(identifiant);
-
-                var userClaims = new List<Claim>()
+                if (personne != null && identifiant != null && adresse != null)
                 {
-                    new Claim(ClaimTypes.Name, id.ToString()),
-                };
+                    AdA ada = new AdA() { EstAdA = true };
+                    identifiant.EstAdA = ada.EstAdA;
 
-                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                    int id = cs.AjouterIdentifiant(identifiant);
 
-                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                HttpContext.SignInAsync(userPrincipal);
+                    var userClaims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, id.ToString()),
+                    };
 
-                personne.IdentifiantId = id;
+                    var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
-                hvm.AdA = cs.CreerAdA(personne, adresse, ada);
-                hvm.Personne = personne;
-                hvm.Adresse = adresse;
-                hvm.Identifiant = identifiant;
+                    var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                    HttpContext.SignInAsync(userPrincipal);
 
-                return View("Index", hvm);
+                    personne.IdentifiantId = id;
+
+                    hvm.AdA = cs.CreerAdA(personne, adresse, ada);
+                    hvm.Personne = personne;
+                    hvm.Adresse = adresse;
+                    hvm.Identifiant = identifiant;
+
+                    return View("Index", hvm);
+                }
+
             }
             return View();
 

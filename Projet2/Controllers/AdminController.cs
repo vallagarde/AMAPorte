@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
@@ -7,11 +8,12 @@ using System.Security.Claims;
 
 namespace Projet2.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
 
         //TOUS LES VUES LIE A GESTION : GCRA; GCCQ; DSI
-        //CRUD pour le compte Admin > OK, , warning avant suppression compte
+        //CRUD pour le compte Admin > OK, > warning avant suppression compte a ajouter
         //Afficher tous les comptes OK > recherche dans les tableaux a implementer, ajouter des données dans le tableau 
         //Afficher et Valider (ou envoyer des retours sur) les propositions d'articles et panier des producteurs 
         //Ajouter des Articles ou Paniers ou Ateliers pour un producteur 
@@ -34,12 +36,14 @@ namespace Projet2.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult CreationCompte()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult CreationCompte(Admin admin, Identifiant identifiant)
         {
