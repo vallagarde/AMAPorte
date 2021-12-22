@@ -16,7 +16,6 @@
                 <img src="~/ImagesPaniers/@panierSaisonnier.Image" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
-                    <h6 class="card-subtitle my-2">@panierSaisonnier.AdP.NomProducteur</h6>
                     <p class="card-text">@panierSaisonnier.Description</p>
                     <p class="card-text">@panierSaisonnier.Prix</p>
                     @Html.ActionLink("Modifier", "ModifierPanier", "Panier", @panierSaisonnier.Id, new { @class = "btn btn-primary" })
