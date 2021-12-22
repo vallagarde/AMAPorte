@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
 using Projet2.Models.PanierSaisonniers;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,6 @@ namespace Projet2.Controllers
     public class PanierController : Controller
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-
         public PanierController(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
@@ -87,5 +87,18 @@ namespace Projet2.Controllers
             ctx.SupprimerPanierSaisonnier(id);
             return RedirectToAction("AfficherPaniers");
         }
+
+        public bool PanierIsEmpty()
+        {
+            try
+            {
+                int PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+                return PanierId == 0;
+            }catch (Exception e)
+            {
+                return true;
+            }
+         }
     }
 }

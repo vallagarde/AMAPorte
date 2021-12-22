@@ -42,7 +42,7 @@ namespace Projet2.Models
 
         public void InitializeDb()
         {
-            //this.Database.EnsureDeleted();
+            this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
     }

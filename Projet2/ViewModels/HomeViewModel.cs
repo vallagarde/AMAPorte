@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Projet2.Helpers;
 using Projet2.Models;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
@@ -12,6 +14,8 @@ namespace Projet2.ViewModels
         public Boutiques Boutiques = new Boutiques();
         public Article Article = new Article();
         public Upload Upload = new Upload();
+        public int PanierId { get; set; }
+        public PanierBoutique PanierBoutique = new PanierBoutique();
 
         //Paniers
         public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();

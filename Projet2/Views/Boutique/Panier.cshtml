@@ -1,4 +1,4 @@
-﻿@model Projet2.Models.Boutique.PanierBoutique
+﻿@model Projet2.ViewModels.HomeViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -17,7 +17,7 @@
         <div class="col-2"></div>
     </div>
 
-    @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.LignePanierBoutiques)
+    @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.PanierBoutique.LignePanierBoutiques)
     {
 
         var prixTTC = Decimal.Round(ligne.Article.PrixTTC, 2);

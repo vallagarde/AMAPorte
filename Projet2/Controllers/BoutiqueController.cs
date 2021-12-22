@@ -28,7 +28,12 @@ namespace Projet2.Controllers
         // GET: /<controller>/
         public IActionResult AjouterArticle()
         {
-            return View();
+            HomeViewModel hvm = new HomeViewModel
+            {
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
 
         }
 
@@ -74,9 +79,16 @@ namespace Projet2.Controllers
 
                 FileToUpload.CopyTo(fs);
 
-                return View();
+                
 
             }
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
         }
 
         [HttpGet]
@@ -85,7 +97,15 @@ namespace Projet2.Controllers
             ArticleRessources ctx = new ArticleRessources();
             Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
 
-            return View(article);
+            HomeViewModel hvm = new HomeViewModel
+            {
+                Article = article,
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+
+
+            return View(hvm);
 
         }
 
@@ -110,6 +130,7 @@ namespace Projet2.Controllers
             {
 
                 Boutiques = new Boutiques() { Articles = articles, NombreArticle = articles.Count },
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
             };
             return View(hvm);
@@ -124,9 +145,10 @@ namespace Projet2.Controllers
             HomeViewModel hvm = new HomeViewModel
             {
 
-                Article = article
+                Article = article,
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
-            };
+             };
             return View(hvm);
 
         }
@@ -167,7 +189,16 @@ namespace Projet2.Controllers
             PanierService ctx = new PanierService();
             PanierBoutique panier = ctx.ObientPanier(panierId);
             List < LignePanierBoutique > liste = panier.LignePanierBoutiques ;
-            return View(panier);
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                PanierBoutique = panier,
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
+
+            
 
         }
         public IActionResult IPanier()
