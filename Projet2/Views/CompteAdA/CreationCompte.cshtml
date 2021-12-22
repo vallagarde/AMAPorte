@@ -37,6 +37,13 @@
     <br />
         @Html.LabelFor(m => Model.Personne.DateNaissance) :
         @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date"})
+        @if(@Model!= null)
+        {
+            @if(@Model.Personne.EstMajeur == false)
+            {
+            <p>"Vous ne pouvez pas créer un compte AMAPorte si vous n'êtes pas majeur."</p>
+            }
+        }
     <br />
         @Html.LabelFor(m => Model.Personne.NTelephone) :
         @Html.TextBoxFor(m => Model.Personne.NTelephone)
@@ -65,6 +72,10 @@
      <br />
         <input type="submit" value="Créer"/>
     }
+
+    
+
+
     <br /><br />  
     <div>
     @Html.ActionLink("Retour sur la page principale", "Index", "Home")

@@ -102,6 +102,8 @@ namespace Projet2.Controllers
 
         public ActionResult Deconnexion()
         {
+            bool EstUtilisateur = false;
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
             return Redirect("/");
         }

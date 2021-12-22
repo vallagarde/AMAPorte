@@ -29,15 +29,16 @@ namespace Projet2.Controllers
 
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
-        public IActionResult Index(HomeViewModel hvm)
+        public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
         {
 
-            if (hvm.ContactComiteEntreprise.Id == 0)
+            if (contactComiteEntreprise.Id == 0)
             {
                 return View("Error");
             }
             else
             {
+                hvm.ContactComiteEntreprise = contactComiteEntreprise;
                 hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
                 hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);

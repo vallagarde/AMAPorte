@@ -23,8 +23,14 @@ namespace Projet2.Models.PanierSaisonniers
 
         public List<PanierSaisonnier> ObtientTousLesPaniers()
         {
+            List<PanierSaisonnier> listePaniers = _bddContext.PanierSaisonniers.ToList();
+            foreach (PanierSaisonnier panierSaisonnier in listePaniers)
+            {
+                var queryAdP = from adp in _bddContext.AdPs where adp.Id == panierSaisonnier.AdPId select adp;
+                panierSaisonnier.AdP = queryAdP.First();
+            }
             //return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
-            return _bddContext.PanierSaisonniers.ToList();
+            return listePaniers;
         }
         //public List<Produit> ObtientTousLesProduits()
         //{
@@ -42,6 +48,7 @@ namespace Projet2.Models.PanierSaisonniers
             var paniers = queryPanier.ToList();
             foreach (PanierSaisonnier panierSaisonnier in paniers)
             {
+                panierSaisonnier.AdP = adp;
                 adp.AssortimentPanier.Add(panierSaisonnier);
             }
             return adp.AssortimentPanier;
