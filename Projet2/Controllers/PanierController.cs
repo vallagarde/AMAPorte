@@ -18,7 +18,6 @@ namespace Projet2.Controllers
         private HomeViewModel hvm = new HomeViewModel();
         private PanierSaisonnierService ctx = new PanierSaisonnierService();
         private readonly IWebHostEnvironment _webHostEnvironment;
-
         public PanierController(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
@@ -130,5 +129,18 @@ namespace Projet2.Controllers
             ctx.SupprimerPanierSaisonnier(id);
             return RedirectToAction("AfficherPaniers");
         }
+
+        public bool PanierIsEmpty()
+        {
+            try
+            {
+                int PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+                return PanierId == 0;
+            }catch (Exception e)
+            {
+                return true;
+            }
+         }
     }
 }
