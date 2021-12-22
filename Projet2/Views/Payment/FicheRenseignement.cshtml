@@ -11,17 +11,17 @@
 <fieldset>
     <h2> Personne </h2>
     <br />
-    @Html.LabelFor(m => Model.Personne.Nom) :
-    @Html.TextBoxFor(m => Model.Personne.Nom)
+    @Html.LabelFor(m => Model.Client.Nom) :
+    @Html.TextBoxFor(m => Model.Client.Nom)
     <br />
-    @Html.LabelFor(m => Model.Personne.Prenom) :
-    @Html.TextBoxFor(m => Model.Personne.Prenom)
+    @Html.LabelFor(m => Model.Client.Prenom) :
+    @Html.TextBoxFor(m => Model.Client.Prenom)
     <br />
-    @Html.LabelFor(m => Model.Personne.DateNaissance) :
-    @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date" })
+    @Html.LabelFor(m => Model.Client.DateNaissance) :
+    @Html.TextBoxFor(m => Model.Client.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date" })
     <br />
-    @Html.LabelFor(m => Model.Personne.NTelephone) :
-    @Html.TextBoxFor(m => Model.Personne.NTelephone)
+    @Html.LabelFor(m => Model.Client.NTelephone) :
+    @Html.TextBoxFor(m => Model.Client.NTelephone)
     <br />
     @Html.LabelFor(m => Model.Adresse.Numero) :
     @Html.TextBoxFor(m => Model.Adresse.Numero)
@@ -38,8 +38,8 @@
     @Html.LabelFor(m => Model.Adresse.Pays) :
     @Html.TextBoxFor(m => Model.Adresse.Pays)
     <br />
-    @Html.LabelFor(m => Model.Personne.EstEnAccord) :
-    @Html.CheckBoxFor(m => Model.Personne.EstEnAccord)
+    @Html.LabelFor(m => Model.Client.EstEnAccord) :
+    @Html.CheckBoxFor(m => Model.Client.EstEnAccord)
 </fieldset>
     <br />
     <input type="submit" value="Continuer vers le paiement" />
