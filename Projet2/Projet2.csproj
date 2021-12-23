@@ -21,6 +21,7 @@
     <Folder Include="wwwroot\ImagesPaniers\" />
     <Folder Include="Data\" />
     <Folder Include="Views\Payment\" />
+    <Folder Include="Models\Calendrier\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="bootstrap" />
@@ -34,6 +35,7 @@
     <None Remove="Stripe.net" />
     <None Remove="Data\" />
     <None Remove="Views\Payment\" />
+    <None Remove="Models\Calendrier\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />

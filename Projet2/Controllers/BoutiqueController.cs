@@ -128,17 +128,60 @@ namespace Projet2.Controllers
 
         }
         [HttpPost]
-        public IActionResult AfficherBoutique(String recherche)
+        public IActionResult AfficherBoutique(String recherche, String rechercheAdP)
         {
             ArticleRessources ctx = new ArticleRessources();
+            CompteServices cts = new CompteServices();
             List<Article> articles = ctx.ObtientTousLesArticles();
+            List<Article>  articles2 = articles;
+            List<Article> articles3 = new List<Article>();
+            List<AdP> listAdP = null;
+            if (rechercheAdP != null) {
 
-            List<Article> articles2 = articles.FindAll(x => x.Nom.Contains(recherche));
+                listAdP = cts.ObtenirAdPParNom(rechercheAdP);
+            }
+
+            if (recherche != null)
+            {
+                articles2 = articles.FindAll(x => x.Nom.ToLower().Contains(recherche.ToLower()));
+
+                if (listAdP != null)
+                {
+                    foreach (AdP adp in listAdP)
+                    {
+                        List<Article> listintermediaire = articles2.FindAll(x => x.AdPId == adp.Id);
+
+                        foreach (Article articleintermediaire in listintermediaire)
+                        {
+                            articles3.Add(articleintermediaire);
+
+                        }
+                    }
+                }
+                else
+                {
+                    articles3 = articles2;
+                }
+            }
+            else if (listAdP != null)
+            {
+                foreach (AdP adp in listAdP)
+                {
+                    List<Article> listintermediaire = articles2.FindAll(x => x.AdPId == adp.Id);
+
+                    foreach (Article articleintermediaire in listintermediaire)
+                    {
+                        articles3.Add(articleintermediaire);
+
+                    }
+                }
+            }
+
 
             HomeViewModel hvm = new HomeViewModel
             {
 
-                Boutiques = new Boutiques() { Articles = articles2, NombreArticle = articles2.Count },
+                Boutiques = new Boutiques() { Articles = articles3, NombreArticle = articles3.Count },
                 PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
             };

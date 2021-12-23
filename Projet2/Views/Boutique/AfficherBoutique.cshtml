@@ -13,36 +13,42 @@
     <div class="row">
         <div class="col-md-3 menu-rigth">
             <form method="post">
-                <div class="input-group">
-                    <div id="search-autocomplete" class="form-outline">
-                        <input type="search" id="form1" class="form-control" name="recherche" />
-                        <label class="form-label" for="form1">Search</label>
+                <div class="row">
+                    <div class="input-group">
+                        <input name="recherche" type="search" class="form-control rounded" placeholder="Produit" aria-label="Produit"
+                               aria-describedby="search-addon" />
                     </div>
-                    <button type="button" class="btn btn-primary">
-                        <i class="fas fa-search"></i>
-                    </button>
+                </div>
+                <div class="row">
+                    <div class="input-group">
+                        <input name="rechercheAdP" type="search" class="form-control rounded" placeholder="Producteur" aria-label="Producteur" aria-describedby="search-addon" />
+                    </div>
+                </div>
+                <div class="row">
+
+                    <button type="submit" class="btn btn-outline-primary">Recherche</button>
                 </div>
             </form>
         </div>
-        <div class="col-md-9">
-            <div class="row row-cols-1 row-cols-md-4 g-5">
-                @foreach (Projet2.Models.Boutique.Article article in @Model.Boutiques.Articles as List<Projet2.Models.Boutique.Article>)
-                {
-                    <div class="col ">
-                        <div class="card h-100">
-                            @{
-                                String filepath = "~/ImageArticle/" + @article.Image;
-                            }
-                            <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..." />
-                            <div class="card-body">
-                                <h5 class="card-title">@article.Nom</h5>
-                                <p class="card-text">@article.Description</p>
-                                @Html.ActionLink("Voir article", "Article", "Boutique", new { @Id = article.Id })
+            <div class="col-md-9">
+                <div class="row row-cols-1 row-cols-md-4 g-5">
+                    @foreach (Projet2.Models.Boutique.Article article in @Model.Boutiques.Articles as List<Projet2.Models.Boutique.Article>)
+                    {
+                        <div class="col ">
+                            <div class="card h-100">
+                                @{
+                                    String filepath = "~/ImageArticle/" + @article.Image;
+                                }
+                                <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..." />
+                                <div class="card-body">
+                                    <h5 class="card-title">@article.Nom</h5>
+                                    <p class="card-text">@article.Description</p>
+                                    @Html.ActionLink("Voir article", "Article", "Boutique", new { @Id = article.Id })
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
-    </div>
 </div>
