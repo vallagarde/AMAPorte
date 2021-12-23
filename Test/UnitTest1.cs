@@ -19,109 +19,7 @@ namespace Test
                 ctx.InitializeDb();
             }
 
-            using (PanierSaisonnierService pss = new PanierSaisonnierService())
-            {
-
-                PanierSaisonnier panierSaisonnier1 = new PanierSaisonnier()
-                {
-
-                    NomPanier = "Panier Fruits Thierry",
-                    ProduitsProposes = "Pommes, Poires, Bananes, Melon",
-                    Description = "Beaux fruits de saison. Mjam.",
-                    Prix = 45.9m,
-                    Image = "pommes.jpg",
-                    AdPId = 1
-                };
-                pss.CreerPanierSaisonnier(panierSaisonnier1);
-
-                PanierSaisonnier panierSaisonnier2 = new PanierSaisonnier()
-                {
-
-                    NomPanier = "Panier Legumes Thierry",
-                    ProduitsProposes = "Poireaux, Carottes, Tomates, Poivrons",
-                    Description = "C'est bon",
-                    Prix = 45.9m,
-                    Image = "onion.jpg",
-                    AdPId = 1
-                };
-                pss.CreerPanierSaisonnier(panierSaisonnier2);
-
-                PanierSaisonnier panierSaisonnier3 = new PanierSaisonnier()
-                {
-
-                    NomPanier = "Panier Legumes Julien",
-                    ProduitsProposes = "Poireaux, Carottes, Tomates, Poivrons",
-                    Description = "C'est bon",
-                    Prix = 40.9m,
-                    Image = "onion.jpg",
-                    AdPId = 2
-                };
-                pss.CreerPanierSaisonnier(panierSaisonnier3);
-
-                PanierSaisonnier panierSaisonnier4 = new PanierSaisonnier()
-                {
-
-                    NomPanier = "Panier Fruits Julien",
-                    ProduitsProposes = "Pommes, Poires, Bananes, Melon",
-                    Description = "Poireaux, Carottes, Tomates, Poivrons",
-                    Prix = 40.9m,
-                    Image = "pommes.jpg",
-                    AdPId = 2
-                };
-                pss.CreerPanierSaisonnier(panierSaisonnier4);
-
-            }
-
-            using (ArticleRessources ar = new ArticleRessources())
-            {
-                Article article = new Article()
-                {
-                    Nom = "Miel",
-                    Description = "Miels de crus, pollen frais, gelée royale, propolis.",
-                    Prix = 5.9m,
-                    Stock = 5,
-                    PrixTTC = 7.5m,
-                    Image = "onion.jpg",
-                    AdPId = 1
-                };
-                ar.CreerArticle(article.Nom, article.Description, (int)article.Prix, article.Stock, (int)article.PrixTTC, article.Image, article.AdPId);
-
-                Article article2 = new Article()
-                {
-                    Nom = "Confiture de Framboises",
-                    Description = "Somptueuse, estivale et parfumée.",
-                    Prix = 4.9m,
-                    Stock = 3,
-                    PrixTTC = 6.5m,
-                    Image = "pommes.jpg",
-                    AdPId = 1
-                };
-                ar.CreerArticle(article2.Nom, article2.Description, (int)article2.Prix, article2.Stock, (int)article2.PrixTTC, article2.Image, article2.AdPId);
-
-                Article article3 = new Article()
-                {
-                    Nom = "Miel",
-                    Description = "Miels de crus, pollen frais, gelée royale, propolis.",
-                    Prix = 7.9m,
-                    Stock = 2,
-                    PrixTTC = 9.5m,
-                    Image = "onion.jpg",
-                    AdPId = 2
-                };
-                ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
-
-                Article article4 = new Article()
-                {
-                    Nom = "Confiture de Framboises",
-                    Description = "Somptueuse, estivale et parfumée.",
-                    Prix = 2.9m,
-                    Stock = 6,
-                    PrixTTC = 5.5m,
-                    Image = "pommes.jpg",
-                    AdPId = 2
-                };
-                ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
-            }
+            
 
             using (CompteServices cs = new CompteServices())
             {
@@ -417,6 +315,110 @@ namespace Test
                     EstGCCQ = true
                 };
                 cs.CreerAdmin(admin);
+            }
+
+            using (PanierSaisonnierService pss = new PanierSaisonnierService())
+            {
+
+                PanierSaisonnier panierSaisonnier1 = new PanierSaisonnier()
+                {
+
+                    NomPanier = "Panier Fruits Thierry",
+                    ProduitsProposes = "Pommes, Poires, Bananes, Melon",
+                    Description = "Beaux fruits de saison. Mjam.",
+                    Prix = 45.9m,
+                    Image = "pommes.jpg",
+                    AdPId = 1
+                };
+                pss.CreerPanierSaisonnier(panierSaisonnier1);
+
+                PanierSaisonnier panierSaisonnier2 = new PanierSaisonnier()
+                {
+
+                    NomPanier = "Panier Legumes Thierry",
+                    ProduitsProposes = "Poireaux, Carottes, Tomates, Poivrons",
+                    Description = "C'est bon",
+                    Prix = 45.9m,
+                    Image = "onion.jpg",
+                    AdPId = 1
+                };
+                pss.CreerPanierSaisonnier(panierSaisonnier2);
+
+                PanierSaisonnier panierSaisonnier3 = new PanierSaisonnier()
+                {
+
+                    NomPanier = "Panier Legumes Julien",
+                    ProduitsProposes = "Poireaux, Carottes, Tomates, Poivrons",
+                    Description = "C'est bon",
+                    Prix = 40.9m,
+                    Image = "onion.jpg",
+                    AdPId = 2
+                };
+                pss.CreerPanierSaisonnier(panierSaisonnier3);
+
+                PanierSaisonnier panierSaisonnier4 = new PanierSaisonnier()
+                {
+
+                    NomPanier = "Panier Fruits Julien",
+                    ProduitsProposes = "Pommes, Poires, Bananes, Melon",
+                    Description = "Poireaux, Carottes, Tomates, Poivrons",
+                    Prix = 40.9m,
+                    Image = "pommes.jpg",
+                    AdPId = 2
+                };
+                pss.CreerPanierSaisonnier(panierSaisonnier4);
+
+            }
+
+            using (ArticleRessources ar = new ArticleRessources())
+            {
+                Article article = new Article()
+                {
+                    Nom = "Miel",
+                    Description = "Miels de crus, pollen frais, gelée royale, propolis.",
+                    Prix = 5.9m,
+                    Stock = 5,
+                    PrixTTC = 7.5m,
+                    Image = "onion.jpg",
+                    AdPId = 1
+                };
+                ar.CreerArticle(article.Nom, article.Description, (int)article.Prix, article.Stock, (int)article.PrixTTC, article.Image, article.AdPId);
+
+                Article article2 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 4.9m,
+                    Stock = 3,
+                    PrixTTC = 6.5m,
+                    Image = "pommes.jpg",
+                    AdPId = 1
+                };
+                ar.CreerArticle(article2.Nom, article2.Description, (int)article2.Prix, article2.Stock, (int)article2.PrixTTC, article2.Image, article2.AdPId);
+
+                Article article3 = new Article()
+                {
+                    Nom = "Miel",
+                    Description = "Miels de crus, pollen frais, gelée royale, propolis.",
+                    Prix = 7.9m,
+                    Stock = 2,
+                    PrixTTC = 9.5m,
+                    Image = "onion.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
+
+                Article article4 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 2.9m,
+                    Stock = 6,
+                    PrixTTC = 5.5m,
+                    Image = "pommes.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
             }
 
 
