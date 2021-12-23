@@ -1,6 +1,6 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 @{
-    ViewData["Title"] = "ModifierPanier";
+//ViewData["Title"] = "ModifierPanier";
 }
 
 <div class="container mt-3">
@@ -16,15 +16,6 @@
         <br />
         @Html.LabelFor(m => Model.PanierSaisonnier.ProduitsProposes)
         @Html.TextBoxFor(m => Model.PanierSaisonnier.ProduitsProposes)
-        @*@foreach (var item in Model.ProduitsProposes)
-        {
-        }*@
-        @*<ul class=" list-group">
-            @foreach (var item in Model.ProduitsProposes)
-            {
-                <a class="list-group-item list-group-item-action " placeholder="Small input" align-content-start asp-controller="Panier" asp-action="ModifierPanier">@item.NomProduit</a>
-            }
-        </ul>*@
         @Html.ValidationMessageFor(m => Model.PanierSaisonnier.ProduitsProposes)
         <br />
         @Html.LabelFor(m => Model.PanierSaisonnier.Description)

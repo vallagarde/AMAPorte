@@ -34,6 +34,7 @@ namespace Projet2.ViewModels
         //Paniers
         public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();
         public CataloguePanier CataloguePanier = new CataloguePanier();
+        public LignePanierSaisonnier LignePanierSaisonnier = new LignePanierSaisonnier();
 
         //Pour Comptes + Authorisation
         public Personne Personne = new Personne();

@@ -32,6 +32,32 @@ namespace Projet2.Controllers
         {
             return View();
         }
+        public IActionResult Paiement()
+        {
+            return View();
+        }
+        public IActionResult CommandePanier(PanierSaisonnier panierSaisonnier)
+        {
+            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == panierSaisonnier.Id).FirstOrDefault();
+            return View(hvm);
+        }
+        //
+        [HttpGet]
+        public IActionResult CommandeLignePanier(PanierSaisonnier panierSaisonnier)
+        {
+            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == panierSaisonnier.Id).FirstOrDefault();
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult CommandeLignePanier(PanierSaisonnier panierSaisonnier, int qauantite)
+        {
+            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == panierSaisonnier.Id).FirstOrDefault();
+
+
+
+            return View(hvm);
+        }
 
         [HttpPost]
         public IActionResult AjouterPanier(PanierSaisonnier panierSaisonnier, IFormFile fileToUpload)
@@ -98,19 +124,6 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult ModifierPanier(int id)
         {
-            //if (id != 0)
-            //{
-            //    using (PanierSaisonnierService ctx = new PanierSaisonnierService()))
-            //    {
-            //        PanierSaisonnier panierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
-            //        if (panierSaisonnier == null)
-            //        {
-            //            return View("Error");
-            //        }
-            //        return View();
-            //    }
-            //}
-            //return View("Error");
             hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
             return View(hvm);
         }
@@ -118,15 +131,14 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult ModifierPanier(PanierSaisonnier panierSaisonnier)
         {
-            
             ctx.ModifierPanierSaisonnier(panierSaisonnier);
             return RedirectToAction("AfficherPaniers", panierSaisonnier.Id);
         }
 
-        public IActionResult SupprimerPanier(int id)
+        public IActionResult SupprimerPanier(PanierSaisonnier panierSaisonnier)
         {
             PanierSaisonnierService ctx = new PanierSaisonnierService();
-            ctx.SupprimerPanierSaisonnier(id);
+            ctx.SupprimerPanierSaisonnier(panierSaisonnier.Id);
             return RedirectToAction("AfficherPaniers");
         }
 
