@@ -82,6 +82,11 @@ namespace Projet2.Controllers
                         {
                             if (hvm.AdP.Id != 0)
                             {
+                                int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+                                if (panierId != 0)
+                                {
+                                    return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                }
                                 return RedirectToAction("Index", "CompteAdP", hvm.AdP);
                             }
                         }

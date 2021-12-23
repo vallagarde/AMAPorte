@@ -12,8 +12,12 @@ namespace Test
     public class UnitTest1
     {
         [Fact]
-        public void Creation_CataloguePaniers_Verification()
+        public void Creation_BaseDeDonnees()
         {
+            using (BddContext ctx = new BddContext())
+            {
+                ctx.InitializeDb();
+            }
 
             using (PanierSaisonnierService pss = new PanierSaisonnierService())
             {
@@ -67,12 +71,6 @@ namespace Test
                 pss.CreerPanierSaisonnier(panierSaisonnier4);
 
             }
-        }
-
-
-        [Fact]
-        public void Creation_Boutique_Verification()
-        {
 
             using (ArticleRessources ar = new ArticleRessources())
             {
@@ -123,15 +121,8 @@ namespace Test
                     AdPId = 2
                 };
                 ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
-
-
             }
-        }
 
-
-        [Fact]
-        public void Creation_Comptes_PourBaseDeDonnees()
-        {
             using (CompteServices cs = new CompteServices())
             {
                 //AdAs
@@ -427,11 +418,11 @@ namespace Test
                 };
                 cs.CreerAdmin(admin);
             }
+
+
+
+
         }
-
-
-
-
 
 
 
