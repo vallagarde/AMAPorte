@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
+using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 
@@ -32,7 +33,7 @@ namespace Projet2.Controllers
         public IActionResult Commande()
         {
             PanierService ctx = new PanierService();
-
+            CalendrierService csc = new CalendrierService();
             HomeViewModel hvm = new HomeViewModel();
             Commande commande = new Commande();
             commande.PanierBoutique = hvm.PanierBoutique;
@@ -46,6 +47,7 @@ namespace Projet2.Controllers
                 if (viewModel.Identifiant.EstAdA == true)
                 {
                     commande.AdAId = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id).Id;
+
                 }
                 else if (viewModel.Identifiant.EstCE == true)
                 {
@@ -59,6 +61,7 @@ namespace Projet2.Controllers
             }
 
             ctx.CreerCommande(commande);
+            csc.AjouterLigneCalendrierCommande(commande);
 
                 return View(hvm);
         }
