@@ -6,6 +6,23 @@
     <title>@ViewData["Title"] - Appliweb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site2.css" />
+    <script>
+        function validate() {
+            var valid = false;
+
+            if (document.getElementById("contrat").checked) {
+                valid = true;
+            }
+
+            if (valid) {
+                alert("Validation Succesfull");
+            }
+            else {
+                alert{ "Veuillez accepter les conditions pour continuer" }
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -34,7 +51,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inscription">Inscription</a>
                         </li>
-                        <li class="nav-item">
+                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Panier" asp-action="AfficherPaniers">Vos paniers</a>
                         </li>
                         <li class="nav-item">
@@ -57,7 +74,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item">Action</a></li>
-                                <li><a class="dropdown-item">Another action</a></li>
+                                <li><a class="dropdown-item" >Another action</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item">Something else here</a></li>
                             </ul>
@@ -66,42 +83,35 @@
                 </div>
 
                 <div class="navbar-collapse collapse dual-collapse2 flex-sm-row-reverse">
-
-
-                        <a class="navbar-brand" id="panierVide"><img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                    
-                    
-                    
-                        <a style="display: none;" id="panierRemplit" class="navbar-brand" asp-area="" asp-controller="Boutique" asp-action="IPanier"><img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-                    
-
+                    <a class="navbar-brand" asp-area="" asp-controller="Boutique" asp-action="IPanier"><img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
 
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-    </div>
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
+    </div>  
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
 
-
-    <div class="container" id="azerty">
-        <div class="col">123</div>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - Appliweb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    
+        <div class="container" id="azerty">
+            <div class="col">123</div>
         </div>
+    
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - Appliweb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
 
-
+    
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
+    <script src="~/js/customJs.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
 
     @RenderSection("Scripts", required: false)

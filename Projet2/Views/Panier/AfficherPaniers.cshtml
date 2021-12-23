@@ -16,12 +16,13 @@
                 <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
-                    <p class="card-text">@panierSaisonnier.AdP.NomProducteur</p>
+                    <h6 class="card-title">@panierSaisonnier.AdP.NomProducteur</h6>
                     <p class="card-text">@panierSaisonnier.Description</p>
                     <p class="card-text">@panierSaisonnier.Prix</p>
-                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", @panierSaisonnier.Id, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", @panierSaisonnier.Id, new { @class = "card-link" })
-                    @Html.ActionLink("Choisir", "PaiementPanier", "Panier")
+                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", @panierSaisonnier, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", @panierSaisonnier, new { @class = "card-link" })
+                    @Html.ActionLink("Choisir", "CommandePanier", "Panier", @panierSaisonnier)
+                    @Html.ActionLink("Plus", "CommandeLignePanier", "Panier", @panierSaisonnier)
                 </div>
             </div>
         </div>

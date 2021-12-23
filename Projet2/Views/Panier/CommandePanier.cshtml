@@ -1,0 +1,26 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Paiement Panier";
+}
+
+
+<div class=" container">
+    <div class="row">
+        @Html.HiddenFor(m => Model.PanierSaisonnier.Id)
+        <div class="col">
+
+            @{
+                String filepath = "~/ImagesPaniers/" + @Model.PanierSaisonnier.Image;
+            }
+            <img src="~/ImagesPaniers/@Model.PanierSaisonnier.Image" class="card-img-top" alt="...">
+        </div>
+        <div class="col">
+            <h2 class="">@Model.PanierSaisonnier.NomPanier</h2>
+            <h3 class="">@Model.PanierSaisonnier.AdP.NomProducteur</h3>
+            <p class="">@Model.PanierSaisonnier.Description</p>
+            <p class="">@Model.PanierSaisonnier.Prix</p>
+            @Html.ActionLink("Annuler", "AfficherPaniers", "Panier", new { @class = "btn btn-primary" })
+            @Html.ActionLink("Payer", "Paiement", "Panier", @Model.PanierSaisonnier.Id, new { @class = "card-link" })
+        </div>
+    </div>
+</div>

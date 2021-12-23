@@ -32,10 +32,6 @@ namespace Projet2.Models.PanierSaisonniers
             //return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
             return listePaniers;
         }
-        //public List<Produit> ObtientTousLesProduits()
-        //{
-        //    return _bddContext.Produits.ToList();
-        //}x
 
         public void Dispose()
         {
@@ -71,12 +67,10 @@ namespace Projet2.Models.PanierSaisonniers
 
         public int ModifierPanierSaisonnier(int Id, string nomPanier, string produitsProposes, string description, decimal prix)
         {
-
             PanierSaisonnier panierSaisonnier = _bddContext.PanierSaisonniers.Find(Id);
 
             if (panierSaisonnier != null)
             {
-
                 panierSaisonnier.Id = Id;
                 panierSaisonnier.NomPanier = nomPanier;
                 //panierSaisonnier.NomProducteur = nomProducteur;
@@ -85,7 +79,6 @@ namespace Projet2.Models.PanierSaisonniers
                 panierSaisonnier.Prix = prix;
                 _bddContext.SaveChanges();
             }
-
             return panierSaisonnier.Id;
         }
 
@@ -97,44 +90,18 @@ namespace Projet2.Models.PanierSaisonniers
                 _bddContext.SaveChanges();
                 return panierSaisonnier;
             }
-
             return null;
         }
 
 
         public void SupprimerPanierSaisonnier(int Id)
         {
-
             PanierSaisonnier panierSaisonnier = _bddContext.PanierSaisonniers.Find(Id);
-            //List<Produit> produits = ObtientTousLesProduits;
             if (panierSaisonnier != null)
             {
                 _bddContext.PanierSaisonniers.Remove(panierSaisonnier);
-                //SupprimerProduitPropose(panierSaisonnier.ProduitsProposes);
                 _bddContext.SaveChanges();
             }
-
         }
-
-        //public void SupprimerProduitPropose (List<Produit> list)
-        //{
-        //    Produit produitpropose = _bddContext.Produits.Find();
-        //    if (produitpropose != null)
-        //    {
-        //        _bddContext.Produits.Remove(produitpropose);
-        //        _bddContext.SaveChanges();
-        //    }
-        //}
-        //public void ChercherProduit(string id)
-        //{
-        //    Produit produit = _bddContext().Produits.ToList();
-        //    Personne personneASupprimer = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
-
-        //    if (produit != null)
-        //    {
-        //        _bddContext.Produits.Remove(produit);
-        //        _bddContext.SaveChanges();
-        //    }
-        //}
     }
 }
