@@ -13,23 +13,17 @@ namespace Projet2.Controllers
     public class CompteAdAController : Controller
     {
         //View pour paiement 12€/6 mois 
-        //CRUD Compte CE ok, ajouter quelques attributs (photo, adresse facturation), warning avant suppression compte
-        //adresse avec base de données ? 
-        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
-        //mettre les informations de son compte dans une vue "Mon Compte" 
-        //BOUTIQUE / PANIERS S. : 
+
         //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
-        //voir ses paniers/commandes en boutique en cours dans une vue
-        //voir l'historique de ses commandes panier et boutique, ajouter un seul ! avis par panier ou article
-        //ATELIERS :
-        //avoir access a l'onglet ateliers pour en reserver/favoriser
-        //voir les ateliers a venir sur sa page d'accueil 
-        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+        
 
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(AdA ada)
         {
+            //voir les ateliers a venir sur sa page d'accueil 
+            //mettre les informations de son compte dans une vue "Mon Compte" 
+
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
 
             if (hvm.Personne == null)
@@ -56,6 +50,8 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse)
         {
+            //CRUD Compte CE ok, ajouter quelques attributs (photo, adresse facturation),
+            //adresse avec base de données ? 
             if (personne != null && identifiant != null && adresse != null)
             {
                 int Age = personne.getAge();
@@ -104,15 +100,38 @@ namespace Projet2.Controllers
             return View();
         }
 
+        public IActionResult Commandes(AdA ada)
+        {
+            //voir ses paniers/commandes en boutique en cours dans une vue           
+            return View(hvm);
+        }
+
+        public IActionResult HistoriqueCommandes(AdA ada)
+        {
+            //voir l'historique de ses commandes panier et boutique, ajouter un seul ! avis par panier ou article
+            return View(hvm);
+        }
+
+        public IActionResult HistoriqueAteliers(AdA ada)
+        {
+            //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+            return View(hvm);
+        }
+
+
+        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
         public IActionResult ArticlesFavoris(AdA ada)
         {
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
             hvm.AdA = ada;
             return View(hvm);        
         }
-
+        
+        
+        
         public IActionResult AteliersFavoris(AdA ada)
         {
+            //avoir access a l'onglet ateliers pour en reserver/favoriser
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
             hvm.AdA = ada;
             return View(hvm);
@@ -170,6 +189,7 @@ namespace Projet2.Controllers
 
         public IActionResult SuppressionCompte(AdA ada)
         {
+            //warning avant suppression compte
             cs.SupprimerAdA(ada.Id);
             HttpContext.SignOutAsync();
             return View();
