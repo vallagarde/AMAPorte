@@ -2,7 +2,7 @@
 using Projet2.Models.Boutique;
 using Projet2.Models.PanierSaisonniers;
 
-namespace Projet2.Models.Calendrier
+namespace Projet2.Models.Calendriers
 {
     public class Calendrier
     {
@@ -12,7 +12,8 @@ namespace Projet2.Models.Calendrier
         public Commande Commande { get; set; }
         public int? CommandeId { get; set; }
 
-        public PanierSaisonnier PanierSaisonnier{ get; set; }
+        public PanierSaisonnier PanierSaisonnier { get; set; }
         public int? PanierSaisonniersId { get; set; }
+
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
+using Projet2.Models.Calendriers;
+
 
 namespace Projet2.Models
 {
@@ -16,6 +18,11 @@ namespace Projet2.Models
         public DbSet<LignePanierBoutique> LignePanierBoutique { get; set; }
         public DbSet<PanierBoutique> PanierBoutique { get; set; }
         public DbSet<Commande> Commande { get; set; }
+
+        // Calendrier:
+
+        public DbSet<Calendrier> Calendrier { get; set; }
+
 
         //context compte
         public DbSet<AdA> AdAs { get; set; }
