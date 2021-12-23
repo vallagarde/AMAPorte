@@ -207,8 +207,14 @@ namespace Projet2.Models.Compte
             return null;
         }
 
-            //Fonctions AdP
-            public AdP CreerAdP(Personne personne, Adresse adresse, AdP adp)
+
+        public List<AdP> ObtenirAdPParNom(String nom)
+        {
+            List<AdP> list = ObtenirTousLesAdPs().FindAll(x => x.NomProducteur.ToLower().Contains(nom.ToLower())); ;
+            return list;
+        }
+        //Fonctions AdP
+        public AdP CreerAdP(Personne personne, Adresse adresse, AdP adp)
         {
             personne.Adresse = adresse;
             CreerAdresse(adresse);
