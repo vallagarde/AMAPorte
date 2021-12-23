@@ -7,6 +7,7 @@ namespace Projet2.Models.Boutique
     {
         public int Id { get; set; }
         public PanierBoutique PanierBoutique { get; set; }
+        public int PanierBoutiqueId { get; set; }
         public DateTime DateTime { get; set; }
 
         public int? AdAId { get; set; }

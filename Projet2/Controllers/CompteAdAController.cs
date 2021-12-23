@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
+using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Projet2.Controllers
         
 
         CompteServices cs = new CompteServices();
+        PanierService panierService = new PanierService();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(AdA ada)
         {
@@ -103,11 +105,15 @@ namespace Projet2.Controllers
         public IActionResult Commandes(AdA ada)
         {
             //voir ses paniers/commandes en boutique en cours dans une vue           
+
+
             return View(hvm);
         }
 
         public IActionResult HistoriqueCommandes(AdA ada)
         {
+            ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
+            hvm.AdA = ada;
             //voir l'historique de ses commandes panier et boutique, ajouter un seul ! avis par panier ou article
             return View(hvm);
         }
