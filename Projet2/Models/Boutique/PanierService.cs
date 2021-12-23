@@ -201,7 +201,23 @@ namespace Projet2.Models.Boutique
             }
             _bddContext.SaveChanges();
         }
+        public void CalculerTotalPanier(int id)
+        {
+            PanierBoutique panier = _bddContext.PanierBoutique.Find(id);
+            List<LignePanierBoutique> lignes = _bddContext.LignePanierBoutique.Where(a => a.PanierBoutiqueId == id).ToList();
+            panier.Total = 0;
+            foreach (LignePanierBoutique ligne in lignes)
+            {
+                panier.Total += ligne.SousTotal;
+            }
+            _bddContext.SaveChanges();
 
-       
+        }
+        public void CreerCommande(Commande commande)
+        {
+            _bddContext.Commande.Add(commande);
+            _bddContext.SaveChanges();
+
+        }
     }
 }

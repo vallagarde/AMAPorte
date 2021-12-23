@@ -553,5 +553,14 @@ namespace Projet2.Models.Compte
             return BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(ASCIIEncoding.Default.GetBytes(motDePasseSel)));
         }
 
+        public Client CreerClient(Client Client, Adresse adresse)
+        {
+            Client.Adresse = adresse;
+            CreerAdresse(adresse);
+            _bddContext.Clients.Add(Client);
+            _bddContext.SaveChanges();
+            return Client;
+        }
+
     }
 }

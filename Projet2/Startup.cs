@@ -58,7 +58,7 @@ namespace Projet2
 
             using (BddContext ctx = new BddContext())
             {
-                //ctx.InitializeDb();
+               //ctx.InitializeDb();
             }
 
             if (env.IsDevelopment())

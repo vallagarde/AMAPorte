@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Projet2.Controllers
     public class CompteCEController : Controller
     {
         //View pour paiement 12€/6 mois 
-        //CRUD Compte CE ok, regarder pourquoi la liste des autres CE ne s'affiche pas directement, ajouter quelques attributs (paiement, adresse facturation), warning avant suppression compte
+        //CRUD Compte CE ok ajouter quelques attributs (adresse facturation), warning avant suppression compte
         //adresse avec base de données ? 
         //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 
         //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
@@ -37,11 +38,11 @@ namespace Projet2.Controllers
             }
             else
             {
-                hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+                hvm.ContactComiteEntreprise = contactComiteEntreprise;
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
                 hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
-                hvm.Identifiant = cs.ObtenirIdentifiant(contactComiteEntreprise.IdentifiantId);
-                hvm.ContactComiteEntreprise = contactComiteEntreprise;
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
                 return View(hvm);
             }
         }
@@ -50,7 +51,6 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult CreationCompte()
         {
-            //ViewBag.listePaiements = Paiement.listePaiements;
             return View();
         }
 
@@ -74,16 +74,17 @@ namespace Projet2.Controllers
 
                 var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                 HttpContext.SignInAsync(userPrincipal);
+                bool EstUtilisateur = true;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
-                
                 contactComiteEntreprise.IdentifiantId = id;
                 contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
 
                 hvm.ContactComiteEntreprise = cs.CreerCCE(contactComiteEntreprise, entreprise, adresse);
-                hvm.Entreprise = entreprise;
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-                hvm.Adresse = adresse;
-                hvm.Identifiant = identifiant;
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
 
                 return View("Index", hvm);
             }

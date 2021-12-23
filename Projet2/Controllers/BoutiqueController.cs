@@ -127,6 +127,24 @@ namespace Projet2.Controllers
             return View(hvm);
 
         }
+        [HttpPost]
+        public IActionResult AfficherBoutique(String recherche)
+        {
+            ArticleRessources ctx = new ArticleRessources();
+            List<Article> articles = ctx.ObtientTousLesArticles();
+
+            List<Article> articles2 = articles.FindAll(x => x.Nom.Contains(recherche));
+
+            HomeViewModel hvm = new HomeViewModel
+            {
+
+                Boutiques = new Boutiques() { Articles = articles2, NombreArticle = articles2.Count },
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+            };
+            return View(hvm);
+
+        }
 
         public IActionResult Article(int id)
         {
@@ -180,6 +198,8 @@ namespace Projet2.Controllers
             PanierService ctx = new PanierService();
             PanierBoutique panier = ctx.ObientPanier(panierId);
             List < LignePanierBoutique > liste = panier.LignePanierBoutiques ;
+            ctx.CalculerTotalPanier(panierId);
+
             HomeViewModel hvm = new HomeViewModel
             {
 
@@ -195,6 +215,7 @@ namespace Projet2.Controllers
         public IActionResult IPanier()
         {
             int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Projet2.Helpers;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
@@ -74,6 +75,8 @@ namespace Projet2.Controllers
 
                 var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                 HttpContext.SignInAsync(userPrincipal);
+                bool EstUtilisateur = true;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
                 admin.IdentifiantId = id;
 

@@ -23,8 +23,14 @@ namespace Projet2.Models.PanierSaisonniers
 
         public List<PanierSaisonnier> ObtientTousLesPaniers()
         {
-            return _bddContext.PanierSaisonniers.Include(p => p.AdP).ToList();
-            //return _bddContext.PanierSaisonniers.ToList();
+            List<PanierSaisonnier> listePaniers = _bddContext.PanierSaisonniers.ToList();
+            foreach (PanierSaisonnier panierSaisonnier in listePaniers)
+            {
+                var queryAdP = from adp in _bddContext.AdPs where adp.Id == panierSaisonnier.AdPId select adp;
+                panierSaisonnier.AdP = queryAdP.First();
+            }
+            //return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
+            return listePaniers;
         }
 
         public void Dispose()
@@ -38,6 +44,7 @@ namespace Projet2.Models.PanierSaisonniers
             var paniers = queryPanier.ToList();
             foreach (PanierSaisonnier panierSaisonnier in paniers)
             {
+                panierSaisonnier.AdP = adp;
                 adp.AssortimentPanier.Add(panierSaisonnier);
             }
             return adp.AssortimentPanier;
@@ -60,12 +67,10 @@ namespace Projet2.Models.PanierSaisonniers
 
         public int ModifierPanierSaisonnier(int Id, string nomPanier, string produitsProposes, string description, decimal prix)
         {
-
             PanierSaisonnier panierSaisonnier = _bddContext.PanierSaisonniers.Find(Id);
 
             if (panierSaisonnier != null)
             {
-
                 panierSaisonnier.Id = Id;
                 panierSaisonnier.NomPanier = nomPanier;
                 //panierSaisonnier.NomProducteur = nomProducteur;
@@ -91,7 +96,6 @@ namespace Projet2.Models.PanierSaisonniers
 
         public void SupprimerPanierSaisonnier(int Id)
         {
-
             PanierSaisonnier panierSaisonnier = _bddContext.PanierSaisonniers.Find(Id);
             if (panierSaisonnier != null)
             {
