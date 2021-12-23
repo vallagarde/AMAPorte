@@ -23,13 +23,9 @@ namespace Projet2.Models.PanierSaisonniers
 
         public List<PanierSaisonnier> ObtientTousLesPaniers()
         {
-            //return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
-            return _bddContext.PanierSaisonniers.ToList();
+            return _bddContext.PanierSaisonniers.Include(p => p.AdP).ToList();
+            //return _bddContext.PanierSaisonniers.ToList();
         }
-        //public List<Produit> ObtientTousLesProduits()
-        //{
-        //    return _bddContext.Produits.ToList();
-        //}x
 
         public void Dispose()
         {
@@ -78,7 +74,6 @@ namespace Projet2.Models.PanierSaisonniers
                 panierSaisonnier.Prix = prix;
                 _bddContext.SaveChanges();
             }
-
             return panierSaisonnier.Id;
         }
 
@@ -90,7 +85,6 @@ namespace Projet2.Models.PanierSaisonniers
                 _bddContext.SaveChanges();
                 return panierSaisonnier;
             }
-
             return null;
         }
 
@@ -99,35 +93,11 @@ namespace Projet2.Models.PanierSaisonniers
         {
 
             PanierSaisonnier panierSaisonnier = _bddContext.PanierSaisonniers.Find(Id);
-            //List<Produit> produits = ObtientTousLesProduits;
             if (panierSaisonnier != null)
             {
                 _bddContext.PanierSaisonniers.Remove(panierSaisonnier);
-                //SupprimerProduitPropose(panierSaisonnier.ProduitsProposes);
                 _bddContext.SaveChanges();
             }
-
         }
-
-        //public void SupprimerProduitPropose (List<Produit> list)
-        //{
-        //    Produit produitpropose = _bddContext.Produits.Find();
-        //    if (produitpropose != null)
-        //    {
-        //        _bddContext.Produits.Remove(produitpropose);
-        //        _bddContext.SaveChanges();
-        //    }
-        //}
-        //public void ChercherProduit(string id)
-        //{
-        //    Produit produit = _bddContext().Produits.ToList();
-        //    Personne personneASupprimer = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
-
-        //    if (produit != null)
-        //    {
-        //        _bddContext.Produits.Remove(produit);
-        //        _bddContext.SaveChanges();
-        //    }
-        //}
     }
 }

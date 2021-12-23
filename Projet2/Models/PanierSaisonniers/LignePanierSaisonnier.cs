@@ -11,8 +11,8 @@ namespace Projet2.Models.PanierSaisonniers
         public int Id { get; set; }
         public int Quantite { get; set; }
         public decimal SousTotal { get; set; }
+        public int PanierSaisonnierId { get; set; }
         public PanierSaisonnier PanierSaisonnier { get; set; }
-
         public int ContactComiteEntrepriseId { get; set; }
         public ContactComiteEntreprise ContactComiteEntreprise { get; set; }
 
