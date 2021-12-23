@@ -69,6 +69,12 @@ namespace Projet2.Controllers
                         {
                             if (hvm.AdA.Id != 0)
                             {
+                                int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+                                if(panierId != 0)
+                                {
+                                return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                }
                                 return RedirectToAction("Index", "CompteAdA", hvm.AdA);
                             }
                         }
@@ -82,6 +88,13 @@ namespace Projet2.Controllers
                     }
                     else if (hvm.ContactComiteEntreprise != null)
                     {
+                        int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+                        if (panierId != 0)
+                        {
+                            return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                        }
+
                         hvm.Entreprise = cptressource.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                         return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
                     }

@@ -13,7 +13,7 @@ namespace Projet2.Controllers
     public class CompteAdAController : Controller
     {
         //View pour paiement 12€/6 mois 
-        //CRUD Compte CE ok, ajouter quelques attributs (paiement, photo, adresse facturation), warning avant suppression compte
+        //CRUD Compte CE ok, ajouter quelques attributs (photo, adresse facturation), warning avant suppression compte
         //adresse avec base de données ? 
         //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
         //mettre les informations de son compte dans une vue "Mon Compte" 
@@ -31,16 +31,16 @@ namespace Projet2.Controllers
         public IActionResult Index(AdA ada)
         {
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
-            hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
-            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-            hvm.AdA = ada;
+
             if (hvm.Personne == null)
             {
                 return View("Error");
             }
             else
             {
-                //View("ArticlesFavoris", hvm);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                hvm.AdA = ada;
                 return View(hvm);
             }
         }
@@ -49,7 +49,6 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult CreationCompte()
         {
-            //ViewBag.listePaiements = Paiement.listePaiements;
             return View();
         }
 
