@@ -33,7 +33,10 @@
         @Model.Adresse.CodePostal @Model.Adresse.Ville
         <br/>
         @Model.Adresse.Pays
+        <br />
+        <br />
 
+        @Html.ActionLink("Voir l'historique de mes commandes en boutique", "HistoriqueCommandes", "CompteAdA", @Model.AdA)
         <br />
         <br />
         @Html.ActionLink("Mes Producteurs Favoris", "ProducteursFavoris", "CompteAdA", @Model.AdA)
@@ -41,6 +44,7 @@
         @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteAdA", @Model.AdA)
         <br/>
         @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteAdA", @Model.AdA)
+        <br/>
         <br/>
         @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdA", @Model.AdA)
         <br/>

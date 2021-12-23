@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Projet2.Models.Compte;
+using System;
 namespace Projet2.Models.Boutique
 {
     public class Avis
@@ -10,6 +11,11 @@ namespace Projet2.Models.Boutique
         public int ArticleId { get; set; }
         public Article Article { get; set; }
 
+        public AdA AdA { get; set; }
+        public int? AdAId { get; set; }
+
+        public Entreprise Entreprise { get; set; }
+        public int? EntrepriseId { get; set; }
 
     }
 }

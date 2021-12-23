@@ -30,13 +30,14 @@ namespace Projet2.Models.Compte
 
         public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
 
-
-        public int? AvisId { get; set; }
-        public Avis Avis { get; set; }
-
         public AdA()
         {
             EstAdA = true;
+            CommandesBoutiqueEffectues = new List<Commande>();
+            CommandesPanierEffectues = new List<PanierSaisonnier>();
+            ArticlesFavoris = new List<Article>();
+            ProducteursFavoris = new List<AdP>();
+            //AteliersFavoris = new List<Atelier>();
         }
 
     }

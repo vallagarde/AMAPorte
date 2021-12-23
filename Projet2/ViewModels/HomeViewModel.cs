@@ -16,6 +16,20 @@ namespace Projet2.ViewModels
         public Upload Upload = new Upload();
         public int PanierId { get; set; }
         public PanierBoutique PanierBoutique = new PanierBoutique();
+        public Commande Commande = new Commande();
+        public Avis Avis = new Avis();
+
+        public string ReturnDateForDisplayCommande
+        {
+            get
+            {
+                if (this.Commande != null)
+                {
+                    return this.Commande.DateTime.ToString("d");
+                }
+                return null;
+            }
+        }
 
         //Paniers
         public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();

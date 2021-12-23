@@ -14,12 +14,8 @@ namespace Test
         [Fact]
         public void Creation_BaseDeDonnees()
         {
-            using (BddContext ctx = new BddContext())
-            {
-                ctx.InitializeDb();
-            }
-
-            
+            using BddContext ctx = new BddContext();
+            ctx.InitializeDb();
 
             using (CompteServices cs = new CompteServices())
             {
@@ -34,9 +30,9 @@ namespace Test
                 int id = cs.AjouterIdentifiant(identifiant1);
 
                 var userClaims = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id.ToString()),
+                            };
 
                 var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
@@ -74,9 +70,9 @@ namespace Test
                 int id2 = cs.AjouterIdentifiant(identifiant2);
 
                 var userClaims2 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity2 = new ClaimsIdentity(userClaims2, "User Identity");
 
@@ -116,9 +112,9 @@ namespace Test
                 int id3 = cs.AjouterIdentifiant(identifiant3);
 
                 var userClaims3 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity3 = new ClaimsIdentity(userClaims3, "User Identity");
 
@@ -162,9 +158,9 @@ namespace Test
                 int id4 = cs.AjouterIdentifiant(identifiant4);
 
                 var userClaims4 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity4 = new ClaimsIdentity(userClaims4, "User Identity");
 
@@ -210,9 +206,9 @@ namespace Test
                 int id5 = cs.AjouterIdentifiant(identifiant5);
 
                 var userClaims5 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity5 = new ClaimsIdentity(userClaims5, "User Identity");
 
@@ -256,9 +252,9 @@ namespace Test
                 int id6 = cs.AjouterIdentifiant(identifiant6);
 
                 var userClaims6 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id6.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id6.ToString()),
+                            };
 
                 var ClaimIdentity6 = new ClaimsIdentity(userClaims6, "User Identity");
 
@@ -301,9 +297,9 @@ namespace Test
                 int id7 = cs.AjouterIdentifiant(identifiant7);
 
                 var userClaims7 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id7.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id7.ToString()),
+                            };
 
                 var ClaimIdentity7 = new ClaimsIdentity(userClaims7, "User Identity");
 
@@ -419,14 +415,137 @@ namespace Test
                     AdPId = 2
                 };
                 ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
+
+
+                    //Commandes
+
+                    PanierBoutique panierBoutique1 = new PanierBoutique()
+                    {
+                        Total = 30m
+                    };
+                    ctx.PanierBoutique.Add(panierBoutique1);
+                    ctx.SaveChanges();
+
+                    PanierBoutique panierBoutique2 = new PanierBoutique()
+                    {
+                        //Total = LignePanierBoutique3.SousTotal + LignePanierBoutique4.SousTotal
+                        Total = 30m
+                    };
+                    ctx.PanierBoutique.Add(panierBoutique2);
+                    ctx.SaveChanges();
+
+                    PanierBoutique panierBoutique3 = new PanierBoutique()
+                    {
+                        Total = 30m
+                    };
+                    ctx.PanierBoutique.Add(panierBoutique3);
+                    ctx.SaveChanges();
+
+
+                    LignePanierBoutique LignePanierBoutique1 = new LignePanierBoutique()
+                    {
+                        Article = article,
+                        Quantite = 2,
+                        SousTotal = article.PrixTTC * 3,
+                        PanierBoutiqueId = 1
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique1);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique2 = new LignePanierBoutique()
+                    {
+                        Article = article2,
+                        Quantite = 3,
+                        SousTotal = article2.PrixTTC * 3,
+                        PanierBoutiqueId = 1
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique2);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique3 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 2
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique3);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique4 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 2
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique4);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique5 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 3
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique5);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique6 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 3
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique6);
+                    ctx.SaveChanges();
+
+
+
+
+                    Client client = new Client()
+                        {
+                            Id = 1,
+                            Nom = "Client",
+                            Prenom = "Clint",
+                            DateNaissance = new DateTime(1980, 02, 05),
+                            NTelephone = 1234567890,
+                            AdresseId = 1,
+                            EstEnAccord = true
+                        };
+                        ctx.Clients.Add(client);
+                        ctx.SaveChanges();
+
+                    Commande commande1 = new Commande()
+                        {
+                            PanierBoutique = panierBoutique1,
+                            DateTime = new DateTime(2021, 12, 23, 12, 30, 00),
+                            AdAId = 1,
+                        };
+                    ctx.Commande.Add(commande1);
+                    ctx.SaveChanges();
+
+                    Commande commande2 = new Commande()
+                    {
+                        PanierBoutique = panierBoutique2,
+                        DateTime = new DateTime(2021, 12, 22, 13, 30, 30),
+                        ClientId = 1,
+                    };
+                    ctx.Commande.Add(commande2);
+                    ctx.SaveChanges();
+
+                    Commande commande3 = new Commande()
+                    {
+                        PanierBoutique = panierBoutique3,
+                        DateTime = new DateTime(2021, 12, 23, 09, 43, 12),
+                        EntrepriseId = 1,
+                    };
+                    ctx.Commande.Add(commande3);
+                    ctx.SaveChanges();
+                
             }
-
-
-
-
         }
-
-
-
     }
 }
