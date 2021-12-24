@@ -30,7 +30,6 @@ namespace Projet2.Controllers
             }
             else
             {
-                //View("ArticlesFavoris", hvm);
                 return View(hvm);
             }
         }
@@ -39,7 +38,6 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult CreationCompte()
         {
-            //ViewBag.listePaiements = Paiement.listePaiements;
             return View();
         }
 

@@ -2,22 +2,14 @@
 @{
     ViewData["Title"] = "Boutique";
 }
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mes Commandes En Boutique</title>
-</head>
-<body> 
-
+ 
 <div class="shadow-sm p-2 mb-5 welcome">
     <h2>Mes Commandes En Boutique</h2>
 </div>
 
 <!-- Products -->
 <div class="container">
-    
+    @Html.ActionLink("Retour", "Index", "CompteAdA", @Model.AdA)
     <div class="row">
         <div class="col-md-2 menu-rigth">
             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
@@ -61,6 +53,3 @@
         </div>
     </div>   
 </div>
-
-</body>
-</html>

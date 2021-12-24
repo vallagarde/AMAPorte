@@ -1,14 +1,8 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 @{
-    Layout = null;
+
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Comptes AMAPorte</title>
-</head>
-<body>
+<div class = "container">
     @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
 
 <br/>
@@ -78,6 +72,4 @@
        }
        </table>
 </div>
-       
-</body>
-</html>
+</div>       

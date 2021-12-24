@@ -1,41 +1,12 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 @{
-    Layout = null;
+ 
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Compte</title>
-</head>
-<body>
-    <div>
+
+    <div class = "container">
         Bonjour @Model.Personne.Prenom 
 
-        Mon Compte : 
-        <br/>
-        Nom : @Model.Personne.Nom
-        <br/>
-        Prenom: @Model.Personne.Prenom
-        <br/>
-        Date de Naissance : @Model.ReturnDateForDisplay
-        <br/>
-        Numéro Téléphone : @Model.Personne.NTelephone
-        <br/>
-        Adresse Mail : @Model.Identifiant.AdresseMail
-        <br/>
-        <br/>
-
-        Adresse : 
-        <br/>
-        @Model.Adresse.Numero @Model.Adresse.Voie
-        <br/>
-        @Model.Adresse.CodePostal @Model.Adresse.Ville
-        <br/>
-        @Model.Adresse.Pays
         <br />
-        <br />
-
         @Html.ActionLink("Voir l'historique de mes commandes en boutique", "HistoriqueCommandes", "CompteAdA", @Model.AdA)
         <br />
         <br />
@@ -46,15 +17,9 @@
         @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteAdA", @Model.AdA)
         <br/>
         <br/>
-        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdA", @Model.AdA)
-        <br/>
-        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdA", @Model.AdA)
+        @Html.ActionLink("Gerer Mon Compte", "AdACompteInfo", "CompteAdA", @Model.AdA)
         <br/>
         @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
         <br/>
         @Html.ActionLink("Retour sur la page principale", "Index", "Home")
     </div>
-
-
-</body>
-</html>

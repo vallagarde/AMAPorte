@@ -61,6 +61,11 @@ namespace Projet2.ViewModels
         public List<AdA> ListeComptesAdA = new List<AdA>();
         public List<AdP> ListeComptesAdP = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
+        public List<Commande> ListeCommandesEnPrep = new List<Commande>();
+        public List<Commande> ListeCommandesLivr = new List<Commande>();
+        public List<Commande> ListeCommandesARecup = new List<Commande>();
+        
+            
 
         public Paiement Paiement = new Paiement();
         public bool Authentifie { get; set; }

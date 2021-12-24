@@ -23,6 +23,7 @@ namespace Projet2.Controllers
             int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
             PanierBoutique panier = ctx.ObientPanier(panierId);
 
+            ctx.ChangerEtatCommande(panierId, "EstEnPreparation");
             hvm.PanierBoutique = panier;
             hvm.PanierId = panierId;
 

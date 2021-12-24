@@ -19,5 +19,37 @@ namespace Projet2.Models.Boutique
         public int? ClientId { get; set; }
         public Client Client { get; set; }
 
+
+        public bool EstEnPreparation { get; set; }
+
+        public bool EstARecuperer { get; set; }
+
+        public bool EstLivre { get; set; }
+        public string EtatCommande
+        {
+            get
+            {
+                if (EstEnPreparation) return "EstEnPreparation";
+                else if (EstARecuperer) return "EstARecuperer";
+                else if (EstLivre) return "EstLivre";
+                return null;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case "EstEnPreparation":
+                        EstEnPreparation = true;
+                        break;
+                    case "EstARecuperer":
+                        EstARecuperer = true;
+                        break;
+                    case "EstLivre":
+                        EstLivre = true;
+                        break;
+                }
+            }
+        }
+
     }
 }
