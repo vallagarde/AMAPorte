@@ -140,8 +140,7 @@ namespace Projet2.Controllers
         {
             CompteServices cs = new CompteServices();
             hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
-
-           
+          
                 HttpContext.SignOutAsync();
                  var userClaims = new List<Claim>()
                     {
@@ -151,7 +150,6 @@ namespace Projet2.Controllers
                 var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                 HttpContext.SignInAsync(userPrincipal);
                
-
                     if (hvm.Identifiant.EstAdP == true)
                     {
                         hvm.AdP = cs.ObtenirAdPParIdentifiant(hvm.Identifiant.Id);

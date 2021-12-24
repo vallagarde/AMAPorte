@@ -13,6 +13,8 @@ namespace Projet2.Models.Compte
         public bool EstAdA { get; set; }
         public DateTime DateInscription { get; set; }
 
+        public string Image { get; set; }
+
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
 
@@ -36,6 +38,7 @@ namespace Projet2.Models.Compte
         {
             EstAdA = true;
             DateInscription = DateTime.Today;
+            Image = "Default.jpg";
             CommandesBoutiqueEffectues = new List<Commande>();
             CommandesPanierEffectues = new List<PanierSaisonnier>();
             ArticlesFavoris = new List<Article>();

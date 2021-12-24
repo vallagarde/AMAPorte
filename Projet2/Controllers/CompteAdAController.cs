@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -20,6 +23,14 @@ namespace Projet2.Controllers
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
         HomeViewModel hvm = new HomeViewModel();
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public CompteAdAController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
         public IActionResult Index(AdA ada)
         {
             //voir les ateliers a venir sur sa page d'accueil 
@@ -117,6 +128,41 @@ namespace Projet2.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public IActionResult AjouterImage(AdA ada)
+        {
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult AjouterImage(AdA ada, IFormFile FileToUpload)
+        {
+            ada.Image = FileToUpload.FileName;
+            hvm.AdA = cs.ObtenirAdAParId(ada.Id);
+            hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+            
+            cs.AjouterPhoto(FileToUpload.FileName, hvm.Personne.IdentifiantId);
+
+            var FileDic = "Files";
+
+            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageProfils");
+
+            if (!Directory.Exists(FilePath))
+
+                Directory.CreateDirectory(FilePath);
+
+            var fileName = FileToUpload.FileName;
+
+            var filePath = Path.Combine(FilePath, fileName);
+
+            using (FileStream fs = System.IO.File.Create(filePath))
+
+            {
+                FileToUpload.CopyTo(fs);
+            }
+            return RedirectToAction("Index", hvm.AdA);
+        }
 
         public IActionResult Commandes(AdA ada)
         {
@@ -147,8 +193,7 @@ namespace Projet2.Controllers
             return View(hvm);        
         }
         
-        
-        
+              
         public IActionResult AteliersFavoris(AdA ada)
         {
             //avoir access a l'onglet ateliers pour en reserver/favoriser
