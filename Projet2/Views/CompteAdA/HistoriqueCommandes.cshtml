@@ -1,6 +1,6 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 @{
-    ViewData["Title"] = "Boutique";
+    ViewData["Title"] = "Commandes Histo Boutique";
 }
  
 <div class="shadow-sm p-2 mb-5 welcome">
@@ -19,35 +19,38 @@
                 @Html.HiddenFor(m => @Model.AdA.Id)  
                 @foreach (var commande in @Model.AdA.CommandesBoutiqueEffectues)
                 {
+                    @if(commande.EstLivre == true)
+                    {
                     var Total = Decimal.Round(commande.PanierBoutique.Total, 2);                   
-                    <div class="row ">
-                            <div class="card-body">
-                                <h5 class="card-title">Numéro de Commande : @commande.Id</h5>
-                                <p class="card-text">@commande.DateTime</p>
-                                <div class="row ">
-                                @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                                {
-                                    var SousTotal = Decimal.Round(lignePanierBoutique.SousTotal, 2);
-                                        <div class="card h-100">
-                                            @{
-                                            String filepath = "~/ImageArticle/" + @lignePanierBoutique.Article.Image;
-                                            }
-                                            <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                <p class="card-text">@lignePanierBoutique.Article.Nom</p>
-                                                <p class="card-text">@SousTotal</p>
-                                                @if(@lignePanierBoutique.AvisId == null)
-                                                {
-                                                @Html.ActionLink("Laisser un avis sur l'Article", "ArticleAvis", "Boutique", @lignePanierBoutique)
+                        <div class="row ">
+                                <div class="card-body">
+                                    <h5 class="card-title">Numéro de Commande : @commande.Id</h5>
+                                    <p class="card-text">@commande.DateTime</p>
+                                    <div class="row ">
+                                    @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
+                                    {
+                                        var SousTotal = Decimal.Round(lignePanierBoutique.SousTotal, 2);
+                                            <div class="card h-100">
+                                                @{
+                                                String filepath = "~/ImageArticle/" + @lignePanierBoutique.Article.Image;
                                                 }
-                                                </div>
-                                        </div>
+                                                <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
+                                                    <div class="card-body">
+                                                    <p class="card-text">@lignePanierBoutique.Article.Nom</p>
+                                                    <p class="card-text">@SousTotal</p>
+                                                    @if(@lignePanierBoutique.AvisId == null)
+                                                    {
+                                                    @Html.ActionLink("Laisser un avis sur l'Article", "ArticleAvis", "Boutique", @lignePanierBoutique)
+                                                    }
+                                                    </div>
+                                            </div>
                                     
-                                }
-                                </div>
-                                <p class="card-text">@Total</p>
-                            </div>                       
-                    </div>
+                                    }
+                                    </div>
+                                    <p class="card-text">@Total</p>
+                                </div>                       
+                        </div>
+                    }
                 }
             </div>
         </div>

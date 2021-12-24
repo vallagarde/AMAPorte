@@ -123,8 +123,8 @@ namespace Projet2.Controllers
         public IActionResult Commandes(AdA ada)
         {
             //voir ses paniers/commandes en boutique en cours dans une vue           
-
-
+            ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
+            hvm.AdA = ada;
             return View(hvm);
         }
 
@@ -143,9 +143,9 @@ namespace Projet2.Controllers
         }
 
 
-        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
         public IActionResult ArticlesFavoris(AdA ada)
         {
+            //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
             hvm.AdA = ada;
             return View(hvm);        
