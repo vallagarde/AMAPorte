@@ -4,13 +4,16 @@
 }
 
     <div class = "container">
+  
+        <img src="~/ImageProfils/@Model.AdA.Image" width="80" height="80">
         Bonjour @Model.Personne.Prenom 
-
-        <br />
+        <br /><br />
         @Html.ActionLink("Voir l'historique de mes commandes en boutique", "HistoriqueCommandes", "CompteAdA", @Model.AdA)
         <br />
         @Html.ActionLink("Voir mes commandes en cours", "Commandes", "CompteAdA", @Model.AdA)
         <br />
+        <br />
+        @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdA", @Model.AdA)
         <br />
         @Html.ActionLink("Mes Producteurs Favoris", "ProducteursFavoris", "CompteAdA", @Model.AdA)
         <br/>
