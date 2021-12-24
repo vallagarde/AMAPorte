@@ -1,0 +1,37 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+}
+
+<h1>Changer Identifiant : </h1>
+
+    @using (Html.BeginForm())
+    {
+<fieldset>
+    <h2> Identifiant </h2>
+        @Html.HiddenFor(m => Model.Identifiant.Id)
+        @Html.HiddenFor(m => Model.Identifiant.EstAdA)
+        @Html.HiddenFor(m => Model.Identifiant.EstAdP)
+        @Html.HiddenFor(m => Model.Identifiant.EstCE)
+        @Html.HiddenFor(m => Model.Identifiant.EstDSI)
+        @Html.HiddenFor(m => Model.Identifiant.EstGCCQ)
+        @Html.HiddenFor(m => Model.Identifiant.EstGCRA)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
+        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
+        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+    <br />
+        @Html.LabelFor(m => Model.Identifiant.MotDePasse) :
+        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { required = "required" })
+        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+    <br />
+</fieldset>
+     <br />
+        <input type="submit" value="Modification" />
+    }
+    <br />
+@if(@Model.Identifiant.Id != 0)
+{
+    @Html.ActionLink("Retour sur Mon Compte", "EspacePersonnel", "Home")  
+}
+    <br />

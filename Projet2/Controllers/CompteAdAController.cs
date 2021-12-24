@@ -23,8 +23,6 @@ namespace Projet2.Controllers
         public IActionResult Index(AdA ada)
         {
             //voir les ateliers a venir sur sa page d'accueil 
-            //mettre les informations de son compte dans une vue "Mon Compte" 
-
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
 
             if (hvm.Personne == null)
@@ -122,7 +120,6 @@ namespace Projet2.Controllers
 
         public IActionResult Commandes(AdA ada)
         {
-            //voir ses paniers/commandes en boutique en cours dans une vue           
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
             hvm.AdA = ada;
             return View(hvm);
@@ -132,7 +129,6 @@ namespace Projet2.Controllers
         {
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
             hvm.AdA = ada;
-            //voir l'historique de ses commandes panier et boutique, ajouter un seul ! avis par panier ou article
             return View(hvm);
         }
 
@@ -180,11 +176,10 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModificationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdA ada)
+        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdA ada)
         {
                 
                 hvm.Adresse = cs.ModifierAdresse(adresse);
-                hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
                 personne.AdresseId = hvm.Adresse.Id;
                 personne.IdentifiantId = hvm.Identifiant.Id;
                 hvm.Personne = cs.ModifierPersonne(personne);

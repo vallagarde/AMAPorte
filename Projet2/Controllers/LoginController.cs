@@ -125,5 +125,56 @@ namespace Projet2.Controllers
             HttpContext.SignOutAsync();
             return Redirect("/");
         }
+
+        [HttpGet]
+        public ActionResult ModificationIdentifiant(Identifiant Identifiant, int Id)
+        {
+            hvm.Identifiant = Identifiant;
+
+            return View(hvm);
+        }
+
+
+        [HttpPost]
+        public ActionResult ModificationIdentifiant(Identifiant identifiant)
+        {
+            CompteServices cs = new CompteServices();
+            hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
+
+           
+                HttpContext.SignOutAsync();
+                 var userClaims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, hvm.Identifiant.Id.ToString()),
+                    };
+                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                HttpContext.SignInAsync(userPrincipal);
+               
+
+                    if (hvm.Identifiant.EstAdP == true)
+                    {
+                        hvm.AdP = cs.ObtenirAdPParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                    }
+                    else if (hvm.Identifiant.EstAdA == true)
+                    {
+                        hvm.AdA = cs.ObtenirAdAParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                    }
+                    else if (hvm.Identifiant.EstCE == true)
+                    {
+                        hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                    }
+                    else if ((hvm.Identifiant.EstGCCQ == true) || (hvm.Identifiant.EstGCRA == true) || (hvm.Identifiant.EstDSI == true))
+                    {
+                        hvm.Admin = cs.ObtenirAdminParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "Admin", hvm.Admin);
+                    }
+                    
+             return RedirectToAction("Index", "Login");
+        }
+
     }
 }

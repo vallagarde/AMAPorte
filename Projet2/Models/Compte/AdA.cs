@@ -1,5 +1,6 @@
 using Projet2.Models.Boutique;
 using Projet2.Models.PanierSaisonniers;
+using System;
 using System.Collections.Generic;
 
 
@@ -10,6 +11,7 @@ namespace Projet2.Models.Compte
         public int Id { get; set; }
 
         public bool EstAdA { get; set; }
+        public DateTime DateInscription { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
@@ -33,6 +35,7 @@ namespace Projet2.Models.Compte
         public AdA()
         {
             EstAdA = true;
+            DateInscription = DateTime.Today;
             CommandesBoutiqueEffectues = new List<Commande>();
             CommandesPanierEffectues = new List<PanierSaisonnier>();
             ArticlesFavoris = new List<Article>();
