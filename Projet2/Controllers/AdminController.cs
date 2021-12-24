@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
+using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
@@ -87,6 +88,37 @@ namespace Projet2.Controllers
             }
             return View();
 
+        }
+
+        [HttpGet]
+        public IActionResult GestionEtatCommande(Admin admin)
+        {
+            hvm.Admin = admin;
+            PanierService panierService = new PanierService();
+            List<Commande> commandes = panierService.ObtenirCommandes();
+            
+            foreach (Commande commande in commandes)
+            {
+                if (commande.EstEnPreparation)
+                {
+                    hvm.ListeCommandesEnPrep.Add(commande);
+                }
+                else if (commande.EstARecuperer)
+                {
+                    hvm.ListeCommandesARecup.Add(commande);
+                }
+                else hvm.ListeCommandesLivr.Add(commande);
+            }
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult GestionEtatCommande(Admin admin, Commande commande)
+        {
+            hvm.Admin = admin;
+            PanierService panierService = new PanierService();
+            panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
+            return RedirectToAction("GestionEtatCommande", hvm.Admin);
         }
 
         public IActionResult GestionDemandesProducteurs(Admin admin)

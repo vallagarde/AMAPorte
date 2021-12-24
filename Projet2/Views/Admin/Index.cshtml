@@ -20,6 +20,8 @@
         Identifiant : @Model.Identifiant.AdresseMail
         <br/>
         <br/>
+        @Html.ActionLink("Gestion Etat des Commandes", "GestionEtatCommande", "Admin", @Model.Admin)
+        <br/>
         @Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)
         <br/>
         @Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)

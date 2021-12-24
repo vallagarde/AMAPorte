@@ -292,5 +292,44 @@ namespace Projet2.Models.Boutique
             return article.Avis;
         }
 
+        public void ChangerEtatCommande(int panierId, string etat)
+        {
+            var queryCommande = from c in _bddContext.Commande where c.PanierBoutiqueId == panierId select c;
+            Commande commande = queryCommande.FirstOrDefault();
+            commande.EtatCommande = "";
+            commande.EstEnPreparation = false;
+            commande.EstARecuperer = false;
+            commande.EstLivre = false;
+            commande.EtatCommande = etat;
+            _bddContext.Update(commande);
+            _bddContext.SaveChanges();
+        }
+
+        public List<Commande> ObtenirCommandes()
+        {
+            List<Commande> commandes = _bddContext.Commande.ToList();
+            foreach (Commande commande in commandes)
+            {
+                var queryAdA = from ada in _bddContext.AdAs where ada.Id == commande.AdAId select ada;
+                commande.AdA = queryAdA.FirstOrDefault();
+                var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
+                commande.AdA.Personne = queryPersonne.FirstOrDefault();
+                var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
+                var lignes = queryLignePanierBoutique.ToList();
+                foreach (LignePanierBoutique lignePanierBoutique in lignes)
+                {
+                    var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                    lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    var queryAdP = from adp in _bddContext.AdPs where adp.Id == lignePanierBoutique.Article.AdPId select adp;
+                    lignePanierBoutique.Article.AdP = queryAdP.FirstOrDefault();
+                    var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                    lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+                }               
+            }
+            return commandes;
+        }
+
     }
 }

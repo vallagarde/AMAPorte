@@ -525,6 +525,7 @@ namespace Test
                             PanierBoutique = panierBoutique1,
                             DateTime = new DateTime(2021, 12, 23, 12, 30, 00),
                             AdAId = 1,
+                            EstEnPreparation = true,
                         };
                     ctx.Commande.Add(commande1);
                     ctx.SaveChanges();
@@ -533,7 +534,8 @@ namespace Test
                     {
                         PanierBoutique = panierBoutique2,
                         DateTime = new DateTime(2021, 12, 22, 13, 30, 30),
-                        ClientId = 1,
+                        AdAId = 1,
+                        EstEnPreparation = true,
                     };
                     ctx.Commande.Add(commande2);
                     ctx.SaveChanges();
@@ -542,7 +544,8 @@ namespace Test
                     {
                         PanierBoutique = panierBoutique3,
                         DateTime = new DateTime(2021, 12, 23, 09, 43, 12),
-                        EntrepriseId = 1,
+                        AdAId = 1,
+                        EstEnPreparation = true,
                     };
                     ctx.Commande.Add(commande3);
                     ctx.SaveChanges();

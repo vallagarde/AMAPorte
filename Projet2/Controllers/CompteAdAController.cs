@@ -14,7 +14,6 @@ namespace Projet2.Controllers
     public class CompteAdAController : Controller
     {
         //View pour paiement 12€/6 mois 
-
         //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
         
 
@@ -40,6 +39,25 @@ namespace Projet2.Controllers
                 return View(hvm);
             }
         }
+
+        public IActionResult AdACompteInfo(AdA ada)
+        {
+
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+
+            if (hvm.Personne == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                hvm.AdA = ada;
+                return View(hvm);
+            }
+        }
+
 
         [AllowAnonymous]
         [HttpGet]
@@ -179,7 +197,7 @@ namespace Projet2.Controllers
                 viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
                 if (viewModel.Identifiant.EstAdA == true)
                 {
-                    return View("Index", hvm);
+                    return View("AdACompteInfo", hvm);
                 }
                 else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
                 {
