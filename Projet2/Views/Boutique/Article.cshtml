@@ -3,30 +3,30 @@
 @{
 }
 
-    <div class=" container">
-        <div class="col-7">
-            <div class="row">
-                <img src="~/ImageArticle/@Model.Article.Image" />
-            </div>
-            <div class="row">
-                @Model.Article.Nom
 
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="~/ImageArticle/@Model.Article.Image" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: BST-498</div>
+                <h1 class="display-5 fw-bolder">@Model.Article.Nom</h1>
+                <div class="fs-5 mb-5">
+                    <span>€ @Decimal.Round(Model.Article.PrixTTC, 2)</span>
+                </div>
+                <p class="lead">@Model.Article.Description</p>
+                <div class="d-flex">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(m => Model.Article.Id)
+                        <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" name="Quantite" />
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Ajouter au panier
+                        </button>
+                    }
+                </div>
             </div>
         </div>
-            <div class="col-5">
-                @using (Html.BeginForm())
-                {
-                <div class="col">
-                    @Html.HiddenFor(m => Model.Article.Id)
-                </div>
-                <div class="col">
-                    <label for="stock" class="col-sm-2 col-form-label">Quantite</label>
-                    <input id="stock" type="number" class="form-control" name="Quantite">
-                </div>
-                <div class="col-12">
-                    <button type="submit">ajouter Panier</button>
-                </div>
-                }
-            </div>
     </div>
-  
+</section>

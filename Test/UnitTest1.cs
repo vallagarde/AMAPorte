@@ -124,6 +124,29 @@ namespace Test
                 };
                 ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
 
+                Article article5 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 2.9m,
+                    Stock = 6,
+                    PrixTTC = 5.5m,
+                    Image = "pommes.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
+
+                Article article6 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 2.9m,
+                    Stock = 6,
+                    PrixTTC = 5.5m,
+                    Image = "pommes.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article6.Nom, article6.Description, (int)article6.Prix, article6.Stock, (int)article6.PrixTTC, article6.Image, article6.AdPId);
 
             }
         }
