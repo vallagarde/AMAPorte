@@ -1,7 +1,7 @@
 version: 0.0 
 os: linux 
 files: 
-  - source: my-website 
+  - source: / 
     destination: /var/www/my-temp-dir/
 hooks:
   ApplicationStart:
