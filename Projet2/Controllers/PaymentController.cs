@@ -24,7 +24,6 @@ namespace Projet2.Controllers
             int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
             PanierBoutique panier = ctx.ObientPanier(panierId);
 
-            ctx.ChangerEtatCommande(panierId, "EstEnPreparation");
             hvm.PanierBoutique = panier;
             hvm.PanierId = panierId;
 
@@ -35,11 +34,14 @@ namespace Projet2.Controllers
 
         public IActionResult Commande()
         {
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
             PanierService ctx = new PanierService();
             CalendrierService csc = new CalendrierService();
+            PanierBoutique panierBoutique = ctx.ObientPanier(panierId);
+
             HomeViewModel hvm = new HomeViewModel();
             Commande commande = new Commande();
-            commande.PanierBoutique = hvm.PanierBoutique;
+            commande.PanierBoutique = panierBoutique;
             commande.DateTime = DateTime.Now;
 
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
@@ -64,38 +66,55 @@ namespace Projet2.Controllers
             }
 
             ctx.CreerCommande(commande);
+            ctx.ChangerEtatCommande(panierId, "EstEnPreparation");
             csc.AjouterLigneCalendrierCommande(commande);
+            ctx.DeduireDuStock(panierBoutique);
 
-                return View(hvm);
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "panierId", 0);
+
+            return View(hvm);
         }
 
 
         public IActionResult EtapePaiement(int Total)
         {
-            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
-            if (viewModel.Authentifie)
-            {
-                CompteServices cs = new CompteServices();
-                HomeViewModel hvm = new HomeViewModel();
-                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
-                if (viewModel.Identifiant.EstAdP == true)
+            PanierService ctx = new PanierService();
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierBoutique panierboutique = ctx.ObientPanier(panierId);
+            int articleid = ctx.ArticlesPlusEnStock(panierboutique);
+            if (articleid == 0)
+            { 
+                UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+                if (viewModel.Authentifie)
                 {
-                    hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
-                    return RedirectToAction("Paiement", hvm);
-                }
-                else if (viewModel.Identifiant.EstAdA == true)
-                {
-                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
-                    return RedirectToAction("Paiement", hvm);
-                }
-                else if (viewModel.Identifiant.EstCE == true)
-                {
-                    hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
-                    return RedirectToAction("Paiement", hvm);
-                }
+                    CompteServices cs = new CompteServices();
+                    HomeViewModel hvm = new HomeViewModel();
+                
+                    viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                    if (viewModel.Identifiant.EstAdP == true)
+                    {
+                        hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    
+                        return RedirectToAction("Paiement", hvm);
+                    }
+                    else if (viewModel.Identifiant.EstAdA == true)
+                    {
+                        hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                        return RedirectToAction("Paiement", hvm);
+                    }
+                    else if (viewModel.Identifiant.EstCE == true)
+                    {
+                        hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                        return RedirectToAction("Paiement", hvm);
+                    }
 
+                }
+                return RedirectToAction("FicheRenseignement");
             }
-            return RedirectToAction("FicheRenseignement");
+            else
+            {
+                return RedirectToAction("ArticleSansStock", new { articleid });
+            }
         }
 
         public IActionResult FicheRenseignement()
@@ -119,7 +138,18 @@ namespace Projet2.Controllers
             return RedirectToAction("Paiement", new { hvm });
 
         }
+
+        public IActionResult ArticleSansStock(int articleid)
+        {
+            PanierService ctx = new PanierService();
+            HomeViewModel hvm = new HomeViewModel()
+            {
+                Article = ctx.ObtientArticle(articleid)
+            };
+            return View(hvm);
+        }
+
     }
 
- 
+
 }
