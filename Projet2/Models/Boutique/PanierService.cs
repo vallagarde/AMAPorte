@@ -36,10 +36,10 @@ namespace Projet2.Models.Boutique
         }
 
 
-        public int CreerLigne(int quantite, int ArticleId, decimal sousTotal)
+        public int CreerLigne(int quantite, int ArticleId, decimal sousTotal, int panierId)
         {
             
-            LignePanierBoutique ligne = new LignePanierBoutique() { ArticleId=ArticleId, Quantite=quantite, SousTotal=sousTotal };
+            LignePanierBoutique ligne = new LignePanierBoutique() { ArticleId=ArticleId, Quantite=quantite, SousTotal=sousTotal, PanierBoutiqueId = panierId };
             _bddContext.LignePanierBoutique.Add(ligne);
             _bddContext.SaveChanges();
             return ligne.Id;
@@ -68,13 +68,13 @@ namespace Projet2.Models.Boutique
 
             if (list.Count == 0)
             {
-                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC);
+                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC, PanierId);
 
             }
             else
             {
                 LignePanierBoutique ligne = _bddContext.LignePanierBoutique.Where(a => a.ArticleId == ArticleId).Where(c => c.PanierBoutiqueId == PanierId).FirstOrDefault();
-                ligneId = ModifierLigneRelatif(ligne.Id ,quantite,article, quantite * article.PrixTTC);
+                ligneId = ModifierLigneRelatif(ligne.Id ,quantite,article, quantite * article.PrixTTC, PanierId);
             }
             //LignePanierBoutique ligne = _bddContext.LignePanierBoutique.
             LignePanierBoutique ligneFinal = _bddContext.LignePanierBoutique.Find(ligneId);
@@ -94,8 +94,7 @@ namespace Projet2.Models.Boutique
 
             if (list.Count == 0)
             {
-                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC);
-
+                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC, PanierId);
             }
             else
             {
@@ -117,7 +116,7 @@ namespace Projet2.Models.Boutique
             _bddContext.Dispose();
         }
 
-        public int ModifierLigneRelatif(int id, int quantite, Article article, decimal sousTotal)
+        public int ModifierLigneRelatif(int id, int quantite, Article article, decimal sousTotal, int panierId)
         {
             LignePanierBoutique ligne = _bddContext.LignePanierBoutique.Find(id);
 
@@ -127,7 +126,7 @@ namespace Projet2.Models.Boutique
                 ligne.Id = id;
                 ligne.Quantite += quantite ;
                 ligne.SousTotal += sousTotal;
-
+                ligne.PanierBoutiqueId = panierId;
                 _bddContext.SaveChanges();
             }
 

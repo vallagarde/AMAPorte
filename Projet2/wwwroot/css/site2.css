@@ -224,7 +224,7 @@ label.radio input:checked + span {
 
 
 /* CSS LOGIN & FORMULAIRES COMPTES*/
-section 
+.signupLayout
 {
     position: relative;
     background: #557085;
@@ -236,7 +236,7 @@ section
     transition: 0.5s;
 }
 
-    section .container {
+    .signupLayout .container {
         position: relative;
         width: 80%;
         min-height: 800px;
@@ -263,7 +263,7 @@ section .container .user .imgBx
     transition: 0.5s;
 }
 
-section .container .user .imgBx img 
+section  .container .user .imgBx img 
 {
     position: absolute;
     top: 0;
@@ -273,7 +273,7 @@ section .container .user .imgBx img
     object-fit: cover;
 }
 
-section .container .user .formBx 
+section  .container .user .formBx 
 {
     position: relative;
     width: 50%;
@@ -287,7 +287,7 @@ section .container .user .formBx
 
 }
 
-section .container .user .formBx h2 
+section  .container .user .formBx h2 
 {
     font-size: 18px; 
     font-weight: 600; 
@@ -301,7 +301,7 @@ section .container .user .formBx h2
     color: #555;
 }
 
-section .container .user .formBx input 
+section  .container .user .formBx input 
 {
     width: 100%;
     padding: 10px;
@@ -316,7 +316,7 @@ section .container .user .formBx input
     font-weight: 300;
 }
 
-section .container .user .formBx label 
+section  .container .user .formBx label 
 {
     width: 100%;
     padding: 20px;
@@ -328,7 +328,7 @@ section .container .user .formBx label
     font-weight: 600; 
 }
 
-section .container .user .formBx input[type="submit"]
+section  .container .user .formBx input[type="submit"]
 {
     max-width: 170px; 
     background: #677eff; 
@@ -342,12 +342,12 @@ section .container .user .formBx input[type="submit"]
     position: center;
 }
 
-section .container .user.signupBx .formBx input[type="submit"] 
+section  .container .user.signupBx .formBx input[type="submit"] 
 {
     background: #e73e49;    
 }
 
-section .container .user .formBx .signup 
+section  .container .user .formBx .signup 
 {
     position: relative;
     margin-top: 20px;
@@ -360,19 +360,19 @@ section .container .user .formBx .signup
     
 }
 
-section .container .user .formBx .signup a{
+section  .container .user .formBx .signup a{
     font-weight: 600; 
     text-decoration: none; 
     color: #577eff;
 }
 
-section .container .signupBx 
+section  .container .signupBx 
 {
     pointer-events: initial;
     min-height: 1038px;
 }
 
-section .container .signupBx .formBx {
+section  .container .signupBx .formBx {
     pointer-events: initial;
     align-items: flex-start;
     overflow: auto;
@@ -381,13 +381,11 @@ section .container .signupBx .formBx {
 
 @media (max-width: 991px)
 {
-    section .container 
-    {
+    section .form .container {
         max-width: 400px;
     }
 
-    section .container .imgBx 
-    {
+    section .container .imgBx {
         display: none;
     }
     section .container .user .formBx 
