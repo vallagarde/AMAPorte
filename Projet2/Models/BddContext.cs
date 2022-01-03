@@ -612,7 +612,7 @@ namespace Projet2.Models
                 Commande commande1 = new Commande()
                 {
                     PanierBoutique = panierBoutique1,
-                    DateTime = new DateTime(2021, 12, 23, 12, 30, 00),
+                    DateLivraison = new DateTime(2021, 12, 23, 12, 30, 00),
                     AdAId = 1,
                     EstEnPreparation = true,
                 };
@@ -622,7 +622,7 @@ namespace Projet2.Models
                 Commande commande2 = new Commande()
                 {
                     PanierBoutique = panierBoutique2,
-                    DateTime = new DateTime(2021, 12, 22, 13, 30, 30),
+                    DateLivraison = new DateTime(2021, 12, 22, 13, 30, 30),
                     AdAId = 1,
                     EstARecuperer = true,
                 };
@@ -632,7 +632,7 @@ namespace Projet2.Models
                 Commande commande3 = new Commande()
                 {
                     PanierBoutique = panierBoutique3,
-                    DateTime = new DateTime(2021, 12, 23, 09, 43, 12),
+                    DateLivraison = new DateTime(2021, 12, 23, 09, 43, 12),
                     AdAId = 1,
                     EstEnLivraison = true,
                 };
