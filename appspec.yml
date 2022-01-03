@@ -5,5 +5,5 @@ files:
     destination: /var/www/my-temp-dir/
 hooks:
   ApplicationStart:
-    - location: .aws/stopApplication.sh
-    - location: .aws/startApplication.sh 
+    - location: code_deploy/stopApplication.sh
+    - location: code_deploy/startApplication.sh 
