@@ -1,14 +1,5 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Compte</title>
-</head>
-<body>
+
     Mon Compte : 
         <br/>
         DSI : @Model.Admin.EstDSI
@@ -34,6 +25,4 @@
         <br/>
         @Html.ActionLink("Retour sur la page principale", "Index", "Home", @Model.Admin)
         <br/>
-
-</body>
-</html>
+        @Html.ActionLink("Creation Nouveau Compte Admin", "CreationCompte", "Admin", @Model.Admin)

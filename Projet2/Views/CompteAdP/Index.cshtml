@@ -1,71 +1,24 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Compte</title>
-</head>
-<body>
+
     <div>
-        Bonjour @Model.Personne.Prenom 
-
-        Mon Compte : 
-        <br/>
-        Nom Producteur : @Model.AdP.NomProducteur
-        <br/>
-        Description : @Model.AdP.Description
-        <br/>
-        Numéro SIREN : @Model.AdP.Siren
-        <br/>
-        <br/>
-        Nom : @Model.Personne.Nom
-        <br/>
-        Prenom: @Model.Personne.Prenom
-        <br/>
-        Date de Naissance : @Model.ReturnDateForDisplay
-        <br/>
-        Numéro Téléphone : @Model.Personne.NTelephone
-        <br/>
-        <br/>
-
-        Adresse : 
-        <br/>
-        @Model.Adresse.Numero @Model.Adresse.Voie
-        <br/>
-        @Model.Adresse.CodePostal @Model.Adresse.Ville
-        <br/>
-        @Model.Adresse.Pays
-        <br/>
-        <br/>
-        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
-        <br/>
-        @Html.ActionLink("Retour sur la page principale", "Index", "Home")
-        <br />
+        <img src="~/ImageProfils/@Model.AdP.Image" width="80" height="80">
+        Bonjour @Model.Personne.Prenom        
         <br />
         <br />
         Gestion de la Boutique
-        <br />
         <br />
         @*AJOUTER UN ARTICLE DOIT SAUVEGARDER LE PRODUCTEUR QUI EN AJOUTE*@
         @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
         <br/>
         @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
         <br/>
-        @Html.ActionLink("Commandes Boutique A Preparer", "BoutiqueAPreparer", "EspaceAdP", @Model.AdP)
+        @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
         <br/>
         @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
         <br/>
         <br />
         <br />
         Gestion des Paniers Saissoniers
-        <br />
         <br />
         @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
         <br/>
@@ -86,9 +39,13 @@
         @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
         <br/>
         @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
-        <br/>       
+        <br/> 
+        <br/>
+        @Html.ActionLink("Gerer Mon Compte", "AdPCompteInfo", "CompteAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdP", @Model.AdP)
+        <br/>
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+        <br/>
+        @Html.ActionLink("Retour sur la page principale", "Index", "Home")
     </div>
-
-
-</body>
-</html>

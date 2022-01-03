@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -12,24 +15,50 @@ namespace Projet2.Controllers
     [Authorize]
     public class CompteAdPController : Controller
     {
-        //ajouter quelques attributs (RIB, photo), warning avant suppression compte
+        //ajouter quelques attributs (RIB), warning avant suppression compte
         //adresse avec base de données ? 
-        //mettre les informations de son compte dans une vue "Mon Compte" 
        
         CompteServices cs = new CompteServices();
         HomeViewModel hvm = new HomeViewModel();
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public CompteAdPController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
         public IActionResult Index(AdP adp)
         {
             hvm.Personne = cs.ObtenirPersonne(adp.PersonneId);
-            hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
-            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-            hvm.AdP = adp;
+
             if (hvm.Personne == null)
             {
                 return View("Error");
             }
             else
             {
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                hvm.AdP = adp;
+                return View(hvm);
+            }
+        }
+
+        public IActionResult AdPCompteInfo(AdP adp)
+        {
+
+            hvm.Personne = cs.ObtenirPersonne(adp.PersonneId);
+
+            if (hvm.Personne == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                hvm.AdP = adp;
                 return View(hvm);
             }
         }
@@ -46,38 +75,86 @@ namespace Projet2.Controllers
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdP adp)
         {
 
-            if (personne != null && identifiant != null)
+            if (personne != null && identifiant != null && adresse != null)
             {
-                adp.EstAdP = true;
-                identifiant.EstAdP = adp.EstAdP;
-                int id = cs.AjouterIdentifiant(identifiant);
 
-                var userClaims = new List<Claim>()
+                int Age = personne.getAge();
+                if (Age > 18)
                 {
-                    new Claim(ClaimTypes.Name, id.ToString()),
-                };
+                    personne.EstMajeur = true;
+                }
 
-                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                if (personne.EstMajeur == true)
+                {
+                    if (personne.EstEnAccord == true)
+                    {
+                        adp = new AdP() { EstAdP = true };
+                        identifiant.EstAdP = adp.EstAdP;
 
-                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                HttpContext.SignInAsync(userPrincipal);
-                bool EstUtilisateur = true;
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
+                        int id = cs.AjouterIdentifiant(identifiant);
 
+                        var userClaims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.Name, id.ToString()),
+                        };
 
-                personne.IdentifiantId = id;
+                        var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
-                hvm.AdP = cs.CreerAdP(personne, adresse, adp);
+                        var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                        HttpContext.SignInAsync(userPrincipal);
+                        bool EstUtilisateur = true;
+                        SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
+                        personne.IdentifiantId = id;
+
+                        hvm.AdP = cs.CreerAdP(personne, adresse, adp);
+                        hvm.Personne = personne;
+                        hvm.Adresse = adresse;
+                        hvm.Identifiant = identifiant;
+
+                        return View("Index", hvm);
+                    }
+                }
                 hvm.Personne = personne;
-                hvm.Adresse = adresse;
-                hvm.Identifiant = identifiant;
-                hvm.AdP.PersonneId = hvm.Personne.Id;
-
-                return View("Index", hvm);
+                return View(hvm);
             }
             return View();
+        }
 
+        [HttpGet]
+        public IActionResult AjouterImage(AdP adp)
+        {
+            hvm.AdP = adp;
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult AjouterImage(AdP adp, IFormFile FileToUpload)
+        {
+            adp.Image = FileToUpload.FileName;
+            hvm.AdP = cs.ObtenirAdPParId(adp.Id);
+            hvm.Personne = cs.ObtenirPersonne(hvm.AdP.PersonneId);
+
+            cs.AjouterPhoto(FileToUpload.FileName, hvm.Personne.IdentifiantId);
+
+            var FileDic = "Files";
+
+            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageProfils");
+
+            if (!Directory.Exists(FilePath))
+
+                Directory.CreateDirectory(FilePath);
+
+            var fileName = FileToUpload.FileName;
+
+            var filePath = Path.Combine(FilePath, fileName);
+
+            using (FileStream fs = System.IO.File.Create(filePath))
+
+            {
+                FileToUpload.CopyTo(fs);
+            }
+            return RedirectToAction("Index", hvm.AdA);
         }
 
         [HttpGet]
@@ -93,11 +170,10 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModificationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdP adp)
+        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdP adp)
         {
 
             hvm.Adresse = cs.ModifierAdresse(adresse);
-            hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
             personne.AdresseId = hvm.Adresse.Id;
             personne.IdentifiantId = hvm.Identifiant.Id;
             hvm.Personne = cs.ModifierPersonne(personne);
@@ -110,7 +186,7 @@ namespace Projet2.Controllers
                 viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
                 if (viewModel.Identifiant.EstAdP == true)
                 {
-                    return View("Index", hvm);
+                    return View("AdPCompteInfo", hvm);
                 }
                 else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
                 {
@@ -126,6 +202,7 @@ namespace Projet2.Controllers
 
         public IActionResult SuppressionCompte(AdP adp)
         {
+            //warning avant suppression compte
             cs.SupprimerAdP(adp.Id);
             HttpContext.SignOutAsync();
             return View();

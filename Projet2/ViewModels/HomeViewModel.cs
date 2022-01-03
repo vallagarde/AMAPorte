@@ -62,12 +62,13 @@ namespace Projet2.ViewModels
         public List<AdP> ListeComptesAdP = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
         public List<Commande> ListeCommandesEnPrep = new List<Commande>();
-        public List<Commande> ListeCommandesLivr = new List<Commande>();
+        public List<Commande> ListeCommandesEnCours = new List<Commande>();
+        public List<Commande> ListeCommandesLivres = new List<Commande>();
         public List<Commande> ListeCommandesARecup = new List<Commande>();
-        
-            
+        public List<LignePanierBoutique> ListeCommandesAPrep = new List<LignePanierBoutique>();
+        public List<LignePanierBoutique> ListeCommandesDonnees = new List<LignePanierBoutique>();
 
-        public Paiement Paiement = new Paiement();
+
         public bool Authentifie { get; set; }
 
         public LignePanierBoutique LignePanierBoutique= new LignePanierBoutique();

@@ -17,9 +17,7 @@ namespace Projet2.Controllers
     public class CompteAdAController : Controller
     {
         //View pour paiement 12€/6 mois 
-        //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
         
-
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
         HomeViewModel hvm = new HomeViewModel();
@@ -79,7 +77,6 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse)
         {
-            //CRUD Compte CE ok, ajouter quelques attributs (photo, adresse facturation),
             //adresse avec base de données ? 
             if (personne != null && identifiant != null && adresse != null)
             {
@@ -93,12 +90,10 @@ namespace Projet2.Controllers
                 {
                     if (personne.EstEnAccord == true)
                     {
-
                         AdA ada = new AdA() { EstAdA = true };
                         identifiant.EstAdA = ada.EstAdA;
 
                         int id = cs.AjouterIdentifiant(identifiant);
-
 
                         var userClaims = new List<Claim>()
                         {
@@ -204,6 +199,7 @@ namespace Projet2.Controllers
 
         public IActionResult ProducteursFavoris(AdA ada)
         {
+            //ajouter foncionnalité favoriser dans les producteurs pour les utilisateurs connectés
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
             hvm.AdA = ada;
             return View(hvm);

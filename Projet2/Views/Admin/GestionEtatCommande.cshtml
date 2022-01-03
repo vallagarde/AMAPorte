@@ -13,7 +13,7 @@
             @foreach (var commande in @Model.ListeCommandesEnPrep)
             {
              <tr border="1">
-                    <td>Commande : @commande.Id : @commande.EtatCommande</td>
+                    <td>Commande @commande.Id</td>
                     <tr>
                     <td>Acheteur : @commande.AdA.Personne.Nom</td>
                     <td>@commande.AdA.Personne.Prenom</td>                    
@@ -32,7 +32,57 @@
                     @Html.HiddenFor(m => @Model.Admin.Id)
                     @Html.HiddenFor(m => @Model.Admin.Role)
                     @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)   
+                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                   @Html.Label("Etat", "En Livraison")
+                   @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnLivraison")
+                 <br/>
+                   @Html.Label("Etat", "A Recuperer")
+                   @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstARecuperer")
+                 <br/>
+                    @Html.Label("Etat", "Cloturé")
+                    @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstLivre")
+                   <br/> 
+                    <button class="btn btn-primary" type="submit">Modifier</button>
+                </form>
+                      </td>
+                     </tr>
+                 </tr>
+            }            
+       }
+       </table>
+</div>
+<br/>
+<br/>
+<div>
+    <p>Commandes En Livraison</p>
+    <table border="1">
+        @if(@Model.ListeCommandesEnCours.Count != 0){                                  
+            @foreach (var commande in @Model.ListeCommandesEnCours)
+            {
+             <tr border="1">
+                    <td>Commande @commande.Id</td>
+                    <tr>
+                    <td>Acheteur : @commande.AdA.Personne.Nom</td>
+                    <td>@commande.AdA.Personne.Prenom</td>                    
+             </tr>
+                @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
+                        {
+                            <tr>
+                                <td>Article : @lignePanierBoutique.Article.Nom</td>
+                                <td>Producteur : @lignePanierBoutique.Article.AdP.NomProducteur</td>
+                            </tr>
+                        }
+                        
+                 <tr>
+                <td>
+                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommande">
+                    @Html.HiddenFor(m => @Model.Admin.Id)
+                    @Html.HiddenFor(m => @Model.Admin.Role)
+                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                    @Html.Label("Etat", "En Preparation")
+                    @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnPreparation")                          
+                <br/> 
                    @Html.Label("Etat", "A Recuperer")
                    @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstARecuperer")
                  <br/>
@@ -57,7 +107,7 @@
             @foreach (var commande in @Model.ListeCommandesARecup)
             {
                  <tr border="1">
-                    <td>Commande : @commande.Id : @commande.EtatCommande</td>
+                    <td>Commande @commande.Id</td>
                     <tr>
                     <td>Acheteur : @commande.AdA.Personne.Nom</td>
                     <td>@commande.AdA.Personne.Prenom</td>                    
@@ -76,10 +126,13 @@
                            @Html.HiddenFor(m => @Model.Admin.Id)
                            @Html.HiddenFor(m => @Model.Admin.Role)
                            @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                           @Html.HiddenFor(m => @commande.PanierBoutiqueId)   
+                           @Html.HiddenFor(m => @commande.PanierBoutiqueId)                           
                            @Html.Label("Etat", "En Preparation")
                            @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnPreparation")                          
-                           <br/> 
+                           <br/>
+                           @Html.Label("Etat", "En Livraison")
+                           @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnLivraison")
+                         <br/>
                             @Html.Label("Etat", "Cloturé")
                             @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstLivre")
                             <br/> 
@@ -98,15 +151,15 @@
 <div>
     <p>Commandes Livrés</p>
     <table border="1">
-       @if(@Model.ListeCommandesLivr.Count != 0){                                  
-            @foreach (var commande in @Model.ListeCommandesLivr)
+       @if(@Model.ListeCommandesLivres.Count != 0){                                  
+            @foreach (var commande in @Model.ListeCommandesLivres)
             {
              <tr border="1">
-                    <td>Commande : @commande.Id : @commande.EtatCommande</td>
+                    <td>Commande @commande.Id </td>
                     <tr>
                     <td>Acheteur : @commande.AdA.Personne.Nom</td>
                     <td>@commande.AdA.Personne.Prenom</td>                    
-            </tr>
+                    </tr>
                 @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
                         {
                             <tr>
@@ -123,7 +176,10 @@
                         @Html.HiddenFor(m => @commande.PanierBoutiqueId)   
                         @Html.Label("Etat", "En Preparation")
                         @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnPreparation")                          
-                        <br/> 
+                        <br/>
+                        @Html.Label("Etat", "En Livraison")
+                       @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnLivraison")
+                     <br/>
                         @Html.Label("Etat", "A Recuperer")
                         @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstARecuperer")
 
@@ -132,7 +188,7 @@
                            </form>    
                      </td>
                      </tr>
-                 </tr>
+                </tr>
             }            
        }
        </table>

@@ -4,7 +4,7 @@
     
 }
 
-<h1>Formulaire Modification Adhérent Acheteur : </h1>
+<h1>Modifier Mon Compte</h1>
 
     @using (Html.BeginForm())
     {
@@ -15,13 +15,12 @@
         @Html.HiddenFor(m => Model.Identifiant.Id)
         @Html.HiddenFor(m => Model.Identifiant.EstAdA)
         @Html.HiddenFor(m => Model.Adresse.Id)
-        @Html.HiddenFor(m => Model.Identifiant.Id)
     <br />
-        Adresse Mail : @Model.Identifiant.AdresseMail
+        @Model.Identifiant.AdresseMail
     <br />
         @Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.AdA.Id)
     <br />
-    <h2> Personne </h2>
+    <h2> Mes Données </h2>
     <br />
         @Html.LabelFor(m => Model.Personne.Nom) :
         @Html.TextBoxFor(m => Model.Personne.Nom)
@@ -47,9 +46,6 @@
         @Html.LabelFor(m => Model.Adresse.Ville) :
         @Html.TextBoxFor(m => Model.Adresse.Ville)
      <br />
-        @Html.LabelFor(m => Model.Adresse.Pays) :
-        @Html.TextBoxFor(m => Model.Adresse.Pays)
-     <br />
 </fieldset>
      <br />
         <input type="submit" value="Modification" />
@@ -57,5 +53,5 @@
 
     <br /><br />  
     <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAda", @Model.AdA)
+    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdA", @Model.AdA)
     </div>
