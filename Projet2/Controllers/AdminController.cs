@@ -47,33 +47,37 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(Admin admin, Identifiant identifiant)
         {
-
-            if (admin != null && identifiant != null)
+            if (!cs.TrouverIdentifiant(identifiant))
             {
-                if (admin.EstDSI == true)
+                if (admin != null && identifiant != null)
                 {
-                    identifiant.EstDSI = true;
-                }
-                else if (admin.EstGCRA == true) 
-                {
-                    identifiant.EstGCRA = true;
-                }
-                else
-                {
-                    identifiant.EstGCCQ = true;
-                }
+                    if (admin.EstDSI == true)
+                    {
+                        identifiant.EstDSI = true;
+                    }
+                    else if (admin.EstGCRA == true)
+                    {
+                        identifiant.EstGCRA = true;
+                    }
+                    else
+                    {
+                        identifiant.EstGCCQ = true;
+                    }
 
-                int id = cs.AjouterIdentifiant(identifiant);
-                admin.IdentifiantId = id;
-                cs.CreerAdmin(admin);
+                    int id = cs.AjouterIdentifiant(identifiant);
+                    admin.IdentifiantId = id;
+                    cs.CreerAdmin(admin);
 
-                UtilisateurViewModel viewModel = new UtilisateurViewModel();
-                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
-                HomeViewModel hvm = new HomeViewModel();
-                hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
-                return View("Index", hvm);                              
+                    UtilisateurViewModel viewModel = new UtilisateurViewModel();
+                    viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                    HomeViewModel hvm = new HomeViewModel();
+                    hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return View("Index", hvm);
+                }
             }
-            return View();
+            hvm.Admin.IdentifiantId = admin.IdentifiantId;
+            hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
+            return View(hvm);
         }
 
         [HttpGet]
@@ -147,8 +151,10 @@ namespace Projet2.Controllers
         public IActionResult SuppressionCompte(Admin admin)
         {
             cs.SupprimerAdmin(admin.Id);
+            bool EstUtilisateur = false;
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
-            return View();
+            return Redirect("/");
         }
 
     }

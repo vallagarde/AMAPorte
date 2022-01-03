@@ -35,7 +35,12 @@
                           <tr >
                               <th>@Html.LabelFor(m => m.Identifiant.AdresseMail)</th>
                               <th>@Html.TextBoxFor(m => m.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
-                                  @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail) </th>
+                                  @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail) 
+                                    @if(@Model.AdresseExistante == true)
+                                            {
+                                            <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+                                            }
+                              </th>
                           </tr>
                           <tr>
                               <th>@Html.LabelFor(m => m.Identifiant.MotDePasse)</th>
@@ -52,15 +57,18 @@
                             </colgroup>
                             <tr>
                               <th>@Html.LabelFor(m => Model.AdP.NomProducteur)</th>
-                              <th>@Html.TextBoxFor(m => Model.AdP.NomProducteur,  new {placeholder="Nom de la Production"})</th>
+                              <th>@Html.TextBoxFor(m => Model.AdP.NomProducteur,  new {placeholder="Nom de la Production"})
+                              @Html.ValidationMessageFor(m => Model.AdP.NomProducteur, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.AdP.Description)</th>
-                              <th>@Html.TextBoxFor(m => Model.AdP.Description, new {placeholder="Ecrivez quelques mots sur votre production"})</th>
+                              <th>@Html.TextBoxFor(m => Model.AdP.Description, new {placeholder="Ecrivez quelques mots sur votre production"})
+                              @Html.ValidationMessageFor(m => Model.AdP.Description, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.AdP.Siren)</th>
-                              <th>@Html.TextBoxFor(m => Model.AdP.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})</th>
+                              <th>@Html.TextBoxFor(m => Model.AdP.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})
+                              @Html.ValidationMessageFor(m => Model.AdP.Siren, "", new { @class = "text-danger" })</th>
                             </tr>
                             </table>
 
@@ -73,15 +81,18 @@
                             </colgroup>
                             <tr>
                               <th>@Html.LabelFor(m => Model.Personne.Nom)</th>
-                              <th>@Html.TextBoxFor(m => Model.Personne.Nom, new {placeholder="Nom de Famille"})</th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.Nom, new {placeholder="Nom de Famille"})
+                              @Html.ValidationMessageFor(m => Model.Personne.Nom, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.Personne.Prenom) </th>
-                              <th>@Html.TextBoxFor(m => Model.Personne.Prenom, new {placeholder="Prénom"})</th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.Prenom, new {placeholder="Prénom"})
+                              @Html.ValidationMessageFor(m => Model.Personne.Prenom, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.Personne.NTelephone) </th>
-                              <th>@Html.TextBoxFor(m => Model.Personne.NTelephone, new {placeholder="Numéro Téléphone"})</th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.NTelephone, new {placeholder="Numéro Téléphone"})
+                              @Html.ValidationMessageFor(m => Model.Personne.NTelephone, "", new { @class = "text-danger" })</th>
                             </tr>
                             </table>
 
@@ -113,15 +124,19 @@
                         </colgroup>
                         <tr>
                             <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Numero, "", new { @class = "text-danger" })</th>
                             <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Voie, "", new { @class = "text-danger" })</th>
                         </tr>
                         <tr>
                             <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)
+                            @Html.ValidationMessageFor(m => Model.Adresse.CodePostal, "", new { @class = "text-danger" })</th>
                             <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Ville, "", new { @class = "text-danger" })</th>
                         </tr>
                         </table>
                          <table width=100%>
@@ -131,7 +146,8 @@
                             </colgroup>
                                 <tr align="justify">
                                 <th >@Html.CheckBoxFor(m => Model.Personne.EstEnAccord)</th>
-                                <th>@Html.LabelFor(m => Model.Personne.EstEnAccord)</th>
+                                <th>@Html.LabelFor(m => Model.Personne.EstEnAccord)
+                                @Html.ValidationMessageFor(m => Model.Personne.EstEnAccord, "", new { @class = "text-danger" })</th>
                             </tr>
                         </table>
                         <table width=100%>

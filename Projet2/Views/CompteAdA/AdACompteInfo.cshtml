@@ -28,10 +28,20 @@
         <br/>
         @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdA", @Model.AdA)
         <br/>
-        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdA", @Model.AdA)
+        <button class="modalButton" id="myBtn">Supprimer Compte</button>
         <br/>
         @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
         <br/>
         @Html.ActionLink("Retour", "Index", "CompteAdA", @Model.AdA)
     </div>
 
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+            <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
+            @Html.HiddenFor(m => Model.AdP.Id)
+             <button class="modalButton" type="submit">Je supprime mon compte</button>
+            </form>
+        </div>
+        </div>

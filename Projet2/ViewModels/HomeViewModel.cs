@@ -59,6 +59,7 @@ namespace Projet2.ViewModels
         public List<LignePanierBoutique> ListeCommandesAPrep = new List<LignePanierBoutique>();
         public List<LignePanierBoutique> ListeCommandesDonnees = new List<LignePanierBoutique>();
         public DateTime ProchaineDateLivraison = new DateTime();
+        public bool AdresseExistante;
 
         public string ReturnDateForDisplayLivraison
         {

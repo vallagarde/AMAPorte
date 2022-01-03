@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Projet2.Models.Compte;
 using Projet2.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Projet2.Controllers
 {
     public class LoginController : Controller
-        //ajouter une option mot de passe oublié
         //ajouter des authentifications sur des espaces member only 
         //ajouter un identifiant avec un adresse mail (verifier si existe pas encore)
 
@@ -118,6 +118,7 @@ namespace Projet2.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public ActionResult Deconnexion()
         {
             bool EstUtilisateur = false;
@@ -149,7 +150,8 @@ namespace Projet2.Controllers
                 var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
                 var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
                 HttpContext.SignInAsync(userPrincipal);
-               
+               if(identifiant.Id != 0)
+                {
                     if (hvm.Identifiant.EstAdP == true)
                     {
                         hvm.AdP = cs.ObtenirAdPParIdentifiant(hvm.Identifiant.Id);
@@ -170,9 +172,15 @@ namespace Projet2.Controllers
                         hvm.Admin = cs.ObtenirAdminParIdentifiant(hvm.Identifiant.Id);
                         return RedirectToAction("Index", "Admin", hvm.Admin);
                     }
-                    
-             return RedirectToAction("Index", "Login");
+                    else
+                    {
+                        return RedirectToAction("Index", "Login");
+                    }
+                } else
+                {
+                //Envoie mail à l'adresse mail recu avec un lien vers la modification inclus identifiant Id
+                return RedirectToAction("Index", "Login");
+                }            
         }
-
     }
 }
