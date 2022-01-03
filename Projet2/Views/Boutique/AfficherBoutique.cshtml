@@ -22,9 +22,19 @@
                     </div>
                 </div>
                 <div class="row m-2">
-                    <div class="input-group">
-                        <input name="rechercheAdP" type="search" class="form-control rounded" placeholder="Producteur" aria-label="Producteur" aria-describedby="search-addon" />
-                    </div>
+                        <div class="form-group">
+                            <select id="form_need" name="rechercheAdP" class="form-control" data-error="Producteurs">
+
+                                <option value=""></option>
+
+                                @foreach (Projet2.Models.Compte.AdP adp in Model.ListeComptesAdP)
+                                {
+                                    <option value="@adp.NomProducteur"> @adp.NomProducteur </option>
+
+                                }
+
+                            </select>
+                        </div>
                 </div>
                 <div class="row m-2">
 
@@ -44,9 +54,13 @@
                             }
                             <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..." />
                             <div class="card-body">
-                                <h5 class="card-title" style="max-height: 2em">@article.Nom</h5>
-                                <p class="card-text" style="max-height: 4em">@article.Description</p>
-                                @Html.ActionLink("Voir article", "Article", "Boutique", new { @Id = article.Id })
+                                <h5 class="card-title text-center" style="max-height: 2em">@article.Nom</h5>
+                                <p class="card-text text-center" style="max-height: 4em">€ @Decimal.Round(article.PrixTTC, 2)</p>
+                                <div class="d-grid gap-2 col-12 mx-auto">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Article", "Boutique", new { @Id = article.Id })'">
+                                        Voir Article
+                                    </button>
+                                </div>
 
                             </div>
                         </div>
