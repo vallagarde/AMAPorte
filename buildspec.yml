@@ -3,6 +3,7 @@ run-as: root
 artifacts:
   files:
     - '.aws/*'
+    - 'code_deploy/*'
     - 'appspec.yml'
     - 'my-website/**/*'
 phases:
