@@ -5,7 +5,5 @@ files:
     destination: /var/www/my-temp-dir/
 hooks:
   ApplicationStart:
-    - location: code_deploy/stopApplication.sh
-      timeout: 120
-    - location: code_deploy/startApplication.sh
-      timeout: 120
+    - location: .aws/stopApplication.sh
+    - location: .aws/startApplication.sh
