@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,6 +6,9 @@
     <title>@ViewData["Title"] - Appliweb</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site2.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+
     <script>
         function validate() {
             var valid = false;
@@ -29,7 +32,7 @@
 <body>
 
     <header>
-        <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-page="/Index"><img src="/Images/Logo.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,27 +92,37 @@
                 </div>
 
                 <div class="navbar-collapse collapse dual-collapse2 flex-sm-row-reverse">
-                    <a class="navbar-brand" asp-area="" asp-controller="Boutique" asp-action="IPanier"><img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+
+                    <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="button" id="panierVide">
+                            <i class="bi bi-basket2" type="button"></i>
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form>
+
+
+                    <button class="btn btn-outline-dark" type="button" id="panierRemplit" asp-area="" asp-controller="Boutique" asp-action="IPanier">
+                        <img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""><span class="badge bg-dark text-white ms-1 rounded-pill">1</span>                        
+                    </button>
+
 
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-    </div>  
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
+    </div>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
-    
-        <div class="container" id="azerty">
-            <div class="col"></div>
-        </div>
-    
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - Appliweb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
+
+    <div class="container" id="azerty">
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Appliweb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
 
     
     </footer>
