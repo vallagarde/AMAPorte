@@ -6,4 +6,6 @@ files:
 hooks:
   ApplicationStart:
     - location: code_deploy/stopApplication.sh
-    - location: code_deploy/startApplication.sh 
+      timeout: 120
+    - location: code_deploy/startApplication.sh
+      timeout: 120
