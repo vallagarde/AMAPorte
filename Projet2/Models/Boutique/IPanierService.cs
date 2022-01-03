@@ -8,8 +8,8 @@ namespace Projet2.Models.Boutique
         List<PanierBoutique> ObtientTousLesPaniers();
         List<LignePanierBoutique> ObtientTousLesLignes();
 
-        int CreerLigne(int quantite, int ArticleId, decimal sousTotal);
-        int ModifierLigneRelatif(int id ,int quantite, Article article, decimal sousTotal);
+        int CreerLigne(int quantite, int ArticleId, decimal sousTotal, int panierId);
+        int ModifierLigneRelatif(int id ,int quantite, Article article, decimal sousTotal, int panierId);
         int CreerPanier();
         void AjouterArticle(int PanierId, int ArticleId, int quantite);
         int ModifierPanier(int id ,List<LignePanierBoutique> liste);
