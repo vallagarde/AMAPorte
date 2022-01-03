@@ -192,11 +192,12 @@ namespace Projet2.Controllers
         public IActionResult Article(int id)
         {
             ArticleRessources ctx = new ArticleRessources();
+            PanierService ps = new PanierService();
             Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
+            article.Avis = ps.AfficherAvisPourArticle(article);
 
             HomeViewModel hvm = new HomeViewModel
             {
-
                 Article = article,
                 PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
@@ -301,5 +302,49 @@ namespace Projet2.Controllers
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
+
+        [HttpGet]
+        public IActionResult ArticleAvis(LignePanierBoutique lignePanierBoutique)
+        {
+            HomeViewModel model = new HomeViewModel();
+
+            ArticleRessources ctxarticle = new ArticleRessources();
+            model.Article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == lignePanierBoutique.ArticleId).FirstOrDefault();
+            model.LignePanierBoutique = lignePanierBoutique;
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public IActionResult ArticleAvis(LignePanierBoutique lignePanierBoutique, Article article)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                HomeViewModel hvm = new HomeViewModel();
+                PanierService ctx = new PanierService();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdA == true)
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                    
+                    ctx.AjouterAvisAdA(lignePanierBoutique, article, hvm.AdA.Id);
+
+                    return RedirectToAction("Article", new { @Id = article.Id });
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                    
+                    ctx.AjouterAvisCE(lignePanierBoutique, article, hvm.ContactComiteEntreprise.EntrepriseId);
+
+                    return RedirectToAction("Article", "Boutique", hvm.ContactComiteEntreprise);
+                }
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
     }
 }

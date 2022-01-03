@@ -1,15 +1,9 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 @{
-    Layout = null;
+    
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Modifier Compte</title>
-</head>
-<body> 
+
 <h1>Formulaire Modification Adhérent Acheteur : </h1>
 
     @using (Html.BeginForm())
@@ -23,13 +17,9 @@
         @Html.HiddenFor(m => Model.Adresse.Id)
         @Html.HiddenFor(m => Model.Identifiant.Id)
     <br />
-        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
-        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
-        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+        Adresse Mail : @Model.Identifiant.AdresseMail
     <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { Value=@Model.Identifiant.MotDePasse})
-        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+        @Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.AdA.Id)
     <br />
     <h2> Personne </h2>
     <br />
@@ -60,9 +50,6 @@
         @Html.LabelFor(m => Model.Adresse.Pays) :
         @Html.TextBoxFor(m => Model.Adresse.Pays)
      <br />
-     
-        @* Paiement en :
-        @Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) *@
 </fieldset>
      <br />
         <input type="submit" value="Modification" />
@@ -72,7 +59,3 @@
     <div>
     @Html.ActionLink("Retour sur le Compte", "Index", "CompteAda", @Model.AdA)
     </div>
-
-
-</body>
-</html>

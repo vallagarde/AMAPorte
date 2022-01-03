@@ -158,6 +158,30 @@ namespace Projet2.Models.Compte
             }
         }
 
+        public void AjouterPhoto(string image, int identifiantId)
+        {
+            Identifiant identifiant = _bddContext.Identifiants.Find(identifiantId);
+            if (identifiant.EstAdA)
+            {
+                AdA ada = ObtenirAdAParId(identifiantId);
+                ada.Image = image; 
+                _bddContext.AdAs.Update(ada);
+                _bddContext.SaveChanges();
+            }
+            //else if (identifiant.EstAdP)
+            //{
+            //    AdP adp = ObtenirAdPParId(identifiantId);
+            //    adp.Image = image;
+            //    _bddContext.AdPs.Update(adp);
+            //}
+            //else if (identifiant.EstCE)
+            //{
+            //    ContactComiteEntreprise ce = ObtenirCCEParId(identifiantId);
+            //    ce.Image = image;
+            //    _bddContext.ContactComiteEntreprises.Update(ce);
+            //}
+        }
+
         //Obtenir AdP
         public List<AdP> ObtenirTousLesAdPs()
         {

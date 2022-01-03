@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Projet2.Helpers;
+using Projet2.Models.Compte;
 
 namespace Projet2.Models.Boutique
 {
@@ -113,7 +114,7 @@ namespace Projet2.Models.Boutique
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _bddContext.Dispose();
         }
 
         public int ModifierLigneRelatif(int id, int quantite, Article article, decimal sousTotal)
@@ -219,5 +220,116 @@ namespace Projet2.Models.Boutique
             _bddContext.SaveChanges();
 
         }
+
+        public List<Commande> ObtenirCommandesParAdA(AdA ada)
+        {
+            var queryCommande = from commande in _bddContext.Commande where commande.AdAId == ada.Id select commande;
+            var commandesAdA = queryCommande.ToList();
+            foreach (Commande commande in commandesAdA)
+            {
+                var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
+                var lignes = queryLignePanierBoutique.ToList();
+                foreach (LignePanierBoutique lignePanierBoutique in lignes)
+                {
+                    var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                    lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                    lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+                }
+                ada.CommandesBoutiqueEffectues.Add(commande);
+            }
+            return ada.CommandesBoutiqueEffectues;
+        }
+
+        public void AjouterAvisAdA(LignePanierBoutique lignePanierBoutique, Article article, int Id)
+        {
+            Avis nouveauAvis = new Avis()
+            {
+                ArticleId = article.Id,
+                Text = lignePanierBoutique.Avis.Text,
+                Note = lignePanierBoutique.Avis.Note,
+                AdAId = Id,
+            };
+            CreerAvis(nouveauAvis);
+            lignePanierBoutique = _bddContext.LignePanierBoutique.Find(lignePanierBoutique.Id);
+            lignePanierBoutique.AvisId = nouveauAvis.Id;
+            _bddContext.LignePanierBoutique.Update(lignePanierBoutique);
+            _bddContext.SaveChanges();
+        }
+
+        public int CreerAvis(Avis avis)
+        {
+            _bddContext.Add(avis);
+            _bddContext.SaveChanges();
+            return avis.Id;
+        }
+
+        
+
+        public void AjouterAvisCE(LignePanierBoutique lignePanierBoutique, Article article, int Id)
+        {
+            Avis nouveauAvis = new Avis()
+            {
+                Article = article,
+                Text = lignePanierBoutique.Avis.Text,
+                Note = lignePanierBoutique.Avis.Note,
+                EntrepriseId = Id
+            };
+            _bddContext.Add(nouveauAvis);
+            _bddContext.SaveChanges();
+
+        }
+        public List<Avis> AfficherAvisPourArticle(Article article)
+        {
+            var queryAvis = from avis in _bddContext.Avis where avis.ArticleId == article.Id select avis;
+            var avisArticle = queryAvis.ToList();
+            foreach (Avis avis in avisArticle)
+            {
+                article.Avis.Add(avis);
+            }
+            return article.Avis;
+        }
+
+        public void ChangerEtatCommande(int panierId, string etat)
+        {
+            var queryCommande = from c in _bddContext.Commande where c.PanierBoutiqueId == panierId select c;
+            Commande commande = queryCommande.FirstOrDefault();
+            commande.EtatCommande = "";
+            commande.EstEnPreparation = false;
+            commande.EstARecuperer = false;
+            commande.EstLivre = false;
+            commande.EtatCommande = etat;
+            _bddContext.Update(commande);
+            _bddContext.SaveChanges();
+        }
+
+        public List<Commande> ObtenirCommandes()
+        {
+            List<Commande> commandes = _bddContext.Commande.ToList();
+            foreach (Commande commande in commandes)
+            {
+                var queryAdA = from ada in _bddContext.AdAs where ada.Id == commande.AdAId select ada;
+                commande.AdA = queryAdA.FirstOrDefault();
+                var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
+                commande.AdA.Personne = queryPersonne.FirstOrDefault();
+                var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
+                var lignes = queryLignePanierBoutique.ToList();
+                foreach (LignePanierBoutique lignePanierBoutique in lignes)
+                {
+                    var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                    lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    var queryAdP = from adp in _bddContext.AdPs where adp.Id == lignePanierBoutique.Article.AdPId select adp;
+                    lignePanierBoutique.Article.AdP = queryAdP.FirstOrDefault();
+                    var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                    lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+                }               
+            }
+            return commandes;
+        }
+
     }
 }

@@ -1,0 +1,37 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Paiement Ligne de Panier";
+}
+
+
+<div class=" container">
+    <div class="row">
+        @Html.HiddenFor(m => Model.LignePanierSaisonnier.Id)
+        @Html.HiddenFor(m => Model.LignePanierSaisonnier.ContactComiteEntrepriseId)
+
+        <div class="col">
+
+            @{
+                String filepath = "~/ImagesPaniers/" + @Model.LignePanierSaisonnier.PanierSaisonnier.Image;
+            }
+            <img src="~/ImagesPaniers/@Model.LignePanierSaisonnier.PanierSaisonnier.Image" class="card-img-top" alt="...">
+        </div>
+        <div class="col">
+
+            var prixTTC = Decimal.Round(@Model.LignePanierSaisonnier.PanierSaisonnier.Prix, 2);
+            var SousTotal = Decimal.Round(@Model.LignePanierSaisonnier.SousTotal, 2);
+
+            <h2 class="">@Model.LignePanierSaisonnier.PanierSaisonnier.NomPanier</h2>
+            <h3 class="">@Model.PanierSaisonnier.AdP.NomProducteur</h3>
+            <p class="">@Model.LignePanierSaisonnier.PanierSaisonnier.Description</p>
+            <p class="">@Model.PanierSaisonnier.Prix</p>
+            <p class="">@Model.LignePanierSaisonnier.Quantite</p>
+            <p class="">prixTTC</p>
+            @Html.LabelFor(m => Model.LignePanierSaisonnier.Quantite)
+            @Html.TextBoxFor(m => Model.LignePanierSaisonnier.Quantite, new { @type = "number" })
+            <p class="">SousTotal</p>
+            @Html.ActionLink("Annuler", "AfficherPaniers", "Panier", new { @class = "btn btn-primary" })
+            @Html.ActionLink("Payer", "Paiement", "Panier", @Model.LignePanierSaisonnier.PanierSaisonnier.Id, new { @class = "card-link" })
+        </div>
+    </div>
+</div>

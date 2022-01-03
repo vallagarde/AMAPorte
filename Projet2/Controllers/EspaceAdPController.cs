@@ -13,13 +13,8 @@ namespace Projet2.Controllers
     [Authorize]
     public class EspaceAdPController : Controller
     {
-        //BOUTIQUE
-        //OK\\ ajouter des articles à la boutique, les modifier,  les supprimer, les afficher dans son espace personnel
         //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
-        //PANIER
-        //OK\\ajouter des paniers s., les modifier, les supprimer  les afficher dans son espace personnel,
         //> A FAIRE (liaison avec une date specifique prennant en compte les commandes en amont)
-        //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
         //ATELIER
         //!\\ajouter des ateliers, les modifier, les annuler, les afficher dans son espace personnel
         //!\\(avec informations sur les participants (nom, prenom, telephone, /nom entreprise et nombre participants pour CE))

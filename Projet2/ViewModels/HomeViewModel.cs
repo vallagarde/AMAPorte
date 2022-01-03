@@ -16,10 +16,25 @@ namespace Projet2.ViewModels
         public Upload Upload = new Upload();
         public int PanierId { get; set; }
         public PanierBoutique PanierBoutique = new PanierBoutique();
+        public Commande Commande = new Commande();
+        public Avis Avis = new Avis();
+
+        public string ReturnDateForDisplayCommande
+        {
+            get
+            {
+                if (this.Commande != null)
+                {
+                    return this.Commande.DateTime.ToString("d");
+                }
+                return null;
+            }
+        }
 
         //Paniers
         public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();
         public CataloguePanier CataloguePanier = new CataloguePanier();
+        public LignePanierSaisonnier LignePanierSaisonnier = new LignePanierSaisonnier();
 
         //Pour Comptes + Authorisation
         public Personne Personne = new Personne();
@@ -46,6 +61,11 @@ namespace Projet2.ViewModels
         public List<AdA> ListeComptesAdA = new List<AdA>();
         public List<AdP> ListeComptesAdP = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
+        public List<Commande> ListeCommandesEnPrep = new List<Commande>();
+        public List<Commande> ListeCommandesLivr = new List<Commande>();
+        public List<Commande> ListeCommandesARecup = new List<Commande>();
+        
+            
 
         public Paiement Paiement = new Paiement();
         public bool Authentifie { get; set; }

@@ -1,0 +1,39 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+
+}
+    <div class = "container">
+        Mon Compte : 
+        <br/>
+        Nom : @Model.Personne.Nom
+        <br/>
+        Prenom: @Model.Personne.Prenom
+        <br/>
+        Date de Naissance : @Model.ReturnDateForDisplay
+        <br/>
+        Numéro Téléphone : @Model.Personne.NTelephone
+        <br/>
+        Adresse Mail : @Model.Identifiant.AdresseMail
+        <br/>
+        <br/>
+
+        Adresse : 
+        <br/>
+        @Model.Adresse.Numero @Model.Adresse.Voie
+        <br/>
+        @Model.Adresse.CodePostal @Model.Adresse.Ville
+        <br/>
+        @Model.Adresse.Pays
+        <br />
+        <br />
+
+        <br/>
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdA", @Model.AdA)
+        <br/>
+        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdA", @Model.AdA)
+        <br/>
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+        <br/>
+        @Html.ActionLink("Retour", "Index", "CompteAdA", @Model.AdA)
+    </div>
+

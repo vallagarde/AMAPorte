@@ -1,14 +1,9 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 @{
-    Layout = null;
+    
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Inscription</title>
-</head>
-<body>
+
+    <div class = "container inscription">
     <div>
     <br />
     @Html.ActionLink("Creation Compte AdA", "CreationCompte", "CompteAdA")
@@ -30,5 +25,4 @@
     <br />
     @Html.ActionLink("Déconnecter", "Deconnexion", "Login")
     </div>
-</body>
-</html>
+    </div>

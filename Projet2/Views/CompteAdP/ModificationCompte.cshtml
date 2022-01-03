@@ -1,15 +1,9 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 @{
-    Layout = null;
+    
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Modifier Compte</title>
-</head>
-<body> 
+
 <h1>Formulaire Modification Adhérent Producteur : </h1>
 
     @using (Html.BeginForm())
@@ -80,9 +74,5 @@
 
     <br /><br />  
     <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAda", @Model.AdP)
+    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdP", @Model.AdP)
     </div>
-
-
-</body>
-</html>

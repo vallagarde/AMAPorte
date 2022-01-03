@@ -17,12 +17,14 @@ namespace Projet2.Models.Boutique
 
         public int AdPId { get; set; }
         public AdP AdP { get; set; }
-
         public virtual List<Avis> Avis { get; set; }
-
         public int? BoutiquesId { get; set; }
         public Boutiques Boutiques { get; set; }
 
+        public Article()
+        {
+            Avis = new List<Avis>();
+        }
 
     }
 }

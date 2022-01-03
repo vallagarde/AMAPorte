@@ -9,6 +9,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
 
+    <script>
+        function validate() {
+            var valid = false;
+
+            if (document.getElementById("contrat").checked) {
+                valid = true;
+            }
+
+            if (valid) {
+                alert("Validation Succesfull");
+            }
+            else {
+                alert{ "Veuillez accepter les conditions pour continuer" }
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -30,17 +47,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Producteur">Producteurs</a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Activites">Activites</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inscription">Inscription</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Panier" asp-action="AfficherPaniers">Vos paniers</a>
-                        </li>
-                        <li class="nav-item">
+                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Panier" asp-action="AfficherPaniers">Vos paniers</a>
                         </li>
                         <li class="nav-item">
@@ -61,6 +74,8 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item">Adherent</a></li>
                                 <li><a class="dropdown-item">Producteur</a></li>
+                                <li><a class="dropdown-item">Action</a></li>
+                                <li><a class="dropdown-item" >Another action</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item">Inscription</a></li>
                             </ul>
@@ -82,6 +97,7 @@
                         <img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""><span class="badge bg-dark text-white ms-1 rounded-pill">1</span>                        
                     </button>
 
+
                 </div>
             </div>
         </nav>
@@ -99,14 +115,15 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - Appliweb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
 
 
+    
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js"></script>
+    <script src="~/js/customJs.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
 
     @RenderSection("Scripts", required: false)

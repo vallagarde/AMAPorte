@@ -3,7 +3,6 @@
 @{
 }
 
-
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
@@ -13,6 +12,7 @@
                 <h1 class="display-5 fw-bolder">@Model.Article.Nom</h1>
                 <div class="fs-5 mb-5">
                     <span>€ @Decimal.Round(Model.Article.PrixTTC, 2)</span>
+
                 </div>
                 <p class="lead">@Model.Article.Description</p>
                 <div class="d-flex">
@@ -28,5 +28,17 @@
                 </div>
             </div>
         </div>
+
+    @foreach(var avis in @Model.Article.Avis)
+    {
+        <br/>
+        @avis.Note
+        <br/>
+        @avis.Text
+        <br/>
+        @avis.AdAId
+        <br/>
+        <br/>
+    }
     </div>
 </section>
