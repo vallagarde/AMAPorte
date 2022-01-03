@@ -236,7 +236,6 @@ label.radio input:checked + span {
     transition: 0.5s;
 }
 
-
 .signupLayout .container {
     position: relative;
     width: 80%;
@@ -264,7 +263,7 @@ section .container .user .imgBx
     transition: 0.5s;
 }
 
-section .container .user .imgBx img 
+section  .container .user .imgBx img 
 {
     position: absolute;
     top: 0;
@@ -286,7 +285,6 @@ section  .container .user .formBx
     transition: 0.5s;
 
 }
-
 
 section  .container .user .formBx h2 
 {
@@ -348,7 +346,7 @@ section  .container .user.signupBx .formBx input[type="submit"]
     background: #e73e49;    
 }
 
-section .container .user .formBx .signup 
+section  .container .user .formBx .signup 
 {
     position: relative;
     margin-top: 20px;
@@ -367,11 +365,14 @@ section  .container .user .formBx .signup a{
     color: #577eff;
 }
 
+
 section .container .user .formBx .signup a.oubli {
     color: #e73e49;
 }
 
-section .container .signupBx {
+
+section  .container .signupBx 
+{
     pointer-events: initial;
     min-height: 1080px;
     background: #fff;
@@ -410,7 +411,7 @@ section .container .signupBx {
     color: #e73e49;
 }
 
-section .container .signupBx .formBx {
+section  .container .signupBx .formBx {
     pointer-events: initial;
     align-items: flex-start;
     overflow: auto;
@@ -420,8 +421,8 @@ section .container .signupBx .formBx {
 
 
 
-
-@media (max-width: 991px) {
+@media (max-width: 991px)
+{
     section .form .container {
         max-width: 400px;
     }

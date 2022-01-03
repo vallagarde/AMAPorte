@@ -433,5 +433,41 @@ namespace Projet2.Models.Boutique
             }
             return commandes;
         }
+
+        public void DeduireDuStock(PanierBoutique panierBoutique)
+        {
+            
+            foreach (LignePanierBoutique ligne in panierBoutique.LignePanierBoutiques)
+            {
+              
+                int quantite = ligne.Quantite;
+                int stock = ligne.Article.Stock;
+                int articleId = ligne.ArticleId;
+                Article article = ObtientArticle(articleId);
+
+                int nouveauStock = stock - quantite;
+                article.Stock = nouveauStock;
+                _bddContext.SaveChanges();
+
+            }
+        }
+
+
+
+        public int ArticlesPlusEnStock(PanierBoutique panier)
+        {
+            int articleid = 0;
+            foreach(LignePanierBoutique ligne in panier.LignePanierBoutiques)
+            {
+                if(ligne.Article.Stock < ligne.Quantite)
+                {
+                    articleid = ligne.ArticleId;
+                    break;
+                }
+            }
+
+            return articleid;
+
+        }
     }
 }

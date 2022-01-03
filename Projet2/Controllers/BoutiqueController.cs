@@ -115,11 +115,12 @@ namespace Projet2.Controllers
         public IActionResult AfficherBoutique()
         {
             ArticleRessources ctx = new ArticleRessources();
+            CompteServices csc = new CompteServices();
             List<Article> articles = ctx.ObtientTousLesArticles();
 
             HomeViewModel hvm = new HomeViewModel
             {
-
+                ListeComptesAdP = csc.ObtenirTousLesAdPs(),
                 Boutiques = new Boutiques() { Articles = articles, NombreArticle = articles.Count },
                 PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
@@ -131,21 +132,47 @@ namespace Projet2.Controllers
         public IActionResult AfficherBoutique(String recherche, String rechercheAdP)
         {
             ArticleRessources ctx = new ArticleRessources();
-            CompteServices cts = new CompteServices();
+            CompteServices csc = new CompteServices();
             List<Article> articles = ctx.ObtientTousLesArticles();
             List<Article>  articles2 = articles;
             List<Article> articles3 = new List<Article>();
             List<AdP> listAdP = null;
-            if (rechercheAdP != null) {
 
-                listAdP = cts.ObtenirAdPParNom(rechercheAdP);
-            }
-
-            if (recherche != null)
+            if (recherche==null && rechercheAdP == null)
             {
-                articles2 = articles.FindAll(x => x.Nom.ToLower().Contains(recherche.ToLower()));
+                return RedirectToAction("AfficherBoutique");
+            }
+            else
+            {
+                if (rechercheAdP != null)
+                {
 
-                if (listAdP != null)
+                    listAdP = csc.ObtenirAdPParNom(rechercheAdP);
+                }
+
+                if (recherche != null)
+                {
+                    articles2 = articles.FindAll(x => x.Nom.ToLower().Contains(recherche.ToLower()));
+
+                    if (listAdP != null)
+                    {
+                        foreach (AdP adp in listAdP)
+                        {
+                            List<Article> listintermediaire = articles2.FindAll(x => x.AdPId == adp.Id);
+
+                            foreach (Article articleintermediaire in listintermediaire)
+                            {
+                                articles3.Add(articleintermediaire);
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        articles3 = articles2;
+                    }
+                }
+                else if (listAdP != null)
                 {
                     foreach (AdP adp in listAdP)
                     {
@@ -158,34 +185,18 @@ namespace Projet2.Controllers
                         }
                     }
                 }
-                else
+
+
+                HomeViewModel hvm = new HomeViewModel
                 {
-                    articles3 = articles2;
-                }
+                    ListeComptesAdP = csc.ObtenirTousLesAdPs(),
+                    Boutiques = new Boutiques() { Articles = articles3, NombreArticle = articles3.Count },
+                    PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+                };
+                return View(hvm);
             }
-            else if (listAdP != null)
-            {
-                foreach (AdP adp in listAdP)
-                {
-                    List<Article> listintermediaire = articles2.FindAll(x => x.AdPId == adp.Id);
-
-                    foreach (Article articleintermediaire in listintermediaire)
-                    {
-                        articles3.Add(articleintermediaire);
-
-                    }
-                }
-            }
-
-
-            HomeViewModel hvm = new HomeViewModel
-            {
-
-                Boutiques = new Boutiques() { Articles = articles3, NombreArticle = articles3.Count },
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
-
-            };
-            return View(hvm);
+            
 
         }
 
@@ -345,6 +356,20 @@ namespace Projet2.Controllers
             }
             return RedirectToAction("Index", "Login");
         }
+        public int QuantitePanier()
+        {
+            PanierService ctx = new PanierService();
+            int ProduitsNombres = 0;
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierBoutique panierBoutique = ctx.ObientPanier(panierId);
+
+            foreach (LignePanierBoutique ligne in panierBoutique.LignePanierBoutiques)
+            {
+                ProduitsNombres += ligne.Quantite;
+            }
+            return ProduitsNombres;
+        }
+
 
     }
 }
