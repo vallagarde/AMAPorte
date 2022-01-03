@@ -2,10 +2,30 @@
 
 <section class="signupLayout">
         <div class="container">
+
+                         <div class="tabs">
+                       <nav class="navbar navbar-expand-lg">
+                            <div class="collapse navbar-collapse">
+                                    <ul>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte">Je suis un particulier</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link chosen" asp-area="" asp-controller="CompteCE" asp-action="CreationCompte">Je represente un CE</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdP" asp-action="CreationCompte">Je suis un producteur</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </nav>
+                   </div>
             <div  class="user signupBx">
 
+
                 <div class="formBx">
-                   
+                  
+
                     @using (Html.BeginForm())
                     {
                     
@@ -71,7 +91,7 @@
                             </table>
 
                         <h2> Remplissez les Informations de Paiement </h2>
-                        <h2> (Adresse de l'Entreprise) </h2>
+                        <h2 class="signup"> (Adresse de l'Entreprise) </h2>
                         <table width=100%>
                         <colgroup>
                             <col style="width: 25%" align="right">

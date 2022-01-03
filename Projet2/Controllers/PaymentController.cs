@@ -40,7 +40,7 @@ namespace Projet2.Controllers
             HomeViewModel hvm = new HomeViewModel();
             Commande commande = new Commande();
             commande.PanierBoutique = hvm.PanierBoutique;
-            commande.DateTime = DateTime.Now;
+            commande.DateCommande = DateTime.Now;
 
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)

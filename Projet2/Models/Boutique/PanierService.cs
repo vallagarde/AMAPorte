@@ -293,12 +293,15 @@ namespace Projet2.Models.Boutique
         {
             Avis nouveauAvis = new Avis()
             {
-                Article = article,
+                ArticleId = article.Id,
                 Text = lignePanierBoutique.Avis.Text,
                 Note = lignePanierBoutique.Avis.Note,
                 EntrepriseId = Id
             };
-            _bddContext.Add(nouveauAvis);
+            CreerAvis(nouveauAvis);
+            lignePanierBoutique = _bddContext.LignePanierBoutique.Find(lignePanierBoutique.Id);
+            lignePanierBoutique.AvisId = nouveauAvis.Id;
+            _bddContext.LignePanierBoutique.Update(lignePanierBoutique);
             _bddContext.SaveChanges();
 
         }
@@ -334,23 +337,32 @@ namespace Projet2.Models.Boutique
             {
                 var queryAdA = from ada in _bddContext.AdAs where ada.Id == commande.AdAId select ada;
                 commande.AdA = queryAdA.FirstOrDefault();
-                var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
-                commande.AdA.Personne = queryPersonne.FirstOrDefault();
-                var queryAdresseP = from adresse in _bddContext.Adresses where adresse.Id == commande.AdA.Personne.AdresseId select adresse;
-                commande.AdA.Personne.Adresse = queryAdresseP.FirstOrDefault();
+                if(commande.AdA != null)
+                {
+                    var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
+                    commande.AdA.Personne = queryPersonne.FirstOrDefault();
+                    var queryAdresseP = from adresse in _bddContext.Adresses where adresse.Id == commande.AdA.Personne.AdresseId select adresse;
+                    commande.AdA.Personne.Adresse = queryAdresseP.FirstOrDefault();
+                }
 
-                //var queryCCE = from entreprise in _bddContext.Entreprises where entreprise.Id == commande.EntrepriseId select entreprise;
-                //commande.Entreprise = queryCCE.FirstOrDefault();
-                //var queryAdresseE = from adresse in _bddContext.Adresses where adresse.Id == commande.Entreprise.AdresseId select adresse;
-                //commande.Entreprise.Adresse = queryAdresseE.FirstOrDefault();
+                var queryCCE = from entreprise in _bddContext.Entreprises where entreprise.Id == commande.EntrepriseId select entreprise;
+                commande.Entreprise = queryCCE.FirstOrDefault();
+                if(commande.Entreprise != null)
+                {
+                    var queryAdresseE = from adresse in _bddContext.Adresses where adresse.Id == commande.Entreprise.AdresseId select adresse;
+                    commande.Entreprise.Adresse = queryAdresseE.FirstOrDefault();
+                }
 
-                //var queryClient = from client in _bddContext.Clients where client.Id == commande.ClientId select client;
-                //commande.Client = queryClient.FirstOrDefault();
-                //var queryAdresseC = from adresse in _bddContext.Adresses where adresse.Id == commande.Client.AdresseId select adresse;
-                //commande.Client.Adresse = queryAdresseC.FirstOrDefault();
-
+                var queryClient = from client in _bddContext.Clients where client.Id == commande.ClientId select client;
+                commande.Client = queryClient.FirstOrDefault();
+                if (commande.Client != null)
+                {
+                    var queryAdresseC = from adresse in _bddContext.Adresses where adresse.Id == commande.Client.AdresseId select adresse;
+                    commande.Client.Adresse = queryAdresseC.FirstOrDefault();
+                }
                 var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
                 commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                
                 var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
                 var lignes = queryLignePanierBoutique.ToList();
                 foreach (LignePanierBoutique lignePanierBoutique in lignes)
@@ -388,20 +400,29 @@ namespace Projet2.Models.Boutique
                 {
                     var queryAdA = from ada in _bddContext.AdAs where ada.Id == commande.AdAId select ada;
                     commande.AdA = queryAdA.FirstOrDefault();
-                    var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
-                    commande.AdA.Personne = queryPersonne.FirstOrDefault();
-                    var queryAdresseP = from adresse in _bddContext.Adresses where adresse.Id == commande.AdA.Personne.AdresseId select adresse;
-                    commande.AdA.Personne.Adresse = queryAdresseP.FirstOrDefault();
+                    if (commande.AdA != null)
+                    {
+                        var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
+                        commande.AdA.Personne = queryPersonne.FirstOrDefault();
+                        var queryAdresseP = from adresse in _bddContext.Adresses where adresse.Id == commande.AdA.Personne.AdresseId select adresse;
+                        commande.AdA.Personne.Adresse = queryAdresseP.FirstOrDefault();
+                    }
 
-                    //var queryCCE = from entreprise in _bddContext.Entreprises where entreprise.Id == commande.EntrepriseId select entreprise;
-                    //commande.Entreprise = queryCCE.FirstOrDefault();
-                    //var queryAdresseE = from adresse in _bddContext.Adresses where adresse.Id == commande.Entreprise.AdresseId select adresse;
-                    //commande.Entreprise.Adresse = queryAdresseE.FirstOrDefault();
+                    var queryCCE = from entreprise in _bddContext.Entreprises where entreprise.Id == commande.EntrepriseId select entreprise;
+                    commande.Entreprise = queryCCE.FirstOrDefault();
+                    if (commande.Entreprise != null)
+                    {
+                        var queryAdresseE = from adresse in _bddContext.Adresses where adresse.Id == commande.Entreprise.AdresseId select adresse;
+                        commande.Entreprise.Adresse = queryAdresseE.FirstOrDefault();
+                    }
 
-                   //var queryClient = from client in _bddContext.Clients where client.Id == commande.ClientId select client;
-                   //commande.Client = queryClient.FirstOrDefault();
-                   //var queryAdresseC = from adresse in _bddContext.Adresses where adresse.Id == commande.Client.AdresseId select adresse;
-                   //commande.Client.Adresse = queryAdresseC.FirstOrDefault();
+                    var queryClient = from client in _bddContext.Clients where client.Id == commande.ClientId select client;
+                    commande.Client = queryClient.FirstOrDefault();
+                    if (commande.Client != null)
+                    {
+                        var queryAdresseC = from adresse in _bddContext.Adresses where adresse.Id == commande.Client.AdresseId select adresse;
+                        commande.Client.Adresse = queryAdresseC.FirstOrDefault();
+                    }
 
                     var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
                     commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();

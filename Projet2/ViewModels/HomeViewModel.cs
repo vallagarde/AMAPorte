@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Projet2.Helpers;
 using Projet2.Models;
 using Projet2.Models.Boutique;
+using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 
@@ -19,17 +20,7 @@ namespace Projet2.ViewModels
         public Commande Commande = new Commande();
         public Avis Avis = new Avis();
 
-        public string ReturnDateForDisplayCommande
-        {
-            get
-            {
-                if (this.Commande != null)
-                {
-                    return this.Commande.DateTime.ToString("d");
-                }
-                return null;
-            }
-        }
+
 
         //Paniers
         public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();
@@ -67,7 +58,19 @@ namespace Projet2.ViewModels
         public List<Commande> ListeCommandesARecup = new List<Commande>();
         public List<LignePanierBoutique> ListeCommandesAPrep = new List<LignePanierBoutique>();
         public List<LignePanierBoutique> ListeCommandesDonnees = new List<LignePanierBoutique>();
+        public DateTime ProchaineDateLivraison = new DateTime();
 
+        public string ReturnDateForDisplayLivraison
+        {
+            get
+            {
+                if (this.ProchaineDateLivraison != null)
+                {
+                    return this.ProchaineDateLivraison.ToString("d");
+                }
+                return null;
+            }
+        }
 
         public bool Authentifie { get; set; }
 
