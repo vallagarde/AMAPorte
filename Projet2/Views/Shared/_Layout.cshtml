@@ -101,8 +101,9 @@
                     </form>
 
 
-                    <button class="btn btn-outline-dark" type="button" id="panierRemplit" asp-area="" asp-controller="Boutique" asp-action="IPanier">
-                        <img src="https://img.icons8.com/ios/50/000000/hamper.png" width="30" height="30" class="d-inline-block align-top" alt=""><span class="badge bg-dark text-white ms-1 rounded-pill">1</span>                        
+                    <button class="btn btn-outline-dark" type="button" id="panierRemplit" onclick="location.href='@Url.Action("IPanier", "Boutique")'">
+                        <i class="bi bi-basket2" type="button"></i>
+                        <span class="badge bg-dark text-white ms-1 rounded-pill" id="nombreArticle">1</span>
                     </button>
 
 

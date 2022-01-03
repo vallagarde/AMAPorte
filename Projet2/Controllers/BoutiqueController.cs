@@ -345,6 +345,20 @@ namespace Projet2.Controllers
             }
             return RedirectToAction("Index", "Login");
         }
+        public int QuantitePanier()
+        {
+            PanierService ctx = new PanierService();
+            int ProduitsNombres = 0;
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierBoutique panierBoutique = ctx.ObientPanier(panierId);
+
+            foreach (LignePanierBoutique ligne in panierBoutique.LignePanierBoutiques)
+            {
+                ProduitsNombres += ligne.Quantite;
+            }
+            return ProduitsNombres;
+        }
+
 
     }
 }
