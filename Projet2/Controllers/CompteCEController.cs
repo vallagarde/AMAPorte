@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
+using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
@@ -13,23 +14,38 @@ namespace Projet2.Controllers
     public class CompteCEController : Controller
     {
         //View pour paiement 12€/6 mois 
-        //CRUD Compte CE ok ajouter quelques attributs (adresse facturation), warning avant suppression compte
-        //adresse avec base de données ? 
+        //warning avant suppression compte
         //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 
         //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
-        //mettre les informations de son compte dans une vue "Mon Compte" 
         //BOUTIQUE / PANIERS S. : 
         //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
-        //voir ses paniers s./commandes en boutique en cours dans une vue
-        //voir l'historique de ses commandes panier s. et boutique, ajouter un seul ! avis par panier ou article
         //ATELIERS :
         //avoir access a l'onglet ateliers pour en reserver/favoriser
         //voir les ateliers a venir sur sa page d'accueil 
         //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
 
         CompteServices cs = new CompteServices();
+        PanierService panierService = new PanierService();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
+        {
+
+            if (contactComiteEntreprise.Id == 0)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.ContactComiteEntreprise = contactComiteEntreprise;
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                return View(hvm);
+            }
+        }
+
+        public IActionResult CECompteInfo(ContactComiteEntreprise contactComiteEntreprise)
         {
 
             if (contactComiteEntreprise.Id == 0)
@@ -58,38 +74,62 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(ContactComiteEntreprise contactComiteEntreprise,Entreprise entreprise, Identifiant identifiant, Adresse adresse)
         {
-
+            //adresse avec base de données ? 
             if (contactComiteEntreprise != null && identifiant != null && entreprise != null)
             {
-                contactComiteEntreprise.EstCE = true;
-                identifiant.EstCE = contactComiteEntreprise.EstCE;
-                int id = cs.AjouterIdentifiant(identifiant);
+                if (entreprise.EstEnAccord == true)
+                {
+                    contactComiteEntreprise.EstCE = true;
+                    identifiant.EstCE = contactComiteEntreprise.EstCE;
+                    int id = cs.AjouterIdentifiant(identifiant);
 
-                var userClaims = new List<Claim>()
+                    var userClaims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.Name, id.ToString()),
                 };
 
-                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                    var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
-                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                HttpContext.SignInAsync(userPrincipal);
-                bool EstUtilisateur = true;
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
+                    var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                    HttpContext.SignInAsync(userPrincipal);
+                    bool EstUtilisateur = true;
+                    SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
-                contactComiteEntreprise.IdentifiantId = id;
-                contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
+                    contactComiteEntreprise.IdentifiantId = id;
+                    contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
 
-                hvm.ContactComiteEntreprise = cs.CreerCCE(contactComiteEntreprise, entreprise, adresse);
-                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
-                hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-                hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
-                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                    hvm.ContactComiteEntreprise = cs.CreerCCE(contactComiteEntreprise, entreprise, adresse);
+                    hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                    hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+                    hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
 
-                return View("Index", hvm);
+                    return View("Index", hvm);
+                }               
             }
             return View();
+        }
 
+        public IActionResult Commandes(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+            hvm.Entreprise.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParEntreprise(hvm.Entreprise);
+            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            return View(hvm);
+        }
+
+        public IActionResult HistoriqueCommandes(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+            hvm.Entreprise.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParEntreprise(hvm.Entreprise);
+            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            return View(hvm);
+        }
+        
+        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+        public IActionResult HistoriqueAteliers(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            return View(hvm);
         }
 
         public IActionResult ArticlesFavoris(ContactComiteEntreprise contactComiteEntreprise)
@@ -132,7 +172,6 @@ namespace Projet2.Controllers
         {
 
             hvm.Adresse = cs.ModifierAdresse(adresse);
-            hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
             entreprise.AdresseId = hvm.Adresse.Id;
             contactComiteEntreprise.IdentifiantId = hvm.Identifiant.Id;
             contactComiteEntreprise.AdresseMail = hvm.Identifiant.AdresseMail;

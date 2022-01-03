@@ -1,20 +1,10 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    ViewData["Title"] = "Paniers";
-}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Assortiment de Paniers</title>
-</head>
-<body> 
+ 
 
 <div class="shadow-sm p-2 mb-5 welcome">
     <h2>Mon Assortiment de Paniers Saisonniers</h2>
 </div>
-
+@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
 <!-- Products -->
 <div class="container">
     
@@ -45,6 +35,3 @@
         </div>
     </div>   
 </div>
-
-</body>
-</html>

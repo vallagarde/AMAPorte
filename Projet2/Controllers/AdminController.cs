@@ -24,9 +24,8 @@ namespace Projet2.Controllers
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(Admin admin)
         {
-
             hvm.Identifiant = cs.ObtenirIdentifiant(admin.IdentifiantId);
-            hvm.Admin = admin;
+            hvm.Admin = cs.ObtenirAdminParIdentifiant(admin.IdentifiantId);
             if (hvm.Identifiant == null)
             {
                 return View("Error");
@@ -38,14 +37,13 @@ namespace Projet2.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
-        public IActionResult CreationCompte()
+        public IActionResult CreationCompte(Admin admin)
         {
-            return View();
+            hvm.Admin = admin;
+            return View(hvm);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public IActionResult CreationCompte(Admin admin, Identifiant identifiant)
         {
@@ -66,28 +64,16 @@ namespace Projet2.Controllers
                 }
 
                 int id = cs.AjouterIdentifiant(identifiant);
-
-                var userClaims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.Name, id.ToString()),
-                };
-
-                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
-
-                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                HttpContext.SignInAsync(userPrincipal);
-                bool EstUtilisateur = true;
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
-
                 admin.IdentifiantId = id;
+                cs.CreerAdmin(admin);
 
-                hvm.Admin = cs.CreerAdmin(admin);
-                hvm.Identifiant = identifiant;
-
-                return View("Index", hvm);
+                UtilisateurViewModel viewModel = new UtilisateurViewModel();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                HomeViewModel hvm = new HomeViewModel();
+                hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                return View("Index", hvm);                              
             }
             return View();
-
         }
 
         [HttpGet]
@@ -103,11 +89,15 @@ namespace Projet2.Controllers
                 {
                     hvm.ListeCommandesEnPrep.Add(commande);
                 }
+                else if (commande.EstEnLivraison)
+                {
+                    hvm.ListeCommandesEnCours.Add(commande);
+                }
                 else if (commande.EstARecuperer)
                 {
                     hvm.ListeCommandesARecup.Add(commande);
                 }
-                else hvm.ListeCommandesLivr.Add(commande);
+                else hvm.ListeCommandesLivres.Add(commande);
             }
             return View(hvm);
         }

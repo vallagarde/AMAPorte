@@ -1,7 +1,4 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    ViewData["Title"] = "Commandes Histo Boutique";
-}
  
 <div class="shadow-sm p-2 mb-5 welcome">
     <h2>Mes Commandes En Boutique</h2>
@@ -37,6 +34,7 @@
                                                 <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
                                                     <div class="card-body">
                                                     <p class="card-text">@lignePanierBoutique.Article.Nom</p>
+                                                    <p class="card-text">Quantité : @lignePanierBoutique.Quantite</p>
                                                     <p class="card-text">@SousTotal</p>
                                                     @if(@lignePanierBoutique.AvisId == null)
                                                     {

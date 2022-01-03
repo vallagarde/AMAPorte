@@ -1,5 +1,6 @@
 ﻿using Projet2.Models.Boutique;
 using Projet2.Models.PanierSaisonniers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,15 +14,19 @@ namespace Projet2.Models.Compte
     {
         public int Id { get; set; }
 
-        [Display(Name = "Numéro SIREN")]
+        public DateTime DateInscription { get; set; }
+
+        public string Image { get; set; }
+
+        [Display(Name = "SIREN")]
         [Required(ErrorMessage = "Vous devez insérer un numéro SIREN.")]
         public int Siren { get; set; }
 
-        [Display(Name = "Nom de la Production")]
+        [Display(Name = "Nom")]
         [Required(ErrorMessage = "Vous devez insérer un nom.")]
         public string NomProducteur { get; set; }
 
-        [Display(Name = "Ecrivez quelques mot sur votre production")]
+        [Display(Name = "Déscription")]
         public string Description { get; set; }
 
         public virtual List<Article> Assortiment { get; set; }
@@ -36,6 +41,8 @@ namespace Projet2.Models.Compte
         public AdP()
         {
             EstAdP = true;
+            DateInscription = DateTime.Today;
+            Image = "Default.jpg";
             Assortiment = new List<Article>();
             AssortimentPanier = new List<PanierSaisonnier>();
         }

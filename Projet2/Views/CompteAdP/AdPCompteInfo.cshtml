@@ -1,9 +1,14 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
 
-}
     <div class = "container">
         Mon Compte : 
+        <br/>
+        @Model.AdP.NomProducteur
+        <br/>
+        Description : @Model.AdP.Description
+        <br/>
+        Numéro SIREN : @Model.AdP.Siren
+        <br/>
         <br/>
         Nom : @Model.Personne.Nom
         <br/>
@@ -12,8 +17,6 @@
         Date de Naissance : @Model.ReturnDateForDisplay
         <br/>
         Numéro Téléphone : @Model.Personne.NTelephone
-        <br/>
-        Adresse Mail : @Model.Identifiant.AdresseMail
         <br/>
         <br/>
 
@@ -26,12 +29,12 @@
         <br />
 
         <br/>
-        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdA", @Model.AdA)
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)
         <br/>
-        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdA", @Model.AdA)
+        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "CompteAdP", @Model.AdP)
         <br/>
         @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
         <br/>
-        @Html.ActionLink("Retour", "Index", "CompteAdA", @Model.AdA)
+        @Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
     </div>
 

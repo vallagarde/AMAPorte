@@ -1,20 +1,9 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Creation Compte</title>
-</head>
-<body>
-       
-    
+   
 <h1>Formulaire Creation Admin : </h1>
-
     @using (Html.BeginForm())
     {
+        
 <fieldset>
     <h2> Identifiant </h2>
     <br />
@@ -43,8 +32,7 @@
     }
     <br /><br />  
     <div>
-    @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+    @Html.ActionLink("Retour", "Index", "Admin", @Model.Admin)
     </div>
-</body>
-</html>
 

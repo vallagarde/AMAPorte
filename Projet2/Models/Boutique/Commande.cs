@@ -22,6 +22,8 @@ namespace Projet2.Models.Boutique
 
         public bool EstEnPreparation { get; set; }
 
+        public bool EstEnLivraison { get; set; }
+
         public bool EstARecuperer { get; set; }
 
         public bool EstLivre { get; set; }
@@ -30,6 +32,7 @@ namespace Projet2.Models.Boutique
             get
             {
                 if (EstEnPreparation) return "EstEnPreparation";
+                else if (EstEnLivraison) return "EstEnLivraison";
                 else if (EstARecuperer) return "EstARecuperer";
                 else if (EstLivre) return "EstLivre";
                 return null;
@@ -40,6 +43,9 @@ namespace Projet2.Models.Boutique
                 {
                     case "EstEnPreparation":
                         EstEnPreparation = true;
+                        break;
+                    case "EstEnLivraison":
+                        EstEnLivraison = true;
                         break;
                     case "EstARecuperer":
                         EstARecuperer = true;

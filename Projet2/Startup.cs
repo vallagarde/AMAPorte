@@ -51,6 +51,10 @@ namespace Projet2
             });
             services.AddControllersWithViews();
 
+            services.AddRazorPages().AddMvcOptions(options => {
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "Ce champs est requis");
+            });
+
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 

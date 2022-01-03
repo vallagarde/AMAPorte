@@ -21,9 +21,6 @@ namespace Projet2.Models.Compte
         public bool EstAboAnnuel { get; set; }
         public bool EstAboSemestre { get; set; }
 
-        public Paiement Paiement { get; set; }
-        public int? PaiementId { get; set; }
-
         public virtual List<AdP> ProducteursFavoris { get; set; }
 
         //public List<Atelier> AteliersFavoris { get; set; }

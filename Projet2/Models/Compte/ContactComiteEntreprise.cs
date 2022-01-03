@@ -1,4 +1,5 @@
 ﻿using Projet2.Models.PanierSaisonniers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,18 +24,26 @@ namespace Projet2.Models.Compte
         public string Prenom { get; set; }
 
         [Display(Name = "Téléphone")]
-        [Required, RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
+        [Required(ErrorMessage = "Vous devez insérer un numero de telephone")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
         public int NTelephone { get; set; }
 
+        [Display(Name = "Adresse Mail")]
+        [Required(ErrorMessage = "Le mail ne peut pas être null.")]
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Le erter")]
         public string AdresseMail { get; set; }
 
         public bool EstCE { get; set; }
+        public DateTime DateInscription { get; set; }
+
 
         public virtual List<LignePanierSaisonnier> CommandesPanierEffectues { get; set; }
 
         public ContactComiteEntreprise()
         {
             EstCE = true;
+            DateInscription = DateTime.Today;
+
         }
 
     }
