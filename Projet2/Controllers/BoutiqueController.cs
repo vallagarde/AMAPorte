@@ -288,7 +288,7 @@ namespace Projet2.Controllers
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
-        [HttpPost]
+        
         public IActionResult SupprimerLigne(int Id)
         {
             int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");

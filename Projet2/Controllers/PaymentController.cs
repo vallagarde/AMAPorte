@@ -7,6 +7,7 @@ using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
+using Projet2.Models.Mails;
 using Projet2.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,6 +27,7 @@ namespace Projet2.Controllers
             hvm.PanierBoutique = panier;
             hvm.PanierId = panierId;
 
+            
 
             return View(hvm);
         }
@@ -113,7 +115,7 @@ namespace Projet2.Controllers
                 Client = client
             };
             SessionHelper.SetObjectAsJson(HttpContext.Session, "client", client);
-            return RedirectToAction("Paiement", new { @hvm = hvm });
+            return RedirectToAction("Paiement", new { hvm });
 
         }
     }

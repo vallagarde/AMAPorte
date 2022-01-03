@@ -23,6 +23,7 @@
     <Folder Include="Data\" />
     <Folder Include="Views\Payment\" />
     <Folder Include="Models\Calendrier\" />
+    <Folder Include="Models\Mails\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="bootstrap" />
@@ -37,6 +38,8 @@
     <None Remove="Data\" />
     <None Remove="Views\Payment\" />
     <None Remove="Models\Calendrier\" />
+    <None Remove="MailKit" />
+    <None Remove="Models\Mails\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.1.2" />
@@ -48,5 +51,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Stripe.net" Version="39.83.0" />
+    <PackageReference Include="MailKit" Version="3.0.0" />
   </ItemGroup>
 </Project>

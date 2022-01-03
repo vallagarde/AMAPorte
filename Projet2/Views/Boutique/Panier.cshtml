@@ -10,11 +10,23 @@
     <div class="row no-gutters">
         <div class="col-md-12">
             <div class="product-details mr-2">
-                <div class="d-flex flex-row align-items-center"><i class="fa fa-long-arrow-left"></i><span class="ml-2">Continue Shopping</span></div>
+                <h5 class="mb-3">
+                    <a onclick="location.href='@Url.Action("AfficherBoutique", "Boutique")'" type="button" class="text-body">
+                        <i class="fas fa-long-arrow-alt-left me-2"></i>Revenir à la boutique
+                    </a>
+                </h5>
                 <hr>
+                @{
+                    int ProduitsNombres = 0;
+                    foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.PanierBoutique.LignePanierBoutiques)
+                    {
+                        ProduitsNombres += ligne.Quantite;
+                    }
+                }
+
                 <h6 class="mb-0">Votre Panier</h6>
                 <div class="d-flex justify-content-between">
-                    <span>Vous avez </span>
+                    <span>Vous avez @ProduitsNombres articles</span>
                     <div class="d-flex flex-row align-items-center">
                         <span class="text-black-50"></span>
                         <div class="price ml-2"><span class="mr-1"></span><i class="fa fa-angle-down"></i></div>
@@ -49,11 +61,12 @@
                                         <div style="width: 80px;">
                                             <h5 class="mb-0"> €@SousTotal</h5>
                                         </div>
-                                        <a style="color: #cecece;"><i class="bi bi-trash" type="button" onclick="location.href='@Url.Action("SupprimerLigne", "Boutique" ,new {Id= ligne.Id})'"></i></a>
                                         <div>
-                                            <button class="btn btn-primary" type="submit">Modifier</button>
+                                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">Modifier</button>
                                             <input type="hidden" name="Id" value="@ligne.Id" />
                                         </div>
+                                        <a style="color: #cecece;"><i class="bi bi-trash" type="button" onclick="location.href='@Url.Action("SupprimerLigne", "Boutique" ,new {Id= ligne.Id})'"></i></a>
+
 
                                     </div>
                                 </div>
@@ -63,51 +76,30 @@
 
                     </form>
 
-
-
-                    <div class="row">
-
-                        <div class="col-2"> @ligne.Article.Nom</div>
-                        <div class="col-2">
-                            <input type="number" class="form-control" name="quantite" value="@ligne.Quantite" />
-                            <input type="hidden" name="Id" value="@ligne.Id" />
-                        </div>
-                        <div class="col-2">@prixTTC</div>
-                        <div class="col-2">@SousTotal</div>
-
-                        <div class="col-2"><button class="btn btn-primary" type="submit">Modifier</button></div>
-
-
-                    </div>
-
-                    <form method="post" asp-controller="Boutique" asp-action="SupprimerLigne">
-                        <input type="hidden" name="Id" value="@ligne.Id" />
-
-                        <div class="col-2"><button class="btn btn-primary" type="submit">Supprimer</button></div>
-                    </form>
                 }
 
+            </div>
+            <hr>
 
+            <label for="Total">Total = @Model.PanierBoutique.Total</label>
+            <hr>
 
-                <button type="button" class="btn btn-info btn-block btn-lg">
-                    <div class="d-flex justify-content-between">
-                        <span>$4818.00</span>
-                        <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+            <row class="m-2">
+                <div class="text-center d-grid gap-2 col-6 mx-auto">
+                    <a class="btn btn-outline-dark flex-shrink-0" type="button" asp-area="" asp-controller="Boutique" asp-action="ViderPanier">Vider le Panier</a>
+                </div>
+            </row>
+
+            <form method="post" asp-controller="Payment" asp-action="EtapePaiement">
+                <input type="hidden" name="Total" value="@Model.PanierBoutique.Total" />
+                <row class="m-2">
+                    <div class="text-center d-grid gap-2 col-6 mx-auto">
+                        <button type="submit" class="btn btn-outline-dark flex-shrink-0">
+                            Paiement
+                        </button>
                     </div>
-                </button>
-                ;
-            </div>
-                <a class="btn btn-primary" type="button" asp-area="" asp-controller="Boutique" asp-action="ViderPanier">Vider le Panier</a>
-                <form method="post" asp-controller="Payment" asp-action="EtapePaiement">
-
-                    <label for="Total">Total = @Model.PanierBoutique.Total</label>
-
-
-                    <input type="hidden" name="Total" value="@Model.PanierBoutique.Total" />
-
-                    <div class="col-2"><button class="btn btn-primary" type="submit">Paiment</button></div>
-                </form>
-
-            </div>
+                </row>
+            </form>
+        </div>
     </div>
 </div>
