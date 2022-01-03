@@ -209,7 +209,7 @@ namespace Projet2.Models.Boutique
             panier.Total = 0;
             foreach (LignePanierBoutique ligne in lignes)
             {
-                panier.Total += ligne.SousTotal;
+                panier.Total += Decimal.Round(ligne.SousTotal, 2);
             }
             _bddContext.SaveChanges();
 
