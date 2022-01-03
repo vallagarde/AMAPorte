@@ -532,6 +532,18 @@ namespace Projet2.Models.Compte
             return identifiant.Id;
         }
 
+        public bool TrouverIdentifiant(Identifiant identifiant)
+        {
+            bool adresseExistante = false;
+            Identifiant identifiantExistant = (from i in _bddContext.Identifiants where i.AdresseMail == identifiant.AdresseMail select i).FirstOrDefault();
+            if (identifiantExistant != null)
+            {
+                adresseExistante = true;
+                return adresseExistante;
+            }
+            return adresseExistante;
+        }
+
         public Identifiant ModifierIdentifiant(Identifiant identifiant)
         {
             if (identifiant.Id != 0)
@@ -541,6 +553,14 @@ namespace Projet2.Models.Compte
                 this._bddContext.Identifiants.Update(identifiant);
                 this._bddContext.SaveChanges();
                 return identifiant;
+            }
+            else
+            {
+                Identifiant identifiantExistant = (from i in _bddContext.Identifiants where i.AdresseMail == identifiant.AdresseMail select i).FirstOrDefault();
+                string motDePasse = EncodeMD5(identifiant.MotDePasse);
+                identifiant.MotDePasse = motDePasse;
+                this._bddContext.Identifiants.Update(identifiant);
+                this._bddContext.SaveChanges();
             }
             return identifiant;
         }

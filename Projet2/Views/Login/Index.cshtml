@@ -46,12 +46,20 @@ else
                                                      @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
                                  </th>
                                 </tr>
+                                 <tr align="center">
+                                  <th class="signup">Mot de passe oublié ?<a class="oubli" asp-area="" asp-controller="Login" asp-action="ModificationIdentifiant"> Réinitisaliser votre mot de passe</a></th>
+                                </tr>
+                                <tr align="center">
+                                  <th class="signup"></th>
+                                  <th class="signup"></th>
+                                </tr>
                                 <tr align="center">
                                   <th class="signup"><input type="submit" value="Se connecter" /></th>
                                 </tr>
                                 <tr align="center">
                                   <th class="signup">Pas encore de Compte ?<a asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte"> Inscrivez-vous</a></th>
                                 </tr>
+                                                             
                         </table>               
                     }
                 </div>

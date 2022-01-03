@@ -63,16 +63,6 @@ namespace Projet2.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Inscription()
-        {
-            HomeViewModel hvm = new HomeViewModel
-            {
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
-
-            };
-            return View(hvm);
-        }
-
         [Authorize]
         public IActionResult EspacePersonnel()
         {

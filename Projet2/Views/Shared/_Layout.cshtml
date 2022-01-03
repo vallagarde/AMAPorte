@@ -52,9 +52,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Activites">Activites</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Inscription">Inscription</a>
-                        </li>
                          <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Panier" asp-action="AfficherPaniers">Vos paniers</a>
                         </li>
@@ -135,6 +132,25 @@
 
 
     @RenderSection("Scripts", required: false)
+
+   
+    <script>
+    // Modal Script > Jeyan
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+    </script>
 
 </body>
 </html>

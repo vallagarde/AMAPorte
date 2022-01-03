@@ -15,8 +15,20 @@
              <tr border="1">
                     <td>Commande @commande.Id</td>
                     <tr>
-                    <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                    <td>@commande.AdA.Personne.Prenom</td>                    
+                     @if(@commande.AdA != null)
+                            {
+                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
+                                <td>@commande.AdA.Personne.Prenom</td> 
+                            }
+                            @if(@commande.Client != null)
+                            {
+                                <td>Acheteur : @commande.Client.Nom</td>
+                                <td>@commande.Client.Prenom</td> 
+                            }
+                            @if(@commande.Entreprise != null)
+                            {
+                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
+                            }                     
              </tr>
                 @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
                         {
@@ -62,8 +74,20 @@
              <tr border="1">
                     <td>Commande @commande.Id</td>
                     <tr>
-                    <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                    <td>@commande.AdA.Personne.Prenom</td>                    
+                            @if(@commande.AdA != null)
+                            {
+                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
+                                <td>@commande.AdA.Personne.Prenom</td> 
+                            }
+                            @if(@commande.Client != null)
+                            {
+                                <td>Acheteur : @commande.Client.Nom</td>
+                                <td>@commande.Client.Prenom</td> 
+                            }
+                            @if(@commande.Entreprise != null)
+                            {
+                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
+                            }                                              
              </tr>
                 @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
                         {
@@ -109,8 +133,20 @@
                  <tr border="1">
                     <td>Commande @commande.Id</td>
                     <tr>
-                    <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                    <td>@commande.AdA.Personne.Prenom</td>                    
+                     @if(@commande.AdA != null)
+                            {
+                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
+                                <td>@commande.AdA.Personne.Prenom</td> 
+                            }
+                            @if(@commande.Client != null)
+                            {
+                                <td>Acheteur : @commande.Client.Nom</td>
+                                <td>@commande.Client.Prenom</td> 
+                            }
+                            @if(@commande.Entreprise != null)
+                            {
+                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
+                            }                       
                      </tr>
                         @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
                                 {
@@ -157,8 +193,20 @@
              <tr border="1">
                     <td>Commande @commande.Id </td>
                     <tr>
-                    <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                    <td>@commande.AdA.Personne.Prenom</td>                    
+                     @if(@commande.AdA != null)
+                            {
+                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
+                                <td>@commande.AdA.Personne.Prenom</td> 
+                            }
+                            @if(@commande.Client != null)
+                            {
+                                <td>Acheteur : @commande.Client.Nom</td>
+                                <td>@commande.Client.Prenom</td> 
+                            }
+                            @if(@commande.Entreprise != null)
+                            {
+                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
+                            }                     
                     </tr>
                 @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
                         {

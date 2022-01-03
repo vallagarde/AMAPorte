@@ -74,51 +74,54 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdP adp)
         {
-
-            if (personne != null && identifiant != null && adresse != null)
+            if (!cs.TrouverIdentifiant(identifiant))
             {
-
-                int Age = personne.getAge();
-                if (Age > 18)
+                if (personne != null && identifiant != null && adresse != null)
                 {
-                    personne.EstMajeur = true;
-                }
 
-                if (personne.EstMajeur == true)
-                {
-                    if (personne.EstEnAccord == true)
+                    int Age = personne.getAge();
+                    if (Age > 18)
                     {
-                        adp = new AdP() { EstAdP = true };
-                        identifiant.EstAdP = adp.EstAdP;
+                        personne.EstMajeur = true;
+                    }
 
-                        int id = cs.AjouterIdentifiant(identifiant);
+                    if (personne.EstMajeur == true)
+                    {
+                        if (personne.EstEnAccord == true)
+                        {
+                            adp = new AdP() { EstAdP = true };
+                            identifiant.EstAdP = adp.EstAdP;
 
-                        var userClaims = new List<Claim>()
+                            int id = cs.AjouterIdentifiant(identifiant);
+
+                            var userClaims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.Name, id.ToString()),
                         };
 
-                        var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                            var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
-                        var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                        HttpContext.SignInAsync(userPrincipal);
-                        bool EstUtilisateur = true;
-                        SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
+                            var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                            HttpContext.SignInAsync(userPrincipal);
+                            bool EstUtilisateur = true;
+                            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
-                        personne.IdentifiantId = id;
+                            personne.IdentifiantId = id;
 
-                        hvm.AdP = cs.CreerAdP(personne, adresse, adp);
-                        hvm.Personne = personne;
-                        hvm.Adresse = adresse;
-                        hvm.Identifiant = identifiant;
+                            hvm.AdP = cs.CreerAdP(personne, adresse, adp);
+                            hvm.Personne = personne;
+                            hvm.Adresse = adresse;
+                            hvm.Identifiant = identifiant;
 
-                        return View("Index", hvm);
+                            return View("Index", hvm);
+                        }
                     }
+                    hvm.Personne = personne;
+                    return View(hvm);
                 }
-                hvm.Personne = personne;
-                return View(hvm);
             }
-            return View();
+            hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
+            return View(hvm);
         }
 
         [HttpGet]
@@ -204,8 +207,10 @@ namespace Projet2.Controllers
         {
             //warning avant suppression compte
             cs.SupprimerAdP(adp.Id);
+            bool EstUtilisateur = false;
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
-            return View();
+            return Redirect("/");
         }
 
 

@@ -568,7 +568,7 @@ namespace Test
                     Commande commande1 = new Commande()
                         {
                             PanierBoutique = panierBoutique1,
-                            DateTime = new DateTime(2021, 12, 23, 12, 30, 00),
+                            DateCommande = DateTime.Today,
                             AdAId = 1,
                             EstEnPreparation = true,
                         };
@@ -578,8 +578,8 @@ namespace Test
                     Commande commande2 = new Commande()
                         {
                             PanierBoutique = panierBoutique2,
-                            DateTime = new DateTime(2021, 12, 22, 13, 30, 30),
-                        AdAId = 1,
+                            DateCommande = DateTime.Today,
+                            EntrepriseId = 1,
                             EstARecuperer = true,
                         };
                     ctx.Commande.Add(commande2);
@@ -588,8 +588,8 @@ namespace Test
                     Commande commande3 = new Commande()
                         {
                             PanierBoutique = panierBoutique3,
-                            DateTime = new DateTime(2021, 12, 23, 09, 43, 12),
-                        AdAId = 1,
+                            DateCommande = DateTime.Today,
+                            ClientId = 1,
                             EstEnLivraison = true,
                         };
                     ctx.Commande.Add(commande3);

@@ -8,7 +8,10 @@ namespace Projet2.Models.Boutique
         public int Id { get; set; }
         public PanierBoutique PanierBoutique { get; set; }
         public int PanierBoutiqueId { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime DateCommande { get; set; }
+
+        public DateTime DateLivraison { get; set; }
+
 
         public int? AdAId { get; set; }
         public AdA AdA { get; set; }
@@ -57,5 +60,17 @@ namespace Projet2.Models.Boutique
             }
         }
 
+
+        public string ReturnDateForDisplayCommande
+        {
+            get
+            {
+                if (this.DateLivraison != null)
+                {
+                    return this.DateLivraison.ToString("d");
+                }
+                return null;
+            }
+        }
     }
 }
