@@ -5,7 +5,7 @@ using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 using Projet2.Models.Calendriers;
-
+using Microsoft.Extensions.Configuration;
 
 namespace Projet2.Models
 {
@@ -43,7 +43,19 @@ namespace Projet2.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("server=localhost;user id=root;password=nitnelave;database=AmaPorte");
+            //optionsBuilder.UseMySql("server=localhost;user id=root;password=nitnelave;database=AmaPorte");
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                optionsBuilder.UseMySql("server=localhost;user id=root;password=nitnelave;database=AmaPorte");
+            }
+            else
+            {
+                IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+                optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"));
+            }
         }
 
         public void InitializeDb()
