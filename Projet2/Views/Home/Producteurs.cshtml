@@ -1,0 +1,34 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+
+
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1>Liste des producteurs</h1>
+            <div class="justify-center">
+                <table border="1">
+
+                    @foreach (var adp in @Model.ListeComptesAdP)
+                    {
+                <tr>
+                    <td>@adp.Id</td>
+                    <td>@adp.NomProducteur</td>
+                    <td>@adp.Description</td>
+                    <td>@adp.Personne.Prenom</td>
+                    <td>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Producteur", "Home", new { @Id = @adp.Id })'">
+                                        Voir Producteur
+                                    </button>
+                    </td>
+                </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

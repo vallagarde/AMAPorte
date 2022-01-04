@@ -10,6 +10,7 @@ using Projet2.Helpers;
 using Projet2.Models;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 
 namespace Projet2.Controllers
@@ -44,18 +45,63 @@ namespace Projet2.Controllers
             };
             return View(hvm);
         }
-        public IActionResult Producteur()
+        public IActionResult Producteurs()
         {
-            ArticleRessources ctx = new ArticleRessources();
-            List<Article> articles = ctx.ObtientTousLesArticles();
+            HomeViewModel hvm = new HomeViewModel();
+            ArticleRessources articleRessources = new ArticleRessources();
+            PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
+            CompteServices cs = new CompteServices();
 
-            HomeViewModel hvm = new HomeViewModel
+            hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
+            foreach (AdP adp in hvm.ListeComptesAdP)
             {
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId"),
-                Boutiques = new Boutiques(){ Articles = articles, NombreArticle = articles.Count}
-                
-            };
+                if (adp.EstActive)
+                {
+                    foreach (Article article in articleRessources.ObtenirArticleParAdP(adp))
+                    {
+                        if (!article.EstValide)
+                        {
+                            hvm.AdP.Assortiment.Add(article);
+                        }
+                    }
+                    foreach (PanierSaisonnier panierSaisonnier in saisonnierService.ObtenirPanierParAdP(adp))
+                    {
+                        if (!panierSaisonnier.EstValide)
+                        {
+                            hvm.AdP.AssortimentPanier.Add(panierSaisonnier);
+                        }
+                    }
 
+                }
+                
+            }
+
+            return View(hvm);
+        }
+
+        public IActionResult Producteur(int Id)
+        {
+            HomeViewModel hvm = new HomeViewModel();
+            ArticleRessources articleRessources = new ArticleRessources();
+            PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
+            CompteServices cs = new CompteServices();
+
+            hvm.AdP = cs.ObtenirAdPParId(Id);
+
+            //foreach (Article article in articleRessources.ObtenirArticleParAdP(hvm.AdP))
+            //{
+            //    if (!article.EstValide)
+            //    {
+            //        hvm.AdP.Assortiment.Add(article);
+            //    }
+            //}
+            //foreach (PanierSaisonnier panierSaisonnier in saisonnierService.ObtenirPanierParAdP(hvm.AdP))
+            //{
+            //    if (!panierSaisonnier.EstValide)
+            //    {
+            //        hvm.AdP.AssortimentPanier.Add(panierSaisonnier);
+            //    }
+            //}
             return View(hvm);
         }
 

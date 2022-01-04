@@ -1,17 +1,13 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    ViewData["Title"] = "AfficherPaniers";
-}
 
-
-<div class="container">
-    <div> <h1>Liste de nos Paniers saisonniers</h1></div>
-    <br />
-    <div class="row row row-cols-1 row-cols-md-5 g-2 ">
-        @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
+<br />
+<div class="row row row-cols-1 row-cols-md-4 g-4">
+    @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
+    {
+        @if (@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
         {
             <div class="col">
-                <div class="card text-center h-100" style="width: 15rem; height: 10rem;">
+                <div class="card h-100">
 
                     @{
                         String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
@@ -20,7 +16,6 @@
                     <div class="card-body">
                         <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
                         <h6 class="card-title">@panierSaisonnier.AdP.NomProducteur</h6>
-
                         <p class="card-text">@panierSaisonnier.Description</p>
                         <p class="card-text">@panierSaisonnier.Prix</p>
                         @Html.ActionLink("Choisir", "CommandePanier", "Panier", @panierSaisonnier)
@@ -32,3 +27,4 @@
 
     }
 </div>
+
