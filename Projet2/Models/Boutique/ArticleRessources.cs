@@ -63,6 +63,7 @@ namespace Projet2.Models.Boutique
                     article.AdPId = adpId;
                     article.EstValide = false;
                     article.EstEnAttente = false;
+                    article.DateModification = DateTime.Now;
                 _bddContext.SaveChanges();
                 }          
                 return article.Id;

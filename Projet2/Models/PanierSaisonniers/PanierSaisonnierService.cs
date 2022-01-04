@@ -71,9 +71,11 @@ namespace Projet2.Models.PanierSaisonniers
 
             if (panierSaisonnier != null)
             {
+                panierSaisonnier.EstValide = false;
+                panierSaisonnier.EstEnAttente = false;
+                panierSaisonnier.DateModification = DateTime.Now;
                 panierSaisonnier.Id = Id;
                 panierSaisonnier.NomPanier = nomPanier;
-                //panierSaisonnier.NomProducteur = nomProducteur;
                 panierSaisonnier.ProduitsProposes = produitsProposes;
                 panierSaisonnier.Description = description;
                 panierSaisonnier.Prix = prix;
@@ -86,6 +88,9 @@ namespace Projet2.Models.PanierSaisonniers
         {
             if (panierSaisonnier.Id != 0)
             {
+                panierSaisonnier.DateModification = DateTime.Now;
+                panierSaisonnier.EstValide = false;
+                panierSaisonnier.EstEnAttente = false;
                 _bddContext.PanierSaisonniers.Update(panierSaisonnier);
                 _bddContext.SaveChanges();
                 return panierSaisonnier;
@@ -103,5 +108,25 @@ namespace Projet2.Models.PanierSaisonniers
                 _bddContext.SaveChanges();
             }
         }
+
+        public void ValidationPanier(PanierSaisonnier panierSaisonnier)
+        {
+            PanierSaisonnier panierSaisonnierAValider = (from p in _bddContext.PanierSaisonniers where p.Id == panierSaisonnier.Id select p).FirstOrDefault();
+
+            if (panierSaisonnier.EstValide)
+            {
+                panierSaisonnierAValider.EstValide = true;
+                _bddContext.Update(panierSaisonnierAValider);
+                _bddContext.SaveChanges();
+            }
+            else
+            {
+                panierSaisonnierAValider.AdminCommentaire = panierSaisonnier.AdminCommentaire;
+                panierSaisonnierAValider.EstEnAttente = true;
+                _bddContext.Update(panierSaisonnierAValider);
+                _bddContext.SaveChanges();
+            }
+        }
+
     }
 }

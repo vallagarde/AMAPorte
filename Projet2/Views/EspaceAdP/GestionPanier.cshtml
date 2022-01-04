@@ -14,10 +14,14 @@
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
+                
                 @foreach (var panierSaisonnier in @Model.AdP.AssortimentPanier)
                 {
-                    <div class="col ">
+                    @if (!@panierSaisonnier.EstValide && @panierSaisonnier.EstEnAttente)
+                    {
+                        <div class="col ">
                         <div class="card h-100">
+                            <h5 class="card-title">A modifier</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
                             }
@@ -26,12 +30,74 @@
                                 <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
                                 <p class="card-text">@panierSaisonnier.Description</p>
                                 <p class="card-text">@panierSaisonnier.Prix</p>
+                                <p class="card-text">@panierSaisonnier.DateInscription</p>
+                                @if(@panierSaisonnier.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.DateModification</p>
+                                    } 
+                                <p class="card-text">Commentaire : @panierSaisonnier.AdminCommentaire</p>
                                 @Html.ActionLink("Modifier", "PanierModification", "EspaceAdP", @panierSaisonnier)
                             </div>
                         </div>
-                    </div>
+                        </div>                        
+                    }                   
                 }
-            </div>
+                
+                @foreach (var panierSaisonnier in @Model.AdP.AssortimentPanier)
+                {
+                    @if (@panierSaisonnier.EstValide)
+                    {
+                        <div class="col ">
+                            
+                        <div class="card h-100">
+                            <h5 class="card-title">En boutique</h5>
+                            @{
+                                String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
+                            }
+                            <img src="~/ImageArticle/@panierSaisonnier.Image" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
+                                <p class="card-text">@panierSaisonnier.Description</p>
+                                <p class="card-text">@panierSaisonnier.Prix</p>
+                                <p class="card-text">@panierSaisonnier.DateInscription</p>
+                                @if(@panierSaisonnier.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.DateModification</p>
+                                    } 
+                                @Html.ActionLink("Modifier", "PanierModification", "EspaceAdP", @panierSaisonnier)
+                            </div>
+                        </div>
+                        </div>                        
+                    }                   
+                }
+                
+                @foreach (var panierSaisonnier in @Model.AdP.AssortimentPanier)
+                {
+                    @if (!@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
+                    {
+                        
+                        <div class="col ">
+                        <div class="card h-100">
+                        <h5 class="card-title"> En attente</h5>
+                           @{
+                                String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
+                            }
+                            <img src="~/ImageArticle/@panierSaisonnier.Image" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
+                                <p class="card-text">@panierSaisonnier.Description</p>
+                                <p class="card-text">@panierSaisonnier.Prix</p>
+                                <p class="card-text">@panierSaisonnier.DateInscription</p>
+                                @if(@panierSaisonnier.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.DateModification</p>
+                                    } 
+                            </div>
+                        </div>
+                        </div>                        
+                    }                   
+                }
+            </div>            
         </div>
     </div>   
 </div>

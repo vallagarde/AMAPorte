@@ -329,12 +329,12 @@ namespace Projet2.Models
                 };
                 cs.CreerCCE(contactComiteEntreprise2, entreprise2, adresse6);
 
-                //CCE
+                //Admin
                 Identifiant identifiant7 = new Identifiant()
                 {
                     AdresseMail = "admin@gmail.com",
                     MotDePasse = "test",
-                    EstCE = true
+                    EstGCCQ = true
                 };
 
                 int id7 = cs.AjouterIdentifiant(identifiant7);
@@ -468,7 +468,9 @@ namespace Projet2.Models
                     Stock = 2,
                     PrixTTC = 9.5m,
                     Image = "onion.jpg",
-                    AdPId = 2
+                    AdPId = 2,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
 
@@ -480,7 +482,9 @@ namespace Projet2.Models
                     Stock = 6,
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
-                    AdPId = 2
+                    AdPId = 2,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
 
@@ -492,7 +496,9 @@ namespace Projet2.Models
                     Stock = 6,
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
-                    AdPId = 2
+                    AdPId = 2,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
 
@@ -504,7 +510,9 @@ namespace Projet2.Models
                     Stock = 6,
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
-                    AdPId = 2
+                    AdPId = 2,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 ar.CreerArticle(article6.Nom, article6.Description, (int)article6.Prix, article6.Stock, (int)article6.PrixTTC, article6.Image, article6.AdPId);
 
@@ -615,7 +623,7 @@ namespace Projet2.Models
                 Commande commande1 = new Commande()
                 {
                     PanierBoutique = panierBoutique1,
-                    DateLivraison = new DateTime(2021, 12, 23, 12, 30, 00),
+                    DateCommande = DateTime.Now,
                     AdAId = 1,
                     EstEnPreparation = true,
                 };
@@ -625,7 +633,7 @@ namespace Projet2.Models
                 Commande commande2 = new Commande()
                 {
                     PanierBoutique = panierBoutique2,
-                    DateLivraison = new DateTime(2021, 12, 22, 13, 30, 30),
+                    DateCommande = DateTime.Now,
                     AdAId = 1,
                     EstARecuperer = true,
                 };
@@ -635,7 +643,7 @@ namespace Projet2.Models
                 Commande commande3 = new Commande()
                 {
                     PanierBoutique = panierBoutique3,
-                    DateLivraison = new DateTime(2021, 12, 23, 09, 43, 12),
+                    DateCommande = DateTime.Now,
                     AdAId = 1,
                     EstEnLivraison = true,
                 };
