@@ -7,6 +7,7 @@ using Projet2.Models.PanierSaisonniers;
 using Projet2.Models.Calendriers;
 using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
+using System.Linq;
 
 namespace Projet2.Models
 {
@@ -187,6 +188,8 @@ namespace Projet2.Models
                     Siren = 987654321,
                     NomProducteur = "Les Terres du Ruisseau",
                     Description = "L'harmonie entre l'homme et la nature.",
+                    EstActive = true,
+                    EstEnAttente = false,
                     EstAdP = true,
                     Vedette = true
 
@@ -235,6 +238,8 @@ namespace Projet2.Models
                     NomProducteur = "La Ferme de la Haute Vallée",
                     Description = "Des Bretons, du bon produit...",
                     EstAdP = true,
+                    EstActive = true,
+                    EstEnAttente = false,
                     Vedette =true
                 };
                 cs.CreerAdP(personne4, adresse4, adP2);
@@ -368,7 +373,9 @@ namespace Projet2.Models
                     Description = "Beaux fruits de saison. Mjam.",
                     Prix = 45.9m,
                     Image = "pommes.jpg",
-                    AdPId = 1
+                    AdPId = 1,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 pss.CreerPanierSaisonnier(panierSaisonnier1);
 
@@ -380,7 +387,9 @@ namespace Projet2.Models
                     Description = "C'est bon",
                     Prix = 45.9m,
                     Image = "onion.jpg",
-                    AdPId = 1
+                    AdPId = 1,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 pss.CreerPanierSaisonnier(panierSaisonnier2);
 
@@ -392,7 +401,9 @@ namespace Projet2.Models
                     Description = "C'est bon",
                     Prix = 40.9m,
                     Image = "onion.jpg",
-                    AdPId = 2
+                    AdPId = 2,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 pss.CreerPanierSaisonnier(panierSaisonnier3);
 
@@ -404,7 +415,9 @@ namespace Projet2.Models
                     Description = "Poireaux, Carottes, Tomates, Poivrons",
                     Prix = 40.9m,
                     Image = "pommes.jpg",
-                    AdPId = 2
+                    AdPId = 2,
+                    EstValide = true,
+                    EstEnAttente = false,
                 };
                 pss.CreerPanierSaisonnier(panierSaisonnier4);
 
@@ -422,7 +435,11 @@ namespace Projet2.Models
                     Image = "onion.jpg",
                     AdPId = 1
                 };
-                ar.CreerArticle(article.Nom, article.Description, (int)article.Prix, article.Stock, (int)article.PrixTTC, article.Image, article.AdPId);
+                int id = ar.CreerArticle(article.Nom, article.Description, (int)article.Prix, article.Stock, (int)article.PrixTTC, article.Image, article.AdPId);
+                article = ar.ObtientTousLesArticles().Where(c => c.Id == id).FirstOrDefault();
+                article.EstEnAttente = false;
+                article.EstValide = true;
+                ar.ValidationArticle(article);
 
                 Article article2 = new Article()
                 {
@@ -434,7 +451,11 @@ namespace Projet2.Models
                     Image = "pommes.jpg",
                     AdPId = 1
                 };
-                ar.CreerArticle(article2.Nom, article2.Description, (int)article2.Prix, article2.Stock, (int)article2.PrixTTC, article2.Image, article2.AdPId);
+                int id2 = ar.CreerArticle(article2.Nom, article2.Description, (int)article2.Prix, article2.Stock, (int)article2.PrixTTC, article2.Image, article2.AdPId);
+                article2 = ar.ObtientTousLesArticles().Where(c => c.Id == id2).FirstOrDefault();
+                article2.EstEnAttente = false;
+                article2.EstValide = true;
+                ar.ValidationArticle(article2);
 
                 Article article3 = new Article()
                 {
@@ -446,7 +467,11 @@ namespace Projet2.Models
                     Image = "onion.jpg",
                     AdPId = 1
                 };
-                ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
+                int id3 = ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
+                article3 = ar.ObtientTousLesArticles().Where(c => c.Id == id3).FirstOrDefault();
+                article3.EstEnAttente = false;
+                article3.EstValide = true;
+                ar.ValidationArticle(article3);
 
                 Article article4 = new Article()
                 {
@@ -458,7 +483,11 @@ namespace Projet2.Models
                     Image = "pommes.jpg",
                     AdPId = 1
                 };
-                ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
+                int id4 = ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
+                article4 = ar.ObtientTousLesArticles().Where(c => c.Id == id4).FirstOrDefault();
+                article4.EstEnAttente = false;
+                article4.EstValide = true;
+                ar.ValidationArticle(article4);
 
                 Article article5 = new Article()
                 {
@@ -469,10 +498,12 @@ namespace Projet2.Models
                     PrixTTC = 9.5m,
                     Image = "onion.jpg",
                     AdPId = 2,
-                    EstValide = true,
-                    EstEnAttente = false,
                 };
-                ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
+                int id5 = ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
+                article5 = ar.ObtientTousLesArticles().Where(c => c.Id == id5).FirstOrDefault();
+                article5.EstEnAttente = false;
+                article5.EstValide = true;
+                ar.ValidationArticle(article5);
 
                 Article article6 = new Article()
                 {
@@ -482,11 +513,13 @@ namespace Projet2.Models
                     Stock = 6,
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
-                    AdPId = 2,
-                    EstValide = true,
-                    EstEnAttente = false,
+                    AdPId = 2,                  
                 };
-                ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
+                int id6 = ar.CreerArticle(article6.Nom, article6.Description, (int)article6.Prix, article6.Stock, (int)article6.PrixTTC, article6.Image, article6.AdPId);
+                article6 = ar.ObtientTousLesArticles().Where(c => c.Id == id6).FirstOrDefault();
+                article6.EstEnAttente = false;
+                article6.EstValide = true;
+                ar.ValidationArticle(article6);
 
                 Article article7 = new Article()
                 {
@@ -497,10 +530,12 @@ namespace Projet2.Models
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
                     AdPId = 2,
-                    EstValide = true,
-                    EstEnAttente = false,
                 };
-                ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
+                int id7 = ar.CreerArticle(article7.Nom, article7.Description, (int)article7.Prix, article7.Stock, (int)article7.PrixTTC, article7.Image, article7.AdPId);
+                article7 = ar.ObtientTousLesArticles().Where(c => c.Id == id7).FirstOrDefault();
+                article7.EstEnAttente = false;
+                article7.EstValide = true;
+                ar.ValidationArticle(article7);
 
                 Article article8 = new Article()
                 {
@@ -511,10 +546,12 @@ namespace Projet2.Models
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
                     AdPId = 2,
-                    EstValide = true,
-                    EstEnAttente = false,
                 };
-                ar.CreerArticle(article6.Nom, article6.Description, (int)article6.Prix, article6.Stock, (int)article6.PrixTTC, article6.Image, article6.AdPId);
+                int id8 = ar.CreerArticle(article8.Nom, article8.Description, (int)article8.Prix, article8.Stock, (int)article8.PrixTTC, article8.Image, article8.AdPId);
+                article8 = ar.ObtientTousLesArticles().Where(c => c.Id == id8).FirstOrDefault();
+                article8.EstEnAttente = false;
+                article8.EstValide = true;
+                ar.ValidationArticle(article8);
 
 
                 //Commandes
@@ -544,7 +581,7 @@ namespace Projet2.Models
 
                 LignePanierBoutique LignePanierBoutique1 = new LignePanierBoutique()
                 {
-                    Article = article,
+                    ArticleId = article.Id,
                     Quantite = 2,
                     SousTotal = article.PrixTTC * 3,
                     PanierBoutiqueId = 1
@@ -554,7 +591,7 @@ namespace Projet2.Models
 
                 LignePanierBoutique LignePanierBoutique2 = new LignePanierBoutique()
                 {
-                    Article = article2,
+                    ArticleId = article2.Id,
                     Quantite = 3,
                     SousTotal = article2.PrixTTC * 3,
                     PanierBoutiqueId = 1
@@ -564,7 +601,7 @@ namespace Projet2.Models
 
                 LignePanierBoutique LignePanierBoutique3 = new LignePanierBoutique()
                 {
-                    Article = article3,
+                    ArticleId = article3.Id,
                     Quantite = 4,
                     SousTotal = article3.PrixTTC * 4,
                     PanierBoutiqueId = 2
@@ -574,7 +611,7 @@ namespace Projet2.Models
 
                 LignePanierBoutique LignePanierBoutique4 = new LignePanierBoutique()
                 {
-                    Article = article3,
+                    ArticleId = article3.Id,
                     Quantite = 4,
                     SousTotal = article3.PrixTTC * 4,
                     PanierBoutiqueId = 2
@@ -584,7 +621,7 @@ namespace Projet2.Models
 
                 LignePanierBoutique LignePanierBoutique5 = new LignePanierBoutique()
                 {
-                    Article = article3,
+                    ArticleId = article3.Id,
                     Quantite = 4,
                     SousTotal = article3.PrixTTC * 4,
                     PanierBoutiqueId = 3
@@ -594,15 +631,13 @@ namespace Projet2.Models
 
                 LignePanierBoutique LignePanierBoutique6 = new LignePanierBoutique()
                 {
-                    Article = article3,
+                    ArticleId = article3.Id,
                     Quantite = 4,
                     SousTotal = article3.PrixTTC * 4,
                     PanierBoutiqueId = 3
                 };
                 this.LignePanierBoutique.Add(LignePanierBoutique6);
                 this.SaveChanges();
-
-
 
 
                 Client client = new Client()

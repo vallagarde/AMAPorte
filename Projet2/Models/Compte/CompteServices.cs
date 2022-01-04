@@ -237,10 +237,15 @@ namespace Projet2.Models.Compte
 
         public AdP ObtenirAdPParId(int id)
         {
-            var query = from adp in _bddContext.AdPs where adp.Id == id select adp;
-            var adps = query.ToList();
-            foreach (AdP adp in adps)
+            AdP adp = (from a in _bddContext.AdPs where a.Id == id select a).FirstOrDefault();
+            if (adp != null)
             {
+                var queryPersonne = from personne in _bddContext.Personnes where personne.Id == adp.PersonneId select personne;
+                adp.Personne = queryPersonne.First();
+                var queryAdresse = from adresse in _bddContext.Adresses where adresse.Id == adp.Personne.AdresseId select adresse;
+                var queryIdentifiant = from identifiant in _bddContext.Identifiants where identifiant.Id == adp.Personne.IdentifiantId select identifiant;
+                adp.Personne.Adresse = queryAdresse.First();
+                adp.Personne.Identifiant = queryIdentifiant.First();
                 return adp;
             }
             return null;
