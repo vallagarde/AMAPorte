@@ -56,7 +56,7 @@ namespace Projet2.Controllers
             
                     // mettre le file dans le dossier
 
-                    var FileDic = "Files";
+                    //var FileDic = "Files";
 
                     string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
 

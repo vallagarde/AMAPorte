@@ -30,10 +30,10 @@ namespace Projet2.Models
         public DbSet<Admin> Admins { get; set; }
 
         //context panierSaisonnier
-        public DbSet<Produit> Produits { get; set; }
         public DbSet<PanierSaisonnier> PanierSaisonniers { get; set; }
         public DbSet<CataloguePanier> CataloguePaniers { get; set; }
         public DbSet<LignePanierSaisonnier> LignePanierSaisonniers { get; set; }
+        public DbSet<CommandePanier> CommandePaniers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

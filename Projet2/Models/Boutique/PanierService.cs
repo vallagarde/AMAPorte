@@ -52,9 +52,9 @@ namespace Projet2.Models.Boutique
             return panier.Id;
 
         }
+
         public PanierBoutique ObientPanier(int panierId)
         {
-
             return _bddContext.PanierBoutique.Include(c => c.LignePanierBoutiques).ThenInclude(it => it.Article).Where(c => c.Id == panierId).FirstOrDefault();
         }
 
