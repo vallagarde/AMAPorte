@@ -19,6 +19,10 @@ $(document).ready(function () {
                         type: 'GET',
                         success: function (res) {
 
+
+
+
+
                             $("#nombreArticle").html(res);
 
 

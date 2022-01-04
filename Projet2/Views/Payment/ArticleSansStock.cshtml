@@ -6,15 +6,19 @@
 }
 
 
-<section>
-    <div>
-        <h1>
-            Désolé
-        </h1>
-        <h2>
-            Il semblerait que l'article @Model.Article.Nom ne soit plus disponible dans les quantités que vous désirez
-        </h2>
+<section class=" gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5 text-center">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Désolé</h3>
+                        <h4>
+                            Il semblerait que l'article @Model.Article.Nom ne soit plus disponible qu'en @Model.Article.Stock exemplaire
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </section>
