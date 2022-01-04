@@ -12,6 +12,7 @@ namespace Projet2.ViewModels
 {
     public class HomeViewModel
     {
+        //Boutique
         public Boutiques Boutiques = new Boutiques();
         public Article Article = new Article();
         public Upload Upload = new Upload();
@@ -19,7 +20,7 @@ namespace Projet2.ViewModels
         public PanierBoutique PanierBoutique = new PanierBoutique();
         public Commande Commande = new Commande();
         public Avis Avis = new Avis();
-
+        public LignePanierBoutique LignePanierBoutique = new LignePanierBoutique();
 
 
         //Paniers
@@ -49,17 +50,23 @@ namespace Projet2.ViewModels
         public ContactComiteEntreprise ContactComiteEntreprise = new ContactComiteEntreprise();
         public Admin Admin = new Admin();
         public Client Client = new Client();
+        public bool AdresseExistante;
+        public bool Authentifie { get; set; }
+
+        //Admin
         public List<AdA> ListeComptesAdA = new List<AdA>();
         public List<AdP> ListeComptesAdP = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
+
+        //Commandes
         public List<Commande> ListeCommandesEnPrep = new List<Commande>();
         public List<Commande> ListeCommandesEnCours = new List<Commande>();
         public List<Commande> ListeCommandesLivres = new List<Commande>();
         public List<Commande> ListeCommandesARecup = new List<Commande>();
         public List<LignePanierBoutique> ListeCommandesAPrep = new List<LignePanierBoutique>();
         public List<LignePanierBoutique> ListeCommandesDonnees = new List<LignePanierBoutique>();
+
         public DateTime ProchaineDateLivraison = new DateTime();
-        public bool AdresseExistante;
 
         public string ReturnDateForDisplayLivraison
         {
@@ -72,9 +79,5 @@ namespace Projet2.ViewModels
                 return null;
             }
         }
-
-        public bool Authentifie { get; set; }
-
-        public LignePanierBoutique LignePanierBoutique= new LignePanierBoutique();
     }
 }

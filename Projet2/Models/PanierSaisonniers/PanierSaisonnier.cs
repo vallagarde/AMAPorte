@@ -25,7 +25,14 @@ namespace Projet2.Models.PanierSaisonniers
         public int? CataloguePanierId { get; set; }
         public CataloguePanier CataloguePanier { get; set; }
 
+        public bool EstValide { get; set; }
+
         //public int? LignePanierSaisonnierId { get; set; }
         //public LignePanierSaisonnier  LignePanierSaisonnier { get; set; }
+
+        public PanierSaisonnier()
+        {
+            EstValide = false;
+        }
     }
 }
