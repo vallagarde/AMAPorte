@@ -187,7 +187,9 @@ namespace Projet2.Models
                     Siren = 987654321,
                     NomProducteur = "Les Terres du Ruisseau",
                     Description = "L'harmonie entre l'homme et la nature.",
-                    EstAdP = true
+                    EstAdP = true,
+                    Vedette = true
+
                 };
                 cs.CreerAdP(personne3, adresse3, adP1);
 
@@ -232,7 +234,8 @@ namespace Projet2.Models
                     Siren = 987654322,
                     NomProducteur = "La Ferme de la Haute Vallée",
                     Description = "Des Bretons, du bon produit...",
-                    EstAdP = true
+                    EstAdP = true,
+                    Vedette =true
                 };
                 cs.CreerAdP(personne4, adresse4, adP2);
 

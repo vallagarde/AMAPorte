@@ -25,11 +25,13 @@ namespace Projet2.Controllers
 
         public IActionResult Index()
         {
+            CompteServices csx = new CompteServices();
             HomeViewModel hvm = new HomeViewModel
             {
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId"),
+                ListeComptesAdP = csx.ObtenirAdPsVedettes()
 
-            };
+        };
             return View(hvm);
         }
 
