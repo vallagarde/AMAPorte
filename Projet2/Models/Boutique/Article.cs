@@ -13,6 +13,9 @@ namespace Projet2.Models.Boutique
         public int Stock { get; set; }
         public decimal PrixTTC { get; set; }
         public String Image { get; set; }
+        public bool EstValide { get; set; }
+        public bool EstEnAttente { get; set; }
+        public String AdminCommentaire { get; set; }
 
 
         public int AdPId { get; set; }
@@ -24,6 +27,9 @@ namespace Projet2.Models.Boutique
         public Article()
         {
             Avis = new List<Avis>();
+            AdminCommentaire = "";
+            EstValide = false;
+            EstEnAttente = false;
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace Projet2.Controllers
 
 
         // GET: /<controller>/
+        [Authorize]
         public IActionResult AjouterArticle()
         {
             HomeViewModel hvm = new HomeViewModel
@@ -37,7 +39,7 @@ namespace Projet2.Controllers
 
         }
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC, IFormFile FileToUpload)
         {
@@ -82,35 +84,6 @@ namespace Projet2.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult ModifierArticle(int id)
-        {
-            ArticleRessources ctx = new ArticleRessources();
-            Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
-
-            HomeViewModel hvm = new HomeViewModel
-            {
-                Article = article,
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
-
-            };
-
-
-            return View(hvm);
-
-        }
-
-        [HttpPost]
-        public IActionResult ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC, AdP adp)
-        {
-            ArticleRessources ctx = new ArticleRessources();
-            ctx.ModifierArticle(id, nom, description, prix, stock, prixTTC, adp.Id);
-
-            return RedirectToAction("ModifierArticle", new { @Id = id });
-
-        }
-
-        
 
         public IActionResult AfficherBoutique()
         {
@@ -203,9 +176,8 @@ namespace Projet2.Controllers
         public IActionResult Article(int id)
         {
             ArticleRessources ctx = new ArticleRessources();
-            PanierService ps = new PanierService();
             Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
-            article.Avis = ps.AfficherAvisPourArticle(article);
+            article.Avis = ctx.AfficherAvisPourArticle(article);
 
             HomeViewModel hvm = new HomeViewModel
             {
@@ -335,7 +307,7 @@ namespace Projet2.Controllers
             {
                 CompteServices cs = new CompteServices();
                 HomeViewModel hvm = new HomeViewModel();
-                PanierService ctx = new PanierService();
+                ArticleRessources ctx = new ArticleRessources();
                 viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
                 if (viewModel.Identifiant.EstAdA == true)
                 {

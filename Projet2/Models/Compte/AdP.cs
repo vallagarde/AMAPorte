@@ -34,6 +34,7 @@ namespace Projet2.Models.Compte
         public virtual List<PanierSaisonnier> AssortimentPanier { get; set; }
 
         public bool EstAdP { get; set; }
+        public bool EstActive { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
@@ -41,6 +42,7 @@ namespace Projet2.Models.Compte
         public AdP()
         {
             EstAdP = true;
+            EstActive = false;
             DateInscription = DateTime.Today;
             Image = "Default.jpg";
             Assortiment = new List<Article>();
