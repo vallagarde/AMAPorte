@@ -55,10 +55,14 @@
                               <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
                               <th>@Html.TextBoxFor(m => Model.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
                                   @Html.ValidationMessageFor(m => Model.Identifiant.AdresseMail, "", new { @class = "text-danger" }) </th>
-                                    @if(@Model.AdresseExistante == true)
+                                  @if(@Model != null)  
+                                  {
+                                      @if(@Model.AdresseExistante == true)
                                         {
                                         <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
                                         }
+                                  } 
+                                  
                           </tr>
                           <tr>
                               <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>

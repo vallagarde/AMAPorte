@@ -44,10 +44,14 @@
                               <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>
                               <th>@Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
                                   @Html.ValidationMessageFor(m => Model.Identifiant.MotDePasse)
+                                @if(@Model != null)
+                                {
                                   @if(@Model.AdresseExistante == true)
                                         {
                                         <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
-                                        }
+                                        }  
+                                }
+                                
                               </th>
                          </tr>
                         </table>
