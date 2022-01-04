@@ -38,10 +38,10 @@ namespace Projet2.Models
         public DbSet<Admin> Admins { get; set; }
 
         //context panierSaisonnier
-        public DbSet<Produit> Produits { get; set; }
         public DbSet<PanierSaisonnier> PanierSaisonniers { get; set; }
         public DbSet<CataloguePanier> CataloguePaniers { get; set; }
         public DbSet<LignePanierSaisonnier> LignePanierSaisonniers { get; set; }
+        public DbSet<CommandePanier> CommandePaniers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -514,6 +514,7 @@ namespace Projet2.Models
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
                     AdPId = 2,                  
+
                 };
                 int id6 = ar.CreerArticle(article6.Nom, article6.Description, (int)article6.Prix, article6.Stock, (int)article6.PrixTTC, article6.Image, article6.AdPId);
                 article6 = ar.ObtientTousLesArticles().Where(c => c.Id == id6).FirstOrDefault();
@@ -530,6 +531,7 @@ namespace Projet2.Models
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
                     AdPId = 2,
+
                 };
                 int id7 = ar.CreerArticle(article7.Nom, article7.Description, (int)article7.Prix, article7.Stock, (int)article7.PrixTTC, article7.Image, article7.AdPId);
                 article7 = ar.ObtientTousLesArticles().Where(c => c.Id == id7).FirstOrDefault();

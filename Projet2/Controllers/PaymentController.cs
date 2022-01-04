@@ -7,6 +7,7 @@ using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 using Projet2.Models.Mails;
 using Projet2.ViewModels;
 
@@ -17,7 +18,13 @@ namespace Projet2.Controllers
     public class PaymentController : Controller
     {
         // GET: /<controller>/
-
+        public IActionResult PaiementPanier(PanierSaisonnier panierSaisonnier)
+        {
+            PanierSaisonnierService ctx = new PanierSaisonnierService();
+            HomeViewModel hvm = new HomeViewModel();
+            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == panierSaisonnier.Id).FirstOrDefault();
+            return View(hvm);
+        }
         public IActionResult Paiement(HomeViewModel hvm)
         {
             PanierService ctx = new PanierService();

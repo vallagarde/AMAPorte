@@ -3,7 +3,7 @@
     ViewData["Title"] = "AjouterPanier";
 }
 
-<body>
+<div class="container">
     <form enctype="multipart/form-data" method="post" asp-controller="Panier" asp-action="AjouterPanier">
         <fieldset>
             @Html.HiddenFor(m => Model.AdP.Id)
@@ -19,12 +19,14 @@
             @Html.TextBoxFor(m => Model.PanierSaisonnier.Description)
             <br />
             @Html.LabelFor(m => Model.PanierSaisonnier.Prix)
-            @Html.TextBoxFor(m => Model.PanierSaisonnier.Prix, "{0:n2}")
+            @Html.TextBoxFor(m => Model.PanierSaisonnier.Prix, "{0:n2}") €
             <br />
             <input name="fileToUpload" type="file" value="browse" />
-            @Html.EditorFor(model => model.Upload.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Upload.Name, "", new { @class = "text-danger" })
+            @*@Html.EditorFor(model => model.Upload.Name, new { htmlAttributes = new { @class = "form-control hidden" } })
+            @Html.ValidationMessageFor(model => model.Upload.Name, "", new { @class = "text-danger" })*@
+        <div>
             <input type="submit" value="Ajouter" />
+        </div>
         </fieldset>
         </form>
-</body>
+</div>
