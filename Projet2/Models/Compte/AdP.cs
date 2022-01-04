@@ -18,6 +18,8 @@ namespace Projet2.Models.Compte
 
         public string Image { get; set; }
 
+        public bool? Vedette { get; set; }
+
         [Display(Name = "SIREN")]
         [Required(ErrorMessage = "Vous devez insérer un numéro SIREN.")]
         public int Siren { get; set; }

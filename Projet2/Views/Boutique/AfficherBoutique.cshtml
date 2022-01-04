@@ -44,7 +44,7 @@
             </form>
         </div>
         <div class="col-md-9">
-            <div class="row row-cols-1 row-cols-md-4 g-5">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-5">
                 @foreach (Projet2.Models.Boutique.Article article in @Model.Boutiques.Articles as List<Projet2.Models.Boutique.Article>)
                 {
                     @if(@article.EstValide && !@article.EstEnAttente)
