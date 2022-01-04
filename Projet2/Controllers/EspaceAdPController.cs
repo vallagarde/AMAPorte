@@ -95,9 +95,9 @@ namespace Projet2.Controllers
             return View(hvm);
         }
         [HttpPost]
-        public IActionResult ArticleModification(Article article, AdP adp)
+        public IActionResult ArticleModification(Article article, int Id)
         {
-            ar.ModifierArticle(article.Id, article.Nom, article.Description, article.Prix, article.Stock, article.PrixTTC, adp.Id);
+            ar.ModifierArticle(article.Id, article.Nom, article.Description, article.Prix, article.Stock, article.PrixTTC, article.AdPId);
 
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)

@@ -14,7 +14,6 @@ namespace Projet2.Controllers
     public class CompteCEController : Controller
     {
         //View pour paiement 12€/6 mois 
-        //warning avant suppression compte
         //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 
         //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
         //BOUTIQUE / PANIERS S. : 

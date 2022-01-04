@@ -11,7 +11,6 @@ namespace Projet2.Controllers
 {
     public class LoginController : Controller
         //ajouter des authentifications sur des espaces member only 
-        //ajouter un identifiant avec un adresse mail (verifier si existe pas encore)
 
     {
         private CompteServices cptressource;

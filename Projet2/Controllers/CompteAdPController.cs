@@ -15,7 +15,7 @@ namespace Projet2.Controllers
     [Authorize]
     public class CompteAdPController : Controller
     {
-        //ajouter quelques attributs (RIB), warning avant suppression compte
+        //ajouter quelques attributs (RIB)
         //adresse avec base de données ? 
        
         CompteServices cs = new CompteServices();
@@ -178,7 +178,6 @@ namespace Projet2.Controllers
 
             hvm.Adresse = cs.ModifierAdresse(adresse);
             personne.AdresseId = hvm.Adresse.Id;
-            personne.IdentifiantId = hvm.Identifiant.Id;
             hvm.Personne = cs.ModifierPersonne(personne);
             adp.PersonneId = hvm.Personne.Id;
             hvm.AdP = cs.ModifierAdP(adp);
@@ -205,7 +204,6 @@ namespace Projet2.Controllers
 
         public IActionResult SuppressionCompte(AdP adp)
         {
-            //warning avant suppression compte
             cs.SupprimerAdP(adp.Id);
             bool EstUtilisateur = false;
             SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);

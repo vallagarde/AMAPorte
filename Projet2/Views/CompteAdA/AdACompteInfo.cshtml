@@ -40,7 +40,7 @@
             <span class="close">&times;</span>
             <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
             <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
-            @Html.HiddenFor(m => Model.AdP.Id)
+            @Html.HiddenFor(m => Model.AdA.Id)
              <button class="modalButton" type="submit">Je supprime mon compte</button>
             </form>
         </div>

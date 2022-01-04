@@ -1,13 +1,34 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-    <div>
+    <div class="container">
         <img src="~/ImageProfils/@Model.AdP.Image" width="80" height="80">
         Bonjour @Model.Personne.Prenom        
         <br />
         <br />
-        Gestion de la Boutique
-        <br />
-        @*AJOUTER UN ARTICLE DOIT SAUVEGARDER LE PRODUCTEUR QUI EN AJOUTE*@
+
+        @if (!@Model.AdP.EstActive && !@Model.AdP.EstEnAttente)
+        {
+        <h2>Votre Compte est en attente de validation</h2>
+        <p>Vous pouvez ajouter des articles, paniers et ateliers dès sa validation.</p>
+        }
+
+        @if (!@Model.AdP.EstActive && @Model.AdP.EstEnAttente)
+        {
+        <h2>Votre Compte a été rejeté</h2>
+        @if(@Model.AdP.AdminCommentaire != null)
+        {
+           <p>Vous avez recu une demande de modification : @Model.AdP.AdminCommentaire</p>
+           <p>Cliquez ici pour modifier votre compte : @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)</p>
+        }
+        @if (@Model.AdP.AdminCommentaire == null)
+        {
+            <p>Votre compte va être supprimer dans 10 jours. N'hésitez pas à nous contacter.</p>
+        }
+        }
+
+        @if (@Model.AdP.EstActive)
+        {
+        <p>Gestion de la Boutique</p>
         @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
         <br/>
         @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
@@ -18,7 +39,7 @@
         <br/>
         <br />
         <br />
-        Gestion des Paniers Saissoniers
+        <p>Gestion des Paniers Saissoniers</p>
         <br />
         @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
         <br/>
@@ -30,7 +51,7 @@
         <br/>
         <br />
         <br />
-        Gestion des Ateliers
+        <p>Gestion des Ateliers</p>
         <br />
         @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
         <br/>
@@ -39,7 +60,10 @@
         @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
         <br/>
         @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
-        <br/> 
+        <br/>        
+        }
+
+        
         <br/>
         @Html.ActionLink("Gerer Mon Compte", "AdPCompteInfo", "CompteAdP", @Model.AdP)
         <br/>
@@ -47,5 +71,4 @@
         <br/>
         @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
         <br/>
-        @Html.ActionLink("Retour sur la page principale", "Index", "Home")
     </div>

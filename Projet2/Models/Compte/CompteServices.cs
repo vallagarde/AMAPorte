@@ -268,6 +268,10 @@ namespace Projet2.Models.Compte
         {
             if (adpAModifier.Id != 0)
             {
+                if (adpAModifier.EstEnAttente)
+                {
+                    adpAModifier.EstEnAttente = false;
+                }
                 _bddContext.AdPs.Update(adpAModifier);
                 _bddContext.SaveChanges();
                 return adpAModifier;
@@ -289,9 +293,31 @@ namespace Projet2.Models.Compte
             }
         }
 
+        public void ValidationAdP(AdP adp)
+        {
+            AdP adpAValider = (from a in _bddContext.AdPs where a.Id == adp.Id select a).FirstOrDefault();
 
-        //Obtenir CE
-        public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
+            if (adp.EstActive)
+            {
+                adpAValider.EstActive = true;
+                _bddContext.Update(adpAValider);
+                _bddContext.SaveChanges();
+            }
+            else
+            {
+                adpAValider.AdminCommentaire = adp.AdminCommentaire;
+                adpAValider.EstEnAttente = true;
+                _bddContext.Update(adpAValider);
+                _bddContext.SaveChanges();
+            }
+
+        }
+
+            
+
+
+//Obtenir CE
+public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
         {
             List<ContactComiteEntreprise> CCEList = _bddContext.ContactComiteEntreprises.ToList();
             foreach (ContactComiteEntreprise cce in CCEList)

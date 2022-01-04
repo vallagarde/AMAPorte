@@ -37,20 +37,22 @@ namespace Projet2.Models.Compte
 
         public bool EstAdP { get; set; }
         public bool EstActive { get; set; }
+        public bool EstEnAttente { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
+        public String AdminCommentaire { get; set; }
 
         public AdP()
         {
             EstAdP = true;
             EstActive = false;
+            EstEnAttente = false;
             DateInscription = DateTime.Today;
             Image = "Default.jpg";
             Assortiment = new List<Article>();
             AssortimentPanier = new List<PanierSaisonnier>();
+            AdminCommentaire = null;
         }
-
-
     }
 }

@@ -24,6 +24,7 @@ namespace Projet2.Controllers
         private HomeViewModel hvm = new HomeViewModel();
         private PanierService panierService = new PanierService();
         private ArticleRessources articleRessources = new ArticleRessources();
+        private PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
         public IActionResult Index(Admin admin)
         {
             hvm.Identifiant = cs.ObtenirIdentifiant(admin.IdentifiantId);
@@ -128,6 +129,14 @@ namespace Projet2.Controllers
                         hvm.AdP.Assortiment.Add(article);
                     }
                 }
+                foreach (PanierSaisonnier panierSaisonnier in saisonnierService.ObtenirPanierParAdP(adp))
+                {
+                    if (!panierSaisonnier.EstValide)
+                    {
+                        hvm.AdP.AssortimentPanier.Add(panierSaisonnier);
+                    }
+                }
+
             }
             hvm.Admin = admin;
             return View(hvm);
@@ -143,14 +152,16 @@ namespace Projet2.Controllers
             }
             if (panierSaisonnier != null)
             {
-                //Fonction dans panier services
-                articleRessources.ValidationArticle(article);
+                saisonnierService.ValidationPanier(panierSaisonnier);
+                //message à producteur ?
             }
 
             hvm.Admin = admin;
             return RedirectToAction("GestionDemandesProducteurs", hvm.Admin);
         }
 
+
+        [HttpGet]
         public IActionResult GestionComptes(Admin admin)
         {
             hvm.ListeComptesAdA = cs.ObtenirTousLesAdAs();
@@ -158,6 +169,20 @@ namespace Projet2.Controllers
             hvm.ListeComptesCCEs = cs.ObtenirTousLesCCEs();
             hvm.Admin = admin;
             return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult GestionComptes(Admin admin, AdP adp)
+        {
+            if (adp != null)
+            {
+                cs.ValidationAdP(adp);
+                //message à producteur ?
+            }
+
+            hvm.Admin = admin;
+            return RedirectToAction("GestionComptes", hvm.Admin);
+
         }
 
         [HttpGet]

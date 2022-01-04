@@ -3,38 +3,28 @@
     ViewData["Title"] = "AfficherPaniers";
 }
 
-<div> Liste des Paniers saisonniers :  </div>
 <br />
 <div class="row row row-cols-1 row-cols-md-4 g-4">
     @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
     {
-        <div class="col">
-            <div class="card h-100">
-                @{
-                    String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
-                }
-                <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
-                    <h6 class="card-title">@panierSaisonnier.AdP.NomProducteur</h6>
-                    <p class="card-text">@panierSaisonnier.Description</p>
-                    <p class="card-text">@panierSaisonnier.Prix</p>
-                    @Html.ActionLink("Modifier", "ModifierPanier", "Panier", @panierSaisonnier, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Supprimer", "SupprimerPanier", "Panier", @panierSaisonnier, new { @class = "card-link" })
-                    @Html.ActionLink("Choisir", "CommandePanier", "Panier", @panierSaisonnier)
-                    @Html.ActionLink("Plus", "CommandeLignePanier", "Panier", @panierSaisonnier)
+        @if (@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    @{
+                        String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
+                    }
+                    <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
+                        <h6 class="card-title">@panierSaisonnier.AdP.NomProducteur</h6>
+                        <p class="card-text">@panierSaisonnier.Description</p>
+                        <p class="card-text">@panierSaisonnier.Prix</p>
+                        @Html.ActionLink("Choisir", "CommandePanier", "Panier", @panierSaisonnier)
+                        @Html.ActionLink("Plus", "CommandeLignePanier", "Panier", @panierSaisonnier)
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     }
-</div>
-<div>
-    @Html.ActionLink("Ajouter un Panier", "AjouterPanier", "Panier")
-</div>
-
-<div>
-    @Html.ActionLink("Un changement?", "ModifierPanier", "Panier")
-</div>
-<div>
-    @Html.ActionLink("Choisir", "PaiementPanier", "Panier")
 </div>

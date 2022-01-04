@@ -253,7 +253,6 @@ namespace Projet2.Controllers
 
         public IActionResult SuppressionCompte(AdA ada)
         {
-            //warning avant suppression compte
             cs.SupprimerAdA(ada.Id);
             bool EstUtilisateur = false;
             SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);

@@ -21,7 +21,7 @@
                     {
                         <div class="col ">
                         <div class="card h-100">
-                            <h5 class="card-title"> A modifier pour la mise en boutique</h5>
+                            <h5 class="card-title" color="red">A modifier</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -29,6 +29,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
+                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
+                                <p class="card-text">@article.Stock</p>
+                                <p class="card-text">@article.DateInscription</p>
+                                    @if(@article.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                    }                                  
                                 <p class="card-text">Commentaire : @article.AdminCommentaire</p>
                                 @Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)
                             </div>
@@ -44,7 +51,7 @@
                         <div class="col ">
                             
                         <div class="card h-100">
-                            <h5 class="card-title"><br/>En boutique</h5>
+                            <h5 class="card-title">En boutique</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -52,6 +59,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
+                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
+                                <p class="card-text">@article.Stock</p>
+                                <p class="card-text">@article.DateInscription</p>
+                                @if(@article.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                    } 
                                 @Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)
                             </div>
                         </div>
@@ -66,7 +80,7 @@
                         
                         <div class="col ">
                         <div class="card h-100">
-                        <h5 class="card-title"> En attente de validation</h5>
+                        <h5 class="card-title"> En attente</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -74,6 +88,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
+                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
+                                <p class="card-text">@article.Stock</p>
+                                <p class="card-text">@article.DateInscription</p>
+                                @if(@article.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                    } 
                             </div>
                         </div>
                         </div>                        

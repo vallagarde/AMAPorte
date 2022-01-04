@@ -9,6 +9,11 @@
     <fieldset>
         <legend>Modifier un Panier : </legend>
         @Html.HiddenFor(m => Model.PanierSaisonnier.Id)
+        @Html.HiddenFor(m => Model.PanierSaisonnier.Image)
+        @Html.HiddenFor(m => Model.PanierSaisonnier.EstValide)
+        @Html.HiddenFor(m => Model.PanierSaisonnier.EstEnAttente)
+        @Html.HiddenFor(m => Model.PanierSaisonnier.AdminCommentaire)
+        @Html.HiddenFor(m => Model.PanierSaisonnier.DateInscription)
         @Html.HiddenFor(m => Model.PanierSaisonnier.AdPId)
         @Html.HiddenFor(m => Model.AdP.Id)
 

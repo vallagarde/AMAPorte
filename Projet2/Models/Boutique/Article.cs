@@ -16,6 +16,8 @@ namespace Projet2.Models.Boutique
         public bool EstValide { get; set; }
         public bool EstEnAttente { get; set; }
         public String AdminCommentaire { get; set; }
+        public DateTime DateInscription { get; set; }
+        public DateTime? DateModification { get; set; }
 
 
         public int AdPId { get; set; }
@@ -27,9 +29,10 @@ namespace Projet2.Models.Boutique
         public Article()
         {
             Avis = new List<Avis>();
-            AdminCommentaire = "";
+            AdminCommentaire = null;
             EstValide = false;
             EstEnAttente = false;
+            DateInscription = DateTime.Now;
         }
 
     }

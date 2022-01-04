@@ -11,9 +11,12 @@
 <fieldset>
     <h2> Identifiant </h2>
         @Html.HiddenFor(m => Model.AdP.Id)
+        @Html.HiddenFor(m => Model.AdP.EstActive)
+        @Html.HiddenFor(m => Model.AdP.EstEnAttente)
         @Html.HiddenFor(m => Model.AdP.PersonneId)
         @Html.HiddenFor(m => Model.Identifiant.EstAdP)
         @Html.HiddenFor(m => Model.Personne.Id)
+        @Html.HiddenFor(m => Model.Personne.IdentifiantId)
         @Html.HiddenFor(m => Model.Identifiant.Id)
         @Html.HiddenFor(m => Model.Adresse.Id)
     <br />
