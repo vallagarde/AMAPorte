@@ -213,8 +213,10 @@ namespace Projet2.Models.Boutique
             _bddContext.SaveChanges();
 
         }
-        public void CreerCommande(Commande commande)
+        public void CreerCommande(Commande commande, int panierBoutiqueId)
         {
+
+            commande.PanierBoutiqueId = panierBoutiqueId;
             _bddContext.Commande.Add(commande);
             _bddContext.SaveChanges();
 
