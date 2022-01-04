@@ -1,0 +1,72 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+<div class="shadow-sm p-2 mb-5 welcome">
+    <h2>Mes Commandes A Préparer</h2>
+</div>
+
+<!-- Products -->
+<div class="container">
+    @Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+    <div class="row">
+        <div class="col-md-2 menu-rigth">
+            <p>Date <script> document.write(new Date().toLocaleDateString()); </script></p>           
+        </div>
+        <div class="col-md-9">
+            <div class="row row-cols-1 row-cols-md-4 g-5">
+                @Html.HiddenFor(m => @Model.AdP.Id)  
+                <h5>Prochaine Date de Livraison @Model.ReturnDateForDisplayLivraison</h5>
+                @foreach (var commande in @Model.ListeCommandesEnPrep)
+                {
+                var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
+                        <div class="row ">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                    <form method="post" asp-controller="EspaceAdP" asp-action="CommandesAPreparer">
+                                      @Html.HiddenFor(m => @Model.AdP.Id)
+                                      @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
+                                    </form>
+                                    <br/>
+                                    Commande @commande.Id
+                                    </h5>
+                                    <p class="card-text">Date de Commande : @commande.DateCommande</p>
+                                    <p class="card-text">Date de Livraison : @commande.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text">@commande.EtatCommande</p>
+                                    @if(@commande.AdA != null)
+                                    {
+                                    <p class="card-text">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
+                                    }
+                                    @if(@commande.Client != null)
+                                    {
+                                    <p class="card-text">@commande.Client.Prenom @commande.Client.Nom </p>
+                                    }
+                                    @if(@commande.Entreprise != null)
+                                    {
+                                    <p class="card-text">@commande.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div class="row ">
+                                    @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
+                                    {
+                                        
+                                            <div class="card h-100">
+                                                @{
+                                                String filepath = "~/ImageArticle/" + @lignePanierBoutique.Article.Image;
+                                                }
+                                                <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
+                                                    <div class="card-body">
+                                                    <p class="card-text">Id @lignePanierBoutique.Article.Id : @lignePanierBoutique.Article.Nom</p>
+                                                    <p class="card-text">Quantité : @lignePanierBoutique.Quantite</p>
+                                                    <p class="card-text">Stock : @lignePanierBoutique.Article.Stock</p>
+                                                    </div>
+                                            </div>                                    
+                                    }
+                                    </div>
+                                    <p class="card-text">Total : @Total €</p>
+
+                                </div>                       
+                        </div>                    
+                }
+            </div>
+        </div>
+    </div>   
+</div>

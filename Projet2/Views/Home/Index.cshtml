@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 <!--<div class="item-active" style="background-image: url('./Images/fond.jpg'); background-position: center; background-repeat: no-repeat; background-size: cover; background-attachment: fixed;">
@@ -6,6 +7,7 @@
 
 
 
+<div class="container-fluid pt-5">
 
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -14,7 +16,7 @@
             <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner shadow-lg bg-body rounded">
-   
+
             <div class="carousel-item active z-depth-4 flex-center" style="height: 200px">
                 <img src="./Images/mer.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
@@ -46,21 +48,21 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+</div>
+<div class="container p-50 ">
 
-    <div class="container p-50 ">
-
-        <div class="text-center shadow-lg p-3 mb-5 bg-body rounded">
-            <h1 class="display-4">Bienvenue sur AMAPorte</h1>
-            <p>Pour un commerce biologique accessible</p>
-        </div>
-
+    <div class="text-center shadow-lg p-3 mb-5 bg-body rounded">
+        <h1 class="display-4">Bienvenue sur AMAPorte</h1>
+        <p>Pour un commerce biologique accessible</p>
     </div>
+
+</div>
 
 <div class="container-fluid" style=" height: 50px;">
 </div>
 
-    <div class="container-fluid" style=" height: 400px;">
-    </div>
+<div class="container-fluid" style=" height: 400px;">
+</div>
 
 <div class="container-fluid" style=" height: 600px;">
     <h2>Nos valeurs </h2>
@@ -68,59 +70,34 @@
     </ul>
 </div>
 
-    <div class="container-fluid" style=" height: 400px;">
+<div class="container-fluid" style=" height: 400px;">
 </div>
 <div class=" container-fluid">
     <h1 id="producteurs">Nos producteurs en Vedette</h1>
-    <div class="container-cardscontainer">
-        <div class="container-cardcontainer">
-            <div class="card">
-                <div class="contentleft">
-                    <h2>Thierry</h2>
-                    <p>La description de Thierry et sa production</p>
-                    <a href="#">Lien vers la page de Thierry</a>
-                </div>
-                <img src="~/Images/Thierry.png" />
-            </div>
-        </div>
-        <div class="container-cardcontainer">
-            <div class="card">
-                <div class="contentright">
-                    <h2>Thierry</h2>
-                    <p>La description de Thierry et sa production</p>
-                    <a href="#">Lien vers la page de Thierry</a>
-                </div>
-                <img src="~/Images/Thierry.png" />
-            </div>
+
+    <div class="containers d-flex align-items-center justify-content-center flex-wrap">
+        <div class="row row-cols-sm-1 row-cols-md-2 row-cols-xl-4 g-5">
+            @foreach (Projet2.Models.Compte.AdP adp in Model.ListeComptesAdP)
+            {
+
+                    <div class="box">
+                        <div class="body">
+                            <div class="imgContainer"> <img src="~/Images/Thierry.png" /></div>
+                            <div class="content d-flex flex-column align-items-center justify-content-center">
+                                <div>
+                                    <h3 class="text-white fs-5">@adp.NomProducteur</h3>
+                                    <p class="fs-6 text-white">@adp.Description</p>
+                                    <a type ="button" href="#">Lien vers la page de Thierry</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            }
         </div>
     </div>
-
-    <div class="container-cardscontainer">
-        <div class="container-cardcontainer">
-            <div class="card">
-                <div class="contentleft">
-                    <h2>Thierry</h2>
-                    <p>La description de Thierry et sa production</p>
-                    <a href="#">Lien vers la page de Thierry</a>
-                </div>
-                <img src="~/Images/Thierry.png" />
-            </div>
-        </div>
-        <div class="container-cardcontainer">
-            <div class="card">
-                <div class="contentright">
-                    <h2>Thierry</h2>
-                    <p>La description de Thierry et sa production</p>
-                    <a href="#">Lien vers la page de Thierry</a>
-                </div>
-                <img src="~/Images/Thierry.png" />
-            </div>
-        </div>
+    <div class="container-fluid" style=" height: 400px;">
     </div>
-</div>
-
-        <div class="container-fluid" style=" height: 400px;">
-        </div>
     <div class="container pt-20 pb-200">
         <div class="row">
             <div class="col-md-5">
@@ -131,12 +108,48 @@
         </div>
     </div>
 
-        <div class="container-fluid" style=" height: 400px;">
-        </div>
+    <div class="container-fluid" style=" height: 400px;">
+    </div>
     <div class="container">
         <h2>Boutique</h2>
         <ul>
         </ul>
     </div>
+</div>
+<div class="container-cardscontainer">
+    <div class="container-cardcontainer">
+        <div class="card">
+            <div class="contentleft">
+                <h2>Thierry</h2>
+                <p>La description de Thierry et sa production</p>
+                <a href="#">Lien vers la page de Thierry</a>
+            </div>
+            <img src="~/Images/Thierry.png" />
+        </div>
+    </div>
+    <div class="container-cardcontainer">
+        <div class="card">
+            <div class="contentright">
+                <h2>Thierry</h2>
+                <p>La description de Thierry et sa production</p>
+                <a href="#">Lien vers la page de Thierry</a>
+            </div>
+            <img src="~/Images/Thierry.png" />
+        </div>
+    </div>
+</div>
 
-    <!-- </div> -->
+<div class="container-cardscontainer">
+    <div class="container-cardcontainer">
+        <div class="card">
+            <div class="contentleft">
+                <h2>Thierry</h2>
+                <p>La description de Thierry et sa production</p>
+                <a href="#">Lien vers la page de Thierry</a>
+            </div>
+            <img src="~/Images/Thierry.png" />
+        </div>
+    </div>
+
+</div>
+<!-- </div> -->

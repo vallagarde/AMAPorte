@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Projet2.Helpers;
+using Projet2.Models.Compte;
 
 namespace Projet2.Models.Boutique
 {
@@ -35,10 +36,10 @@ namespace Projet2.Models.Boutique
         }
 
 
-        public int CreerLigne(int quantite, int ArticleId, decimal sousTotal)
+        public int CreerLigne(int quantite, int ArticleId, decimal sousTotal, int panierId)
         {
             
-            LignePanierBoutique ligne = new LignePanierBoutique() { ArticleId=ArticleId, Quantite=quantite, SousTotal=sousTotal };
+            LignePanierBoutique ligne = new LignePanierBoutique() { ArticleId=ArticleId, Quantite=quantite, SousTotal=sousTotal, PanierBoutiqueId = panierId };
             _bddContext.LignePanierBoutique.Add(ligne);
             _bddContext.SaveChanges();
             return ligne.Id;
@@ -67,13 +68,13 @@ namespace Projet2.Models.Boutique
 
             if (list.Count == 0)
             {
-                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC);
+                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC, PanierId);
 
             }
             else
             {
                 LignePanierBoutique ligne = _bddContext.LignePanierBoutique.Where(a => a.ArticleId == ArticleId).Where(c => c.PanierBoutiqueId == PanierId).FirstOrDefault();
-                ligneId = ModifierLigneRelatif(ligne.Id ,quantite,article, quantite * article.PrixTTC);
+                ligneId = ModifierLigneRelatif(ligne.Id ,quantite,article, quantite * article.PrixTTC, PanierId);
             }
             //LignePanierBoutique ligne = _bddContext.LignePanierBoutique.
             LignePanierBoutique ligneFinal = _bddContext.LignePanierBoutique.Find(ligneId);
@@ -93,8 +94,7 @@ namespace Projet2.Models.Boutique
 
             if (list.Count == 0)
             {
-                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC);
-
+                ligneId = CreerLigne(quantite, ArticleId, quantite * article.PrixTTC, PanierId);
             }
             else
             {
@@ -113,10 +113,10 @@ namespace Projet2.Models.Boutique
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _bddContext.Dispose();
         }
 
-        public int ModifierLigneRelatif(int id, int quantite, Article article, decimal sousTotal)
+        public int ModifierLigneRelatif(int id, int quantite, Article article, decimal sousTotal, int panierId)
         {
             LignePanierBoutique ligne = _bddContext.LignePanierBoutique.Find(id);
 
@@ -126,7 +126,7 @@ namespace Projet2.Models.Boutique
                 ligne.Id = id;
                 ligne.Quantite += quantite ;
                 ligne.SousTotal += sousTotal;
-
+                ligne.PanierBoutiqueId = panierId;
                 _bddContext.SaveChanges();
             }
 
@@ -208,7 +208,7 @@ namespace Projet2.Models.Boutique
             panier.Total = 0;
             foreach (LignePanierBoutique ligne in lignes)
             {
-                panier.Total += ligne.SousTotal;
+                panier.Total += Decimal.Round(ligne.SousTotal, 2);
             }
             _bddContext.SaveChanges();
 
@@ -217,6 +217,204 @@ namespace Projet2.Models.Boutique
         {
             _bddContext.Commande.Add(commande);
             _bddContext.SaveChanges();
+
+        }
+
+        public List<Commande> ObtenirCommandesParAdA(AdA ada)
+        {
+            var queryCommande = from commande in _bddContext.Commande where commande.AdAId == ada.Id select commande;
+            var commandesAdA = queryCommande.ToList();
+            foreach (Commande commande in commandesAdA)
+            {
+                var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
+                var lignes = queryLignePanierBoutique.ToList();
+                foreach (LignePanierBoutique lignePanierBoutique in lignes)
+                {
+                    var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                    lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                    lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+                }
+                ada.CommandesBoutiqueEffectues.Add(commande);
+            }
+            return ada.CommandesBoutiqueEffectues;
+        }
+
+        public List<Commande> ObtenirCommandesParEntreprise(Entreprise entreprise)
+        {
+            var queryCommande = from commande in _bddContext.Commande where commande.EntrepriseId == entreprise.Id select commande;
+            var commandesCE = queryCommande.ToList();
+            foreach (Commande commande in commandesCE)
+            {
+                var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
+                var lignes = queryLignePanierBoutique.ToList();
+                foreach (LignePanierBoutique lignePanierBoutique in lignes)
+                {
+                    var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                    lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                    lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+                }
+                entreprise.CommandesBoutiqueEffectues.Add(commande);
+            }
+            return entreprise.CommandesBoutiqueEffectues;
+        }
+
+        public void ChangerEtatCommande(int panierId, string etat)
+        {
+            var queryCommande = from c in _bddContext.Commande where c.PanierBoutiqueId == panierId select c;
+            Commande commande = queryCommande.FirstOrDefault();
+            commande.EtatCommande = "";
+            commande.EstEnPreparation = false;
+            commande.EstEnLivraison = false;
+            commande.EstARecuperer = false;
+            commande.EstLivre = false;
+            commande.EtatCommande = etat;
+            _bddContext.Update(commande);
+            _bddContext.SaveChanges();
+        }
+
+        public List<Commande> ObtenirToutesCommandes()
+        {
+            List<Commande> commandes = _bddContext.Commande.ToList();
+            foreach (Commande commande in commandes)
+            {
+                var queryAdA = from ada in _bddContext.AdAs where ada.Id == commande.AdAId select ada;
+                commande.AdA = queryAdA.FirstOrDefault();
+                if(commande.AdA != null)
+                {
+                    var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
+                    commande.AdA.Personne = queryPersonne.FirstOrDefault();
+                    var queryAdresseP = from adresse in _bddContext.Adresses where adresse.Id == commande.AdA.Personne.AdresseId select adresse;
+                    commande.AdA.Personne.Adresse = queryAdresseP.FirstOrDefault();
+                }
+
+                var queryCCE = from entreprise in _bddContext.Entreprises where entreprise.Id == commande.EntrepriseId select entreprise;
+                commande.Entreprise = queryCCE.FirstOrDefault();
+                if(commande.Entreprise != null)
+                {
+                    var queryAdresseE = from adresse in _bddContext.Adresses where adresse.Id == commande.Entreprise.AdresseId select adresse;
+                    commande.Entreprise.Adresse = queryAdresseE.FirstOrDefault();
+                }
+
+                var queryClient = from client in _bddContext.Clients where client.Id == commande.ClientId select client;
+                commande.Client = queryClient.FirstOrDefault();
+                if (commande.Client != null)
+                {
+                    var queryAdresseC = from adresse in _bddContext.Adresses where adresse.Id == commande.Client.AdresseId select adresse;
+                    commande.Client.Adresse = queryAdresseC.FirstOrDefault();
+                }
+                var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+                
+                var queryLignePanierBoutique = from lignePanierBoutique in _bddContext.LignePanierBoutique where lignePanierBoutique.PanierBoutiqueId == commande.PanierBoutique.Id select lignePanierBoutique;
+                var lignes = queryLignePanierBoutique.ToList();
+                foreach (LignePanierBoutique lignePanierBoutique in lignes)
+                {
+                    var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                    lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    var queryAdP = from adp in _bddContext.AdPs where adp.Id == lignePanierBoutique.Article.AdPId select adp;
+                    lignePanierBoutique.Article.AdP = queryAdP.FirstOrDefault();
+                    var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                    lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+                }               
+            }
+            return commandes;
+        }
+
+        public List<Commande> ObtenirCommandesAdP(int adpId)
+        {
+            List<Commande> commandes = new List<Commande>();
+
+            var queryLignes = from ligne in _bddContext.LignePanierBoutique where ligne.Article.AdPId == adpId select ligne;
+            List<LignePanierBoutique> lignes = queryLignes.ToList();
+            foreach (LignePanierBoutique lignePanierBoutique in lignes)
+            {
+                var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
+                lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                var queryAdP = from adp in _bddContext.AdPs where adp.Id == adpId select adp;
+                lignePanierBoutique.Article.AdP = queryAdP.FirstOrDefault();
+                var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
+                lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
+
+                var queryCommande = from c in _bddContext.Commande where c.PanierBoutiqueId == lignePanierBoutique.PanierBoutiqueId select c;
+                List<Commande> ligneCommande = queryCommande.ToList();
+
+                foreach (Commande commande in ligneCommande)
+                {
+                    var queryAdA = from ada in _bddContext.AdAs where ada.Id == commande.AdAId select ada;
+                    commande.AdA = queryAdA.FirstOrDefault();
+                    if (commande.AdA != null)
+                    {
+                        var queryPersonne = from personne in _bddContext.Personnes where personne.Id == commande.AdA.PersonneId select personne;
+                        commande.AdA.Personne = queryPersonne.FirstOrDefault();
+                        var queryAdresseP = from adresse in _bddContext.Adresses where adresse.Id == commande.AdA.Personne.AdresseId select adresse;
+                        commande.AdA.Personne.Adresse = queryAdresseP.FirstOrDefault();
+                    }
+
+                    var queryCCE = from entreprise in _bddContext.Entreprises where entreprise.Id == commande.EntrepriseId select entreprise;
+                    commande.Entreprise = queryCCE.FirstOrDefault();
+                    if (commande.Entreprise != null)
+                    {
+                        var queryAdresseE = from adresse in _bddContext.Adresses where adresse.Id == commande.Entreprise.AdresseId select adresse;
+                        commande.Entreprise.Adresse = queryAdresseE.FirstOrDefault();
+                    }
+
+                    var queryClient = from client in _bddContext.Clients where client.Id == commande.ClientId select client;
+                    commande.Client = queryClient.FirstOrDefault();
+                    if (commande.Client != null)
+                    {
+                        var queryAdresseC = from adresse in _bddContext.Adresses where adresse.Id == commande.Client.AdresseId select adresse;
+                        commande.Client.Adresse = queryAdresseC.FirstOrDefault();
+                    }
+
+                    var queryPanierBoutique = from panierBoutique in _bddContext.PanierBoutique where panierBoutique.Id == commande.PanierBoutiqueId select panierBoutique;
+                    commande.PanierBoutique = queryPanierBoutique.FirstOrDefault();
+
+                    bool alreadyExist = commandes.Contains(commande);
+                    if(!alreadyExist) commandes.Add(commande);
+                }
+            }
+            return commandes;
+        }
+
+        public void DeduireDuStock(PanierBoutique panierBoutique)
+        {
+            
+            foreach (LignePanierBoutique ligne in panierBoutique.LignePanierBoutiques)
+            {
+              
+                int quantite = ligne.Quantite;
+                int stock = ligne.Article.Stock;
+                int articleId = ligne.ArticleId;
+                Article article = ObtientArticle(articleId);
+
+                int nouveauStock = stock - quantite;
+                article.Stock = nouveauStock;
+                _bddContext.SaveChanges();
+
+            }
+        }
+
+
+
+        public int ArticlesPlusEnStock(PanierBoutique panier)
+        {
+            int articleid = 0;
+            foreach(LignePanierBoutique ligne in panier.LignePanierBoutiques)
+            {
+                if(ligne.Article.Stock < ligne.Quantite)
+                {
+                    articleid = ligne.ArticleId;
+                    break;
+                }
+            }
+
+            return articleid;
 
         }
     }

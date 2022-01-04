@@ -158,10 +158,49 @@ namespace Projet2.Models.Compte
             }
         }
 
+        public void AjouterPhoto(string image, int identifiantId)
+        {
+            Identifiant identifiant = _bddContext.Identifiants.Find(identifiantId);
+            if (identifiant.EstAdA)
+            {
+                AdA ada = ObtenirAdAParId(identifiantId);
+                ada.Image = image; 
+                _bddContext.AdAs.Update(ada);
+                _bddContext.SaveChanges();
+            }
+            //else if (identifiant.EstAdP)
+            //{
+            //    AdP adp = ObtenirAdPParId(identifiantId);
+            //    adp.Image = image;
+            //    _bddContext.AdPs.Update(adp);
+            //}
+            //else if (identifiant.EstCE)
+            //{
+            //    ContactComiteEntreprise ce = ObtenirCCEParId(identifiantId);
+            //    ce.Image = image;
+            //    _bddContext.ContactComiteEntreprises.Update(ce);
+            //}
+        }
+
         //Obtenir AdP
         public List<AdP> ObtenirTousLesAdPs()
         {
             List<AdP> AdPList = _bddContext.AdPs.ToList();
+            foreach (AdP adp in AdPList)
+            {
+                var queryPersonne = from personne in _bddContext.Personnes where personne.Id == adp.PersonneId select personne;
+                adp.Personne = queryPersonne.First();
+                var queryAdresse = from adresse in _bddContext.Adresses where adresse.Id == adp.Personne.AdresseId select adresse;
+                var queryIdentifiant = from identifiant in _bddContext.Identifiants where identifiant.Id == adp.Personne.IdentifiantId select identifiant;
+                adp.Personne.Adresse = queryAdresse.First();
+                adp.Personne.Identifiant = queryIdentifiant.First();
+            }
+            return AdPList;
+        }
+
+        public List<AdP> ObtenirAdPsVedettes()
+        {
+            List<AdP> AdPList = _bddContext.AdPs.Where(c => (c.Vedette == true)).ToList();
             foreach (AdP adp in AdPList)
             {
                 var queryPersonne = from personne in _bddContext.Personnes where personne.Id == adp.PersonneId select personne;
@@ -207,8 +246,14 @@ namespace Projet2.Models.Compte
             return null;
         }
 
-            //Fonctions AdP
-            public AdP CreerAdP(Personne personne, Adresse adresse, AdP adp)
+
+        public List<AdP> ObtenirAdPParNom(String nom)
+        {
+            List<AdP> list = ObtenirTousLesAdPs().FindAll(x => x.NomProducteur.ToLower().Contains(nom.ToLower())); ;
+            return list;
+        }
+        //Fonctions AdP
+        public AdP CreerAdP(Personne personne, Adresse adresse, AdP adp)
         {
             personne.Adresse = adresse;
             CreerAdresse(adresse);
@@ -223,6 +268,10 @@ namespace Projet2.Models.Compte
         {
             if (adpAModifier.Id != 0)
             {
+                if (adpAModifier.EstEnAttente)
+                {
+                    adpAModifier.EstEnAttente = false;
+                }
                 _bddContext.AdPs.Update(adpAModifier);
                 _bddContext.SaveChanges();
                 return adpAModifier;
@@ -244,9 +293,31 @@ namespace Projet2.Models.Compte
             }
         }
 
+        public void ValidationAdP(AdP adp)
+        {
+            AdP adpAValider = (from a in _bddContext.AdPs where a.Id == adp.Id select a).FirstOrDefault();
 
-        //Obtenir CE
-        public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
+            if (adp.EstActive)
+            {
+                adpAValider.EstActive = true;
+                _bddContext.Update(adpAValider);
+                _bddContext.SaveChanges();
+            }
+            else
+            {
+                adpAValider.AdminCommentaire = adp.AdminCommentaire;
+                adpAValider.EstEnAttente = true;
+                _bddContext.Update(adpAValider);
+                _bddContext.SaveChanges();
+            }
+
+        }
+
+            
+
+
+//Obtenir CE
+public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
         {
             List<ContactComiteEntreprise> CCEList = _bddContext.ContactComiteEntreprises.ToList();
             foreach (ContactComiteEntreprise cce in CCEList)
@@ -502,6 +573,18 @@ namespace Projet2.Models.Compte
             return identifiant.Id;
         }
 
+        public bool TrouverIdentifiant(Identifiant identifiant)
+        {
+            bool adresseExistante = false;
+            Identifiant identifiantExistant = (from i in _bddContext.Identifiants where i.AdresseMail == identifiant.AdresseMail select i).FirstOrDefault();
+            if (identifiantExistant != null)
+            {
+                adresseExistante = true;
+                return adresseExistante;
+            }
+            return adresseExistante;
+        }
+
         public Identifiant ModifierIdentifiant(Identifiant identifiant)
         {
             if (identifiant.Id != 0)
@@ -511,6 +594,14 @@ namespace Projet2.Models.Compte
                 this._bddContext.Identifiants.Update(identifiant);
                 this._bddContext.SaveChanges();
                 return identifiant;
+            }
+            else
+            {
+                Identifiant identifiantExistant = (from i in _bddContext.Identifiants where i.AdresseMail == identifiant.AdresseMail select i).FirstOrDefault();
+                string motDePasse = EncodeMD5(identifiant.MotDePasse);
+                identifiant.MotDePasse = motDePasse;
+                this._bddContext.Identifiants.Update(identifiant);
+                this._bddContext.SaveChanges();
             }
             return identifiant;
         }

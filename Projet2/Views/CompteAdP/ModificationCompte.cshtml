@@ -1,36 +1,30 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 @{
-    Layout = null;
+    
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Modifier Compte</title>
-</head>
-<body> 
-<h1>Formulaire Modification Adhérent Producteur : </h1>
+
+<h1>Modifier Mon Compte</h1>
 
     @using (Html.BeginForm())
     {
 <fieldset>
     <h2> Identifiant </h2>
         @Html.HiddenFor(m => Model.AdP.Id)
+        @Html.HiddenFor(m => Model.AdP.EstActive)
+        @Html.HiddenFor(m => Model.AdP.EstEnAttente)
+        @Html.HiddenFor(m => Model.AdP.PersonneId)
         @Html.HiddenFor(m => Model.Identifiant.EstAdP)
         @Html.HiddenFor(m => Model.Personne.Id)
+        @Html.HiddenFor(m => Model.Personne.IdentifiantId)
         @Html.HiddenFor(m => Model.Identifiant.Id)
         @Html.HiddenFor(m => Model.Adresse.Id)
     <br />
-        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
-        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
-        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+        @Model.Identifiant.AdresseMail
     <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {Value=@Model.Identifiant.MotDePasse})
-        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+        @Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.AdP.Id)
     <br />
-    <h2> Production </h2>
+    <h2>  Mes Données sur la Production </h2>
     <br />
         @Html.LabelFor(m => Model.AdP.NomProducteur) :
         @Html.TextBoxFor(m => Model.AdP.NomProducteur)
@@ -41,7 +35,7 @@
         @Html.LabelFor(m => Model.AdP.Siren) :
         @Html.TextBoxFor(m => Model.AdP.Siren)
     <br />
-    <h2> Personne </h2>
+    <h2> Mes Données personnelles </h2>
     <br />
         @Html.LabelFor(m => Model.Personne.Nom) :
         @Html.TextBoxFor(m => Model.Personne.Nom)
@@ -67,12 +61,6 @@
         @Html.LabelFor(m => Model.Adresse.Ville) :
         @Html.TextBoxFor(m => Model.Adresse.Ville)
      <br />
-        @Html.LabelFor(m => Model.Adresse.Pays) :
-        @Html.TextBoxFor(m => Model.Adresse.Pays)
-     <br />
-     
-        @* Paiement en :
-        @Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) *@
 </fieldset>
      <br />
         <input type="submit" value="Modification" />
@@ -80,9 +68,5 @@
 
     <br /><br />  
     <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAda", @Model.AdP)
+    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdP", @Model.AdP)
     </div>
-
-
-</body>
-</html>

@@ -6,22 +6,20 @@ using System.Collections.Generic;
 using Xunit;
 using System;
 using System.Security.Claims;
+using Projet2.Models.Calendriers;
 
 namespace Test
 {
     public class UnitTest1
     {
+      
         [Fact]
-        public void Creation_BaseDeDonnees()
+        public void Creation_Comptes_PourBaseDeDonnees()
         {
-            using (BddContext ctx = new BddContext())
-            {
+                using BddContext ctx = new BddContext();
                 ctx.InitializeDb();
-            }
 
-            
-
-            using (CompteServices cs = new CompteServices())
+                using (CompteServices cs = new CompteServices())
             {
                 //AdAs
                 Identifiant identifiant1 = new Identifiant()
@@ -34,9 +32,9 @@ namespace Test
                 int id = cs.AjouterIdentifiant(identifiant1);
 
                 var userClaims = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id.ToString()),
+                            };
 
                 var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
@@ -59,7 +57,6 @@ namespace Test
                     Voie = "Rue de la République",
                     Ville = "Paris",
                     CodePostal = 75010,
-                    Pays = "France"
                 };
                 AdA adA1 = new AdA();
                 cs.CreerAdA(personne1, adresse1, adA1);
@@ -74,9 +71,9 @@ namespace Test
                 int id2 = cs.AjouterIdentifiant(identifiant2);
 
                 var userClaims2 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity2 = new ClaimsIdentity(userClaims2, "User Identity");
 
@@ -99,7 +96,6 @@ namespace Test
                     Voie = "Rue des Petits Ecureuils",
                     Ville = "Levroux",
                     CodePostal = 36110,
-                    Pays = "France"
                 };
                 AdA adA2 = new AdA();
                 cs.CreerAdA(personne2, adresse2, adA2);
@@ -116,9 +112,9 @@ namespace Test
                 int id3 = cs.AjouterIdentifiant(identifiant3);
 
                 var userClaims3 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity3 = new ClaimsIdentity(userClaims3, "User Identity");
 
@@ -141,7 +137,6 @@ namespace Test
                     Voie = "Avenue des Fruits",
                     Ville = "Brion",
                     CodePostal = 36110,
-                    Pays = "France"
                 };
                 AdP adP1 = new AdP()
                 {
@@ -162,9 +157,9 @@ namespace Test
                 int id4 = cs.AjouterIdentifiant(identifiant4);
 
                 var userClaims4 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity4 = new ClaimsIdentity(userClaims4, "User Identity");
 
@@ -187,7 +182,6 @@ namespace Test
                     Voie = "La Garenne",
                     Ville = "Levroux",
                     CodePostal = 36110,
-                    Pays = "France"
                 };
                 AdP adP2 = new AdP()
                 {
@@ -210,9 +204,9 @@ namespace Test
                 int id5 = cs.AjouterIdentifiant(identifiant5);
 
                 var userClaims5 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id2.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id2.ToString()),
+                            };
 
                 var ClaimIdentity5 = new ClaimsIdentity(userClaims5, "User Identity");
 
@@ -231,7 +225,6 @@ namespace Test
                     Voie = "La Croix Chevalier",
                     Ville = "Vineuil",
                     CodePostal = 36110,
-                    Pays = "France"
                 };
 
                 ContactComiteEntreprise contactComiteEntreprise1 = new ContactComiteEntreprise()
@@ -256,9 +249,9 @@ namespace Test
                 int id6 = cs.AjouterIdentifiant(identifiant6);
 
                 var userClaims6 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id6.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id6.ToString()),
+                            };
 
                 var ClaimIdentity6 = new ClaimsIdentity(userClaims6, "User Identity");
 
@@ -277,14 +270,13 @@ namespace Test
                     Voie = "La Garenne",
                     Ville = "Levroux",
                     CodePostal = 36110,
-                    Pays = "France"
                 };
                 ContactComiteEntreprise contactComiteEntreprise2 = new ContactComiteEntreprise()
                 {
                     Identifiant = identifiant6,
                     Nom = "Normand",
                     Prenom = "Noël",
-                    AdresseMail = identifiant5.AdresseMail,
+                    AdresseMail = identifiant6.AdresseMail,
                     NTelephone = 1234567890,
                     EstCE = true
                 };
@@ -301,9 +293,9 @@ namespace Test
                 int id7 = cs.AjouterIdentifiant(identifiant7);
 
                 var userClaims7 = new List<Claim>()
-                        {
-                            new Claim(ClaimTypes.Name, id7.ToString()),
-                        };
+                            {
+                                new Claim(ClaimTypes.Name, id7.ToString()),
+                            };
 
                 var ClaimIdentity7 = new ClaimsIdentity(userClaims7, "User Identity");
 
@@ -319,6 +311,7 @@ namespace Test
 
             using (PanierSaisonnierService pss = new PanierSaisonnierService())
             {
+
 
                 PanierSaisonnier panierSaisonnier1 = new PanierSaisonnier()
                 {
@@ -404,7 +397,7 @@ namespace Test
                     Stock = 2,
                     PrixTTC = 9.5m,
                     Image = "onion.jpg",
-                    AdPId = 2
+                    AdPId = 1
                 };
                 ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
 
@@ -416,17 +409,197 @@ namespace Test
                     Stock = 6,
                     PrixTTC = 5.5m,
                     Image = "pommes.jpg",
+                    AdPId = 1
+                };
+                ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
+
+                Article article5 = new Article()
+                {
+                    Nom = "Miel",
+                    Description = "Miels de crus, pollen frais, gelée royale, propolis.",
+                    Prix = 7.9m,
+                    Stock = 2,
+                    PrixTTC = 9.5m,
+                    Image = "onion.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
+
+                Article article6 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 2.9m,
+                    Stock = 6,
+                    PrixTTC = 5.5m,
+                    Image = "pommes.jpg",
                     AdPId = 2
                 };
                 ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
+
+                Article article7 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 2.9m,
+                    Stock = 6,
+                    PrixTTC = 5.5m,
+                    Image = "pommes.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
+
+                Article article8 = new Article()
+                {
+                    Nom = "Confiture de Framboises",
+                    Description = "Somptueuse, estivale et parfumée.",
+                    Prix = 2.9m,
+                    Stock = 6,
+                    PrixTTC = 5.5m,
+                    Image = "pommes.jpg",
+                    AdPId = 2
+                };
+                ar.CreerArticle(article6.Nom, article6.Description, (int)article6.Prix, article6.Stock, (int)article6.PrixTTC, article6.Image, article6.AdPId);
+
+
+            //Commandes
+
+                    PanierBoutique panierBoutique1 = new PanierBoutique()
+                    {
+                        Total = 30m
+                    };
+                    ctx.PanierBoutique.Add(panierBoutique1);
+                    ctx.SaveChanges();
+
+                    PanierBoutique panierBoutique2 = new PanierBoutique()
+                    {
+                        //Total = LignePanierBoutique3.SousTotal + LignePanierBoutique4.SousTotal
+                        Total = 30m
+                    };
+                    ctx.PanierBoutique.Add(panierBoutique2);
+                    ctx.SaveChanges();
+
+                    PanierBoutique panierBoutique3 = new PanierBoutique()
+                    {
+                        Total = 30m
+                    };
+                    ctx.PanierBoutique.Add(panierBoutique3);
+                    ctx.SaveChanges();
+
+
+                    LignePanierBoutique LignePanierBoutique1 = new LignePanierBoutique()
+                    {
+                        Article = article,
+                        Quantite = 2,
+                        SousTotal = article.PrixTTC * 3,
+                        PanierBoutiqueId = 1
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique1);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique2 = new LignePanierBoutique()
+                    {
+                        Article = article2,
+                        Quantite = 3,
+                        SousTotal = article2.PrixTTC * 3,
+                        PanierBoutiqueId = 1
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique2);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique3 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 2
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique3);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique4 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 2
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique4);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique5 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 3
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique5);
+                    ctx.SaveChanges();
+
+                    LignePanierBoutique LignePanierBoutique6 = new LignePanierBoutique()
+                    {
+                        Article = article3,
+                        Quantite = 4,
+                        SousTotal = article3.PrixTTC * 4,
+                        PanierBoutiqueId = 3
+                    };
+                    ctx.LignePanierBoutique.Add(LignePanierBoutique6);
+                    ctx.SaveChanges();
+
+
+
+
+                    Client client = new Client()
+                        {
+                            Id = 1,
+                            Nom = "Client",
+                            Prenom = "Clint",
+                            DateNaissance = new DateTime(1980, 02, 05),
+                            NTelephone = 1234567890,
+                            AdresseId = 1,
+                            EstEnAccord = true
+                        };
+                        ctx.Clients.Add(client);
+                        ctx.SaveChanges();
+
+                CalendrierService calendrier = new CalendrierService();
+
+                    Commande commande1 = new Commande()
+                        {
+                            PanierBoutique = panierBoutique1,
+                            DateCommande = DateTime.Today,
+                            AdAId = 1,
+                            EstEnPreparation = true,
+                        };
+                    ctx.Commande.Add(commande1);
+                    ctx.SaveChanges();
+
+                    Commande commande2 = new Commande()
+                        {
+                            PanierBoutique = panierBoutique2,
+                            DateCommande = DateTime.Today,
+                            EntrepriseId = 1,
+                            EstARecuperer = true,
+                        };
+                    ctx.Commande.Add(commande2);
+                    ctx.SaveChanges();
+
+                    Commande commande3 = new Commande()
+                        {
+                            PanierBoutique = panierBoutique3,
+                            DateCommande = DateTime.Today,
+                            ClientId = 1,
+                            EstEnLivraison = true,
+                        };
+                    ctx.Commande.Add(commande3);
+                    ctx.SaveChanges();
+
+                    calendrier.AjouterLigneCalendrierCommande(commande1);
+                    calendrier.AjouterLigneCalendrierCommande(commande2);
+                    calendrier.AjouterLigneCalendrierCommande(commande3);
+
             }
-
-
-
-
         }
-
-
-
     }
 }

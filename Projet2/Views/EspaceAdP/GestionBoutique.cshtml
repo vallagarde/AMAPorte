@@ -1,20 +1,10 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    ViewData["Title"] = "Boutique";
-}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Assortiment</title>
-</head>
-<body> 
 
 <div class="shadow-sm p-2 mb-5 welcome">
     <h2>Mon Assortiment en Boutique</h2>
 </div>
-
+@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
 <!-- Products -->
 <div class="container">
     
@@ -24,10 +14,14 @@
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
+                
                 @foreach (var article in @Model.AdP.Assortiment)
                 {
-                    <div class="col ">
+                    @if (!@article.EstValide && @article.EstEnAttente)
+                    {
+                        <div class="col ">
                         <div class="card h-100">
+                            <h5 class="card-title" color="red">A modifier</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -35,15 +29,78 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
-                                @Html.ActionLink("Voir article", "ArticleModification", "EspaceAdP", @article)
+                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
+                                <p class="card-text">@article.Stock</p>
+                                <p class="card-text">@article.DateInscription</p>
+                                    @if(@article.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                    }                                  
+                                <p class="card-text">Commentaire : @article.AdminCommentaire</p>
+                                @Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)
                             </div>
                         </div>
-                    </div>
+                        </div>                        
+                    }                   
                 }
-            </div>
+                
+                @foreach (var article in @Model.AdP.Assortiment)
+                {
+                    @if (@article.EstValide)
+                    {
+                        <div class="col ">
+                            
+                        <div class="card h-100">
+                            <h5 class="card-title">En boutique</h5>
+                            @{
+                                String filepath = "~/ImageArticle/" + @article.Image;
+                            }
+                            <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">@article.Nom</h5>
+                                <p class="card-text">@article.Description</p>
+                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
+                                <p class="card-text">@article.Stock</p>
+                                <p class="card-text">@article.DateInscription</p>
+                                @if(@article.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                    } 
+                                @Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)
+                            </div>
+                        </div>
+                        </div>                        
+                    }                   
+                }
+                
+                @foreach (var article in @Model.AdP.Assortiment)
+                {
+                    @if (!@article.EstValide && !@article.EstEnAttente)
+                    {
+                        
+                        <div class="col ">
+                        <div class="card h-100">
+                        <h5 class="card-title"> En attente</h5>
+                            @{
+                                String filepath = "~/ImageArticle/" + @article.Image;
+                            }
+                            <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..." />
+                            <div class="card-body">
+                                <h5 class="card-title">@article.Nom</h5>
+                                <p class="card-text">@article.Description</p>
+                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
+                                <p class="card-text">@article.Stock</p>
+                                <p class="card-text">@article.DateInscription</p>
+                                @if(@article.DateModification != null)
+                                    {
+                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                    } 
+                            </div>
+                        </div>
+                        </div>                        
+                    }                   
+                }
+            </div>            
         </div>
     </div>   
 </div>
-
-</body>
-</html>

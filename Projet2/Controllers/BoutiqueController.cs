@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace Projet2.Controllers
 
 
         // GET: /<controller>/
+        [Authorize]
         public IActionResult AjouterArticle()
         {
             HomeViewModel hvm = new HomeViewModel
@@ -37,7 +39,7 @@ namespace Projet2.Controllers
 
         }
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult AjouterArticle(string nom, string description, int prix, int stock, int prixTTC, IFormFile FileToUpload)
         {
@@ -82,44 +84,16 @@ namespace Projet2.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult ModifierArticle(int id)
-        {
-            ArticleRessources ctx = new ArticleRessources();
-            Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
-
-            HomeViewModel hvm = new HomeViewModel
-            {
-                Article = article,
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
-
-            };
-
-
-            return View(hvm);
-
-        }
-
-        [HttpPost]
-        public IActionResult ModifierArticle(int id, string nom, string description, decimal prix, int stock, decimal prixTTC, AdP adp)
-        {
-            ArticleRessources ctx = new ArticleRessources();
-            ctx.ModifierArticle(id, nom, description, prix, stock, prixTTC, adp.Id);
-
-            return RedirectToAction("ModifierArticle", new { @Id = id });
-
-        }
-
-        
 
         public IActionResult AfficherBoutique()
         {
             ArticleRessources ctx = new ArticleRessources();
+            CompteServices csc = new CompteServices();
             List<Article> articles = ctx.ObtientTousLesArticles();
 
             HomeViewModel hvm = new HomeViewModel
             {
-
+                ListeComptesAdP = csc.ObtenirTousLesAdPs(),
                 Boutiques = new Boutiques() { Articles = articles, NombreArticle = articles.Count },
                 PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
@@ -128,21 +102,74 @@ namespace Projet2.Controllers
 
         }
         [HttpPost]
-        public IActionResult AfficherBoutique(String recherche)
+        public IActionResult AfficherBoutique(String recherche, String rechercheAdP)
         {
             ArticleRessources ctx = new ArticleRessources();
+            CompteServices csc = new CompteServices();
             List<Article> articles = ctx.ObtientTousLesArticles();
+            List<Article>  articles2 = articles;
+            List<Article> articles3 = new List<Article>();
+            List<AdP> listAdP = null;
 
-            List<Article> articles2 = articles.FindAll(x => x.Nom.Contains(recherche));
-
-            HomeViewModel hvm = new HomeViewModel
+            if (recherche==null && rechercheAdP == null)
             {
+                return RedirectToAction("AfficherBoutique");
+            }
+            else
+            {
+                if (rechercheAdP != null)
+                {
 
-                Boutiques = new Boutiques() { Articles = articles2, NombreArticle = articles2.Count },
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+                    listAdP = csc.ObtenirAdPParNom(rechercheAdP);
+                }
 
-            };
-            return View(hvm);
+                if (recherche != null)
+                {
+                    articles2 = articles.FindAll(x => x.Nom.ToLower().Contains(recherche.ToLower()));
+
+                    if (listAdP != null)
+                    {
+                        foreach (AdP adp in listAdP)
+                        {
+                            List<Article> listintermediaire = articles2.FindAll(x => x.AdPId == adp.Id);
+
+                            foreach (Article articleintermediaire in listintermediaire)
+                            {
+                                articles3.Add(articleintermediaire);
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        articles3 = articles2;
+                    }
+                }
+                else if (listAdP != null)
+                {
+                    foreach (AdP adp in listAdP)
+                    {
+                        List<Article> listintermediaire = articles2.FindAll(x => x.AdPId == adp.Id);
+
+                        foreach (Article articleintermediaire in listintermediaire)
+                        {
+                            articles3.Add(articleintermediaire);
+
+                        }
+                    }
+                }
+
+
+                HomeViewModel hvm = new HomeViewModel
+                {
+                    ListeComptesAdP = csc.ObtenirTousLesAdPs(),
+                    Boutiques = new Boutiques() { Articles = articles3, NombreArticle = articles3.Count },
+                    PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+
+                };
+                return View(hvm);
+            }
+            
 
         }
 
@@ -150,10 +177,10 @@ namespace Projet2.Controllers
         {
             ArticleRessources ctx = new ArticleRessources();
             Article article = ctx.ObtientTousLesArticles().Where(a => a.Id == id).FirstOrDefault();
+            article.Avis = ctx.AfficherAvisPourArticle(article);
 
             HomeViewModel hvm = new HomeViewModel
             {
-
                 Article = article,
                 PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
 
@@ -245,7 +272,7 @@ namespace Projet2.Controllers
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
-        [HttpPost]
+        
         public IActionResult SupprimerLigne(int Id)
         {
             int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
@@ -258,5 +285,63 @@ namespace Projet2.Controllers
             return RedirectToAction("Panier", new { @panierId = panierId });
 
         }
+
+        [HttpGet]
+        public IActionResult ArticleAvis(LignePanierBoutique lignePanierBoutique)
+        {
+            HomeViewModel model = new HomeViewModel();
+
+            ArticleRessources ctxarticle = new ArticleRessources();
+            model.Article = ctxarticle.ObtientTousLesArticles().Where(a => a.Id == lignePanierBoutique.ArticleId).FirstOrDefault();
+            model.LignePanierBoutique = lignePanierBoutique;
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public IActionResult ArticleAvis(LignePanierBoutique lignePanierBoutique, Article article)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                HomeViewModel hvm = new HomeViewModel();
+                ArticleRessources ctx = new ArticleRessources();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdA == true)
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                    
+                    ctx.AjouterAvisAdA(lignePanierBoutique, article, hvm.AdA.Id);
+
+                    return RedirectToAction("Article", new { @Id = article.Id });
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                    
+                    ctx.AjouterAvisCE(lignePanierBoutique, article, hvm.ContactComiteEntreprise.EntrepriseId);
+
+                    return RedirectToAction("Article", "Boutique", hvm.ContactComiteEntreprise);
+                }
+            }
+            return RedirectToAction("Index", "Login");
+        }
+        public int QuantitePanier()
+        {
+            PanierService ctx = new PanierService();
+            int ProduitsNombres = 0;
+            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+            PanierBoutique panierBoutique = ctx.ObientPanier(panierId);
+
+            foreach (LignePanierBoutique ligne in panierBoutique.LignePanierBoutiques)
+            {
+                ProduitsNombres += ligne.Quantite;
+            }
+            return ProduitsNombres;
+        }
+
+
     }
 }

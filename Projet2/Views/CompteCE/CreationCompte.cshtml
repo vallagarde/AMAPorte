@@ -1,86 +1,157 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Creation Compte</title>
-</head>
-<body>
-       
-    
-<h1>Formulaire Creation Adhérent CE : </h1>
 
-    @using (Html.BeginForm())
-    {
-<fieldset>
-    <h2> Identifiant </h2>
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
-        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
-        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
-        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
-    <br />
-    <h2> Vos Coordonnés </h2>
-    <br />
-        @Html.LabelFor(m => Model.ContactComiteEntreprise.Nom) :
-        @Html.TextBoxFor(m => Model.ContactComiteEntreprise.Nom)
-    <br />
-        @Html.LabelFor(m => Model.ContactComiteEntreprise.Prenom) :
-        @Html.TextBoxFor(m => Model.ContactComiteEntreprise.Prenom)
-    <br />
-        @Html.LabelFor(m => Model.ContactComiteEntreprise.NTelephone) :
-        @Html.TextBoxFor(m => Model.ContactComiteEntreprise.NTelephone)
-    <br />
-    <br />
-    <h2> Entreprise </h2>
-    <br />
-        @Html.LabelFor(m => Model.Entreprise.NomEntreprise) :
-        @Html.TextBoxFor(m => Model.Entreprise.NomEntreprise)
-    <br />
-        @Html.LabelFor(m => Model.Entreprise.NombreUtilisateur) :
-        @Html.TextBoxFor(m => Model.Entreprise.NombreUtilisateur)
-    <br />
-        @Html.LabelFor(m => Model.Entreprise.Siren) :
-        @Html.TextBoxFor(m => Model.Entreprise.Siren)
-    <br />
-    <h2> Adresse</h2>
-    <br />
-        @Html.LabelFor(m => Model.Adresse.Numero) :
-        @Html.TextBoxFor(m => Model.Adresse.Numero)
-     <br />
-        @Html.LabelFor(m => Model.Adresse.Voie) :
-        @Html.TextBoxFor(m => Model.Adresse.Voie)
-     <br />
-        @Html.LabelFor(m => Model.Adresse.CodePostal) :
-        @Html.TextBoxFor(m => Model.Adresse.CodePostal)   
-     <br />
-        @Html.LabelFor(m => Model.Adresse.Ville) :
-        @Html.TextBoxFor(m => Model.Adresse.Ville)
-     <br />
-        @Html.LabelFor(m => Model.Adresse.Pays) :
-        @Html.TextBoxFor(m => Model.Adresse.Pays)
-     <br />
-        @* Paiement en :
-        @Html.DropDownList("paiementchoisi", new SelectList(ViewBag.listePayments,"Id", "methodePaiement")) *@
-     <br />
-        @Html.LabelFor(m => Model.Entreprise.EstEnAccord) : 
-        @Html.CheckBoxFor(m => Model.Entreprise.EstEnAccord)
-</fieldset>
-     <br />
-        <input type="submit" value="Créer"/>
-    }
-    <br /><br />  
-    <div>
-    @Html.ActionLink("Retour sur la page principale", "Index", "Home")
-    </div>
+<section class="signupLayout">
+        <div class="container">
+
+                         <div class="tabs">
+                       <nav class="navbar navbar-expand-lg">
+                            <div class="collapse navbar-collapse">
+                                    <ul>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte">Je suis un particulier</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link chosen" asp-area="" asp-controller="CompteCE" asp-action="CreationCompte">Je represente un CE</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdP" asp-action="CreationCompte">Je suis un producteur</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </nav>
+                   </div>
+            <div  class="user signupBx">
 
 
-</body>
-</html>
+                <div class="formBx">
+                  
 
+                    @using (Html.BeginForm())
+                    {
+                    
+                        <h2>Créez un Identifiant </h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                             </colgroup>
+                          <tr >
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th>@Html.TextBoxFor(m => Model.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.AdresseMail) </th>
+                          </tr>
+                          <tr>
+                              <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>
+                              <th>@Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.MotDePasse)
+                                @if(@Model != null)
+                                {
+                                  @if(@Model.AdresseExistante == true)
+                                        {
+                                        <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+                                        }  
+                                }
+                                
+                              </th>
+                         </tr>
+                        </table>
+
+                        <h2> Ajoutez les Informations sur votre Entreprise</h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Entreprise.NomEntreprise)</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NomEntreprise,  new {placeholder="Nom de l'Entreprise'"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.NomEntreprise, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Entreprise.NombreUtilisateur)</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NombreUtilisateur, new {placeholder="Nombre des collaborateurs bénéficiant de ce service"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.NombreUtilisateur, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th> @Html.LabelFor(m => Model.Entreprise.Siren)</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.Siren, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            </table>
+
+
+                        <h2> Insérez vos Données </h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.Nom)</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Nom, new {placeholder="Nom de Famille"})
+                              @Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.Nom, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.Prenom)</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Prenom, new {placeholder="Prénom"})
+                              @Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.Prenom, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.NTelephone)</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.NTelephone, new { placeholder="Numéro Téléphone"})</th> @*, required = "required", pattern = @"\d{10}" *@
+                              <th>@Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.NTelephone, "", new { @class = "error" })</th>
+
+                            </tr>
+                            </table>
+
+                        <h2> Remplissez les Informations de Paiement </h2>
+                        <h2 class="signup"> (Adresse de l'Entreprise) </h2>
+                        <table width=100%>
+                        <colgroup>
+                            <col style="width: 25%" align="right">
+                            <col style="width: 15%">
+                            <col style="width: 5%">
+                            <col style="width: 55%">
+                        </colgroup>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Numero, "", new { @class = "text-danger" })</th>
+                            <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Voie, "", new { @class = "text-danger" })</th>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)
+                            @Html.ValidationMessageFor(m => Model.Adresse.CodePostal, "", new { @class = "text-danger" })</th>
+                            <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Ville, "", new { @class = "text-danger" })</th>
+                        </tr>
+                        </table>
+                         <table width=100%>
+                            <colgroup>
+                                <col style="width: 10%" align="right">
+                                <col style="width: 90%">
+                            </colgroup>
+                                <tr align="justify">
+                                <th >@Html.CheckBoxFor(m => Model.Entreprise.EstEnAccord)</th>
+                                <th>@Html.LabelFor(m => Model.Entreprise.EstEnAccord)
+                                @Html.ValidationMessageFor(m => Model.Entreprise.EstEnAccord, "", new { @class = "text-danger" })</th>
+                            </tr>
+                        </table>
+                        <table width=100%>
+                            <tr align="center">
+                              <th><input type="submit" value="Créez votre Compte"/></th>
+                            </tr>
+                            <tr align="center">
+                              <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>
+                            </tr>
+                        </table>           
+                    }
+                </div>
+              <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
+            </div>
+        </div>
+    </section>

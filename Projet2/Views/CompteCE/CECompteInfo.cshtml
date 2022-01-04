@@ -1,0 +1,58 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+@{
+
+}
+    <div class = "container">
+        Mon Compte : 
+        <br/>
+        Nom : @Model.ContactComiteEntreprise.Nom
+        <br/>
+        Prenom: @Model.ContactComiteEntreprise.Prenom
+        <br/>
+        Téléphone: @Model.ContactComiteEntreprise.NTelephone
+        <br/>
+        Adresse Mail: @Model.ContactComiteEntreprise.AdresseMail
+        <br/>
+        Nom de l'entreprise : @Model.Entreprise.NomEntreprise
+        <br/>
+        Numéro SIREN : @Model.Entreprise.Siren
+        <br/>
+        Nombre Collaborateurs inscrits au service: @Model.Entreprise.NombreUtilisateur
+        <br/>
+        <br/>
+        Adresse : 
+        <br/>
+        @Model.Adresse.Numero @Model.Adresse.Voie
+        <br/>
+        @Model.Adresse.CodePostal @Model.Adresse.Ville
+        <br />
+        <br />
+
+        <br/>
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteCE", @Model.ContactComiteEntreprise)
+        <br/>
+        <!-- Trigger/Open The Modal -->
+        <button class="modalButton" id="myBtn">Supprimer Compte</button>
+        <br/>       
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login", @Model.ContactComiteEntreprise)
+        <br/>
+        @Html.ActionLink("Retour", "Index", "CompteCE", @Model.ContactComiteEntreprise)
+    </div>
+
+
+
+        <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+            <form align="center" method="post" asp-controller="CompteCE" asp-action="SuppressionCompte" class="form-container">
+            @Html.HiddenFor(m => Model.ContactComiteEntreprise.Id)
+            @Html.HiddenFor(m => Model.ContactComiteEntreprise.EntrepriseId)
+             <button class="modalButton" type="submit">Je supprime mon compte</button>
+            </form>
+        </div>
+        </div>
+
+
+
+

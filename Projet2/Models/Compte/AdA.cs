@@ -1,5 +1,6 @@
 using Projet2.Models.Boutique;
 using Projet2.Models.PanierSaisonniers;
+using System;
 using System.Collections.Generic;
 
 
@@ -10,15 +11,15 @@ namespace Projet2.Models.Compte
         public int Id { get; set; }
 
         public bool EstAdA { get; set; }
+        public DateTime DateInscription { get; set; }
+
+        public string Image { get; set; }
 
         public Personne Personne { get; set; }
         public int PersonneId { get; set; }
 
         public bool EstAboAnnuel { get; set; }
         public bool EstAboSemestre { get; set; }
-
-        public Paiement Paiement { get; set; }
-        public int? PaiementId { get; set; }
 
         public virtual List<AdP> ProducteursFavoris { get; set; }
 
@@ -30,13 +31,16 @@ namespace Projet2.Models.Compte
 
         public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
 
-
-        public int? AvisId { get; set; }
-        public Avis Avis { get; set; }
-
         public AdA()
         {
             EstAdA = true;
+            DateInscription = DateTime.Today;
+            Image = "Default.jpg";
+            CommandesBoutiqueEffectues = new List<Commande>();
+            CommandesPanierEffectues = new List<PanierSaisonnier>();
+            ArticlesFavoris = new List<Article>();
+            ProducteursFavoris = new List<AdP>();
+            //AteliersFavoris = new List<Atelier>();
         }
 
     }

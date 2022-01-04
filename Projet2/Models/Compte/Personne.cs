@@ -18,15 +18,16 @@ namespace Projet2.Models.Compte
         public string Prenom { get; set; }
 
         [Display(Name = "Date de Naissance")]
-        [Required(ErrorMessage = "Vous devez insérer un date de naissance")]
+        [Required(ErrorMessage = "Vous devez insérer une date de naissance")]
         [DataType(DataType.Date)]
         public DateTime DateNaissance { get; set; }
 
         [Display(Name = "Téléphone")]
-        [Required, RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
+        [Required(ErrorMessage = "Vous devez insérer un numero de telephone")]
+        [RegularExpression(@"\d{10}", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
         public int NTelephone { get; set; }
 
-        [Display(Name = "J'accepte les conditions générales et la politique de confidentialité")]
+        [Display(Name = "J’atteste que j’ai lu et accepté les conditions générales de vente de AMAPorte.")]
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
         public bool EstEnAccord { get; set; }        
         public bool EstMajeur { get; set; }

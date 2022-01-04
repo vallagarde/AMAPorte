@@ -3,35 +3,68 @@
 
 @if (@Model.Authentifie)
 {
-    <h3>
-        Vous êtes déjà authentifié
-    </h3>
-    <br />
-    @Html.ActionLink("Aller vers mon compte", "EspacePersonnel", "Home")  
-    <br />
-    @Html.ActionLink("Déconnecter", "Deconnexion")
+    <section class="signupLayout">
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx"><img src="~/ImageArticle/pommes.jpg"></div>
+                <div class="formBx">
+                    @using (Html.BeginForm())
+                    {
+                    <h2>Vous êtes déjà authentifié</h2>             
+                    <table width=100%>
+                            <tr align="center" height=60px>
+                              <th class="signup"><a asp-area="" asp-controller="Home" asp-action="EspacePersonnel">Mon Compte</a></th>
+                            </tr>
+                            <tr align="center">
+                              <th class="signup"><a asp-area="" asp-controller="Login" asp-action="Deconnexion">Déconnecter</a></th>
+                            </tr>
+                    </table>
+                    }               
+                </div>
+            </div>
+        </div>
+    </section>
 }
 else
 {
+    <section class="signupLayout">
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx"><img src="~/ImageArticle/pommes.jpg"></div>
+                <div class="formBx">
+                    @using (Html.BeginForm())
+                    {
+                        <h2>Veuillez vous authentifier</h2>
+                        <table width=100%>
+                                <tr>
+                                  <th class="signup">@Html.TextBoxFor(m => m.Identifiant.AdresseMail, new {placeholder="Adresse Mail"})
+                                                    @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+                                 </th>
+                                </tr>
+                                <tr>
+                                  <th class="signup">@Html.PasswordFor(m => m.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
+                                                     @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+                                 </th>
+                                </tr>
+                                 <tr align="center">
+                                  <th class="signup">Mot de passe oublié ?<a class="oubli" asp-area="" asp-controller="Login" asp-action="ModificationIdentifiant"> Réinitisaliser votre mot de passe</a></th>
+                                </tr>
+                                <tr align="center">
+                                  <th class="signup"></th>
+                                  <th class="signup"></th>
+                                </tr>
+                                <tr align="center">
+                                  <th class="signup"><input type="submit" value="Se connecter" /></th>
+                                </tr>
+                                <tr align="center">
+                                  <th class="signup">Pas encore de Compte ?<a asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte"> Inscrivez-vous</a></th>
+                                </tr>
+                                                             
+                        </table>               
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <p>
-        Veuillez vous authentifier :
-    </p>
-    @using (Html.BeginForm())
-    {
-        <div>
-            @Html.LabelFor(m => m.Identifiant.AdresseMail)
-            @Html.TextBoxFor(m => m.Identifiant.AdresseMail)
-            @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
-        </div>
-        <div>
-            @Html.LabelFor(m => m.Identifiant.MotDePasse)
-            @Html.PasswordFor(m => m.Identifiant.MotDePasse)
-            @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
-        </div>
-        <input type="submit" value="Se connecter" />
-        <br />
-        @Html.ActionLink("Créer un compte", "Inscription", "Home")
-    
-        }
 }

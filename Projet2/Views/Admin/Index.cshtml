@@ -1,14 +1,5 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Mon Compte</title>
-</head>
-<body>
+
     Mon Compte : 
         <br/>
         DSI : @Model.Admin.EstDSI
@@ -20,18 +11,30 @@
         Identifiant : @Model.Identifiant.AdresseMail
         <br/>
         <br/>
+        @Html.ActionLink("Gestion Etat des Commandes", "GestionEtatCommande", "Admin", @Model.Admin)
+        <br/>
         @Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)
         <br/>
         @Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)
         <br/>
         @Html.ActionLink("Modifier Compte", "ModificationCompte", "Admin", @Model.Admin)
         <br/>
-        @Html.ActionLink("Supprimer Compte", "SuppressionCompte", "Admin", @Model.Admin)
+         <button class="modalButton" id="myBtn">Supprimer Compte</button>
         <br/>
         @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
         <br/>
         @Html.ActionLink("Retour sur la page principale", "Index", "Home", @Model.Admin)
         <br/>
+        @Html.ActionLink("Creation Nouveau Compte Admin", "CreationCompte", "Admin", @Model.Admin)
 
-</body>
-</html>
+
+        <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+            <form align="center" method="post" asp-controller="Admin" asp-action="SuppressionCompte" class="form-container">
+            @Html.HiddenFor(m => Model.Admin.Id)
+             <button class="modalButton" type="submit">Je supprime mon compte</button>
+            </form>
+        </div>
+        </div>

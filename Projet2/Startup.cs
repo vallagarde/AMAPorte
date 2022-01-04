@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Projet2.Data;
 using Projet2.Models;
+using Projet2.Models.Mails;
 using Stripe;
 
 namespace Projet2
@@ -27,6 +28,10 @@ namespace Projet2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddSingleton<IMailConfiguration>(Configuration.GetSection("EmailConfiguration").Get<MailConfiguration>());
+            services.AddTransient<IMailService, MailService>();
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -46,6 +51,10 @@ namespace Projet2
             });
             services.AddControllersWithViews();
 
+            services.AddRazorPages().AddMvcOptions(options => {
+                options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "Ce champs est requis");
+            });
+
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
@@ -58,7 +67,7 @@ namespace Projet2
 
             using (BddContext ctx = new BddContext())
             {
-               //ctx.InitializeDb();
+               ctx.InitializeDb();
             }
 
             if (env.IsDevelopment())

@@ -41,6 +41,22 @@ namespace Projet2.Models.PanierSaisonniers
         public int? CataloguePanierId { get; set; }
         public CataloguePanier CataloguePanier { get; set; }
 
-      
+        public bool EstValide { get; set; }
+        public bool EstEnAttente { get; set; }
+        public string AdminCommentaire { get; set; }
+
+        public DateTime DateInscription { get; set; }
+        public DateTime? DateModification { get; set; }
+
+        //public int? LignePanierSaisonnierId { get; set; }
+        //public LignePanierSaisonnier  LignePanierSaisonnier { get; set; }
+
+        public PanierSaisonnier()
+        {
+            EstValide = false;
+            EstEnAttente = false;
+            AdminCommentaire = null;
+            DateInscription = DateTime.Now;
+        }
     }
 }

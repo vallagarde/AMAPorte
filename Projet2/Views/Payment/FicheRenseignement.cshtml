@@ -1,55 +1,142 @@
-﻿@model Projet2.ViewModels.HomeViewModel
+@model Projet2.ViewModels.HomeViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
-<h1>Remplissez vos informations personnelles </h1>
-@using (Html.BeginForm())
-{
-<fieldset>
-    <h2> Personne </h2>
-    <br />
-    @Html.LabelFor(m => Model.Client.Nom) :
-    @Html.TextBoxFor(m => Model.Client.Nom)
-    <br />
-    @Html.LabelFor(m => Model.Client.Prenom) :
-    @Html.TextBoxFor(m => Model.Client.Prenom)
-    <br />
-    @Html.LabelFor(m => Model.Client.DateNaissance) :
-    @Html.TextBoxFor(m => Model.Client.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date" })
-    <br />
-    @Html.LabelFor(m => Model.Client.NTelephone) :
-    @Html.TextBoxFor(m => Model.Client.NTelephone)
-    <br />
-    @Html.LabelFor(m => Model.Adresse.Numero) :
-    @Html.TextBoxFor(m => Model.Adresse.Numero)
-    <br />
-    @Html.LabelFor(m => Model.Adresse.Voie) :
-    @Html.TextBoxFor(m => Model.Adresse.Voie)
-    <br />
-    @Html.LabelFor(m => Model.Adresse.CodePostal) :
-    @Html.TextBoxFor(m => Model.Adresse.CodePostal)
-    <br />
-    @Html.LabelFor(m => Model.Adresse.Ville) :
-    @Html.TextBoxFor(m => Model.Adresse.Ville)
-    <br />
-    @Html.LabelFor(m => Model.Adresse.Pays) :
-    @Html.TextBoxFor(m => Model.Adresse.Pays)
-    <br />
-    @Html.LabelFor(m => Model.Client.EstEnAccord) :
-    @Html.CheckBoxFor(m => Model.Client.EstEnAccord)
-</fieldset>
-    <br />
-    <input type="submit" value="Continuer vers le paiement" />
-}
-<br />
-<br />
-    @Html.ActionLink("J'ai déjà un compte", "Index", "Login")
-<br />
-<br />
+<section class=" gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Informations personnelles</h3>
+                        <form method="post">
 
-<div>
-    @Html.ActionLink("Continuer vers le Paiement", "Paiement", "Home")
-</div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="firstName" class="form-control form-control-lg" name="Client.Nom" />
+                                        <label class="form-label" for="firstName">Nom</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="lastName" class="form-control form-control-lg" name="Client.Prenom" />
+                                        <label class="form-label" for="lastName">Prénom</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                    <div class="form-outline datepicker">
+                                        <input type="date"
+                                               class="form-control form-control-lg"
+                                               id="birthdayDate" name="Client.DateNaissance" />
+                                        <label for="birthdayDate" class="form-label">Date de naissance</label>
+                                    </div>
+
+                                </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        <input type="email" id="emailAddress" class="form-control form-control-lg" />
+                                        <label class="form-label" for="emailAddress">Email</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="form-outline">
+                                        <input type="tel" id="phoneNumber" class="form-control form-control-lg" name="Client.NTelephone" />
+                                        <label class="form-label" for="phoneNumber">Télephone</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="number" id="firstName" class="form-control form-control-lg" name="Adresse.Numero" />
+                                        <label class="form-label" for="firstName">Numéro de voie</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="lastName" class="form-control form-control-lg" name="Adresse.Voie" />
+                                        <label class="form-label" for="lastName">voie</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="number" id="firstName" class="form-control form-control-lg" name="Adresse.CodePostal" />
+                                        <label class="form-label" for="firstName">Code Postal</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input type="text" id="lastName" class="form-control form-control-lg" name="Adresse.Ville" />
+                                        <label class="form-label" for="lastName">Ville</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                      
+                            <label for="Client_EstEnAccord">J'accepte les conditions générales et la politique de confidentialité</label>
+                            <input data-val="true" data-val-required="Il faut accepter les conditions générales." id="Client_EstEnAccord" name="Client.EstEnAccord" type="checkbox" value="true">
+
+
+                            
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 pb-2">
+
+                                    <div class="mt-4 pt-2">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="submit" value="Continuer vers le paiment">
+                                            <i class="bi bi-credit-card-2-back me-1"></i>Continuer vers le paiement
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4 pb-2">
+                                    <div class="mt-4 pt-2">
+
+                                        @Html.ActionLink("J'ai déjà un compte", "Index", "Login")
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

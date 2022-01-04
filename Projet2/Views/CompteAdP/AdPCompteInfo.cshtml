@@ -1,0 +1,51 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+    <div class = "container">
+        Mon Compte : 
+        <br/>
+        @Model.AdP.NomProducteur
+        <br/>
+        Description : @Model.AdP.Description
+        <br/>
+        Numéro SIREN : @Model.AdP.Siren
+        <br/>
+        <br/>
+        Nom : @Model.Personne.Nom
+        <br/>
+        Prenom: @Model.Personne.Prenom
+        <br/>
+        Date de Naissance : @Model.ReturnDateForDisplay
+        <br/>
+        Numéro Téléphone : @Model.Personne.NTelephone
+        <br/>
+        <br/>
+
+        Adresse : 
+        <br/>
+        @Model.Adresse.Numero @Model.Adresse.Voie
+        <br/>
+        @Model.Adresse.CodePostal @Model.Adresse.Ville
+        <br />
+        <br />
+
+        <br/>
+        @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)
+        <br/>
+        <button class="modalButton" id="myBtn">Supprimer Compte</button>
+        <br/>
+        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+        <br/>
+        @Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+    </div>
+
+    
+        <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+            <form align="center" method="post" asp-controller="CompteAdP" asp-action="SuppressionCompte" class="form-container">
+            @Html.HiddenFor(m => Model.AdP.Id)
+             <button class="modalButton" type="submit">Je supprime mon compte</button>
+            </form>
+        </div>
+        </div>

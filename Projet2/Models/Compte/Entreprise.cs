@@ -9,8 +9,17 @@ namespace Projet2.Models.Compte
     public class Entreprise
     {
         public int Id { get; set; }
+
+        [Display(Name = "Collaborateurs")]
+        [Required(ErrorMessage = "Vous devez insérer un nombre.")]
         public int NombreUtilisateur { get; set; }
-        public string NomEntreprise { get; set; }   
+
+        [Display(Name = "Nom")]
+        [Required(ErrorMessage = "Vous devez insérer un nom.")]
+        public string NomEntreprise { get; set; }
+
+        [Display(Name = "SIREN")]
+        [Required(ErrorMessage = "Vous devez insérer un numéro SIREN.")]
         public int Siren { get; set; }
         public Adresse Adresse { get; set; }
         public int AdresseId { get; set; }
@@ -20,9 +29,6 @@ namespace Projet2.Models.Compte
 
         public bool EstAboAnnuel { get; set; }
         public bool EstAboSemestre { get; set; }
-
-        public Paiement Paiement { get; set; }
-        public int? PaiementId { get; set; }
 
         public virtual List<AdP> ProducteursFavoris { get; set; }
 
@@ -39,8 +45,14 @@ namespace Projet2.Models.Compte
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
         public bool EstEnAccord { get; set; }
 
-        public int? AvisId { get; set; }
-        public Avis Avis { get; set; }
+        public Entreprise()
+        {
+            CommandesBoutiqueEffectues = new List<Commande>();
+            CommandesPanierEffectues = new List<PanierSaisonnier>();
+            ArticlesFavoris = new List<Article>();
+            ProducteursFavoris = new List<AdP>();
+            //AteliersFavoris = new List<Atelier>();
+        }
 
 
     }

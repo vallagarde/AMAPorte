@@ -5,13 +5,12 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Projet2.Models.Compte;
 using Projet2.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Projet2.Controllers
 {
     public class LoginController : Controller
-        //ajouter une option mot de passe oublié
         //ajouter des authentifications sur des espaces member only 
-        //ajouter un identifiant avec un adresse mail (verifier si existe pas encore)
 
     {
         private CompteServices cptressource;
@@ -118,12 +117,69 @@ namespace Projet2.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public ActionResult Deconnexion()
         {
             bool EstUtilisateur = false;
             SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
             return Redirect("/");
+        }
+
+        [HttpGet]
+        public ActionResult ModificationIdentifiant(Identifiant Identifiant, int Id)
+        {
+            hvm.Identifiant = Identifiant;
+
+            return View(hvm);
+        }
+
+
+        [HttpPost]
+        public ActionResult ModificationIdentifiant(Identifiant identifiant)
+        {
+            CompteServices cs = new CompteServices();
+            hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
+          
+                HttpContext.SignOutAsync();
+                 var userClaims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, hvm.Identifiant.Id.ToString()),
+                    };
+                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                HttpContext.SignInAsync(userPrincipal);
+               if(identifiant.Id != 0)
+                {
+                    if (hvm.Identifiant.EstAdP == true)
+                    {
+                        hvm.AdP = cs.ObtenirAdPParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                    }
+                    else if (hvm.Identifiant.EstAdA == true)
+                    {
+                        hvm.AdA = cs.ObtenirAdAParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                    }
+                    else if (hvm.Identifiant.EstCE == true)
+                    {
+                        hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                    }
+                    else if ((hvm.Identifiant.EstGCCQ == true) || (hvm.Identifiant.EstGCRA == true) || (hvm.Identifiant.EstDSI == true))
+                    {
+                        hvm.Admin = cs.ObtenirAdminParIdentifiant(hvm.Identifiant.Id);
+                        return RedirectToAction("Index", "Admin", hvm.Admin);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Login");
+                    }
+                } else
+                {
+                //Envoie mail à l'adresse mail recu avec un lien vers la modification inclus identifiant Id
+                return RedirectToAction("Index", "Login");
+                }            
         }
     }
 }

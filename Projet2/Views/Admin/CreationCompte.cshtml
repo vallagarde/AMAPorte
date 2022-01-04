@@ -1,26 +1,20 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Creation Compte</title>
-</head>
-<body>
-       
-    
+   
 <h1>Formulaire Creation Admin : </h1>
-
     @using (Html.BeginForm())
     {
+        
 <fieldset>
     <h2> Identifiant </h2>
+    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
     <br />
         @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
         @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
         @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+         @if(@Model.AdresseExistante == true)
+            {
+            <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+            }
     <br />
         @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
         @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
@@ -43,8 +37,7 @@
     }
     <br /><br />  
     <div>
-    @Html.ActionLink("Retour sur la page principale", "Index", "Home")
+    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+    @Html.ActionLink("Retour", "Index", "Admin", @Model.Admin)
     </div>
-</body>
-</html>
 

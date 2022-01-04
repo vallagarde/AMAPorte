@@ -1,0 +1,16 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+
+<form enctype="multipart/form-data" method="post" asp-controller="CompteAdA" asp-action="AjouterImage">
+<fieldset>
+    <h2> Image </h2>
+        @Html.HiddenFor(m => Model.AdA.Id)
+        <input name="FileToUpload" type="file" value="browse" />
+</fieldset>
+     <br />
+        <input type="submit" value="Ajouter l'image'" />
+</form>
+    <br /><br />  
+    <div>
+    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdA", @Model.AdA)
+    </div>

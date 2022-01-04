@@ -13,6 +13,18 @@ $(document).ready(function () {
             } else {
                 $("#panierVide").hide();
                 $("#panierRemplit").show();
+                $(document).ready(function () {
+                    $.ajax({
+                        url: "/Boutique/QuantitePanier",
+                        type: 'GET',
+                        success: function (res) {
+
+                            $("#nombreArticle").html(res);
+
+
+                        }
+                    });
+                });
             }
         }
     });

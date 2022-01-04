@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Projet2.Helpers;
 using Projet2.Models;
 using Projet2.Models.Boutique;
+using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 
@@ -11,11 +12,16 @@ namespace Projet2.ViewModels
 {
     public class HomeViewModel
     {
+        //Boutique
         public Boutiques Boutiques = new Boutiques();
         public Article Article = new Article();
         public Upload Upload = new Upload();
         public int PanierId { get; set; }
         public PanierBoutique PanierBoutique = new PanierBoutique();
+        public Commande Commande = new Commande();
+        public Avis Avis = new Avis();
+        public LignePanierBoutique LignePanierBoutique = new LignePanierBoutique();
+
 
         //Paniers
         public PanierSaisonnier PanierSaisonnier = new PanierSaisonnier();
@@ -45,13 +51,34 @@ namespace Projet2.ViewModels
         public ContactComiteEntreprise ContactComiteEntreprise = new ContactComiteEntreprise();
         public Admin Admin = new Admin();
         public Client Client = new Client();
+        public bool AdresseExistante;
+        public bool Authentifie { get; set; }
+
+        //Admin
         public List<AdA> ListeComptesAdA = new List<AdA>();
         public List<AdP> ListeComptesAdP = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
 
-        public Paiement Paiement = new Paiement();
-        public bool Authentifie { get; set; }
+        //Commandes
+        public List<Commande> ListeCommandesEnPrep = new List<Commande>();
+        public List<Commande> ListeCommandesEnCours = new List<Commande>();
+        public List<Commande> ListeCommandesLivres = new List<Commande>();
+        public List<Commande> ListeCommandesARecup = new List<Commande>();
+        public List<LignePanierBoutique> ListeCommandesAPrep = new List<LignePanierBoutique>();
+        public List<LignePanierBoutique> ListeCommandesDonnees = new List<LignePanierBoutique>();
 
-        public LignePanierBoutique LignePanierBoutique= new LignePanierBoutique();
+        public DateTime ProchaineDateLivraison = new DateTime();
+
+        public string ReturnDateForDisplayLivraison
+        {
+            get
+            {
+                if (this.ProchaineDateLivraison != null)
+                {
+                    return this.ProchaineDateLivraison.ToString("d");
+                }
+                return null;
+            }
+        }
     }
 }

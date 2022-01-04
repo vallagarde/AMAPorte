@@ -1,5 +1,121 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Projet2.ViewModels.HomeViewModel
+
+
+
+<div class = "container">
+    @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
+    <br/>
+    <div>
+        <p>Commandes En Preparation</p>
+        
+            @if(@Model.ListeComptesAdP.Count != 0)
+            {                                  
+                @foreach (var adp in @Model.ListeComptesAdP)
+                {
+                    <table border="1">
+                        @if(adp.Assortiment.Count != 0 || adp.AssortimentPanier.Count != 0)
+                        {
+                            <tr border="1">
+                                <td>@adp.NomProducteur</td>
+                                <td>@adp.Personne.Nom @adp.Personne.Prenom</td>
+                                <td>@adp.Personne.Identifiant.AdresseMail</td>
+                                <td>@adp.DateInscription</td>
+                                <td>@adp.Siren</td>
+                                <td>@adp.EstActive</td>
+                            </tr>
+                                @foreach(var article in @adp.Assortiment)
+                                {
+                                    @if(@article.EstEnAttente == false && @article.EstValide == false)
+                                    {
+                                        <table border="1">
+                                            <tr border="1">
+                                            <td>Id @article.Id</td>
+                                            </tr>
+                                            <tr>
+                                                <td>@article.Nom</td>
+                                                <td>@article.Description</td>
+                                                <td>@article.Prix (@article.Prix TTC)</td> 
+                                                <td>@article.Stock</td>  
+                                                <td>@article.DateInscription</td> 
+                                                @if(@article.DateModification != null)
+                                                    {
+                                                        <td>Dernière Modification @article.DateModification</td>   
+                                                    }                                     
+                                                @if(@article.AdminCommentaire != null)
+                                                    {
+                                                        <td>Dernier Commentaire @article.AdminCommentaire</td>   
+                                                    }                                           
+                                             </tr>
+                                         <tr>
+                                             <td>
+                                                <form method="post" asp-controller="Admin" asp-action="GestionDemandesProducteurs">
+                                                @Html.HiddenFor(m => @Model.Admin.Id)
+                                                @Html.HiddenFor(m => @article.Id)
+                                                @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                                Commentaire : @Html.TextBoxFor(m => @article.AdminCommentaire, new{value=""})
+                                                <br/>
+                                               @Html.Label("Etat", "Validé")
+                                               @Html.RadioButtonFor(m => @article.EstValide, true)
+                                                <br/>
+                                               @Html.Label("Etat", "Rejeté")
+                                               @Html.RadioButtonFor(m =>  @article.EstValide, false)
+                                               <br/> 
+                                               <button class="btn btn-primary" type="submit">Soumettre</button>
+                                                </form>
+                                                  </td>
+                                           </tr>                                        
+                                         </table>                           
+                                    }
+                                }
+                                
+                                @foreach(var panierSaisonnier in @adp.AssortimentPanier)
+                                {
+                                    @if(@panierSaisonnier.EstEnAttente == false && @panierSaisonnier.EstValide == false)
+                                    {
+                                    <table border="1">
+                                        <tr border="1">
+                                        <td>Id @panierSaisonnier.Id</td>
+                                        <tr>
+                                            <td>@panierSaisonnier.NomPanier</td>
+                                            <td>@panierSaisonnier.Description</td>
+                                            <td>@panierSaisonnier.Prix</td> 
+                                            <td>@panierSaisonnier.DateInscription</td> 
+                                            @if(@panierSaisonnier.DateModification != null)
+                                                {
+                                                    <td>Dernière Modification @panierSaisonnier.DateModification</td>   
+                                                }                                     
+                                            @if(@panierSaisonnier.AdminCommentaire != null)
+                                            {
+                                                <td>Dernier Commentaire @panierSaisonnier.AdminCommentaire</td>   
+                                            }                                           
+                                        </tr>
+                                     <tr>
+                                     <td>
+                                        <form method="post" asp-controller="Admin" asp-action="GestionDemandesProducteurs">
+                                        @Html.HiddenFor(m => @Model.Admin.Id)
+                                        @Html.HiddenFor(m => @panierSaisonnier.Id)
+                                        @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                        Commentaire : @Html.TextBoxFor(m => @panierSaisonnier.AdminCommentaire, new{value=""})
+                                        <br/>
+                                       @Html.Label("Etat", "Validé")
+                                       @Html.RadioButtonFor(m => @panierSaisonnier.EstValide, true)
+                                        <br/>
+                                       @Html.Label("Etat", "Rejeté")
+                                       @Html.RadioButtonFor(m =>  @panierSaisonnier.EstValide, false)
+                                       <br/> 
+                                       <button class="btn btn-primary" type="submit">Soumettre</button>
+                                        </form>
+                                          </td>
+                                         </tr>
+                                         </tr>
+                                        </table>                           
+                                    }
+
+                                }
+                        }
+                    </table>
+                }            
+           }
+    </div>
+
+</div>

@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
+using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using Projet2.ViewModels;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -13,16 +17,38 @@ namespace Projet2.Controllers
     public class CompteAdAController : Controller
     {
         //View pour paiement 12€/6 mois 
-
-        //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
         
-
         CompteServices cs = new CompteServices();
+        PanierService panierService = new PanierService();
         HomeViewModel hvm = new HomeViewModel();
+
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public CompteAdAController(IWebHostEnvironment webHostEnvironment)
+        {
+            _webHostEnvironment = webHostEnvironment;
+        }
+
         public IActionResult Index(AdA ada)
         {
             //voir les ateliers a venir sur sa page d'accueil 
-            //mettre les informations de son compte dans une vue "Mon Compte" 
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+
+            if (hvm.Personne == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                hvm.AdA = ada;
+                return View(hvm);
+            }
+        }
+
+        public IActionResult AdACompteInfo(AdA ada)
+        {
 
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
 
@@ -39,6 +65,7 @@ namespace Projet2.Controllers
             }
         }
 
+
         [AllowAnonymous]
         [HttpGet]
         public IActionResult CreationCompte()
@@ -50,65 +77,103 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(Personne personne, Identifiant identifiant, Adresse adresse)
         {
-            //CRUD Compte CE ok, ajouter quelques attributs (photo, adresse facturation),
-            //adresse avec base de données ? 
-            if (personne != null && identifiant != null && adresse != null)
+            if (!cs.TrouverIdentifiant(identifiant))
             {
-                int Age = personne.getAge();
-                if (Age > 18)
+                //adresse avec base de données ? 
+                if (personne != null && identifiant != null && adresse != null)
                 {
-                    personne.EstMajeur = true;
-                }
-
-                if (personne.EstMajeur == true)
-                {
-                    if (personne.EstEnAccord == true)
+                    int Age = personne.getAge();
+                    if (Age > 18)
                     {
+                        personne.EstMajeur = true;
+                    }
 
-                        AdA ada = new AdA() { EstAdA = true };
-                        identifiant.EstAdA = ada.EstAdA;
+                    if (personne.EstMajeur == true)
+                    {
+                        if (personne.EstEnAccord == true)
+                        {
+                            AdA ada = new AdA() { EstAdA = true };
+                            identifiant.EstAdA = ada.EstAdA;
 
-                        int id = cs.AjouterIdentifiant(identifiant);
+                            int id = cs.AjouterIdentifiant(identifiant);
 
-
-                        var userClaims = new List<Claim>()
+                            var userClaims = new List<Claim>()
                         {
                             new Claim(ClaimTypes.Name, id.ToString()),
                         };
 
-                        var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                            var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
-                        var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                        HttpContext.SignInAsync(userPrincipal);
-                        bool EstUtilisateur = true;
-                        SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
+                            var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                            HttpContext.SignInAsync(userPrincipal);
+                            bool EstUtilisateur = true;
+                            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
-                        personne.IdentifiantId = id;
+                            personne.IdentifiantId = id;
 
-                        hvm.AdA = cs.CreerAdA(personne, adresse, ada);
-                        hvm.Personne = personne;
-                        hvm.Adresse = adresse;
-                        hvm.Identifiant = identifiant;
+                            hvm.AdA = cs.CreerAdA(personne, adresse, ada);
+                            hvm.Personne = personne;
+                            hvm.Adresse = adresse;
+                            hvm.Identifiant = identifiant;
 
-                        return View("Index", hvm);
+                            return View("Index", hvm);
+                        }
+
                     }
-                  
+                    hvm.Personne = personne;
+                    return View(hvm);
                 }
-                hvm.Personne = personne;
-                return View(hvm);
             }
-            return View();
+            hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
+            return View(hvm);
+        }
+        [HttpGet]
+        public IActionResult AjouterImage(AdA ada)
+        {
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult AjouterImage(AdA ada, IFormFile FileToUpload)
+        {
+            ada.Image = FileToUpload.FileName;
+            hvm.AdA = cs.ObtenirAdAParId(ada.Id);
+            hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+            
+            cs.AjouterPhoto(FileToUpload.FileName, hvm.Personne.IdentifiantId);
+
+            var FileDic = "Files";
+
+            string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageProfils");
+
+            if (!Directory.Exists(FilePath))
+
+                Directory.CreateDirectory(FilePath);
+
+            var fileName = FileToUpload.FileName;
+
+            var filePath = Path.Combine(FilePath, fileName);
+
+            using (FileStream fs = System.IO.File.Create(filePath))
+
+            {
+                FileToUpload.CopyTo(fs);
+            }
+            return RedirectToAction("Index", hvm.AdA);
         }
 
         public IActionResult Commandes(AdA ada)
         {
-            //voir ses paniers/commandes en boutique en cours dans une vue           
+            ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
+            hvm.AdA = ada;
             return View(hvm);
         }
 
         public IActionResult HistoriqueCommandes(AdA ada)
         {
-            //voir l'historique de ses commandes panier et boutique, ajouter un seul ! avis par panier ou article
+            ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
+            hvm.AdA = ada;
             return View(hvm);
         }
 
@@ -119,16 +184,15 @@ namespace Projet2.Controllers
         }
 
 
-        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
         public IActionResult ArticlesFavoris(AdA ada)
         {
+            //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
             hvm.AdA = ada;
             return View(hvm);        
         }
         
-        
-        
+              
         public IActionResult AteliersFavoris(AdA ada)
         {
             //avoir access a l'onglet ateliers pour en reserver/favoriser
@@ -139,6 +203,7 @@ namespace Projet2.Controllers
 
         public IActionResult ProducteursFavoris(AdA ada)
         {
+            //ajouter foncionnalité favoriser dans les producteurs pour les utilisateurs connectés
             hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
             hvm.AdA = ada;
             return View(hvm);
@@ -156,11 +221,10 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModificationCompte(Personne personne, Identifiant identifiant, Adresse adresse, AdA ada)
+        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdA ada)
         {
                 
                 hvm.Adresse = cs.ModifierAdresse(adresse);
-                hvm.Identifiant = cs.ModifierIdentifiant(identifiant);
                 personne.AdresseId = hvm.Adresse.Id;
                 personne.IdentifiantId = hvm.Identifiant.Id;
                 hvm.Personne = cs.ModifierPersonne(personne);
@@ -173,7 +237,7 @@ namespace Projet2.Controllers
                 viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
                 if (viewModel.Identifiant.EstAdA == true)
                 {
-                    return View("Index", hvm);
+                    return View("AdACompteInfo", hvm);
                 }
                 else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
                 {
@@ -189,10 +253,11 @@ namespace Projet2.Controllers
 
         public IActionResult SuppressionCompte(AdA ada)
         {
-            //warning avant suppression compte
             cs.SupprimerAdA(ada.Id);
+            bool EstUtilisateur = false;
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
-            return View();
+            return Redirect("/");
         }
 
     }

@@ -8,8 +8,6 @@
         public string Voie { get; set; }
         public string Ville { get; set; }
         public int CodePostal { get; set; }
-        public string Pays { get; set; }
-
 
     }
 }

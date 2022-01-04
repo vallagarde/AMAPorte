@@ -1,14 +1,8 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 @{
-    Layout = null;
+
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Comptes AMAPorte</title>
-</head>
-<body>
+<div class = "container">
     @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
 
 <br/>
@@ -25,7 +19,17 @@
                 <td>@adA.Personne.Identifiant.AdresseMail</td>
                 <td>
                     @Html.ActionLink("Modifier", "ModificationCompte", "CompteAdA", new { @id = adA.Id }),
-                    @Html.ActionLink("Supprimer", "SuppressionCompte", "CompteAdA", new { @id = adA.Id })
+                    <button class="modalButton" id="myBtn">Supprimer Compte</button>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p align="center">Supprimer Compte @adA.Id : @adA.Personne.Prenom @adA.Personne.Nom ?</p>
+                                <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
+                                @Html.HiddenFor(m => adA.Id)
+                                 <button class="modalButton" type="submit">Suppression</button>
+                                </form>
+                            </div>
+                        </div>
                 </td>
             </tr>
             }  
@@ -41,15 +45,58 @@
             @foreach (var adP in @Model.ListeComptesAdP)
             {
              <tr>
+                <td>Active : @adP.EstActive</td>
+                <td>En Attente : @adP.EstEnAttente</td>
                 <td>@adP.Id</td>
                 <td>@adP.Personne.Nom</td>
                 <td>@adP.Personne.Prenom</td>
                 <td>@adP.Personne.Identifiant.AdresseMail</td>
                 <td>
                     @Html.ActionLink("Modifier", "ModificationCompte", "CompteAdP", new { @id = adP.Id }),
-                    @Html.ActionLink("Supprimer", "SuppressionCompte", "CompteAdP", new { @id = adP.Id })
+                    <button class="modalButton" id="myBtn">Supprimer Compte</button>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p align="center">Supprimer Compte @adP.Id : @adP.Personne.Prenom @adP.Personne.Nom ?</p>
+                                <form align="center" method="post" asp-controller="CompteAdP" asp-action="SuppressionCompte" class="form-container">
+                                @Html.HiddenFor(m => adP.Id)
+                                 <button class="modalButton" type="submit">Suppression</button>
+                                </form>
+                            </div>
+                        </div>
                 </td>
             </tr>
+            @if(!@adP.EstEnAttente){
+            <tr>
+                <td>                
+                <form method="post" asp-controller="Admin" asp-action="GestionComptes">
+                @Html.HiddenFor(m => @Model.Admin.Id)
+                @Html.HiddenFor(m => @adP.Id)
+                @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                Commentaire : @Html.TextBoxFor(m => @adP.AdminCommentaire, new{value=""})
+                @if (adP.EstActive)
+                {
+                <br/>
+                @Html.Label("Etat", "Rejeté")
+                @Html.RadioButtonFor(m =>  @adP.EstActive, false)
+                <br/>                 
+                }
+                @if(!adP.EstActive)
+                {
+                <br/>
+                @Html.Label("Etat", "Rejeté")
+                @Html.RadioButtonFor(m =>  @adP.EstActive, false)
+                <br/>
+                @Html.Label("Etat", "Validé")
+                @Html.RadioButtonFor(m => @adP.EstActive, true)
+                <br/>
+                }
+                <button class="btn btn-primary" type="submit">Soumettre</button>
+                </form>
+                
+                </td>
+            </tr>
+            }
             }  
            
        }
@@ -60,17 +107,27 @@
     <p>Comptes CCEs </p>
     <table border="1">
         @if(@Model.ListeComptesCCEs.Count != 0){                       
-            @foreach (var cce in @Model.ListeComptesCCEs)
+            @foreach (var contactComiteEntreprise in @Model.ListeComptesCCEs)
             {
              <tr>
-                <td>@cce.Id</td>
-                <td>@cce.Nom</td>
-                <td>@cce.Prenom</td>
-                <td>@cce.AdresseMail</td>
-                <td>@cce.Entreprise.NomEntreprise</td>
+                <td>@contactComiteEntreprise.Id</td>
+                <td>@contactComiteEntreprise.Nom</td>
+                <td>@contactComiteEntreprise.Prenom</td>
+                <td>@contactComiteEntreprise.AdresseMail</td>
+                <td>@contactComiteEntreprise.Entreprise.NomEntreprise</td>
                 <td>
-                    @Html.ActionLink("Modifier", "ModificationCompte", "CompteCE", new { @id = cce.Id }),
-                    @Html.ActionLink("Supprimer", "SuppressionCompte", "CompteCE", new { @id = cce.Id })
+                    @Html.ActionLink("Modifier", "ModificationCompte", "CompteCE", new { @id = contactComiteEntreprise.Id }),
+                    <button class="modalButton" id="myBtn">Supprimer Compte</button>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p align="center">Supprimer Compte @contactComiteEntreprise.Id : @contactComiteEntreprise.Prenom @contactComiteEntreprise.Nom ?</p>
+                                <form align="center" method="post" asp-controller="CompteCE" asp-action="SuppressionCompte" class="form-container">
+                                @Html.HiddenFor(m => contactComiteEntreprise.Id)
+                                 <button class="modalButton" type="submit">Suppression</button>
+                                </form>
+                            </div>
+                        </div>
                 </td>
             </tr>
             }  
@@ -78,6 +135,4 @@
        }
        </table>
 </div>
-       
-</body>
-</html>
+</div>       

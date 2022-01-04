@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
+using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -14,18 +16,19 @@ namespace Projet2.Controllers
     {
 
         //TOUS LES VUES LIE A GESTION : GCRA; GCCQ; DSI
-        //CRUD pour le compte Admin > OK, > warning avant suppression compte a ajouter
         //Afficher tous les comptes OK > recherche dans les tableaux a implementer, ajouter des données dans le tableau 
         //Afficher et Valider (ou envoyer des retours sur) les propositions d'articles et panier des producteurs 
         //Ajouter des Articles ou Paniers ou Ateliers pour un producteur 
 
-        CompteServices cs = new CompteServices();
-        HomeViewModel hvm = new HomeViewModel();
+        private CompteServices cs = new CompteServices();
+        private HomeViewModel hvm = new HomeViewModel();
+        private PanierService panierService = new PanierService();
+        private ArticleRessources articleRessources = new ArticleRessources();
+        private PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
         public IActionResult Index(Admin admin)
         {
-
             hvm.Identifiant = cs.ObtenirIdentifiant(admin.IdentifiantId);
-            hvm.Admin = admin;
+            hvm.Admin = cs.ObtenirAdminParIdentifiant(admin.IdentifiantId);
             if (hvm.Identifiant == null)
             {
                 return View("Error");
@@ -37,64 +40,128 @@ namespace Projet2.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpGet]
-        public IActionResult CreationCompte()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public IActionResult CreationCompte(Admin admin, Identifiant identifiant)
-        {
-
-            if (admin != null && identifiant != null)
-            {
-                if (admin.EstDSI == true)
-                {
-                    identifiant.EstDSI = true;
-                }
-                else if (admin.EstGCRA == true) 
-                {
-                    identifiant.EstGCRA = true;
-                }
-                else
-                {
-                    identifiant.EstGCCQ = true;
-                }
-
-                int id = cs.AjouterIdentifiant(identifiant);
-
-                var userClaims = new List<Claim>()
-                {
-                    new Claim(ClaimTypes.Name, id.ToString()),
-                };
-
-                var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
-
-                var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                HttpContext.SignInAsync(userPrincipal);
-                bool EstUtilisateur = true;
-                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
-
-                admin.IdentifiantId = id;
-
-                hvm.Admin = cs.CreerAdmin(admin);
-                hvm.Identifiant = identifiant;
-
-                return View("Index", hvm);
-            }
-            return View();
-
-        }
-
-        public IActionResult GestionDemandesProducteurs(Admin admin)
+        public IActionResult CreationCompte(Admin admin)
         {
             hvm.Admin = admin;
             return View(hvm);
         }
 
+        [HttpPost]
+        public IActionResult CreationCompte(Admin admin, Identifiant identifiant)
+        {
+            if (!cs.TrouverIdentifiant(identifiant))
+            {
+                if (admin != null && identifiant != null)
+                {
+                    if (admin.EstDSI == true)
+                    {
+                        identifiant.EstDSI = true;
+                    }
+                    else if (admin.EstGCRA == true)
+                    {
+                        identifiant.EstGCRA = true;
+                    }
+                    else
+                    {
+                        identifiant.EstGCCQ = true;
+                    }
+
+                    int id = cs.AjouterIdentifiant(identifiant);
+                    admin.IdentifiantId = id;
+                    cs.CreerAdmin(admin);
+
+                    UtilisateurViewModel viewModel = new UtilisateurViewModel();
+                    viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                    hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return View("Index", hvm);
+                }
+            }
+            hvm.Admin.IdentifiantId = admin.IdentifiantId;
+            hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
+            return View(hvm);
+        }
+
+        [HttpGet]
+        public IActionResult GestionEtatCommande(Admin admin)
+        {
+            hvm.Admin = admin;
+            
+            List<Commande> commandes = panierService.ObtenirToutesCommandes();
+            
+            foreach (Commande commande in commandes)
+            {
+                if (commande.EstEnPreparation)
+                {
+                    hvm.ListeCommandesEnPrep.Add(commande);
+                }
+                else if (commande.EstEnLivraison)
+                {
+                    hvm.ListeCommandesEnCours.Add(commande);
+                }
+                else if (commande.EstARecuperer)
+                {
+                    hvm.ListeCommandesARecup.Add(commande);
+                }
+                else hvm.ListeCommandesLivres.Add(commande);
+            }
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult GestionEtatCommande(Admin admin, Commande commande)
+        {
+            hvm.Admin = admin;
+            panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
+            return RedirectToAction("GestionEtatCommande", hvm.Admin);
+        }
+
+        [HttpGet]
+        public IActionResult GestionDemandesProducteurs(Admin admin)
+        {
+            hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
+            foreach (AdP adp in hvm.ListeComptesAdP)
+            {                         
+              foreach(Article article in articleRessources.ObtenirArticleParAdP(adp))
+                {
+                    if (!article.EstValide)
+                    {
+                        hvm.AdP.Assortiment.Add(article);
+                    }
+                }
+                foreach (PanierSaisonnier panierSaisonnier in saisonnierService.ObtenirPanierParAdP(adp))
+                {
+                    if (!panierSaisonnier.EstValide)
+                    {
+                        hvm.AdP.AssortimentPanier.Add(panierSaisonnier);
+                    }
+                }
+
+            }
+            hvm.Admin = admin;
+            return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult GestionDemandesProducteurs(Admin admin, Article article, PanierSaisonnier panierSaisonnier)
+        {
+            if(article != null)
+            {
+                articleRessources.ValidationArticle(article);
+                //message à producteur ?
+            }
+            if (panierSaisonnier != null)
+            {
+                saisonnierService.ValidationPanier(panierSaisonnier);
+                //message à producteur ?
+            }
+
+            hvm.Admin = admin;
+            return RedirectToAction("GestionDemandesProducteurs", hvm.Admin);
+        }
+
+
+        [HttpGet]
         public IActionResult GestionComptes(Admin admin)
         {
             hvm.ListeComptesAdA = cs.ObtenirTousLesAdAs();
@@ -102,6 +169,20 @@ namespace Projet2.Controllers
             hvm.ListeComptesCCEs = cs.ObtenirTousLesCCEs();
             hvm.Admin = admin;
             return View(hvm);
+        }
+
+        [HttpPost]
+        public IActionResult GestionComptes(Admin admin, AdP adp)
+        {
+            if (adp != null)
+            {
+                cs.ValidationAdP(adp);
+                //message à producteur ?
+            }
+
+            hvm.Admin = admin;
+            return RedirectToAction("GestionComptes", hvm.Admin);
+
         }
 
         [HttpGet]
@@ -125,8 +206,10 @@ namespace Projet2.Controllers
         public IActionResult SuppressionCompte(Admin admin)
         {
             cs.SupprimerAdmin(admin.Id);
+            bool EstUtilisateur = false;
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
-            return View();
+            return Redirect("/");
         }
 
     }

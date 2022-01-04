@@ -25,11 +25,13 @@ namespace Projet2.Controllers
 
         public IActionResult Index()
         {
+            CompteServices csx = new CompteServices();
             HomeViewModel hvm = new HomeViewModel
             {
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
+                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId"),
+                ListeComptesAdP = csx.ObtenirAdPsVedettes()
 
-            };
+        };
             return View(hvm);
         }
 
@@ -61,16 +63,6 @@ namespace Projet2.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult Inscription()
-        {
-            HomeViewModel hvm = new HomeViewModel
-            {
-                PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId")
-
-            };
-            return View(hvm);
         }
 
         [Authorize]
