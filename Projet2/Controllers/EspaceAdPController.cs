@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
+using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +25,7 @@ namespace Projet2.Controllers
         private CompteServices cs = new CompteServices();
         private ArticleRessources ar = new ArticleRessources();
         private PanierSaisonnierService pss = new PanierSaisonnierService();
+        private CalendrierService calendrier = new CalendrierService();
         private HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index()
         {
@@ -34,6 +37,7 @@ namespace Projet2.Controllers
         public IActionResult CommandesAPreparer(AdP adp)
         {
             hvm.AdP = adp;
+            hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
             PanierService panierService = new PanierService();
             List<Commande> commandes = panierService.ObtenirCommandesAdP(adp.Id);
 
@@ -41,7 +45,11 @@ namespace Projet2.Controllers
             {
                 if (commande.EstEnPreparation)
                 {
-                    hvm.ListeCommandesEnPrep.Add(commande);
+                    commande.DateLivraison = calendrier.ObtenirDateLivraisonCommande(commande.Id);
+                    if (commande.DateLivraison.Date == hvm.ProchaineDateLivraison.Date)
+                    {
+                        hvm.ListeCommandesEnPrep.Add(commande);
+                    }                   
                 }
             }
             return View(hvm);

@@ -74,40 +74,44 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult CreationCompte(ContactComiteEntreprise contactComiteEntreprise,Entreprise entreprise, Identifiant identifiant, Adresse adresse)
         {
-            //adresse avec base de données ? 
-            if (contactComiteEntreprise != null && identifiant != null && entreprise != null)
+            if (!cs.TrouverIdentifiant(identifiant))
             {
-                if (entreprise.EstEnAccord == true)
+                //adresse avec base de données ? 
+                if (contactComiteEntreprise != null && identifiant != null && entreprise != null)
                 {
-                    contactComiteEntreprise.EstCE = true;
-                    identifiant.EstCE = contactComiteEntreprise.EstCE;
-                    int id = cs.AjouterIdentifiant(identifiant);
+                    if (entreprise.EstEnAccord == true)
+                    {
+                        contactComiteEntreprise.EstCE = true;
+                        identifiant.EstCE = contactComiteEntreprise.EstCE;
+                        int id = cs.AjouterIdentifiant(identifiant);
 
-                    var userClaims = new List<Claim>()
+                        var userClaims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.Name, id.ToString()),
                 };
 
-                    var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                        var ClaimIdentity = new ClaimsIdentity(userClaims, "User Identity");
 
-                    var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
-                    HttpContext.SignInAsync(userPrincipal);
-                    bool EstUtilisateur = true;
-                    SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
+                        var userPrincipal = new ClaimsPrincipal(new[] { ClaimIdentity });
+                        HttpContext.SignInAsync(userPrincipal);
+                        bool EstUtilisateur = true;
+                        SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
 
-                    contactComiteEntreprise.IdentifiantId = id;
-                    contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
+                        contactComiteEntreprise.IdentifiantId = id;
+                        contactComiteEntreprise.AdresseMail = identifiant.AdresseMail;
 
-                    hvm.ContactComiteEntreprise = cs.CreerCCE(contactComiteEntreprise, entreprise, adresse);
-                    hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
-                    hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-                    hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
-                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                        hvm.ContactComiteEntreprise = cs.CreerCCE(contactComiteEntreprise, entreprise, adresse);
+                        hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                        hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+                        hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                        hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
 
-                    return View("Index", hvm);
-                }               
+                        return View("Index", hvm);
+                    }
+                }
             }
-            return View();
+            hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
+            return View(hvm);
         }
 
         public IActionResult Commandes(ContactComiteEntreprise contactComiteEntreprise)
@@ -200,23 +204,37 @@ namespace Projet2.Controllers
             return Redirect("/");
         }
 
+        [HttpGet]
         public IActionResult SuppressionCompte(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            return View(hvm);
+        }
+
+
+        [HttpPost]
+        public IActionResult SuppressionCompte(ContactComiteEntreprise contactComiteEntreprise, int Id)
         {
             List<ContactComiteEntreprise> listCCE = cs.ObtenirCCEsParEntreprise(contactComiteEntreprise.EntrepriseId);
 
             if (listCCE.Count != 1)
             {
                 cs.SupprimerCCE(contactComiteEntreprise.Id);
+                bool EstUtilisateur = false;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
                 HttpContext.SignOutAsync();
-                return View();
-                
-            } else
+                return Redirect("/");
+
+            }
+            else
             {
                 cs.SupprimerEntreprise(contactComiteEntreprise.EntrepriseId);
+                bool EstUtilisateur = false;
+                SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
                 HttpContext.SignOutAsync();
             }
 
-            return View();
+            return Redirect("/");
         }
 
     }

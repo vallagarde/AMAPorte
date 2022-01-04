@@ -6,10 +6,15 @@
         
 <fieldset>
     <h2> Identifiant </h2>
+    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
     <br />
         @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
         @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
         @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+         @if(@Model.AdresseExistante == true)
+            {
+            <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+            }
     <br />
         @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
         @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})

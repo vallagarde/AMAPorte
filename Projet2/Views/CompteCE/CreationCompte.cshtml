@@ -2,10 +2,30 @@
 
 <section class="signupLayout">
         <div class="container">
+
+                         <div class="tabs">
+                       <nav class="navbar navbar-expand-lg">
+                            <div class="collapse navbar-collapse">
+                                    <ul>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte">Je suis un particulier</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link chosen" asp-area="" asp-controller="CompteCE" asp-action="CreationCompte">Je represente un CE</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdP" asp-action="CreationCompte">Je suis un producteur</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </nav>
+                   </div>
             <div  class="user signupBx">
 
+
                 <div class="formBx">
-                   
+                  
+
                     @using (Html.BeginForm())
                     {
                     
@@ -23,7 +43,16 @@
                           <tr>
                               <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>
                               <th>@Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
-                                  @Html.ValidationMessageFor(m => Model.Identifiant.MotDePasse)</th>
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.MotDePasse)
+                                @if(@Model != null)
+                                {
+                                  @if(@Model.AdresseExistante == true)
+                                        {
+                                        <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+                                        }  
+                                }
+                                
+                              </th>
                          </tr>
                         </table>
 
@@ -35,15 +64,18 @@
                             </colgroup>
                             <tr>
                               <th>@Html.LabelFor(m => Model.Entreprise.NomEntreprise)</th>
-                              <th>@Html.TextBoxFor(m => Model.Entreprise.NomEntreprise,  new {placeholder="Nom de l'Entreprise'"})</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NomEntreprise,  new {placeholder="Nom de l'Entreprise'"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.NomEntreprise, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.Entreprise.NombreUtilisateur)</th>
-                              <th>@Html.TextBoxFor(m => Model.Entreprise.NombreUtilisateur, new {placeholder="Nombre des collaborateurs bénéficiant de ce service"})</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NombreUtilisateur, new {placeholder="Nombre des collaborateurs bénéficiant de ce service"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.NombreUtilisateur, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th> @Html.LabelFor(m => Model.Entreprise.Siren)</th>
-                              <th>@Html.TextBoxFor(m => Model.Entreprise.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.Siren, "", new { @class = "text-danger" })</th>
                             </tr>
                             </table>
 
@@ -56,11 +88,13 @@
                             </colgroup>
                             <tr>
                               <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.Nom)</th>
-                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Nom, new {placeholder="Nom de Famille"})</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Nom, new {placeholder="Nom de Famille"})
+                              @Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.Nom, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.Prenom)</th>
-                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Prenom, new {placeholder="Prénom"})</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Prenom, new {placeholder="Prénom"})
+                              @Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.Prenom, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
                               <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.NTelephone)</th>
@@ -71,7 +105,7 @@
                             </table>
 
                         <h2> Remplissez les Informations de Paiement </h2>
-                        <h2> (Adresse de l'Entreprise) </h2>
+                        <h2 class="signup"> (Adresse de l'Entreprise) </h2>
                         <table width=100%>
                         <colgroup>
                             <col style="width: 25%" align="right">
@@ -81,15 +115,19 @@
                         </colgroup>
                         <tr>
                             <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Numero, "", new { @class = "text-danger" })</th>
                             <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Voie, "", new { @class = "text-danger" })</th>
                         </tr>
                         <tr>
                             <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)
+                            @Html.ValidationMessageFor(m => Model.Adresse.CodePostal, "", new { @class = "text-danger" })</th>
                             <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
-                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Ville, "", new { @class = "text-danger" })</th>
                         </tr>
                         </table>
                          <table width=100%>
@@ -99,7 +137,8 @@
                             </colgroup>
                                 <tr align="justify">
                                 <th >@Html.CheckBoxFor(m => Model.Entreprise.EstEnAccord)</th>
-                                <th>@Html.LabelFor(m => Model.Entreprise.EstEnAccord)</th>
+                                <th>@Html.LabelFor(m => Model.Entreprise.EstEnAccord)
+                                @Html.ValidationMessageFor(m => Model.Entreprise.EstEnAccord, "", new { @class = "text-danger" })</th>
                             </tr>
                         </table>
                         <table width=100%>

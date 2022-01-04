@@ -6,4 +6,4 @@ files:
 hooks:
   ApplicationStart:
     - location: .aws/stopApplication.sh
-    - location: .aws/startApplication.sh 
+    - location: .aws/startApplication.sh

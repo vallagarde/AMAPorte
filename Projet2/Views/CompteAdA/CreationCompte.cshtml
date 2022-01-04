@@ -2,9 +2,29 @@
 
 @*https://www.data.gouv.fr/fr/datasets/departements-de-france/*@
 
+
  <section class="signupLayout">
-        <div class="container">
-            <div class="user signupBx">                
+        <div class="container"> 
+
+             <div class="tabs">
+                       <nav class="navbar navbar-expand-lg">
+                            <div class="collapse navbar-collapse">
+                                    <ul>
+                                        <li class="nav-item">
+                                            <a class="nav-link chosen" asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte">Je suis un particulier</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteCE" asp-action="CreationCompte">Je represente un CE</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" asp-area="" asp-controller="CompteAdP" asp-action="CreationCompte">Je suis un producteur</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </nav>
+                   </div>
+            <div class="user signupBx"> 
+
                 <div class="formBx">
                     @*
                      @using (Html.BeginForm())
@@ -23,7 +43,6 @@
                     <br/>
                     <input type="submit" value="Créez votre Compte"/>
                     *@
-                    
                     @using (Html.BeginForm())
                     {                    
                         <h2>Créez un Identifiant </h2>
@@ -36,6 +55,14 @@
                               <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
                               <th>@Html.TextBoxFor(m => Model.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
                                   @Html.ValidationMessageFor(m => Model.Identifiant.AdresseMail, "", new { @class = "text-danger" }) </th>
+                                  @if(@Model != null)  
+                                  {
+                                      @if(@Model.AdresseExistante == true)
+                                        {
+                                        <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+                                        }
+                                  } 
+                                  
                           </tr>
                           <tr>
                               <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>
@@ -144,6 +171,7 @@
                 </div>
               <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
             </div>
-        </div>
+            </div>
+        
     </section>
 

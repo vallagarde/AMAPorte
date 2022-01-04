@@ -3,35 +3,70 @@
 @{
 }
 
-<h1>Changer Identifiant : </h1>
 
-    @using (Html.BeginForm())
-    {
-<fieldset>
-    <h2> Identifiant </h2>
-        @Html.HiddenFor(m => Model.Identifiant.Id)
-        @Html.HiddenFor(m => Model.Identifiant.EstAdA)
-        @Html.HiddenFor(m => Model.Identifiant.EstAdP)
-        @Html.HiddenFor(m => Model.Identifiant.EstCE)
-        @Html.HiddenFor(m => Model.Identifiant.EstDSI)
-        @Html.HiddenFor(m => Model.Identifiant.EstGCCQ)
-        @Html.HiddenFor(m => Model.Identifiant.EstGCRA)
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
-        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
-        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { required = "required" })
-        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
-    <br />
-</fieldset>
-     <br />
-        <input type="submit" value="Modification" />
-    }
-    <br />
-@if(@Model.Identifiant.Id != 0)
-{
-    @Html.ActionLink("Retour sur Mon Compte", "EspacePersonnel", "Home")  
-}
-    <br />
+ <section class="signupLayout">
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx"><img src="~/ImageArticle/pommes.jpg"></div>
+                <div class="formBx">
+
+                    @if(@Model.Identifiant.Id != 0)
+                   {
+                    @using (Html.BeginForm())
+                    {
+                        @Html.HiddenFor(m => Model.Identifiant.Id)
+                        @Html.HiddenFor(m => Model.Identifiant.EstAdA)
+                        @Html.HiddenFor(m => Model.Identifiant.EstAdP)
+                        @Html.HiddenFor(m => Model.Identifiant.EstCE)
+                        @Html.HiddenFor(m => Model.Identifiant.EstDSI)
+                        @Html.HiddenFor(m => Model.Identifiant.EstGCCQ)
+                        @Html.HiddenFor(m => Model.Identifiant.EstGCRA)
+                        <h2>Mettez votre nouveau mot de passe</h2>
+                        <table width=100%>
+                                <tr>
+                                  <th class="signup">@Html.TextBoxFor(m => m.Identifiant.AdresseMail, new {placeholder="Adresse Mail"})
+                                                    @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+                                 </th>
+                                </tr>
+                                <tr>
+                                  <th class="signup">@Html.PasswordFor(m => m.Identifiant.MotDePasse, new {placeholder="Mot de Passe",  required = "required"})
+                                                     @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
+                                 </th>
+                                </tr>
+                                <tr align="center">
+                                  <th class="signup"><input type="submit" value="Confirmer" /></th>
+                                </tr>                              
+                                <tr align="center">
+                                 <th class="signup"><a asp-area="" asp-controller="Home" asp-action="EspacePersonnel">Retour sur Mon Compte</a></th>
+                                </tr>
+                                </table>  
+                     }
+                     }
+                    @if (@Model.Identifiant.Id == 0)
+                    {
+                        @using (Html.BeginForm())
+                        {
+                            <h2>Mettez votre adresse Mail</h2>
+                            <h2 class="signup">Vous allez recevoir un mail avec un lien pour réinitialiser votre mot de passe</h2>
+                            <table width=100%>
+                                <tr>
+                                    <th class="signup">@Html.TextBoxFor(m => m.Identifiant.AdresseMail, new {placeholder="Adresse Mail"})
+                                        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
+                                    </th>
+                                </tr>
+                                <tr align="center">
+                                    <th class="signup"><input type="submit" value="Confirmer" /></th>
+                                </tr>                              
+                                <tr align="center">
+                                    <th class="signup"><a asp-area="" asp-controller="Login" asp-action="Index">Retour au Login</a></th>
+                                </tr>
+                            </table>
+                        }
+                    }
+            </div>
+            </div>
+        </div>
+    </section>
+    
+    
+     
