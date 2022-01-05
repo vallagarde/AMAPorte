@@ -48,7 +48,15 @@ namespace Projet2.Controllers
 
             HomeViewModel hvm = new HomeViewModel();
             Commande commande = new Commande() { PanierBoutiqueId = panierId };
-            commande.DateCommande = DateTime.Now;
+            DateTime dateDeCommande = DateTime.Now;
+            commande.DateCommande = dateDeCommande;
+
+            while (dateDeCommande.DayOfWeek != DayOfWeek.Wednesday)
+            {
+                dateDeCommande = dateDeCommande.AddDays(1);
+            }
+            commande.DateLivraison = dateDeCommande;
+            
 
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)
@@ -70,11 +78,16 @@ namespace Projet2.Controllers
             {
                 commande.ClientId = SessionHelper.GetObjectFromJson<Client>(HttpContext.Session, "client").Id;
             }
-
+            
             ctx.CreerCommande(commande, panierId);
             ctx.ChangerEtatCommande(panierId, "EstEnPreparation");
-            csc.AjouterLigneCalendrierCommande(commande);
             ctx.DeduireDuStock(panierBoutique);
+            csc.AjouterLigneCalendrierCommande(commande);
+
+
+            hvm.Commande = commande;
+            hvm.PanierBoutique = panierBoutique;
+
 
             SessionHelper.SetObjectAsJson(HttpContext.Session, "panierId", 0);
 

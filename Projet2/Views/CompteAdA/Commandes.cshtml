@@ -20,29 +20,13 @@
                     {
                     var Total = Decimal.Round(commande.PanierBoutique.Total, 2);                   
                         <div class="row ">
-                                <div class="card-body">
-                                    <h5 class="card-title">Numéro de Commande : @commande.Id</h5>
-                                    <p class="card-text">@commande.DateCommande</p>
-                                    <p class="card-text">@commande.EtatCommande</p>
-                                    <div class="row ">
-                                    @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                                    {
-                                        var SousTotal = Decimal.Round(lignePanierBoutique.SousTotal, 2);
-                                            <div class="card h-100">
-                                                @{
-                                                String filepath = "~/ImageArticle/" + @lignePanierBoutique.Article.Image;
-                                                }
-                                                <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
-                                                    <div class="card-body">
-                                                    <p class="card-text">@lignePanierBoutique.Article.Nom</p>
-                                                    <p class="card-text">Quantité : @lignePanierBoutique.Quantite</p>
-                                                    <p class="card-text">@SousTotal</p>
-                                                    </div>
-                                            </div>                                    
-                                    }
-                                    </div>
-                                    <p class="card-text">@Total</p>
-                                </div>                       
+                            <div class="card-body">
+                                <h5 class="card-title">Numéro de Commande : @commande.Id</h5>
+                                <p class="card-text">@commande.DateCommande</p>
+                                <p class="card-text">@commande.EtatCommande</p>
+                                <p class="card-text">@Total</p>
+                                <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "CompteAdA", new { @CommandeId = commande.Id })'"> voir détails</button>
+                            </div>                       
                         </div>
                     }
                 }

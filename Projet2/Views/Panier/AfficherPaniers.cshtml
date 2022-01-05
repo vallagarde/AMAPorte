@@ -1,6 +1,12 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 <br />
+<div class="container-fluid px-4 px-lg-5 my-5 bg-dark py-5">
+    <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Liste des Paniers saisonniers</h1>
+        <p class="lead fw-normal text-white-50 mb-0">Des produits frais toute l'année</p>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row row row-cols-1 row-cols-md-4 g-4">
         @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
@@ -19,14 +25,17 @@
                             <h6 class="card-title text-center">@panierSaisonnier.AdP.NomProducteur</h6>
                             <p class="card-text text-center">@panierSaisonnier.Description</p>
                             <p class="card-text text-center">@Decimal.Round(panierSaisonnier.Prix, 2)</p>
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPanier", "Panier", new { @Id = panierSaisonnier.Id })'">
-                                Commander 1 panier
-                            </button>
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPaniers", "Panier", new { @Id = panierSaisonnier.Id })'">
-                                Commander plusieurs panier
-                            </button>
-                            @Html.ActionLink("Choisir", "CommanderPanier", "Panier", @panierSaisonnier)
-                            @Html.ActionLink("Plus", "AjouterLigneCommande", "Panier", @panierSaisonnier)
+                            <div class="row d-flex justify-content-center">
+                                <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPanier", "Panier", new { @Id = panierSaisonnier.Id })'">
+                                    Commander 1 panier
+                                </button>
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPaniers", "Panier", new { @Id = panierSaisonnier.Id })'">
+                                    Commander plusieurs paniers
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>

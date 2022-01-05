@@ -1,7 +1,74 @@
-﻿@*
+﻿@model Projet2.ViewModels.HomeViewModel
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
-Vous avez validés votre commande
+<section class=" gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-xl-9">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5 text-center">
+                        <div>
+                            <div id="content">
+                                <div class="notify successbox">
+                                    <h1>Commande Finalisée</h1><br />
+                                    <span class="alerticon"><img src="https://i0.wp.com/objectifalpinisme.com/wp-content/uploads/2021/02/pngegg.png?w=750&ssl=1" alt="checkmark" style=" max-height: 50px" /></span><br />
+                                </div>
+
+                                <div id="Box">
+                                    <hr />
+                                    <dl class="dl-horizontal justify content-center">
+                                        <dt>
+                                            N° de Commande :
+                                        </dt>
+
+                                        <dd>
+                                            @Model.Commande.Id
+                                        </dd>
+
+                                        <dt>
+                                            Montant de la transaction :
+                                        </dt>
+
+                                        <dd>
+                                            € @Decimal.Round(Model.PanierBoutique.Total, 2)
+                                        </dd>
+
+                                        <dt>
+                                            Date de commande :
+                                        </dt>
+
+                                        <dd>
+                                            @Model.Commande.DateCommande
+                                        </dd>
+
+                                        <dt>
+                                            Date de Livraison :
+                                        </dt>
+
+                                        <dd>
+                                            @Model.Commande.DateLivraison
+                                        </dd>
+
+                                        <dt>
+                                            Etat de la commande :
+                                        </dt>
+
+                                        <dd>
+                                            @Model.Commande.EtatCommande;
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

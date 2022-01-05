@@ -328,6 +328,14 @@ namespace Projet2.Models.Boutique
             return commandes;
         }
 
+        public Commande ObtientCommandeParId(int id)
+        {
+            
+              return _bddContext.Commande.Find(id);
+            
+        }
+
+
         public List<Commande> ObtenirCommandesAdP(int adpId)
         {
             List<Commande> commandes = new List<Commande>();
