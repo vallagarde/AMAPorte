@@ -170,6 +170,19 @@ namespace Projet2.Controllers
             return View(hvm);
         }
 
+        public IActionResult Commande_infos(int CommandeId)
+        {
+            Commande commande = panierService.ObtientCommandeParId(CommandeId);
+            int panierId = commande.PanierBoutiqueId;
+            PanierBoutique panierBoutique = panierService.ObientPanier(panierId);
+            commande.PanierBoutique = panierBoutique;
+            hvm.PanierBoutique = panierBoutique;
+            hvm.Commande= commande;
+            return View(hvm);
+        }
+
+
+
         public IActionResult HistoriqueCommandes(AdA ada)
         {
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);

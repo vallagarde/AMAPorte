@@ -37,15 +37,13 @@
             </div>
         </form>
 
-
-
-        <form asp-action="Paiement" asp-controller="Panier" method="post">
-            <article>
-                <label>Prix à payer: @PrixAPayer €</label>
-                <input type="hidden" name="PanierId" value="@Model.LignePanierSaisonnier.Id" />
-                <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="@Stripe.Value.PublishableKey" data-locale="auto" data-description="Paiment" data-amount="@APayer"></script>
-            </article>
-        </form>
+    <form asp-action="Paiement" asp-controller="Panier" method="post">
+        <article>
+            <label>Prix à payer: @PrixAPayer €</label>
+            <input type="hidden" name="PanierId" value="@Model.LignePanierSaisonnier.Id" />
+            <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="@Stripe.Value.PublishableKey" data-locale="auto" data-description="Paiment" data-amount="@APayer"></script>
+        </article>
+    </form>
 
 
     </div>

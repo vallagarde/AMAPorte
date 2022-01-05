@@ -2,50 +2,59 @@
 @{
 }
 
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="~/ImageArticle/@Model.PanierSaisonnier.Image" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">Producteur: @Model.PanierSaisonnier.AdP.NomProducteur</div>
+                <h1 class="display-5 fw-bolder">@Model.PanierSaisonnier.NomPanier</h1>
+                <div class="fs-5 mb-5">
+                    <span>€ @Decimal.Round(@Model.PanierSaisonnier.Prix, 2)</span>
 
-<div class=" container">
-    <div class="row">
-        @Html.HiddenFor(m => Model.PanierSaisonnier.Id)
-        <div class="col">
+                </div>
+                <p class="lead">@Model.PanierSaisonnier.ProduitsProposes</p>
+                <div class="d-flex">
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="semaine" id="inlineRadio1" value="13">
+                            <label class="form-check-label" for="inlineRadio1">13 semaines</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="semaine" id="inlineRadio2" value="26">
+                            <label class="form-check-label" for="inlineRadio2">26 semaines</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="semaine" id="inlineRadio3" value="52">
+                            <label class="form-check-label" for="inlineRadio3">52 semaines</label>
+                        </div>
 
-            @{
-                String filepath = "~/ImagesPaniers/" + @Model.PanierSaisonnier.Image;
-            }
-            <img src="~/ImagesPaniers/@Model.PanierSaisonnier.Image" class="card-img-top" alt="...">
+                        <div class="col">
+                            <label for="quantite" class="col-sm-2 col-form-label">Quantite</label>
+                            <input id="quantite" type="number" class="form-control" name="quantite">
+                            <input type="hidden" name="id" value="@Model.PanierSaisonnier.Id">
+                        </div>
+                        <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                            <i class="bi bi-basket2 me-1"></i>
+                            Ajouter au panier
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
-        <div class="col">
-            <h2 class="">@Model.PanierSaisonnier.NomPanier</h2>
-            <h3 class="">@Model.PanierSaisonnier.AdP.NomProducteur</h3>
-            <p class="">@Model.PanierSaisonnier.ProduitsProposes </p>
-            <p class="">@Model.PanierSaisonnier.Description</p>
-            <p class="">@Model.PanierSaisonnier.Prix €</p>
 
-        </div>
-        <div class="col-5">
-            @using (Html.BeginForm())
-            {
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="semaine" id="inlineRadio1" value="13">
-                    <label class="form-check-label" for="inlineRadio1">13 semaines</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="semaine" id="inlineRadio2" value="26">
-                    <label class="form-check-label" for="inlineRadio2">26 semaines</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="semaine" id="inlineRadio3" value="52">
-                    <label class="form-check-label" for="inlineRadio3">52 semaines</label>
-                </div>
-
-                <div class="col">
-                    <label for="quantite" class="col-sm-2 col-form-label">Quantite</label>
-                    <input id="quantite" type="number" class="form-control" name="quantite">
-                    <input type="hidden" name="id" value="@Model.PanierSaisonnier.Id">
-                </div>
-                <div class="col-12">
-                    <button type="submit">ajouter Panier</button>
-                </div>
-            }
-        </div>
+        @foreach (var avis in @Model.Article.Avis)
+        {
+            <br />
+            @avis.Note
+            <br />
+            @avis.Text
+            <br />
+            @avis.AdAId
+            <br />
+            <br />
+        }
     </div>
-</div>>
+</section>
+

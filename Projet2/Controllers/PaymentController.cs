@@ -76,6 +76,10 @@ namespace Projet2.Controllers
             csc.AjouterLigneCalendrierCommande(commande);
             ctx.DeduireDuStock(panierBoutique);
 
+            hvm.Commande = commande;
+            hvm.PanierBoutique = panierBoutique;
+
+
             SessionHelper.SetObjectAsJson(HttpContext.Session, "panierId", 0);
 
             return View(hvm);
