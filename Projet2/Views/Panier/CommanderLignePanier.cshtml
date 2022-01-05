@@ -31,8 +31,14 @@
             var PrixAPayer = Decimal.Round(Apayer, 2);
         }
         <form onsubmit="return validate()">
-            <input type="checkbox" id="contrat" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#contract">contrat</a>
+
+            <input type="checkbox" id="contrat" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">contrat</a>
+            <div>
+                <input type="submit" value="submit" />
+            </div>
         </form>
+
+
 
         <form asp-action="Paiement" asp-controller="Panier" method="post">
             <article>
