@@ -170,5 +170,19 @@ namespace Projet2.Controllers
             return RedirectToAction("AfficherPaniers");
         }
 
+        public bool PanierIsEmpty()
+        {
+            try
+            {
+                int PanierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+                return PanierId == 0;
+            }
+            catch (Exception e)
+            {
+                return true;
+            }
+        }
+
     }
 }
