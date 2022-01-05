@@ -72,7 +72,7 @@ namespace Projet2.Models.Calendriers
 
         public void AjouterLigneCalendrierPanier(CommandePanier commandePanier)
         {
-            DateTime dateDeCommande = commandePanier.DateTime;
+            DateTime dateDeCommande = commandePanier.DateCommande;
             int commandeId = commandePanier.Id;
             while (dateDeCommande.DayOfWeek != DayOfWeek.Wednesday)
             {

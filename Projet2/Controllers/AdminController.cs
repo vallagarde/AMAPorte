@@ -17,7 +17,6 @@ namespace Projet2.Controllers
 
         //TOUS LES VUES LIE A GESTION : GCRA; GCCQ; DSI
         //Afficher tous les comptes OK > recherche dans les tableaux a implementer, ajouter des données dans le tableau 
-        //Afficher et Valider (ou envoyer des retours sur) les propositions d'articles et panier des producteurs 
         //Ajouter des Articles ou Paniers ou Ateliers pour un producteur 
 
         private CompteServices cs = new CompteServices();
@@ -25,6 +24,7 @@ namespace Projet2.Controllers
         private PanierService panierService = new PanierService();
         private ArticleRessources articleRessources = new ArticleRessources();
         private PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
+        private LignePanierService lignePanierService = new LignePanierService();
         public IActionResult Index(Admin admin)
         {
             hvm.Identifiant = cs.ObtenirIdentifiant(admin.IdentifiantId);
@@ -35,7 +35,6 @@ namespace Projet2.Controllers
             }
             else
             {
-                //View("ArticlesFavoris", hvm);
                 return View(hvm);
             }
         }
@@ -105,6 +104,25 @@ namespace Projet2.Controllers
                 }
                 else hvm.ListeCommandesLivres.Add(commande);
             }
+
+            List<CommandePanier> commandesPanier = lignePanierService.ObtenirToutesCommandesPanier();
+            foreach (CommandePanier commandePanier in commandesPanier)
+            {
+                if (commandePanier.EstEnPreparation)
+                {
+                    hvm.ListeCommandesPanierEnPrep.Add(commandePanier);
+                }
+                else if (commandePanier.EstEnLivraison)
+                {
+                    hvm.ListeCommandesPanierEnCours.Add(commandePanier);
+                }
+                else if (commandePanier.EstARecuperer)
+                {
+                    hvm.ListeCommandesPanierARecup.Add(commandePanier);
+                }
+                else hvm.ListeCommandesPanierLivres.Add(commandePanier);
+            }
+
             return View(hvm);
         }
 
@@ -112,10 +130,25 @@ namespace Projet2.Controllers
         public IActionResult GestionEtatCommande(Admin admin, Commande commande)
         {
             hvm.Admin = admin;
-            panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
+            if(commande != null)
+            {
+             panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
+            }
             return RedirectToAction("GestionEtatCommande", hvm.Admin);
         }
 
+        [HttpPost]
+        public IActionResult GestionEtatCommandePanier(Admin admin, CommandePanier commandePanier)
+        {
+            hvm.Admin = admin;
+            if (commandePanier != null)
+            {
+                lignePanierService.ChangerEtatCommandePanier(commandePanier.Id, commandePanier.EtatCommande);
+            }
+            return RedirectToAction("GestionEtatCommande", hvm.Admin);
+        }
+
+        
         [HttpGet]
         public IActionResult GestionDemandesProducteurs(Admin admin)
         {

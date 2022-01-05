@@ -19,6 +19,7 @@ namespace Projet2.Controllers
     {
         private HomeViewModel hvm = new HomeViewModel();
         private PanierSaisonnierService ctx = new PanierSaisonnierService();
+        private LignePanierService lignePanierService = new LignePanierService();
         private readonly IWebHostEnvironment _webHostEnvironment;
         private CalendrierService csv = new CalendrierService();
 
@@ -78,16 +79,13 @@ namespace Projet2.Controllers
         public IActionResult Paiement(int panierId)
         {
 
-            LignePanierSaisonnier lignePanier = ctx.ObtientLignePanierParId(panierId);
-            CommandePanier commande = ctx.CreerCommande(lignePanier);
+            LignePanierSaisonnier lignePanier = lignePanierService.ObtientLignePanierParId(panierId);
+            CommandePanier commande = lignePanierService.CreerCommande(lignePanier);
             csv.AjouterLigneCalendrierPanier(commande);
             
             return View();
         }
-
-
-
-        
+      
         public IActionResult CommanderPanier(int Id)
         {
 
@@ -133,8 +131,8 @@ namespace Projet2.Controllers
         public IActionResult CommanderLignePanier(int lignepanierId)
 
         {
-            LignePanierSaisonnier LignePanier = ctx.ObtientLignePanierParId(lignepanierId);
-            hvm.PanierSaisonnier = ctx.ObtientPanierParId(LignePanier.PanierSaisonnierId);
+            LignePanierSaisonnier LignePanier = lignePanierService.ObtientLignePanierParId(lignepanierId);
+            hvm.PanierSaisonnier = lignePanierService.ObtientPanierParId(LignePanier.PanierSaisonnierId);
             hvm.LignePanierSaisonnier = LignePanier;
             return View(hvm);
         }
@@ -147,6 +145,12 @@ namespace Projet2.Controllers
 
 
             return View(hvm);
+        }
+
+        [HttpGet]
+        public IActionResult AjouterPanier()
+        {
+            return View();
         }
 
         [HttpPost]
@@ -186,26 +190,7 @@ namespace Projet2.Controllers
                     return RedirectToAction("GestionPanier", "EspaceAdP", adp);
 
                 }
-            }
-
-                panierSaisonnier.AdPId = 1;
-                ctx.CreerPanierSaisonnier(panierSaisonnier.NomPanier, panierSaisonnier.ProduitsProposes, panierSaisonnier.Description, panierSaisonnier.Prix, fileToUpload.FileName, panierSaisonnier.AdPId);
-
-                //var FileDic = "Files";
-
-                string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImagesPaniers");
-
-                if (!Directory.Exists(FilePath))
-                    Directory.CreateDirectory(FilePath);
-
-                var fileName = fileToUpload.FileName;
-                var filePath = Path.Combine(FilePath, fileName);
-
-                using (FileStream fs = System.IO.File.Create(filePath))
-                {
-                    fileToUpload.CopyTo(fs);
-                    return RedirectToAction("AfficherPaniers");
-                }
+            } return RedirectToAction("/");
           
         }
 
@@ -238,10 +223,53 @@ namespace Projet2.Controllers
 
                 return PanierId == 0;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return true;
             }
+        }
+
+        [HttpGet]
+        public IActionResult PanierAvis(LignePanierSaisonnier lignePanierSaisonnier)
+        {
+            HomeViewModel model = new HomeViewModel();
+
+            PanierSaisonnierService panierSaisonnierService = new PanierSaisonnierService();
+            model.PanierSaisonnier = panierSaisonnierService.ObtientTousLesPaniers().Where(a => a.Id == lignePanierSaisonnier.PanierSaisonnierId).FirstOrDefault();
+            model.LignePanierSaisonnier = lignePanierSaisonnier;
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public IActionResult PanierAvis(LignePanierSaisonnier lignePanierSaisonnier, PanierSaisonnier panierSaisonnier)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                HomeViewModel hvm = new HomeViewModel();
+                PanierSaisonnierService ctx = new PanierSaisonnierService();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdA == true)
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+
+                    ctx.AjouterAvisAdA(lignePanierSaisonnier, panierSaisonnier, hvm.AdA.Id);
+
+                    return RedirectToAction("HistoriqueCommandes", "CompteAdA", hvm.AdA);
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+
+                    ctx.AjouterAvisCE(lignePanierSaisonnier, panierSaisonnier, hvm.ContactComiteEntreprise.EntrepriseId);
+
+                    return RedirectToAction("HistoriqueCommandes", "CompteCE", hvm.ContactComiteEntreprise);
+                }
+            }
+            return RedirectToAction("Index", "Login");
         }
 
     }

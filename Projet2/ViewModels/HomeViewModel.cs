@@ -64,8 +64,11 @@ namespace Projet2.ViewModels
         public List<Commande> ListeCommandesEnCours = new List<Commande>();
         public List<Commande> ListeCommandesLivres = new List<Commande>();
         public List<Commande> ListeCommandesARecup = new List<Commande>();
-        public List<LignePanierBoutique> ListeCommandesAPrep = new List<LignePanierBoutique>();
-        public List<LignePanierBoutique> ListeCommandesDonnees = new List<LignePanierBoutique>();
+        public List<CommandePanier> ListeCommandesPanierEnPrep = new List<CommandePanier>();
+        public List<CommandePanier> ListeCommandesPanierEnCours = new List<CommandePanier>();
+        public List<CommandePanier> ListeCommandesPanierLivres = new List<CommandePanier>();
+        public List<CommandePanier> ListeCommandesPanierARecup = new List<CommandePanier>();
+
 
         public DateTime ProchaineDateLivraison = new DateTime();
 

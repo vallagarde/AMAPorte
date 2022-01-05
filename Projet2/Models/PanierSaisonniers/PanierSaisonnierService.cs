@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
 using System;
 using System.Collections.Generic;
@@ -29,29 +30,8 @@ namespace Projet2.Models.PanierSaisonniers
                 var queryAdP = from adp in _bddContext.AdPs where adp.Id == panierSaisonnier.AdPId select adp;
                 panierSaisonnier.AdP = queryAdP.First();
             }
-            //return _bddContext.PaniersSaisonniers.Include(p => p.ProduitsProposes).ToList();
             return listePaniers;
         }
-
-        public PanierSaisonnier ObtientPanierParId(int id)
-        {
-            PanierSaisonnier panier = _bddContext.PanierSaisonniers.Where(c => c.Id == id).FirstOrDefault();
-          
-                //var queryAdP = from adp in _bddContext.AdPs where adp.Id == panier.AdPId select adp;
-                //panier.AdP = queryAdP.First();
-            return panier;
-        }
-        public LignePanierSaisonnier ObtientLignePanierParId(int id)
-        {
-            LignePanierSaisonnier panier = _bddContext.LignePanierSaisonniers.Where(c => c.Id == id).FirstOrDefault();
-
-            //var queryAdP = from adp in _bddContext.AdPs where adp.Id == panier.AdPId select adp;
-            //panier.AdP = queryAdP.First();
-            return panier;
-        }
-
-
-
         public void Dispose()
         {
             _bddContext.Dispose();
@@ -69,13 +49,6 @@ namespace Projet2.Models.PanierSaisonniers
             return adp.AssortimentPanier;
         }
 
-        //public int CreerPanierSaisonnier(string nomPanier, string produitsProposes, string description, decimal prix, decimal prixTTC, string imagePanier, int adpId)
-        //{
-        //    PanierSaisonnier panierSaisonnier = new PanierSaisonnier() { NomPanier = nomPanier,  ProduitsProposes = produitsProposes, Description = description, Prix = prix, PrixTTC = prixTTC, Image = imagePanier, AdPId = adpId};
-        //    _bddContext.PanierSaisonniers.Add(panierSaisonnier);
-        //    _bddContext.SaveChanges();
-        //    return panierSaisonnier.Id;
-        //}
         public int CreerPanierSaisonnier(string nomPanier, string produitsProposes, string description, decimal prix, string imagePanier, int adpId)
         {
             PanierSaisonnier panierSaisonnier = new PanierSaisonnier() { NomPanier = nomPanier, ProduitsProposes = produitsProposes, Description = description, Prix = prix, Image = imagePanier, AdPId = adpId };
@@ -108,15 +81,6 @@ namespace Projet2.Models.PanierSaisonniers
                 _bddContext.SaveChanges();
             }
             return panierSaisonnier.Id;
-        }
-
-        public CommandePanier CreerCommande(LignePanierSaisonnier lignePanier)
-        {
-            PanierSaisonnier panier = ObtientPanierParId(lignePanier.PanierSaisonnierId);
-            CommandePanier commande = new CommandePanier() { LignePanierSaisonnier = lignePanier, PanierSaisonnier = panier, DateTime = DateTime.Today, total = lignePanier.SousTotal };
-            _bddContext.CommandePaniers.Add(commande);
-            _bddContext.SaveChanges();
-            return commande;
         }
 
         public PanierSaisonnier ModifierPanierSaisonnier(PanierSaisonnier panierSaisonnier)
@@ -161,6 +125,58 @@ namespace Projet2.Models.PanierSaisonniers
                 _bddContext.SaveChanges();
             }
         }
+        public int CreerAvis(Avis avis)
+        {
+            _bddContext.Add(avis);
+            _bddContext.SaveChanges();
+            return avis.Id;
+        }
+
+        public void AjouterAvisAdA(LignePanierSaisonnier lignePanierSaisonnier, PanierSaisonnier panierSaisonnier, int Id)
+        {
+            Avis nouveauAvis = new Avis()
+            {
+                PanierSaisonnierId = panierSaisonnier.Id,
+                Text = lignePanierSaisonnier.Avis.Text,
+                Note = lignePanierSaisonnier.Avis.Note,
+                AdAId = Id,
+            };
+            CreerAvis(nouveauAvis);
+            lignePanierSaisonnier = _bddContext.LignePanierSaisonniers.Find(lignePanierSaisonnier.Id);
+            lignePanierSaisonnier.AvisId = nouveauAvis.Id;
+            _bddContext.LignePanierSaisonniers.Update(lignePanierSaisonnier);
+            _bddContext.SaveChanges();
+        }
+
+        public void AjouterAvisCE(LignePanierSaisonnier lignePanierSaisonnier, PanierSaisonnier panierSaisonnier, int Id)
+        {
+            Avis nouveauAvis = new Avis()
+            {
+                PanierSaisonnierId = panierSaisonnier.Id,
+                Text = lignePanierSaisonnier.Avis.Text,
+                Note = lignePanierSaisonnier.Avis.Note,
+                EntrepriseId = Id
+            };
+            CreerAvis(nouveauAvis);
+            lignePanierSaisonnier = _bddContext.LignePanierSaisonniers.Find(lignePanierSaisonnier.Id);
+            lignePanierSaisonnier.AvisId = nouveauAvis.Id;
+            _bddContext.LignePanierSaisonniers.Update(lignePanierSaisonnier);
+            _bddContext.SaveChanges();
+
+        }
+
+        public List<Avis> AfficherAvisPourPanier(PanierSaisonnier panierSaisonnier)
+        {
+            List<Avis> avisArticle = (from avis in _bddContext.Avis where avis.PanierSaisonnierId == panierSaisonnier.Id select avis).ToList();
+            foreach (Avis avis in avisArticle)
+            {
+                panierSaisonnier.Avis.Add(avis);
+            }
+            return panierSaisonnier.Avis;
+        }
+
+
+
 
     }
 }

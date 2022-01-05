@@ -1,4 +1,5 @@
-﻿using Projet2.Models.Compte;
+﻿using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,8 @@ namespace Projet2.Models.PanierSaisonniers
     {
 
         public int Id { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime DateCommande { get; set; }
+        public DateTime DateLivraison { get; set; }
 
         public int PanierSaisonnierId { get; set; }
         public PanierSaisonnier PanierSaisonnier { get; set; }
@@ -19,13 +21,64 @@ namespace Projet2.Models.PanierSaisonniers
         public int LignePanierSaisonnierId { get; set; }
         public LignePanierSaisonnier LignePanierSaisonnier { get; set; }
 
-        public decimal total { get; set; }
+        public decimal Total { get; set; }
 
         public int? AdAId { get; set; }
         public AdA AdA { get; set; }
 
-        public int? ContactComiteEntrepriseId { get; set; }
-        public ContactComiteEntreprise ContactComiteEntreprise { get; set; }
+        public int? EntrepriseId { get; set; }
+        public Entreprise Entreprise { get; set; }
+
+
+
+        public bool EstEnPreparation { get; set; }
+
+        public bool EstEnLivraison { get; set; }
+
+        public bool EstARecuperer { get; set; }
+
+        public bool EstLivre { get; set; }
+        public string EtatCommande
+        {
+            get
+            {
+                if (EstEnPreparation) return "EstEnPreparation";
+                else if (EstEnLivraison) return "EstEnLivraison";
+                else if (EstARecuperer) return "EstARecuperer";
+                else if (EstLivre) return "EstLivre";
+                return null;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case "EstEnPreparation":
+                        EstEnPreparation = true;
+                        break;
+                    case "EstEnLivraison":
+                        EstEnLivraison = true;
+                        break;
+                    case "EstARecuperer":
+                        EstARecuperer = true;
+                        break;
+                    case "EstLivre":
+                        EstLivre = true;
+                        break;
+                }
+            }
+        }
+
+        public string ReturnDateForDisplayCommande
+        {
+            get
+            {
+                if (this.DateLivraison != null)
+                {
+                    return this.DateLivraison.ToString("d");
+                }
+                return null;
+            }
+        }
 
     }
 }

@@ -17,7 +17,8 @@ namespace Projet2.Controllers
     public class EspaceAdPController : Controller
     {
         //!\\voir les KPI sur les ventes, voir les commandes (historique + en cours(a preparer, a livrer))
-        //> A FAIRE (liaison avec une date specifique prennant en compte les commandes en amont)
+        //A AMELIORER : Vue calendrier (commandes a preparer)
+
         //ATELIER
         //!\\ajouter des ateliers, les modifier, les annuler, les afficher dans son espace personnel
         //!\\(avec informations sur les participants (nom, prenom, telephone, /nom entreprise et nombre participants pour CE))
@@ -40,7 +41,6 @@ namespace Projet2.Controllers
             hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
             PanierService panierService = new PanierService();
             List<Commande> commandes = panierService.ObtenirCommandesAdP(adp.Id);
-
             foreach (Commande commande in commandes)
             {
                 if (commande.EstEnPreparation)
@@ -52,6 +52,20 @@ namespace Projet2.Controllers
                     }                   
                 }
             }
+            LignePanierService lignePanierService = new LignePanierService();
+            List<CommandePanier> commandesPanier = lignePanierService.ObtenirCommandesPanierAdP(adp.Id);
+            foreach (CommandePanier commandePanier in commandesPanier)
+            {
+                if (commandePanier.EstEnPreparation)
+                {
+                    commandePanier.DateLivraison = calendrier.ObtenirDateLivraisonCommande(commandePanier.Id);
+                    if (commandePanier.DateLivraison.Date == hvm.ProchaineDateLivraison.Date)
+                    {
+                        hvm.ListeCommandesPanierEnPrep.Add(commandePanier);
+                    }
+                }
+            }
+
             return View(hvm);
         }
 
@@ -60,7 +74,22 @@ namespace Projet2.Controllers
         {
             hvm.AdP = cs.ObtenirAdPParId(adp.Id);
             PanierService panierService = new PanierService();
-            panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
+            if(commande.Id != 0)
+            {
+             panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
+            }
+            return RedirectToAction("CommandesAPreparer", hvm.AdP);
+        }
+
+        [HttpPost]
+        public IActionResult CommandesPanierAPreparer(AdP adp, CommandePanier commandePanier)
+        {
+            hvm.AdP = cs.ObtenirAdPParId(adp.Id);
+            LignePanierService lignePanierService = new LignePanierService();
+            if (commandePanier.Id != 0)
+            {
+                lignePanierService.ChangerEtatCommandePanier(commandePanier.Id, commandePanier.EtatCommande);
+            }
             return RedirectToAction("CommandesAPreparer", hvm.AdP);
         }
 
@@ -69,12 +98,26 @@ namespace Projet2.Controllers
             hvm.AdP = adp;
             PanierService panierService = new PanierService();
             List<Commande> commandes = panierService.ObtenirCommandesAdP(adp.Id);
-
             foreach (Commande commande in commandes)
             {
                 if (commande.EstEnLivraison || commande.EstARecuperer || commande.EstLivre)
                 {
                     hvm.ListeCommandesLivres.Add(commande);
+                }
+            }
+            return View(hvm);
+        }
+
+        public IActionResult HistoriquePaniers(AdP adp)
+        {
+            hvm.AdP = adp;
+            LignePanierService lignePanierService = new LignePanierService();
+            List<CommandePanier> commandesPanier = lignePanierService.ObtenirCommandesPanierAdP(adp.Id);
+            foreach (CommandePanier commandePanier in commandesPanier)
+            {
+                if (commandePanier.EstEnLivraison || commandePanier.EstARecuperer || commandePanier.EstLivre)
+                {
+                    hvm.ListeCommandesPanierLivres.Add(commandePanier);
                 }
             }
             return View(hvm);

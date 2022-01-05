@@ -315,7 +315,7 @@ namespace Projet2.Controllers
                     
                     ctx.AjouterAvisAdA(lignePanierBoutique, article, hvm.AdA.Id);
 
-                    return RedirectToAction("Article", new { @Id = article.Id });
+                    return RedirectToAction("HistoriqueCommandes", "CompteAdA", hvm.AdA);
                 }
                 else if (viewModel.Identifiant.EstCE == true)
                 {
@@ -323,7 +323,7 @@ namespace Projet2.Controllers
                     
                     ctx.AjouterAvisCE(lignePanierBoutique, article, hvm.ContactComiteEntreprise.EntrepriseId);
 
-                    return RedirectToAction("Article", "Boutique", hvm.ContactComiteEntreprise);
+                    return RedirectToAction("HistoriqueCommandes", "CompteCE", hvm.ContactComiteEntreprise);
                 }
             }
             return RedirectToAction("Index", "Login");

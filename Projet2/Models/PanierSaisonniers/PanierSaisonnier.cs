@@ -1,4 +1,5 @@
-﻿using Projet2.Models.Compte;
+﻿using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,12 +36,6 @@ namespace Projet2.Models.PanierSaisonniers
         public int AdPId { get; set; }
         public AdP AdP { get; set; }
 
-        public int? AdAId { get; set; }
-        public AdA AdA { get; set; }
-
-        public int? CataloguePanierId { get; set; }
-        public CataloguePanier CataloguePanier { get; set; }
-
         public bool EstValide { get; set; }
         public bool EstEnAttente { get; set; }
         public string AdminCommentaire { get; set; }
@@ -48,11 +43,14 @@ namespace Projet2.Models.PanierSaisonniers
         public DateTime DateInscription { get; set; }
         public DateTime? DateModification { get; set; }
 
+        public virtual List<Avis> Avis { get; set; }
+
         //public int? LignePanierSaisonnierId { get; set; }
         //public LignePanierSaisonnier  LignePanierSaisonnier { get; set; }
 
         public PanierSaisonnier()
         {
+            Avis = new List<Avis>();
             EstValide = false;
             EstEnAttente = false;
             AdminCommentaire = null;

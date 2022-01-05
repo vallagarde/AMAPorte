@@ -15,7 +15,7 @@ namespace Projet2.Controllers
     [Authorize]
     public class CompteAdPController : Controller
     {
-        //ajouter quelques attributs (RIB)
+        //ajouter RIB
         //adresse avec base de données ? 
        
         CompteServices cs = new CompteServices();
@@ -152,8 +152,6 @@ namespace Projet2.Controllers
             hvm.Personne = cs.ObtenirPersonne(hvm.AdP.PersonneId);
 
             cs.AjouterPhoto(FileToUpload.FileName, hvm.Personne.IdentifiantId);
-
-            var FileDic = "Files";
 
             string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageProfils");
 
