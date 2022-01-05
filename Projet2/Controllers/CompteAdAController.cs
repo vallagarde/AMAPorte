@@ -176,6 +176,9 @@ namespace Projet2.Controllers
 
         public IActionResult Commandes(AdA ada)
         {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
             ada.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParAdA(ada);
             hvm.AdA = ada;

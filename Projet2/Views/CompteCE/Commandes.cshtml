@@ -6,10 +6,10 @@
 
 <!-- Products -->
 <div class="container">
-    @Html.ActionLink("Retour", "Index", "CompteCE", @Model.ContactComiteEntreprise)
+    
     <div class="row">
         <div class="col-md-2 menu-rigth">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <p>@Html.ActionLink("Retour", "Index", "CompteCE", @Model.ContactComiteEntreprise)</p>
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
@@ -20,29 +20,35 @@
                     {
                     var Total = Decimal.Round(commande.PanierBoutique.Total, 2);                   
                         <div class="row ">
+                            <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">Commande Boutique : @commande.Id</h5>
-                                    <p class="card-text">@commande.DateCommande</p>
+                                    <h5 class="card-title">Boutique : @commande.Id</h5>
+                                    <p class="card-text">@commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">@commande.EtatCommande</p>
+                                    <p class="card-text">N° Commande : @commande.Id</p>
+                                    <p class="card-text">@Total €</p>
                                     <div class="row ">
-                                    @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                                    {
-                                        var SousTotal = Decimal.Round(lignePanierBoutique.SousTotal, 2);
-                                            <div class="card h-100">
+                                        @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
+                                        {
+                                                var SousTotal = Decimal.Round(lignePanierBoutique.SousTotal, 2);
+                                                <div class="card h-100">
+                                <div class="card-body">
+                                            <div class="row ">
                                                 @{
                                                 String filepath = "~/ImageArticle/" + @lignePanierBoutique.Article.Image;
                                                 }
                                                 <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
-                                                    <div class="card-body">
+                                             </div>   
                                                     <p class="card-text">@lignePanierBoutique.Article.Nom</p>
                                                     <p class="card-text">Quantité : @lignePanierBoutique.Quantite</p>
-                                                    <p class="card-text">@SousTotal</p>
-                                                    </div>
-                                            </div>                                    
-                                    }
-                                    </div>
-                                    <p class="card-text">@Total</p>
-                                </div>                       
+                                                    <p class="card-text">@SousTotal €</p>
+                                                                                                                                 
+                                        </div>                                    
+                                </div>
+                                                }
+                                    </div>                                    
+                                </div>
+                                </div> 
                         </div>
                     }
                 }
@@ -52,25 +58,27 @@
                     {
                     var TotalPanier = Decimal.Round(commandePanier.LignePanierSaisonnier.SousTotal, 2);                   
                         <div class="row ">
-                                <div class="card-body">
-                                    <h5 class="card-title">Commande Panier : @commandePanier.Id</h5>
-                                    <p class="card-text">@commandePanier.DateCommande</p>
-                                    <p class="card-text">@commandePanier.EtatCommande</p>
+                                
+                                    
                                     <div class="row ">
                                     
                                             <div class="card h-100">
+                                                <div class="card-body">
                                                 @{
                                                 String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
                                                 }
-                                                <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
-                                                    <div class="card-body">
+                                                <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />                                                    
+                                                    <h5 class="card-title">Panier</h5>
+                                                    <p class="card-text">N° Commande : @commandePanier.Id</p>
+                                                    <p class="card-text">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                                    <p class="card-text">@commandePanier.EtatCommande</p>                                                   
                                                     <p class="card-text">@commandePanier.LignePanierSaisonnier.Quantite x @commandePanier.PanierSaisonnier.NomPanier</p>
                                                     <p class="card-text">@TotalPanier €</p>
                                                     </div>
                                             </div>                                    
                                     
                                     </div>
-                                </div>                       
+                                                    
                         </div>
                     }
                 }

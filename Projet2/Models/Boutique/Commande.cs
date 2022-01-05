@@ -72,5 +72,17 @@ namespace Projet2.Models.Boutique
                 return null;
             }
         }
+
+        public string ReturnDateCommandeForDisplayCommande
+        {
+            get
+            {
+                if (this.DateCommande != null)
+                {
+                    return this.DateCommande.ToString("d");
+                }
+                return null;
+            }
+        }
     }
 }

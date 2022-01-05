@@ -4,13 +4,13 @@
 <div class="shadow-sm p-2 mb-5 welcome">
     <h2>Mon Assortiment de Paniers Saisonniers</h2>
 </div>
-@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+
 <!-- Products -->
 <div class="container">
     
     <div class="row">
         <div class="col-md-2 menu-rigth">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <p>@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)</p>
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
@@ -19,9 +19,10 @@
                 {
                     @if (!@panierSaisonnier.EstValide && @panierSaisonnier.EstEnAttente)
                     {
+                        var Prix = Decimal.Round(panierSaisonnier.Prix, 2);
                         <div class="col ">
                         <div class="card h-100">
-                            <h5 class="card-title">A modifier</h5>
+                            <h5 class="card-title" align="center">A modifier</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
                             }
@@ -29,14 +30,14 @@
                             <div class="card-body">
                                 <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
                                 <p class="card-text">@panierSaisonnier.Description</p>
-                                <p class="card-text">@panierSaisonnier.Prix</p>
-                                <p class="card-text">@panierSaisonnier.DateInscription</p>
+                                <p class="card-text">@Prix €</p>
+                                <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
                                 @if(@panierSaisonnier.DateModification != null)
                                     {
-                                         <p class="card-text">Dernière Modification @panierSaisonnier.DateModification</p>
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
                                     } 
                                 <p class="card-text">Commentaire : @panierSaisonnier.AdminCommentaire</p>
-                                @Html.ActionLink("Modifier", "PanierModification", "EspaceAdP", @panierSaisonnier)
+                                <p class="card-text" align="center">@Html.ActionLink("Modifier", "PanierModification", "EspaceAdP", @panierSaisonnier)</p>
                             </div>
                         </div>
                         </div>                        
@@ -47,10 +48,10 @@
                 {
                     @if (@panierSaisonnier.EstValide)
                     {
-                        <div class="col ">
-                            
+                        var Prix = Decimal.Round(panierSaisonnier.Prix, 2);
+                        <div class="col ">                            
                         <div class="card h-100">
-                            <h5 class="card-title">En boutique</h5>
+                            <h5 class="card-title" align="center">En boutique</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
                             }
@@ -58,13 +59,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
                                 <p class="card-text">@panierSaisonnier.Description</p>
-                                <p class="card-text">@panierSaisonnier.Prix</p>
-                                <p class="card-text">@panierSaisonnier.DateInscription</p>
+                                <p class="card-text">@Prix €</p>
+                                <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
                                 @if(@panierSaisonnier.DateModification != null)
                                     {
-                                         <p class="card-text">Dernière Modification @panierSaisonnier.DateModification</p>
-                                    } 
-                                @Html.ActionLink("Modifier", "PanierModification", "EspaceAdP", @panierSaisonnier)
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
+                                    }                                 
+                                <p class="card-text" align="center">@Html.ActionLink("Modifier", "PanierModification", "EspaceAdP", @panierSaisonnier)</p>
                             </div>
                         </div>
                         </div>                        
@@ -75,10 +76,10 @@
                 {
                     @if (!@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
                     {
-                        
+                        var Prix = Decimal.Round(panierSaisonnier.Prix, 2);
                         <div class="col ">
                         <div class="card h-100">
-                        <h5 class="card-title"> En attente</h5>
+                        <h5 class="card-title" align="center"> En attente</h5>
                            @{
                                 String filepath = "~/ImageArticle/" + @panierSaisonnier.Image;
                             }
@@ -86,11 +87,11 @@
                             <div class="card-body">
                                 <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
                                 <p class="card-text">@panierSaisonnier.Description</p>
-                                <p class="card-text">@panierSaisonnier.Prix</p>
-                                <p class="card-text">@panierSaisonnier.DateInscription</p>
+                                <p class="card-text">@Prix €</p>
+                                <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
                                 @if(@panierSaisonnier.DateModification != null)
                                     {
-                                         <p class="card-text">Dernière Modification @panierSaisonnier.DateModification</p>
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
                                     } 
                             </div>
                         </div>
