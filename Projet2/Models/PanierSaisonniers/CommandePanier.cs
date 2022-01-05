@@ -68,13 +68,25 @@ namespace Projet2.Models.PanierSaisonniers
             }
         }
 
-        public string ReturnDateForDisplayCommande
+        public string ReturnDateLivraisonForDisplayCommande
         {
             get
             {
                 if (this.DateLivraison != null)
                 {
                     return this.DateLivraison.ToString("d");
+                }
+                return null;
+            }
+        }
+
+        public string ReturnDateCommandeForDisplayCommande
+        {
+            get
+            {
+                if (this.DateCommande != null)
+                {
+                    return this.DateCommande.ToString("d");
                 }
                 return null;
             }

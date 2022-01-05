@@ -41,7 +41,7 @@ namespace Projet2.Models.PanierSaisonniers
         public string AdminCommentaire { get; set; }
 
         public DateTime DateInscription { get; set; }
-        public DateTime? DateModification { get; set; }
+        public DateTime DateModification { get; set; }
 
         public virtual List<Avis> Avis { get; set; }
 
@@ -55,6 +55,30 @@ namespace Projet2.Models.PanierSaisonniers
             EstEnAttente = false;
             AdminCommentaire = null;
             DateInscription = DateTime.Now;
+        }
+
+        public string ReturnInscriptionDateForDisplayPanier
+        {
+            get
+            {
+                if (this.DateInscription != null)
+                {
+                    return this.DateInscription.ToString("d");
+                }
+                return null;
+            }
+        }
+
+        public string ReturnModificationDateForDisplayPanier
+        {
+            get
+            {
+                if (this.DateModification != null)
+                {
+                    return this.DateModification.ToString("d");
+                }
+                return null;
+            }
         }
     }
 }

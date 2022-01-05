@@ -26,7 +26,7 @@ namespace Projet2.Models.Compte
         [Display(Name = "Téléphone")]
         [Required(ErrorMessage = "Vous devez insérer un numero de telephone")]
         [RegularExpression(@"^\d{10}$", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
-        public int NTelephone { get; set; }
+        public string NTelephone { get; set; }
 
         [Display(Name = "Adresse Mail")]
         [Required(ErrorMessage = "Le mail ne peut pas être null.")]

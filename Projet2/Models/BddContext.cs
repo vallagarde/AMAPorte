@@ -95,7 +95,7 @@ namespace Projet2.Models
                                 Nom = "Dubois",
                                 Prenom = "Jean Marie",
                                 DateNaissance = new DateTime(1964, 05, 01),
-                                NTelephone = 1234567890,
+                                NTelephone = "0234567890",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -134,7 +134,7 @@ namespace Projet2.Models
                                 Nom = "Michel",
                                 Prenom = "Héloise",
                                 DateNaissance = new DateTime(1990, 06, 15),
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -175,7 +175,7 @@ namespace Projet2.Models
                                 Nom = "Marchand",
                                 Prenom = "Thierry",
                                 DateNaissance = new DateTime(1976, 10, 01),
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -224,7 +224,7 @@ namespace Projet2.Models
                                 Nom = "Dubedout",
                                 Prenom = "Julien ",
                                 DateNaissance = new DateTime(1980, 02, 05),
-                                NTelephone = 1234567890,
+                                NTelephone = "0234567891",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -289,7 +289,7 @@ namespace Projet2.Models
                                 Nom = "Duhamel",
                                 Prenom = "André",
                                 AdresseMail = identifiant5.AdresseMail,
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstCE = true
                             };
                             cs.CreerCCE(contactComiteEntreprise1, entreprise1, adresse5);
@@ -333,7 +333,7 @@ namespace Projet2.Models
                                 Nom = "Normand",
                                 Prenom = "Noël",
                                 AdresseMail = identifiant6.AdresseMail,
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstCE = true
                             };
                             cs.CreerCCE(contactComiteEntreprise2, entreprise2, adresse6);
