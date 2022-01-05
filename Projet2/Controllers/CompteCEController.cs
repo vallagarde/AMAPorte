@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -13,10 +14,7 @@ namespace Projet2.Controllers
     [Authorize]
     public class CompteCEController : Controller
     {
-        //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 
         //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
-        //BOUTIQUE / PANIERS S. : 
-        //avoir access a l'onglet producteur pour en reserver des paniers/favoriser des producteurs
         //ATELIERS :
         //avoir access a l'onglet ateliers pour en reserver/favoriser
         //voir les ateliers a venir sur sa page d'accueil 
@@ -24,6 +22,7 @@ namespace Projet2.Controllers
 
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
+        LignePanierService lignePanierService = new LignePanierService();
         HomeViewModel hvm = new HomeViewModel();
         public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
         {
@@ -130,6 +129,7 @@ namespace Projet2.Controllers
         {
             hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
             hvm.Entreprise.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParEntreprise(hvm.Entreprise);
+            hvm.Entreprise.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParEntreprise(hvm.Entreprise);
             hvm.ContactComiteEntreprise = contactComiteEntreprise;
             return View(hvm);
         }
@@ -138,39 +138,12 @@ namespace Projet2.Controllers
         {
             hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
             hvm.Entreprise.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParEntreprise(hvm.Entreprise);
+            hvm.Entreprise.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParEntreprise(hvm.Entreprise);
             hvm.ContactComiteEntreprise = contactComiteEntreprise;
             return View(hvm);
         }
         
-        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
-        public IActionResult HistoriqueAteliers(ContactComiteEntreprise contactComiteEntreprise)
-        {
-            return View(hvm);
-        }
 
-        public IActionResult ArticlesFavoris(ContactComiteEntreprise contactComiteEntreprise)
-        {
-            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
-            hvm.ContactComiteEntreprise = contactComiteEntreprise;
-            hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-            return View(hvm);
-        }
-
-        public IActionResult AteliersFavoris(ContactComiteEntreprise contactComiteEntreprise)
-        {
-            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
-            hvm.ContactComiteEntreprise = contactComiteEntreprise;
-            hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-            return View(hvm);
-        }
-
-        public IActionResult ProducteursFavoris(ContactComiteEntreprise contactComiteEntreprise)
-        {
-            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
-            hvm.ContactComiteEntreprise = contactComiteEntreprise;
-            hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
-            return View(hvm);
-        }
 
         [HttpGet]
         public IActionResult ModificationCompte(ContactComiteEntreprise contactComiteEntreprise)
@@ -216,15 +189,7 @@ namespace Projet2.Controllers
             return Redirect("/");
         }
 
-        [HttpGet]
-        public IActionResult SuppressionCompte(ContactComiteEntreprise contactComiteEntreprise)
-        {
-            hvm.ContactComiteEntreprise = contactComiteEntreprise;
-            return View(hvm);
-        }
 
-
-        [HttpPost]
         public IActionResult SuppressionCompte(ContactComiteEntreprise contactComiteEntreprise, int Id)
         {
             List<ContactComiteEntreprise> listCCE = cs.ObtenirCCEsParEntreprise(contactComiteEntreprise.EntrepriseId);
@@ -248,6 +213,37 @@ namespace Projet2.Controllers
 
             return Redirect("/");
         }
+
+
+        public IActionResult ArticlesFavoris(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+            return View(hvm);
+        }
+
+        public IActionResult ProducteursFavoris(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+            return View(hvm);
+        }
+
+        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+        public IActionResult HistoriqueAteliers(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            return View(hvm);
+        }
+        public IActionResult AteliersFavoris(ContactComiteEntreprise contactComiteEntreprise)
+        {
+            hvm.Entreprise = cs.ObtenirEntreprise(contactComiteEntreprise.EntrepriseId);
+            hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+            return View(hvm);
+        }
+
 
     }
 }

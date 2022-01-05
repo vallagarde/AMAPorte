@@ -21,7 +21,7 @@
                     var Total = Decimal.Round(commande.PanierBoutique.Total, 2);                   
                         <div class="row ">
                                 <div class="card-body">
-                                    <h5 class="card-title">Numéro de Commande : @commande.Id</h5>
+                                    <h5 class="card-title">Commande Boutique : @commande.Id</h5>
                                     <p class="card-text">@commande.DateCommande</p>
                                     <div class="row ">
                                     @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
@@ -40,12 +40,54 @@
                                                     {
                                                     @Html.ActionLink("Laisser un avis sur l'Article", "ArticleAvis", "Boutique", @lignePanierBoutique)
                                                     }
+                                                    @if(@lignePanierBoutique.AvisId != null)
+                                                    {
+                                                    <p class="card-text">Votre Avis : @lignePanierBoutique.Avis.Text</p>
+                                                    <p class="card-text">Votre Note : @lignePanierBoutique.Avis.Note </p>
+                                                    }
                                                     </div>
                                             </div>
                                     
                                     }
                                     </div>
                                     <p class="card-text">@Total</p>
+                                </div>                       
+                        </div>
+                    }
+                }
+                 @foreach (var commandePanier in @Model.AdA.CommandesPanierEffectues)
+                {
+                    @if(commandePanier.EstLivre == true)
+                    {
+                    var Total = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);                   
+                        <div class="row ">
+                                <div class="card-body">
+                                    <h5 class="card-title">Commande Panier : @commandePanier.Id</h5>
+                                    <p class="card-text">@commandePanier.DateCommande</p>
+                                    <div class="row ">
+                                    
+                                            <div class="card h-100">
+                                                @{
+                                                String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
+                                                }
+                                                <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
+                                                    <div class="card-body">
+                                                    <p class="card-text">@commandePanier.PanierSaisonnier.NomPanier</p>
+                                                    <p class="card-text">@Total €</p>
+                                                    @if(@commandePanier.LignePanierSaisonnier.AvisId == null)
+                                                    {
+                                                    @Html.ActionLink("Laisser un avis sur le Panier", "PanierAvis", "Panier", @commandePanier.LignePanierSaisonnier)
+                                                    }
+                                                    @if(@commandePanier.LignePanierSaisonnier.AvisId != null)
+                                                    {
+                                                    <p class="card-text">Votre Avis : @commandePanier.LignePanierSaisonnier.Avis.Text </p>
+                                                    <p class="card-text">Votre Note : @commandePanier.LignePanierSaisonnier.Avis.Note </p>
+                                                    }
+                                                    </div>
+                                            </div>
+                                    
+                                    
+                                    </div>
                                 </div>                       
                         </div>
                     }

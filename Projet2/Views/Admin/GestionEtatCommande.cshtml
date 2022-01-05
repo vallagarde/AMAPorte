@@ -60,6 +60,51 @@
             }            
        }
        </table>
+       <table border="1">
+        @if(@Model.ListeCommandesPanierEnPrep.Count != 0){                                  
+            @foreach (var commandePanier in @Model.ListeCommandesPanierEnPrep)
+            {
+             <tr border="1">
+                    <td>Commande Panier @commandePanier.Id</td>
+                    <tr>
+                     @if(@commandePanier.AdA != null)
+                            {
+                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
+                                <td>@commandePanier.AdA.Personne.Prenom</td> 
+                            }
+                            @if(@commandePanier.Entreprise != null)
+                            {
+                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
+                            }                     
+                        </tr>
+                            <tr>
+                                <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
+                                <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
+                            </tr>                                                
+                 <tr>
+                <td>
+                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                    @Html.HiddenFor(m => @Model.Admin.Id)
+                    @Html.HiddenFor(m => @Model.Admin.Role)
+                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                    @Html.HiddenFor(m => @commandePanier.Id)
+                   @Html.Label("Etat", "En Livraison")
+                   @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnLivraison")
+                 <br/>
+                   @Html.Label("Etat", "A Recuperer")
+                   @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstARecuperer")
+                 <br/>
+                    @Html.Label("Etat", "Cloturé")
+                    @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstLivre")
+                   <br/> 
+                    <button class="btn btn-primary" type="submit">Modifier</button>
+                </form>
+                      </td>
+                     </tr>
+                 </tr>
+            }            
+       }
+       </table>
 </div>
 <br/>
 <br/>
@@ -110,6 +155,54 @@
                  <br/>
                     @Html.Label("Etat", "Cloturé")
                     @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstLivre")
+                   <br/> 
+                    <button class="btn btn-primary" type="submit">Modifier</button>
+                </form>
+                      </td>
+                     </tr>
+                 </tr>
+            }            
+       }
+       </table>
+       <table border="1">
+        @if(@Model.ListeCommandesPanierEnCours.Count != 0){                                  
+            @foreach (var commandePanier in @Model.ListeCommandesPanierEnCours)
+            {
+             <tr border="1">
+                    <td>Commande Panier @commandePanier.Id</td>
+                    <tr>
+                            @if(@commandePanier.AdA != null)
+                            {
+                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
+                                <td>@commandePanier.AdA.Personne.Prenom</td> 
+                            }                           
+                            @if(@commandePanier.Entreprise != null)
+                            {
+                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
+                            }                                              
+             </tr>
+
+                            <tr>
+                                <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
+                                <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
+                            </tr>
+                        
+                        
+                 <tr>
+                <td>
+                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                    @Html.HiddenFor(m => @Model.Admin.Id)
+                    @Html.HiddenFor(m => @Model.Admin.Role)
+                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                    @Html.HiddenFor(m => @commandePanier.Id)
+                    @Html.Label("Etat", "En Preparation")
+                    @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnPreparation")                          
+                <br/> 
+                   @Html.Label("Etat", "A Recuperer")
+                   @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstARecuperer")
+                 <br/>
+                    @Html.Label("Etat", "Cloturé")
+                    @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstLivre")
                    <br/> 
                     <button class="btn btn-primary" type="submit">Modifier</button>
                 </form>
@@ -179,6 +272,57 @@
             }            
        }
     </table>
+     <table border="1">
+       @if(@Model.ListeCommandesPanierARecup.Count != 0){                                  
+            @foreach (var commandePanier in @Model.ListeCommandesPanierARecup)
+            {
+                 <tr border="1">
+                    <td>Commande @commandePanier.Id</td>
+                    <tr>
+                     @if(@commandePanier.AdA != null)
+                            {
+                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
+                                <td>@commandePanier.AdA.Personne.Prenom</td> 
+                            }
+                            
+                            @if(@commandePanier.Entreprise != null)
+                            {
+                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
+                            }                       
+                     </tr>
+                        
+                                    <tr>
+                                    <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
+                                    <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
+                                    </tr>
+                                
+                                
+                       <tr>
+                      <td>
+                          <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                           @Html.HiddenFor(m => @Model.Admin.Id)
+                           @Html.HiddenFor(m => @Model.Admin.Role)
+                           @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                           @Html.HiddenFor(m => @commandePanier.Id)                         
+                           @Html.Label("Etat", "En Preparation")
+                           @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnPreparation")                          
+                           <br/>
+                           @Html.Label("Etat", "En Livraison")
+                           @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnLivraison")
+                            <br/>
+                            @Html.Label("Etat", "Cloturé")
+                            @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstLivre")
+                            <br/> 
+                            <button class="btn btn-primary" type="submit">Modifier</button>
+                           </form>    
+                     </td>
+                     </tr>
+                 </tr>
+
+            }            
+       }
+    </table>
+
 </div>
 <br/>
 <br/>
@@ -238,5 +382,54 @@
             }            
        }
        </table>
+        <table border="1">
+       @if(@Model.ListeCommandesPanierLivres.Count != 0){                                  
+            @foreach (var commandePanier in @Model.ListeCommandesPanierLivres)
+            {
+             <tr border="1">
+                    <td>Commande @commandePanier.Id </td>
+                    <tr>
+                     @if(@commandePanier.AdA != null)
+                            {
+                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
+                                <td>@commandePanier.AdA.Personne.Prenom</td> 
+                            }
+                            
+                            @if(@commandePanier.Entreprise != null)
+                            {
+                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
+                            }                     
+                    </tr>
+                
+                            <tr>
+                            <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
+                            <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
+                            </tr>                                   
+                <tr>
+                      <td>
+                        <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                        @Html.HiddenFor(m => @Model.Admin.Id)
+                        @Html.HiddenFor(m => @Model.Admin.Role)
+                        @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                        @Html.HiddenFor(m => @commandePanier.Id)   
+                        @Html.Label("Etat", "En Preparation")
+                        @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnPreparation")                          
+                        <br/>
+                        @Html.Label("Etat", "En Livraison")
+                       @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnLivraison")
+                     <br/>
+                        @Html.Label("Etat", "A Recuperer")
+                        @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstARecuperer")
+
+                        <br/> 
+                            <button class="btn btn-primary" type="submit">Modifier</button>
+                           </form>    
+                     </td>
+                     </tr>
+                </tr>
+            }            
+       }
+       </table>
+
 </div>
 </div>       

@@ -71,7 +71,7 @@
                             </colgroup>
                             <tr>
                               <th>@Html.LabelFor(m => Model.Entreprise.NomEntreprise)</th>
-                              <th>@Html.TextBoxFor(m => Model.Entreprise.NomEntreprise,  new {placeholder="Nom de l'Entreprise'"})
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NomEntreprise,  new {placeholder="Nom de l'Entreprise"})
                               @Html.ValidationMessageFor(m => Model.Entreprise.NomEntreprise, "", new { @class = "text-danger" })</th>
                             </tr>
                             <tr>
@@ -150,6 +150,7 @@
                         </table>
                         <table width=100%>
                             <tr align="center">
+                                <th>
                               <article>
                                 <script src="//checkout.stripe.com/v2/checkout.js"
                                     class="stripe-button"
@@ -164,6 +165,7 @@
                                   });
                                 </script>
                                 </article>
+                                </th>
                             </tr>
                             <tr align="center">
                               <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
 using Projet2.Models.Compte;
+using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +19,7 @@ namespace Projet2.Controllers
     {        
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
+        LignePanierService lignePanierService = new LignePanierService();
         HomeViewModel hvm = new HomeViewModel();
 
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -154,8 +156,6 @@ namespace Projet2.Controllers
             
             cs.AjouterPhoto(FileToUpload.FileName, hvm.Personne.IdentifiantId);
 
-            var FileDic = "Files";
-
             string FilePath = Path.Combine(_webHostEnvironment.WebRootPath, "ImageProfils");
 
             if (!Directory.Exists(FilePath))
@@ -177,6 +177,7 @@ namespace Projet2.Controllers
         public IActionResult Commandes(AdA ada)
         {
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
+            ada.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParAdA(ada);
             hvm.AdA = ada;
             return View(hvm);
         }
@@ -184,38 +185,7 @@ namespace Projet2.Controllers
         public IActionResult HistoriqueCommandes(AdA ada)
         {
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
-            hvm.AdA = ada;
-            return View(hvm);
-        }
-
-        public IActionResult HistoriqueAteliers(AdA ada)
-        {
-            //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
-            return View(hvm);
-        }
-
-
-        public IActionResult ArticlesFavoris(AdA ada)
-        {
-            //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
-            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
-            hvm.AdA = ada;
-            return View(hvm);        
-        }
-        
-              
-        public IActionResult AteliersFavoris(AdA ada)
-        {
-            //avoir access a l'onglet ateliers pour en reserver/favoriser
-            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
-            hvm.AdA = ada;
-            return View(hvm);
-        }
-
-        public IActionResult ProducteursFavoris(AdA ada)
-        {
-            //ajouter foncionnalité favoriser dans les producteurs pour les utilisateurs connectés
-            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            ada.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParAdA(ada);
             hvm.AdA = ada;
             return View(hvm);
         }
@@ -269,6 +239,38 @@ namespace Projet2.Controllers
             SessionHelper.SetObjectAsJson(HttpContext.Session, "authentification", EstUtilisateur);
             HttpContext.SignOutAsync();
             return Redirect("/");
+        }
+
+
+
+
+        public IActionResult ProducteursFavoris(AdA ada)
+        {
+            //ajouter foncionnalité favoriser dans les producteurs pour les utilisateurs connectés
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+        public IActionResult ArticlesFavoris(AdA ada)
+        {
+            //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = ada;
+            return View(hvm);
+        }
+
+
+        public IActionResult HistoriqueAteliers(AdA ada)
+        {
+            //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
+            return View(hvm);
+        }
+        public IActionResult AteliersFavoris(AdA ada)
+        {
+            //avoir access a l'onglet ateliers pour en reserver/favoriser
+            hvm.Personne = cs.ObtenirPersonne(ada.PersonneId);
+            hvm.AdA = ada;
+            return View(hvm);
         }
 
     }

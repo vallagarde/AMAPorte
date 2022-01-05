@@ -1,0 +1,38 @@
+﻿@model Projet2.ViewModels.HomeViewModel
+
+@{
+}
+
+    <div class=" container">
+        <div class="col-7">
+            <div class="row">
+                <img src="~/ImageArticle/@Model.PanierSaisonnier.Image" />
+            </div>
+            <div class="row">
+                @Model.PanierSaisonnier.NomPanier
+
+            </div>
+        </div>
+            <div class="col-5">
+                @using (Html.BeginForm())
+                {
+                <div class="col">
+                    @Html.HiddenFor(m => Model.PanierSaisonnier.Id)
+                    @Html.HiddenFor(m => Model.LignePanierSaisonnier.Id)
+                </div>
+                <div class="col">
+                    @Html.LabelFor(m => Model.LignePanierSaisonnier.Avis.Note)
+                    @Html.TextBoxFor(m => Model.LignePanierSaisonnier.Avis.Note)
+                    
+                </div>
+                <div class="col">
+                    @Html.LabelFor(m => Model.LignePanierSaisonnier.Avis.Text)
+                    @Html.TextBoxFor(m => Model.LignePanierSaisonnier.Avis.Text)
+                </div>
+                <div class="col-12">
+                    <button type="submit">Ajouter Avis</button>
+                </div>
+                }
+            </div>
+    </div>
+  

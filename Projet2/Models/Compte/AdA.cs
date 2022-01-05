@@ -29,7 +29,7 @@ namespace Projet2.Models.Compte
 
         public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
 
-        public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
+        public virtual List<CommandePanier> CommandesPanierEffectues { get; set; }
 
         public AdA()
         {
@@ -37,7 +37,7 @@ namespace Projet2.Models.Compte
             DateInscription = DateTime.Today;
             Image = "Default.jpg";
             CommandesBoutiqueEffectues = new List<Commande>();
-            CommandesPanierEffectues = new List<PanierSaisonnier>();
+            CommandesPanierEffectues = new List<CommandePanier>();
             ArticlesFavoris = new List<Article>();
             ProducteursFavoris = new List<AdP>();
             //AteliersFavoris = new List<Atelier>();

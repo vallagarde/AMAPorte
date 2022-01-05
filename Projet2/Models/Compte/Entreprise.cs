@@ -38,7 +38,7 @@ namespace Projet2.Models.Compte
 
         public virtual List<Commande> CommandesBoutiqueEffectues { get; set; }
 
-        public virtual List<PanierSaisonnier> CommandesPanierEffectues { get; set; }
+        public virtual List<CommandePanier> CommandesPanierEffectues { get; set; }
 
 
         [Display(Name = "J'accepte les conditions générales et la politique de confidentialité")]
@@ -48,7 +48,7 @@ namespace Projet2.Models.Compte
         public Entreprise()
         {
             CommandesBoutiqueEffectues = new List<Commande>();
-            CommandesPanierEffectues = new List<PanierSaisonnier>();
+            CommandesPanierEffectues = new List<CommandePanier>();
             ArticlesFavoris = new List<Article>();
             ProducteursFavoris = new List<AdP>();
             //AteliersFavoris = new List<Atelier>();

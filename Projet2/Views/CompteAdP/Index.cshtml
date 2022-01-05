@@ -28,12 +28,13 @@
 
         @if (@Model.AdP.EstActive)
         {
+        <br/>
+         @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
+        <br/>
         <p>Gestion de la Boutique</p>
         @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
         <br/>
-        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
+        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)       
         <br/>
         @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
         <br/>
@@ -45,14 +46,14 @@
         <br/>
         @Html.ActionLink("Gerer mes Paniers", "GestionPanier", "EspaceAdP", @Model.AdP)
         <br/>
-        @Html.ActionLink("Commandes Panier A Preparer", "PaniersAPreparer", "EspaceAdP", @Model.AdP)
-        <br/>
         @Html.ActionLink("Historique des Commandes Panier", "HistoriquePaniers", "EspaceAdP", @Model.AdP)
         <br/>
         <br />
         <br />
         <p>Gestion des Ateliers</p>
         <br />
+        <p>Bientôt vous allez pouvoir proposer des ateliers !</p>
+        @*
         @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
         <br/>
         @Html.ActionLink("Gerer mes Ateliers", "GestionAtelier", "EspaceAdP", @Model.AdP)
@@ -60,10 +61,10 @@
         @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
         <br/>
         @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
-        <br/>        
+        <br/>  
+        *@
         }
-
-        
+       
         <br/>
         @Html.ActionLink("Gerer Mon Compte", "AdPCompteInfo", "CompteAdP", @Model.AdP)
         <br/>

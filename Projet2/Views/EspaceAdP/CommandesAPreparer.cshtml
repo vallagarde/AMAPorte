@@ -24,6 +24,7 @@
                                     <form method="post" asp-controller="EspaceAdP" asp-action="CommandesAPreparer">
                                       @Html.HiddenFor(m => @Model.AdP.Id)
                                       @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                                      @Html.HiddenFor(m => @commande.Id)
                                     <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
                                     </form>
                                     <br/>
@@ -62,6 +63,52 @@
                                     }
                                     </div>
                                     <p class="card-text">Total : @Total €</p>
+
+                                </div>                       
+                        </div>                    
+                }
+
+                @foreach (var commandePanier in @Model.ListeCommandesPanierEnPrep)
+                {
+                var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);   
+                        <div class="row ">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                    <form method="post" asp-controller="EspaceAdP" asp-action="CommandesPanierAPreparer">
+                                      @Html.HiddenFor(m => @Model.AdP.Id)
+                                      @Html.HiddenFor(m => @commandePanier.Id)
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
+                                    </form>
+                                    <br/>
+                                    Commande Panier @commandePanier.Id
+                                    </h5>
+                                    <p class="card-text">Date de Commande : @commandePanier.DateCommande</p>
+                                    <p class="card-text">Date de Livraison : @commandePanier.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text">@commandePanier.EtatCommande</p>
+                                    @if(@commandePanier.AdA != null)
+                                    {
+                                    <p class="card-text">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    }
+                                    
+                                    @if(@commandePanier.Entreprise != null)
+                                    {
+                                    <p class="card-text">@commandePanier.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div class="row ">                                        
+                                            <div class="card h-100">
+                                                @{
+                                                String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
+                                                }
+                                                <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
+                                                    <div class="card-body">
+                                                    <p class="card-text">Id @commandePanier.PanierSaisonnier.Id : @commandePanier.PanierSaisonnier.NomPanier</p>
+                                                    <p class="card-text">Quantité : @commandePanier.LignePanierSaisonnier.Quantite</p>
+                                                    <p class="card-text">Prix : @TotalPanier €</p>
+                                                    </div>
+                                            </div>                                    
+                                    
+                                    </div>
+                                    
 
                                 </div>                       
                         </div>                    

@@ -1,5 +1,56 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Projet2.ViewModels.HomeViewModel
+
+<div class="shadow-sm p-2 mb-5 welcome">
+    <h2>Historique des Commandes en Boutique</h2>
+</div>
+
+<!-- Products -->
+<div class="container">
+    @Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+    <div class="row">
+        <div class="col-md-2 menu-rigth">
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+        </div>
+        <div class="col-md-9">
+            <div class="row row-cols-1 row-cols-md-4 g-5">
+                @Html.HiddenFor(m => @Model.AdP.Id)  
+                @foreach (var commandePanier in @Model.ListeCommandesPanierLivres)
+                {
+                var Total = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);   
+                        <div class="row ">
+                                <div class="card-body">
+                                    <h5 class="card-title">Commande @commandePanier.Id</h5>
+                                    <p class="card-text">Date de Commande : @commandePanier.DateCommande</p>
+                                    <p class="card-text">@commandePanier.EtatCommande</p>
+                                    @if(@commandePanier.AdA != null)
+                                    {
+                                    <p class="card-text">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    }
+                                    
+                                    @if(@commandePanier.Entreprise != null)
+                                    {
+                                    <p class="card-text">@commandePanier.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div class="row ">
+                                                                         
+                                            <div class="card h-100">
+                                                    <div class="card-body">
+                                                    <p class="card-text">Panier @commandePanier.PanierSaisonnier.NomPanier</p>
+                                                    <p class="card-text">Prix : @Total€</p>
+                                                    @if(@commandePanier.LignePanierSaisonnier.Avis != null)
+                                                    {
+                                                    <p class="card-text">Note : @commandePanier.LignePanierSaisonnier.Avis.Note</p>
+                                                    <p class="card-text">Avis : @commandePanier.LignePanierSaisonnier.Avis.Text</p>
+                                                    }
+                                                    </div>
+                                            </div>                                    
+                                    
+                                    </div>
+                                </div>                       
+                        </div>                    
+                }
+            </div>
+        </div>
+    </div>   
+</div>
+                      

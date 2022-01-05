@@ -52,7 +52,7 @@
                                                 @Html.HiddenFor(m => @Model.Admin.Id)
                                                 @Html.HiddenFor(m => @article.Id)
                                                 @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                                                Commentaire : @Html.TextBoxFor(m => @article.AdminCommentaire, new{value=""})
+                                                Commentaire : <input id="article_AdminCommentaire" name="article.AdminCommentaire" type="text" value=" ">
                                                 <br/>
                                                @Html.Label("Etat", "Validé")
                                                @Html.RadioButtonFor(m => @article.EstValide, true)
@@ -95,7 +95,7 @@
                                         @Html.HiddenFor(m => @Model.Admin.Id)
                                         @Html.HiddenFor(m => @panierSaisonnier.Id)
                                         @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                                        Commentaire : @Html.TextBoxFor(m => @panierSaisonnier.AdminCommentaire, new{value=""})
+                                        Commentaire : <input id="panierSaisonnier_AdminCommentaire" name="panierSaisonnier.AdminCommentaire" type="text" value=" ">
                                         <br/>
                                        @Html.Label("Etat", "Validé")
                                        @Html.RadioButtonFor(m => @panierSaisonnier.EstValide, true)

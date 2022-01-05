@@ -1,4 +1,5 @@
-﻿using Projet2.Models.Compte;
+﻿using Projet2.Models.Boutique;
+using Projet2.Models.Compte;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,13 @@ namespace Projet2.Models.PanierSaisonniers
         //public int? CommandePanierId { get; set; }
         //public CommandePanier CommandePanier { get; set; }
 
-        public int? ContactComiteEntrepriseId { get; set; }
-        public ContactComiteEntreprise ContactComiteEntreprise { get; set; }
+        public Avis Avis { get; set; }
+        public int? AvisId { get; set; }
 
         public int? AdAId { get; set; }
-        public AdA AdA{ get; set; }
+        public AdA AdA { get; set; }
 
+        public int? EntrepriseId { get; set; }
+        public Entreprise Entreprise { get; set; }
     }
 }
