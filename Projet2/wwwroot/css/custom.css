@@ -1,6 +1,44 @@
-﻿.logo {
+﻿* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hnav {
+    background-color: white;
+    /*padding: 4rem;*/
+    font-weight: 600;
+    font-size: large;
+    
+}
+
+.logo {
     position: relative;
     height: 100%;
     max-width: 100%;
     object-fit: cover;
 }
+
+i {
+    font-size: 1.5rem;
+    color: #68b430;
+}
+
+.acustom {
+    color: #68b430;
+}
+
+.logincustom {
+
+}
+
+.footercustom {
+    height: 100px;
+    background-color: #68b430;
+}
+
+/*.maincustom {
+    background-color: aqua;
+}*/
