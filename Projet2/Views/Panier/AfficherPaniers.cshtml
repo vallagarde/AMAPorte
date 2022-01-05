@@ -1,30 +1,37 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 <br />
-<div class="row row row-cols-1 row-cols-md-4 g-4">
-    @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
-    {
-        @if (@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
+<div class="container-fluid">
+    <div class="row row row-cols-1 row-cols-md-4 g-4">
+        @foreach (var panierSaisonnier in @Model.CataloguePanier.PanierSaisonniers)
         {
-            <div class="col">
-                <div class="card h-100">
+            @if (@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
+            {
+                <div class="col">
+                    <div class="card h-100">
 
-                    @{
-                        String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
-                    }
-                    <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
-                        <h6 class="card-title">@panierSaisonnier.AdP.NomProducteur</h6>
-                        <p class="card-text">@panierSaisonnier.Description</p>
-                        <p class="card-text">@panierSaisonnier.Prix</p>
-                        @Html.ActionLink("Choisir", "CommanderPanier", "Panier", @panierSaisonnier)
-                        @Html.ActionLink("Plus", "AjouterLigneCommande", "Panier", @panierSaisonnier)
+                        @{
+                            String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
+                        }
+                        <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@panierSaisonnier.NomPanier</h5>
+                            <h6 class="card-title text-center">@panierSaisonnier.AdP.NomProducteur</h6>
+                            <p class="card-text text-center">@panierSaisonnier.Description</p>
+                            <p class="card-text text-center">@Decimal.Round(panierSaisonnier.Prix, 2)</p>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPanier", "Panier", new { @Id = panierSaisonnier.Id })'">
+                                Commander 1 panier
+                            </button>
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPaniers", "Panier", new { @Id = panierSaisonnier.Id })'">
+                                Commander plusieurs panier
+                            </button>
+                            @Html.ActionLink("Choisir", "CommanderPanier", "Panier", @panierSaisonnier)
+                            @Html.ActionLink("Plus", "AjouterLigneCommande", "Panier", @panierSaisonnier)
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+
         }
-
-    }
+    </div>
 </div>
-

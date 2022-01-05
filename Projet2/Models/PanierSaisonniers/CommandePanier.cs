@@ -24,7 +24,7 @@ namespace Projet2.Models.PanierSaisonniers
         public int? AdAId { get; set; }
         public AdA AdA { get; set; }
 
-        public int ContactComiteEntrepriseId { get; set; }
+        public int? ContactComiteEntrepriseId { get; set; }
         public ContactComiteEntreprise ContactComiteEntreprise { get; set; }
 
     }

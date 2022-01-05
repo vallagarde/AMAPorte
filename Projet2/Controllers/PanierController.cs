@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Projet2.Helpers;
+using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
@@ -19,6 +20,7 @@ namespace Projet2.Controllers
         private HomeViewModel hvm = new HomeViewModel();
         private PanierSaisonnierService ctx = new PanierSaisonnierService();
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private CalendrierService csv = new CalendrierService();
 
         public PanierController(IWebHostEnvironment webHostEnvironment)
         {
@@ -32,19 +34,38 @@ namespace Projet2.Controllers
         }
 
 
-        public IActionResult AjouterLigneCommande(int id)
+        public IActionResult CommanderPaniers(int id)
         {
             hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
             return View(hvm);
         }
 
         [HttpPost]
-        public IActionResult AjouterLigneCommande( int id, int quantite, int semaine)
+        public IActionResult CommanderPaniers( int id, int quantite, int semaine)
         {
             LignePanierService ctxligne = new LignePanierService();
+            int AdAId = 0;
+            int EntrepriseId = 0;
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdA == true)
+                {
+                    AdAId = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id).Id;
+
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    EntrepriseId = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id).Entreprise.Id;
+                }
+
+            }
 
             PanierSaisonnier panier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
-            LignePanierSaisonnier lignePanier = ctxligne.CreerLignePanier(quantite, id, quantite * panier.Prix, semaine);
+            LignePanierSaisonnier lignePanier = ctxligne.CreerLignePanier(quantite, id, quantite * panier.Prix, semaine, AdAId, EntrepriseId);
             hvm.LignePanierSaisonnier = lignePanier;
             //return View(hvm);
             RouteValueDictionary Dict = new RouteValueDictionary();
@@ -56,20 +77,59 @@ namespace Projet2.Controllers
 
         public IActionResult Paiement(int panierId)
         {
+
             LignePanierSaisonnier lignePanier = ctx.ObtientLignePanierParId(panierId);
-            ctx.CreerCommande(lignePanier);
+            CommandePanier commande = ctx.CreerCommande(lignePanier);
+            csv.AjouterLigneCalendrierPanier(commande);
+            
             return View();
         }
 
 
 
         
-        public IActionResult CommanderPanier(PanierSaisonnier panierSaisonnier)
+        public IActionResult CommanderPanier(int Id)
         {
-            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == panierSaisonnier.Id).FirstOrDefault();
+
+            hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == Id).FirstOrDefault();
             return View(hvm);
         }
-     
+
+        [HttpPost]
+        public IActionResult CommanderPanier(int id, int quantite, int semaine)
+        {
+            LignePanierService ctxligne = new LignePanierService();
+
+            int AdAId = 0;
+            int EntrepriseId = 0;
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdA == true)
+                {
+                    AdAId = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id).Id;
+
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    EntrepriseId = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id).Entreprise.Id;
+                }
+
+            }
+
+            PanierSaisonnier panier = ctx.ObtientTousLesPaniers().Where(p => p.Id == id).FirstOrDefault();
+            LignePanierSaisonnier lignePanier = ctxligne.CreerLignePanier(quantite, id, quantite * panier.Prix, semaine, AdAId, EntrepriseId);
+            hvm.LignePanierSaisonnier = lignePanier;
+            //return View(hvm);
+            RouteValueDictionary Dict = new RouteValueDictionary();
+            Dict.Add("lignePanier", lignePanier);
+
+            return RedirectToAction("CommanderLignePanier", new { @lignepanierId = lignePanier.Id });
+        }
+
         public IActionResult CommanderLignePanier(int lignepanierId)
 
         {
@@ -80,7 +140,7 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult CommandeLignePanier(PanierSaisonnier panierSaisonnier, int qauantite)
+        public IActionResult CommandeLignePanier(PanierSaisonnier panierSaisonnier, int quantite)
         {
             hvm.PanierSaisonnier = ctx.ObtientTousLesPaniers().Where(p => p.Id == panierSaisonnier.Id).FirstOrDefault();
 
