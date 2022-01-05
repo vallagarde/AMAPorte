@@ -328,6 +328,8 @@ namespace Projet2.Controllers
             }
             return RedirectToAction("Index", "Login");
         }
+
+
         public int QuantitePanier()
         {
             PanierService ctx = new PanierService();

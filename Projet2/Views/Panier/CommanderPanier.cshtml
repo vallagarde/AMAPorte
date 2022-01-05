@@ -36,17 +36,22 @@
                     <label class="form-check-label" for="inlineRadio3">52 semaines</label>
                 </div>
 
-                <input id="quantite" type="hidden"  name="quantite" value="1">
+                <input id="quantite" type="hidden" name="quantite" value="1">
                 <input type="hidden" name="id" value="@Model.PanierSaisonnier.Id">
+
+                <div class="col-12">
+                    <button type="submit">ajouter Panier</button>
+                </div>
             }
+
             <div><a>Total</a></div>
             @*<div>@Model.CommandePanier.Total</div>
-            <label for="Total">Total = @Model.CommandePanier.Total</label>
+        <label for="Total">Total = @Model.CommandePanier.Total</label>
 
-            <input type="hidden" name="Total" value="@Model.CommandePanier.Total" />*@
+        <input type="hidden" name="Total" value="@Model.CommandePanier.Total" />*@
             <div>
                 @Html.ActionLink("Annuler", "AfficherPaniers", "Panier", new { @class = "btn btn-primary" })
-                @Html.ActionLink("Payer", "Paiement", "Panier", @Model.PanierSaisonnier.Id, new { @class = "card-link" })
+
             </div>
         </div>
     </div>
