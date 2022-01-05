@@ -1,5 +1,14 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
+@using Microsoft.Extensions.Options
+@inject IOptions<Projet2.Data.StripeSettings> Stripe
  
+@{
+    decimal Apayer = 12.00M;
+    decimal APayer = Apayer * 100;
+    var PrixAPayer = Decimal.Round(Apayer, 2);
+
+}
+
 <section class="signupLayout">
         <div class="container">
                         <div class="tabs">
@@ -23,9 +32,7 @@
 
                 <div class="formBx">
 
-                    @using (Html.BeginForm())
-                    {
-                    
+                    <form asp-action="CreationCompte" asp-controller="CompteAdP" method="post">
                         <h2>Créez un Identifiant </h2>
                         <table width=100%>
                             <colgroup>
@@ -156,7 +163,22 @@
                         </table>
                         <table width=100%>
                             <tr align="center">
-                              <th><input type="submit" value="Créez votre Compte"/></th>
+                              <th>
+                                <article>
+                                <script src="//checkout.stripe.com/v2/checkout.js"
+                                    class="stripe-button"
+                                    data-key="@Stripe.Value.PublishableKey"
+                                    data-locale="auto"
+                                    data-description="Abonnement Annuel"
+                                    data-curreny=EUR
+                                    data-amount="@APayer"></script>
+                                <script>
+                                  $(function() {
+                                  $(".stripe-button-el").replaceWith('<input type="submit" value="Créez votre Compte">');
+                                  });
+                                </script>
+                                </article>
+                               </th>
                             </tr>
                             <tr align="center">
                               <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>
@@ -164,7 +186,7 @@
                         </table>
                     
                     <p> </p>                 
-                    }
+                    </form>
                 </div>
               <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
             </div>
