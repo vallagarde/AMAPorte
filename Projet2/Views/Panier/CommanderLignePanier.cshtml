@@ -31,6 +31,7 @@
             var PrixAPayer = Decimal.Round(Apayer, 2);
         }
         <form onsubmit="return validate()">
+
             <input type="checkbox" id="contrat" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">contrat</a>
             <div>
                 <input type="submit" value="submit" />
@@ -51,4 +52,75 @@
     </div>
 
 
+
+
+</div>
+
+
+<div class="modal-dialog modal-dialog-scrollable" id="contract">
+    ...
+</div>
+<div class="modal " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Mon contrat</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                This is some placeholder content to show the scrolling behavior for modals.
+
+                <br />
+                We use repeated line breaks to demonstrate how content can exceed minimum inner
+                height, thereby showing inner scrolling.
+
+                <br />
+                When content becomes longer than the predefined max-height of modal, content will
+                be cropped and scrollable within the modal.
+
+                This is some placeholder content to show the scrolling behavior for modals.
+                <br />
+                We use repeated line breaks to demonstrate how content can exceed minimum inner height,
+                thereby showing inner scrolling.
+                <br />
+
+                <strong>
+                    When content becomes longer than the predefined max-height of modal,
+                    content will be cropped and scrollable within the modal.
+                </strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    J'ai compris'
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade"
+     id="contract"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-mdb-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
 </div>
