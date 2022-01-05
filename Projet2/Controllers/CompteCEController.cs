@@ -13,7 +13,6 @@ namespace Projet2.Controllers
     [Authorize]
     public class CompteCEController : Controller
     {
-        //View pour paiement 12€/6 mois 
         //ajouter foncionnalité d'ajouter des produits, panier xNombreUtilisateur dans la boutique 
         //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
         //BOUTIQUE / PANIERS S. : 
@@ -31,7 +30,21 @@ namespace Projet2.Controllers
 
             if (contactComiteEntreprise.Id == 0)
             {
-                return View("Error");
+                UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                if (hvm.ContactComiteEntreprise == null)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                    hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+                    hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                    return View(hvm);
+                }
             }
             else
             {
