@@ -30,9 +30,20 @@ namespace Projet2.Models.PanierSaisonniers
             return _bddContext.PanierSaisonniers.Find(Id);
         }
 
-        public LignePanierSaisonnier CreerLignePanier(int quantite, int PanierSaisonnierId, decimal sousTotal, int semaine)
+        public LignePanierSaisonnier CreerLignePanier(int quantite, int PanierSaisonnierId, decimal sousTotal, int semaine, int AdAId, int EntrepriseId)
         {
-            LignePanierSaisonnier lignePanier = new LignePanierSaisonnier() { PanierSaisonnierId = PanierSaisonnierId, Quantite = quantite, SousTotal = sousTotal, ContactComiteEntrepriseId = 1, DureeAbonnement = semaine };
+            LignePanierSaisonnier lignePanier = new LignePanierSaisonnier();
+
+            if (AdAId != 0)
+            {
+                lignePanier = new LignePanierSaisonnier() { PanierSaisonnierId = PanierSaisonnierId, Quantite = quantite, SousTotal = sousTotal*semaine, AdAId = AdAId, DureeAbonnement = semaine };
+
+            }
+            else
+            {
+                lignePanier = new LignePanierSaisonnier() { PanierSaisonnierId = PanierSaisonnierId, Quantite = quantite, SousTotal = sousTotal * semaine, ContactComiteEntrepriseId = EntrepriseId, DureeAbonnement = semaine };
+
+            }
 
             _bddContext.LignePanierSaisonniers.Add(lignePanier);
             _bddContext.SaveChanges();

@@ -15,9 +15,7 @@ namespace Projet2.Controllers
 {
     [Authorize]
     public class CompteAdAController : Controller
-    {
-        //View pour paiement 12€/6 mois 
-        
+    {        
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
         HomeViewModel hvm = new HomeViewModel();
@@ -36,13 +34,25 @@ namespace Projet2.Controllers
 
             if (hvm.Personne == null)
             {
-                return View("Error");
+                UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                if(hvm.AdA == null) 
+                {
+                    return View("Error");
+                } else
+                {
+                    hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                    hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                    return View(hvm);
+                }
             }
             else
             {
+                hvm.AdA = cs.ObtenirAdAParId(ada.Id);
                 hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
                 hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-                hvm.AdA = ada;
                 return View(hvm);
             }
         }
@@ -116,7 +126,7 @@ namespace Projet2.Controllers
                             hvm.Adresse = adresse;
                             hvm.Identifiant = identifiant;
 
-                            return View("Index", hvm);
+                            return RedirectToAction("Index", hvm);
                         }
 
                     }
@@ -127,6 +137,7 @@ namespace Projet2.Controllers
             hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
             return View(hvm);
         }
+
         [HttpGet]
         public IActionResult AjouterImage(AdA ada)
         {
@@ -169,6 +180,19 @@ namespace Projet2.Controllers
             hvm.AdA = ada;
             return View(hvm);
         }
+
+        public IActionResult Commande_infos(int CommandeId)
+        {
+            Commande commande = panierService.ObtientCommandeParId(CommandeId);
+            int panierId = commande.PanierBoutiqueId;
+            PanierBoutique panierBoutique = panierService.ObientPanier(panierId);
+            commande.PanierBoutique = panierBoutique;
+            hvm.PanierBoutique = panierBoutique;
+            hvm.Commande= commande;
+            return View(hvm);
+        }
+
+
 
         public IActionResult HistoriqueCommandes(AdA ada)
         {

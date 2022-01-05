@@ -110,12 +110,13 @@ namespace Projet2.Models.PanierSaisonniers
             return panierSaisonnier.Id;
         }
 
-        public void CreerCommande(LignePanierSaisonnier lignePanier)
+        public CommandePanier CreerCommande(LignePanierSaisonnier lignePanier)
         {
             PanierSaisonnier panier = ObtientPanierParId(lignePanier.PanierSaisonnierId);
-            CommandePanier commande = new CommandePanier() { LignePanierSaisonnier = lignePanier, PanierSaisonnier = panier, DateTime = DateTime.Today, AdAId = 1, ContactComiteEntrepriseId = 1, total = lignePanier.SousTotal*lignePanier.DureeAbonnement };
+            CommandePanier commande = new CommandePanier() { LignePanierSaisonnier = lignePanier, PanierSaisonnier = panier, DateTime = DateTime.Today, total = lignePanier.SousTotal };
             _bddContext.CommandePaniers.Add(commande);
             _bddContext.SaveChanges();
+            return commande;
         }
 
         public PanierSaisonnier ModifierPanierSaisonnier(PanierSaisonnier panierSaisonnier)

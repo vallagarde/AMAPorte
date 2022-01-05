@@ -70,27 +70,28 @@ namespace Projet2.Models.Calendriers
             return dateTime;
         }
 
-        /*public void AjouterLigneCalendrierPanier(PanierSaisonnierCommande panierSaisonnierCommande)
+        public void AjouterLigneCalendrierPanier(CommandePanier commandePanier)
         {
-            List<DateTime> liste = new List<DateTime>();
-            foreach (DateTime datetime in panierSaisonnierCommande.LignePanierSaisonnierDateTimes)
-            {
-                DateTime dateDeCommande = panierSaisonnier.DateTime;
-                liste.Add(dateCommande)
-            }
-            
-            int commandeId = panierSaisonnier.Id;
-
+            DateTime dateDeCommande = commandePanier.DateTime;
+            int commandeId = commandePanier.Id;
             while (dateDeCommande.DayOfWeek != DayOfWeek.Wednesday)
             {
                 dateDeCommande = dateDeCommande.AddDays(1);
             }
+            int nbSemaine = commandePanier.LignePanierSaisonnier.DureeAbonnement;
 
-            Calendrier calendrier = new Calendrier() { CommandeId = commandeId, DateLivraison = dateDeCommande };
-
+            Calendrier calendrier = new Calendrier() { PanierSaisonnierId = commandeId , DateLivraison = dateDeCommande };
             _bddContext.Calendrier.Add(calendrier);
+
+            for (int i =0; i< nbSemaine; i++)
+            {
+                dateDeCommande = dateDeCommande.AddDays(7);
+                Calendrier calendrier2 = new Calendrier() { PanierSaisonnierId = commandeId, DateLivraison = dateDeCommande };
+                _bddContext.Calendrier.Add(calendrier2);
+            }
+
             _bddContext.SaveChanges();
 
-        }*/
+        }
     }
 }

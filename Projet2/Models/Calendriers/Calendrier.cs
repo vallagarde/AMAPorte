@@ -13,7 +13,7 @@ namespace Projet2.Models.Calendriers
         public int? CommandeId { get; set; }
 
         public PanierSaisonnier PanierSaisonnier { get; set; }
-        public int? PanierSaisonniersId { get; set; }
+        public int? PanierSaisonnierId { get; set; }
 
     }
 }

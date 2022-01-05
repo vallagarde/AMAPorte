@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
 $(document).ready(function () {
     $.ajax({
         url: "/Panier/PanierIsEmpty",
@@ -19,13 +20,7 @@ $(document).ready(function () {
                         type: 'GET',
                         success: function (res) {
 
-
-
-
-
                             $("#nombreArticle").html(res);
-
-
                         }
                     });
                 });

@@ -34,7 +34,20 @@ namespace Projet2.Controllers
 
             if (hvm.Personne == null)
             {
-                return View("Error");
+                UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                if (hvm.AdP == null)
+                {
+                    return View("Error");
+                }
+                else
+                {
+                    hvm.Personne = cs.ObtenirPersonne(hvm.AdP.PersonneId);
+                    hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                    return View(hvm);
+                }
             }
             else
             {
