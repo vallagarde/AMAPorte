@@ -35,10 +35,10 @@
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
                                         <div style="max-width: 4rem">
-                                            @ligne.Quantite"
+                                            Quantité = @ligne.Quantite  
                                         </div>
                                         <div style="width: 80px;">
-                                            <h5 class="mb-0"> €@SousTotal</h5>
+                                            <h5 class="mb-0">  € @SousTotal</h5>
                                         </div>
                                         <div>
                                             <button class="btn btn-outline-dark flex-shrink-0" type="submit">Modifier</button>
@@ -59,7 +59,7 @@
             </div>
             <hr>
 
-            <label for="Total">Total = @Model.PanierBoutique.Total</label>
+            <label for="Total">Total = @Decimal.Round(Model.PanierBoutique.Total, 2) €</label>
             <hr>
 
            
