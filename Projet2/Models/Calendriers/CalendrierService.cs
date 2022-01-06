@@ -80,18 +80,30 @@ namespace Projet2.Models.Calendriers
             }
             int nbSemaine = commandePanier.LignePanierSaisonnier.DureeAbonnement;
 
-            Calendrier calendrier = new Calendrier() { PanierSaisonnierId = commandeId , DateLivraison = dateDeCommande };
+            Calendrier calendrier = new Calendrier() { LignePanierSaisonnierId = commandeId , DateLivraison = dateDeCommande };
             _bddContext.Calendrier.Add(calendrier);
 
             for (int i =0; i< nbSemaine; i++)
             {
                 dateDeCommande = dateDeCommande.AddDays(7);
-                Calendrier calendrier2 = new Calendrier() { PanierSaisonnierId = commandeId, DateLivraison = dateDeCommande };
+                Calendrier calendrier2 = new Calendrier() { LignePanierSaisonnierId = commandeId, DateLivraison = dateDeCommande };
                 _bddContext.Calendrier.Add(calendrier2);
             }
 
             _bddContext.SaveChanges();
 
+        }
+        public List<DateTime> ObtenirDatesLivraisonPanierSaisonnier(int commandeLignePanierSaisonnierId)
+        {
+            List<Calendrier> listeCalendrier = _bddContext.Calendrier.Where(c => c.LignePanierSaisonnierId == commandeLignePanierSaisonnierId).ToList();
+            List<DateTime> listeDatedeLivraison = new List<DateTime>();
+
+            foreach (Calendrier cal in listeCalendrier)
+            {
+                listeDatedeLivraison.Add(cal.DateLivraison);
+            }
+
+            return listeDatedeLivraison;
         }
     }
 }
