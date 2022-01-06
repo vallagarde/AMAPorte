@@ -24,10 +24,9 @@
                                 @{
                                 String filepath = "~/ImageProfils/Default.jpg";
                                 }
-                                <img src="~/ImageArticle/Default.jpg" class="card-img-top" alt="..." />
+                                <img src="~/ImageArticle/Default.jpg" class="card-img-top" alt="..." style="width: 100px" />
                                 
-                                    <h5 class="card-title">Boutique</h5>
-                                    <p class="card-text">N° Commande : @commande.Id</p>
+                                    <p class="card-text">N° Commande Boutique : @commande.Id</p>
                                     <p class="card-text">@commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">@commande.EtatCommande</p>
                                     <p class="card-text">@Total €</p>
@@ -51,18 +50,19 @@
                                     
                                 <div class="card h-100">
                                     <div class="card-body">
-                                    @{
-                                    String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
-                                    }
-                                    <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
-                                        
-                                        <h5 class="card-title">Panier</h5>
-                                        <p class="card-text">N° Commande : @commandePanier.Id</p>
+                                        @{
+                                            String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
+                                        }
+                                        <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100px" />
+
+                                        <p class="card-text">N° Commande Panier : @commandePanier.Id</p>
+                                        <p class="card-text">@commandePanier.PanierSaisonnier.NomPanier</p>
                                         <p class="card-text">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
                                         <p class="card-text">@commandePanier.EtatCommande</p>
-                                        <p class="card-text">@commandePanier.PanierSaisonnier.NomPanier</p>
                                         <p class="card-text">@TotalPanier €</p>
-                                        </div>
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "CompteAdA", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
+
+                                    </div>
                                 </div>                                                                        
                             </div>                                                     
                         </div>

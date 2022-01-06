@@ -10,6 +10,7 @@ using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -20,6 +21,7 @@ namespace Projet2.Controllers
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
         LignePanierService lignePanierService = new LignePanierService();
+        PanierSaisonnierService pss = new PanierSaisonnierService();
         HomeViewModel hvm = new HomeViewModel();
 
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -187,15 +189,36 @@ namespace Projet2.Controllers
 
         public IActionResult Commande_infos(int CommandeId)
         {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
+
             Commande commande = panierService.ObtientCommandeParId(CommandeId);
             int panierId = commande.PanierBoutiqueId;
             PanierBoutique panierBoutique = panierService.ObientPanier(panierId);
             commande.PanierBoutique = panierBoutique;
             hvm.PanierBoutique = panierBoutique;
             hvm.Commande= commande;
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+
             return View(hvm);
         }
 
+        public IActionResult CommandePanier_infos(int commandePanierId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
+            LignePanierSaisonnier commande = lignePanierService.ObtientLignePanierParId(commandePanierId);
+            int PanierSaisonnierId = commande.PanierSaisonnierId;
+            PanierSaisonnier panierSaisonnier = pss.ObtientTousLesPaniers().Where(c => c.Id == PanierSaisonnierId).FirstOrDefault(); ;
+            commande.PanierSaisonnier = panierSaisonnier;
+            hvm.PanierSaisonnier = panierSaisonnier;
+            hvm.LignePanierSaisonnier = commande;
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+
+            return View(hvm);
+        }
 
 
         public IActionResult HistoriqueCommandes(AdA ada)
