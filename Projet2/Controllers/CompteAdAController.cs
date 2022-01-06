@@ -239,6 +239,7 @@ namespace Projet2.Controllers
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
             hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
             hvm.CommandePanier = lignePanierService.ObtenirCommandesPanierParAdA(hvm.AdA).Where(c => c.Id == commandePanierId).FirstOrDefault();
+
             return View(hvm);
         }
 

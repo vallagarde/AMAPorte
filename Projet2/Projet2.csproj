@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Calendrier\**" />
+    <Content Remove="Models\Calendrier\**" />
+    <EmbeddedResource Remove="Models\Calendrier\**" />
+    <None Remove="Models\Calendrier\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\Images\" />
   </ItemGroup>
   <ItemGroup>
@@ -20,7 +27,6 @@
     <Folder Include="wwwroot\ImagesPaniers\" />
     <Folder Include="Data\" />
     <Folder Include="Views\Payment\" />
-    <Folder Include="Models\Calendrier\" />
     <Folder Include="Models\Mails\" />
   </ItemGroup>
   <ItemGroup>
