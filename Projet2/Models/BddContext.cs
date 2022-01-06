@@ -407,7 +407,7 @@ namespace Projet2.Models
 
 
                         //CCE
-                        Identifiant identifiant5 = new Identifiant()
+                            Identifiant identifiant5 = new Identifiant()
                             {
                                 AdresseMail = "coperl@gmail.com",
                                 MotDePasse = "mdptest",
@@ -587,7 +587,7 @@ namespace Projet2.Models
 
                         //Commandes Paniers
 
-                        BddContext bddContext = new BddContext();
+                        //BddContext bddContext = new BddContext();
 
                         /*LignePanierSaisonnier lignePanierSaisonnier = lignePanierService.CreerLignePanier(1, panierSaisonnier1.Id, 1 * panierSaisonnier1.Prix, 13, adA1.Id, 0);
                         CommandePanier commandePanier = lignePanierService.CreerCommande(lignePanierSaisonnier);
@@ -613,7 +613,7 @@ namespace Projet2.Models
                         commandePanier4.DateCommande = DateTime.Now;
                         bddContext.CommandePaniers.Update(commandePanier4);*/
 
-                        bddContext.SaveChanges();
+                        //bddContext.SaveChanges();
 
                         //Articles Boutique
 
