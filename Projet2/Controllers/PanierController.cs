@@ -176,7 +176,7 @@ namespace Projet2.Controllers
                     // mettre le file dans le dossier
                     //var FileDic1 = "Files";
 
-                    string FilePath1 = Path.Combine(_webHostEnvironment.WebRootPath, "ImageArticle");
+                    string FilePath1 = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
 
                     if (!Directory.Exists(FilePath1))
 
