@@ -12,8 +12,8 @@ namespace Projet2.Models.Calendriers
         public Commande Commande { get; set; }
         public int? CommandeId { get; set; }
 
-        public PanierSaisonnier PanierSaisonnier { get; set; }
-        public int? PanierSaisonnierId { get; set; }
+        public LignePanierSaisonnier LignePanierSaisonnier { get; set; }
+        public int? LignePanierSaisonnierId { get; set; }
 
     }
 }

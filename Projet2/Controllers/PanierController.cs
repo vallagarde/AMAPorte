@@ -76,14 +76,18 @@ namespace Projet2.Controllers
         }
 
 
-        public IActionResult Paiement(int panierId)
+        public IActionResult Paiement(int LignePanierId)
         {
 
-            LignePanierSaisonnier lignePanier = lignePanierService.ObtientLignePanierParId(panierId);
+            LignePanierSaisonnier lignePanier = lignePanierService.ObtientLignePanierParId(LignePanierId);
             CommandePanier commande = lignePanierService.CreerCommande(lignePanier);
             csv.AjouterLigneCalendrierPanier(commande);
+            List<DateTime> datedeLivraison = csv.ObtenirDatesLivraisonPanierSaisonnier(commande.Id); 
+            hvm.LignePanierSaisonnier = lignePanier;
+            hvm.ProchaineDateLivraison = datedeLivraison[0];
             
-            return View();
+            
+            return View(hvm);
         }
       
         public IActionResult CommanderPanier(int Id)
