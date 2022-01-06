@@ -7,7 +7,6 @@ function validate() {
     }
 
     if (valid) {
-        alert("Validation Succesfull");
     }
     else {
         alert("Veuillez accepter les conditions pour continuer");

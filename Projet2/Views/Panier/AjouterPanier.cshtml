@@ -3,7 +3,7 @@
     ViewData["Title"] = "AjouterPanier";
 }
 
-<div class="container">
+<div class="container afternav">
     <form enctype="multipart/form-data" method="post" asp-controller="Panier" asp-action="AjouterPanier">
         <fieldset>
             @Html.HiddenFor(m => Model.AdP.Id)
