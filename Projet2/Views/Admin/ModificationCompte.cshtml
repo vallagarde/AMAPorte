@@ -1,41 +1,68 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-@{
-    Layout = null;
-}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Modifier Compte</title>
-</head>
-<body> 
-<h1>Formulaire Modification Admin : </h1>
 
-    @using (Html.BeginForm())
-    {
-<fieldset>   
-    <h2> Identifiant </h2>
-        @Html.HiddenFor(m => Model.Admin.Id)
-        @Html.HiddenFor(m => Model.Identifiant.Id)
-        @Html.HiddenFor(m => Model.Admin.Role)
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
-        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
-        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {Value=@Model.Identifiant.MotDePasse})
-        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
-    <br />
-</fieldset>
-     <br />
-        <input type="submit" value="Modification" />
-    }
+<section class="signupLayout">
+        <div class="container" style="min-height: 400px">               
+            <div class="user signupBx" > 
+                <div class="formBx" style="margin-top: 0px; height: 100%">
+                        <form asp-action="ModificationCompte" asp-controller="Admin" method="post"> 
+                        @Html.HiddenFor(m => Model.Admin.Id)
+                        @Html.HiddenFor(m => Model.Identifiant.Id)
+                        @Html.HiddenFor(m => Model.Admin.Role)
 
-    <br /><br />  
-    <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "Admin", @Model.Admin)
-    </div>
-</body>
-</html>
+                        <h2>Votre Identifiant </h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                             </colgroup>
+                             <tr >
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th class="signup" >@Html.DisplayFor(m => Model.Identifiant.AdresseMail)</th> 
+                              </tr>
+                               </table>
+                              <table width="100%">
+                              <tr align="center">
+                              <th class="signup" >@Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.Admin.Id)</th>
+                              </tr>                 
+                        </table>
+                        <br/>
+                        <h2>Votre Role</h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.RadioButtonFor(m => @Model.Admin.Role, "DSI") </th>
+                              <th>@Html.Label("Role", "Creer Un Compte DSI")</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.RadioButtonFor(m => @Model.Admin.Role, "GCCQ")</th>
+                              <th>@Html.Label("Role", "Creer Un Compte GCCQ") </th>
+                            </tr>
+                            <tr>
+                              <th>@Html.RadioButtonFor(m => @Model.Admin.Role, "GCRA")</th>
+                              <th>@Html.Label("Role", "Creer Un Compte GCRA") </th>
+                            </tr>
+                           </table>
+                         <table width=100%>
+                            <tr align="center">
+                               <th>
+                                <input type="submit" value="Modifier">                              
+                              </th>                              
+                            </tr>
+                            <tr align="center">
+                              <th class="signup"><a asp-area="" asp-controller="Admin" asp-action="Index"> Retour sur Mon Compte</a></th>
+                            </tr>
+                        </table>
+                        </form>
+                </div>
+              <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
+            </div>
+            </div>
+        
+    </section>
+
+     @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+    @Html.ActionLink("Retour", "Index", "Admin", @Model.Admin)
