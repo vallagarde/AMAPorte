@@ -202,7 +202,7 @@ namespace Projet2.Models
                                 EstEnAttente = false,
                                 EstAdP = true,
                                 Vedette = true,
-                                EstAboAnnuel = true,s
+                                EstAboAnnuel = true,
 
                             };
                             cs.CreerAdP(personne3, adresse3, adP1);
