@@ -236,6 +236,9 @@ namespace Projet2.Models.Boutique
                 {
                     var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
                     lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    lignePanierBoutique.Article.AdP = (from a in _bddContext.AdPs where a.Id == lignePanierBoutique.Article.AdPId select a).FirstOrDefault();
+                    lignePanierBoutique.Article.AdP.Personne = (from p in _bddContext.Personnes where p.Id == lignePanierBoutique.Article.AdP.PersonneId select p).FirstOrDefault();
+                    lignePanierBoutique.Article.AdP.Personne.Adresse = (from ad in _bddContext.Adresses where ad.Id == lignePanierBoutique.Article.AdP.Personne.AdresseId select ad).FirstOrDefault();
                     var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
                     lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
                 }
@@ -258,6 +261,9 @@ namespace Projet2.Models.Boutique
                 {
                     var queryArticle = from article in _bddContext.Article where article.Id == lignePanierBoutique.ArticleId select article;
                     lignePanierBoutique.Article = queryArticle.FirstOrDefault();
+                    lignePanierBoutique.Article.AdP = (from a in _bddContext.AdPs where a.Id == lignePanierBoutique.Article.AdPId select a).FirstOrDefault();
+                    lignePanierBoutique.Article.AdP.Personne = (from p in _bddContext.Personnes where p.Id == lignePanierBoutique.Article.AdP.PersonneId select p).FirstOrDefault();
+                    lignePanierBoutique.Article.AdP.Personne.Adresse = (from ad in _bddContext.Adresses where ad.Id == lignePanierBoutique.Article.AdP.Personne.AdresseId select ad).FirstOrDefault();
                     var queryAvis = from avis in _bddContext.Avis where avis.Id == lignePanierBoutique.AvisId select avis;
                     lignePanierBoutique.Avis = queryAvis.FirstOrDefault();
                 }

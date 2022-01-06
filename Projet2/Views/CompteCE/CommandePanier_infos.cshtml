@@ -5,7 +5,7 @@
 <div class="container mt-5 p-3 rounded cart">
     <div class="row no-gutters">
         <div class="col-md-2 menu-rigth">
-            <p>@Html.ActionLink("Retour", "Commandes", "CompteAdA", Model.AdA)</p>
+            <p>@Html.ActionLink("Retour", "Commandes", "CompteCE", Model.ContactComiteEntreprise)</p>
         </div>
         <div class="col-md-12">
             <div class="product-details mr-2">
@@ -17,13 +17,13 @@
                                     <div class="d-flex flex-row align-items-center">
                                         <div>
                                             @{
-                                        String filepath = "~/ImageArticle/" + @Model.CommandePanier.PanierSaisonnier.Image;
+                                            String filepath = "~/ImageArticle/" + @Model.CommandePanier.PanierSaisonnier.Image;
                                             }
                                             <img src="~/ImageArticle/@Model.CommandePanier.PanierSaisonnier.Image"
-                                                 class="img-fluid rounded-3" alt="Shopping item" style="width: 65px; height: 80%">
+                                                 class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
                                         </div>
                                         <div class="ms-3">
-                                             <h5>@Model.CommandePanier.PanierSaisonnier.AdP.NomProducteur</h5>
+                                            <h5>@Model.CommandePanier.PanierSaisonnier.AdP.NomProducteur</h5>
                                             <h5>@Model.CommandePanier.PanierSaisonnier.NomPanier</h5>
                                             <p class="small mb-0">@Model.CommandePanier.PanierSaisonnier.Description</p>
                                         </div>

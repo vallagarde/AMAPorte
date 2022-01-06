@@ -202,7 +202,7 @@ namespace Projet2.Models
                                 EstEnAttente = false,
                                 EstAdP = true,
                                 Vedette = true,
-                                EstAboAnnuel = true,
+                                EstAboAnnuel = true
 
                             };
                             cs.CreerAdP(personne3, adresse3, adP1);
@@ -252,7 +252,7 @@ namespace Projet2.Models
                                 EstActive = true,
                                 EstEnAttente = false,
                                 Vedette =true,
-                                EstAboAnnuel = true,
+                                EstAboAnnuel = true
                             };
                             cs.CreerAdP(personne4, adresse4, adP2);
 
@@ -281,16 +281,15 @@ namespace Projet2.Models
                                 NomEntreprise = "Amazon",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true,
                                 EstAboAnnuel = true,
-                               
+                                EstEnAccord = true,                             
                             };
                             Adresse adresse5 = new Adresse()
                             {
                                 Numero = 34,
                                 Voie = "La Croix Chevalier",
                                 Ville = "Vineuil",
-                                CodePostal = 36110,
+                                CodePostal = 36110
                             };
 
                             ContactComiteEntreprise contactComiteEntreprise1 = new ContactComiteEntreprise()
@@ -328,8 +327,8 @@ namespace Projet2.Models
                                 NomEntreprise = "",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true,
                                 EstAboAnnuel = true,
+                                EstEnAccord = true,
                             };
                             Adresse adresse6 = new Adresse()
                             {

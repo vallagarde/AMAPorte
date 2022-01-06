@@ -7,6 +7,7 @@ using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -14,17 +15,11 @@ namespace Projet2.Controllers
     [Authorize]
     public class CompteCEController : Controller
     {
-        //ajouter foncionnalité favoriser dans la boutique pour les utilisateurs connectés
-        //ATELIERS :
-        //avoir access a l'onglet ateliers pour en reserver/favoriser
-        //voir les ateliers a venir sur sa page d'accueil 
-        //voir l'historique des ateliers passés, ajouter un seul ! avis par atelier
-
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
         LignePanierService lignePanierService = new LignePanierService();
+        PanierSaisonnierService panierSaisonnierService = new PanierSaisonnierService();
         HomeViewModel hvm = new HomeViewModel();
-
 
         public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
         {
@@ -163,7 +158,7 @@ namespace Projet2.Controllers
                 hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
                 hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.EstAboAnnuel = true;
-                hvm.Entreprise = cs.ModifierEntreprise(hvm.Entreprise);
+                cs.ModifierEntreprise(hvm.Entreprise);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
                 hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
                 hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
@@ -177,6 +172,26 @@ namespace Projet2.Controllers
             hvm.Entreprise.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParEntreprise(hvm.Entreprise);
             hvm.Entreprise.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParEntreprise(hvm.Entreprise);
             hvm.ContactComiteEntreprise = contactComiteEntreprise;
+            return View(hvm);
+        }
+
+        public IActionResult Commande_infos(int CommandeId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+            hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+            hvm.Commande = panierService.ObtenirCommandesParEntreprise(hvm.Entreprise).Where(c => c.Id == CommandeId).FirstOrDefault();            
+            return View(hvm);
+        }
+
+        public IActionResult CommandePanier_infos(int commandePanierId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+            hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+            hvm.CommandePanier = lignePanierService.ObtenirCommandesPanierParEntreprise(hvm.Entreprise).Where(c => c.Id == commandePanierId).FirstOrDefault();
             return View(hvm);
         }
 
@@ -259,6 +274,11 @@ namespace Projet2.Controllers
 
             return Redirect("/");
         }
+
+
+
+
+
 
 
         public IActionResult ArticlesFavoris(ContactComiteEntreprise contactComiteEntreprise)

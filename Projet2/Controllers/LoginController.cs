@@ -92,7 +92,7 @@ namespace Projet2.Controllers
                         
                         if (hvm.AdP != null)
                         {
-                            if (hvm.Identifiant.EstAdA)
+                            if (hvm.Identifiant.EstAdP)
                             {
                                 if (hvm.AdP.EstAboAnnuel)
                                 {

@@ -6,11 +6,11 @@
 <div class="container mt-5 p-3 rounded cart">
     <div class="row no-gutters">
         <div class="col-md-2 menu-rigth">
-            <p>@Html.ActionLink("Retour", "Commandes", "CompteAdA", Model.AdA)</p>
+            <p>@Html.ActionLink("Retour", "Commandes", "CompteCE", Model.ContactComiteEntreprise)</p>
         </div>
         <div class="col-md-12">
             <div class="product-details mr-2">
-                
+
                 @foreach (var lignePanierBoutique in @Model.Commande.PanierBoutique.LignePanierBoutiques)
                 {
 
@@ -25,7 +25,7 @@
                                     <div class="d-flex flex-row align-items-center p-2">
                                         <div>
                                             <img src="~/ImageArticle/@lignePanierBoutique.Article.Image"
-                                                 class="img-fluid rounded-3" alt="Shopping item" style="width: 65px; height: 80%">
+                                                 class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
                                         </div>
                                         <div class="ms-3">
                                             <h5>@lignePanierBoutique.Article.AdP.NomProducteur</h5>
