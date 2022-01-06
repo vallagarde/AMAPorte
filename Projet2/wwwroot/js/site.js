@@ -29,6 +29,7 @@ $(document).ready(function () {
     });
 });
 
+
 $(document).ready(function () {
     $.ajax({
         url: "/Login/UtilisateurEstConnecte",
@@ -60,5 +61,6 @@ $(document).ready(function () {
         }
     });
 });
+
 
 
