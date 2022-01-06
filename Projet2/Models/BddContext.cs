@@ -107,7 +107,10 @@ namespace Projet2.Models
                                 Ville = "Paris",
                                 CodePostal = 75010,
                             };
-                            AdA adA1 = new AdA();
+                            AdA adA1 = new AdA()
+                            {
+                                EstAboAnnuel = true,
+                            };
                             cs.CreerAdA(personne1, adresse1, adA1);
 
                             Identifiant identifiant2 = new Identifiant()
@@ -146,7 +149,10 @@ namespace Projet2.Models
                                 Ville = "Levroux",
                                 CodePostal = 36110,
                             };
-                            AdA adA2 = new AdA();
+                            AdA adA2 = new AdA()
+                            {
+                                EstAboAnnuel = true,
+                            };
                             cs.CreerAdA(personne2, adresse2, adA2);
 
 
@@ -195,7 +201,8 @@ namespace Projet2.Models
                                 EstActive = true,
                                 EstEnAttente = false,
                                 EstAdP = true,
-                                Vedette = true
+                                Vedette = true,
+                                EstAboAnnuel = true,s
 
                             };
                             cs.CreerAdP(personne3, adresse3, adP1);
@@ -244,7 +251,8 @@ namespace Projet2.Models
                                 EstAdP = true,
                                 EstActive = true,
                                 EstEnAttente = false,
-                                Vedette =true
+                                Vedette =true,
+                                EstAboAnnuel = true,
                             };
                             cs.CreerAdP(personne4, adresse4, adP2);
 
@@ -273,7 +281,9 @@ namespace Projet2.Models
                                 NomEntreprise = "Amazon",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true
+                                EstEnAccord = true,
+                                EstAboAnnuel = true,
+                               
                             };
                             Adresse adresse5 = new Adresse()
                             {
@@ -318,7 +328,8 @@ namespace Projet2.Models
                                 NomEntreprise = "",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true
+                                EstEnAccord = true,
+                                EstAboAnnuel = true,
                             };
                             Adresse adresse6 = new Adresse()
                             {
