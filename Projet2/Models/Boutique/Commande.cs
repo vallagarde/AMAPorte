@@ -84,5 +84,19 @@ namespace Projet2.Models.Boutique
                 return null;
             }
         }
+
+        public string ReturnNumeroCommandeForDisplay
+        {
+            get
+            {
+                if (this.Id != 0)
+                {
+                    string NumeroCommande = "B" + this.Id;
+                    return NumeroCommande;
+                }
+                return null;
+            }
+
+        }
     }
 }

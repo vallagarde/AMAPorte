@@ -27,6 +27,7 @@
                                 <img src="~/ImageArticle/Default.jpg" class="card-img-top" alt="..." style="width: 100px" />
                                 
                                     <p class="card-text">N° Commande Boutique : @commande.Id</p>
+
                                     <p class="card-text">@commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">@commande.EtatCommande</p>
                                     <p class="card-text">@Total €</p>
@@ -57,6 +58,7 @@
 
                                         <p class="card-text">N° Commande Panier : @commandePanier.Id</p>
                                         <p class="card-text">@commandePanier.PanierSaisonnier.NomPanier</p>
+
                                         <p class="card-text">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
                                         <p class="card-text">@commandePanier.EtatCommande</p>
                                         <p class="card-text">@TotalPanier €</p>

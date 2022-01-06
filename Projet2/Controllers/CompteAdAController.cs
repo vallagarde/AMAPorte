@@ -84,7 +84,21 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult CreationCompte()
         {
-            return View();
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+           
+            if (viewModel.Identifiant == null)
+            {
+                return View();
+            }
+            else
+            {
+                hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                return View(hvm);
+            }           
         }
 
         [AllowAnonymous]
@@ -108,6 +122,7 @@ namespace Projet2.Controllers
                         {
                             AdA ada = new AdA() { EstAdA = true };
                             identifiant.EstAdA = ada.EstAdA;
+                            ada.EstAboAnnuel = false;
 
                             int id = cs.AjouterIdentifiant(identifiant);
 
@@ -130,9 +145,8 @@ namespace Projet2.Controllers
                             hvm.Adresse = adresse;
                             hvm.Identifiant = identifiant;
 
-                            return RedirectToAction("Index", hvm);
+                            return View(hvm);
                         }
-
                     }
                     hvm.Personne = personne;
                     return View(hvm);
@@ -141,6 +155,29 @@ namespace Projet2.Controllers
             hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
             return View(hvm);
         }
+
+            [AllowAnonymous]
+            [HttpPost]
+            public IActionResult Paiement(HomeViewModel hvm)
+            {
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+            if (hvm.AdA == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.AdA.EstAboAnnuel = true;
+                hvm.AdA = cs.ModifierAdA(hvm.AdA);
+                hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                return RedirectToAction("Index", hvm);
+            }
+            }
 
         [HttpGet]
         public IActionResult AjouterImage(AdA ada)
