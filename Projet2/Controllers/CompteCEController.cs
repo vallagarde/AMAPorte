@@ -24,6 +24,8 @@ namespace Projet2.Controllers
         PanierService panierService = new PanierService();
         LignePanierService lignePanierService = new LignePanierService();
         HomeViewModel hvm = new HomeViewModel();
+
+
         public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
         {
 
