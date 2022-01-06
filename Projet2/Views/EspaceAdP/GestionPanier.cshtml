@@ -32,7 +32,7 @@
                                 <p class="card-text">@panierSaisonnier.Description</p>
                                 <p class="card-text">@Prix €</p>
                                 <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
-                                @if(@panierSaisonnier.DateModification != null)
+                                @if(@panierSaisonnier.DateModification != DateTime.MinValue)
                                     {
                                          <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
                                     } 
@@ -61,7 +61,7 @@
                                 <p class="card-text">@panierSaisonnier.Description</p>
                                 <p class="card-text">@Prix €</p>
                                 <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
-                                @if(@panierSaisonnier.DateModification != null)
+                                @if(@panierSaisonnier.DateModification != DateTime.MinValue)
                                     {
                                          <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
                                     }                                 
@@ -89,7 +89,7 @@
                                 <p class="card-text">@panierSaisonnier.Description</p>
                                 <p class="card-text">@Prix €</p>
                                 <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
-                                @if(@panierSaisonnier.DateModification != null)
+                                @if(@panierSaisonnier.DateModification != DateTime.MinValue)
                                     {
                                          <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
                                     } 

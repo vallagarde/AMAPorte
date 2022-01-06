@@ -30,7 +30,9 @@
                                     <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
                                     </form>
                                     <br/>
-                                    Commande @commande.Id
+                                    N° @commande.ReturnNumeroCommandeForDisplay
+                                    <br/>
+                                    Boutique
                                     </h5>
                                     <p class="card-text">Date de Commande : @commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">Date de Livraison : @commande.ReturnDateForDisplayCommande</p>
@@ -84,7 +86,9 @@
                                     <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
                                     </form>
                                     <br/>
-                                    Commande Panier @commandePanier.Id
+                                    N° @commandePanier.ReturnNumeroCommandeForDisplay
+                                    <br/>
+                                    Panier
                                     </h5>
                                     <p class="card-text">Date de Commande : @commandePanier.DateCommande</p>
                                     <p class="card-text">Date de Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>

@@ -66,7 +66,11 @@ namespace Projet2.Models.Compte
             Admin adminASupprimer = _bddContext.Admins.Find(Id);
             if (adminASupprimer != null)
             {
-                _bddContext.Admins.Remove(adminASupprimer);
+                Identifiant identifiantAModifier = _bddContext.Identifiants.Find(ObtenirIdentifiant(adminASupprimer.IdentifiantId));
+                identifiantAModifier.EstDSI = false;
+                identifiantAModifier.EstGCCQ = false;
+                identifiantAModifier.EstGCRA = false;
+                _bddContext.Identifiants.Update(identifiantAModifier);
                 _bddContext.SaveChanges();
             }
         }
@@ -147,13 +151,13 @@ namespace Projet2.Models.Compte
         public void SupprimerAdA(int Id)
         {
             AdA adaASupprimer = _bddContext.AdAs.Find(Id);
+            Personne personneASupprimer = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
+
             if (adaASupprimer != null)
             {
-                _bddContext.AdAs.Remove(adaASupprimer);
-                Personne personneASupprimer = _bddContext.Personnes.Find(adaASupprimer.PersonneId);
-                SupprimerAdresse(personneASupprimer.AdresseId);
-                SupprimerIdentifiant(personneASupprimer.IdentifiantId);
-                SupprimerPersonne(personneASupprimer.Id);          
+                Identifiant identifiantAModifier = _bddContext.Identifiants.Find(ObtenirIdentifiant(personneASupprimer.IdentifiantId));
+                identifiantAModifier.EstAdA = false;
+                _bddContext.Identifiants.Update(identifiantAModifier);
                 _bddContext.SaveChanges();
             }
         }
@@ -287,13 +291,13 @@ namespace Projet2.Models.Compte
         public void SupprimerAdP(int Id)
         {
             AdP adpASupprimer = _bddContext.AdPs.Find(Id);
+            Personne personneASupprimer = _bddContext.Personnes.Find(adpASupprimer.PersonneId);
+
             if (adpASupprimer != null)
             {
-                _bddContext.AdPs.Remove(adpASupprimer);
-                Personne personneASupprimer = _bddContext.Personnes.Find(adpASupprimer.PersonneId);
-                SupprimerAdresse(personneASupprimer.AdresseId);
-                SupprimerIdentifiant(personneASupprimer.IdentifiantId);
-                SupprimerPersonne(personneASupprimer.Id);
+                Identifiant identifiantAModifier = _bddContext.Identifiants.Find(ObtenirIdentifiant(personneASupprimer.IdentifiantId));
+                identifiantAModifier.EstAdP = false;
+                _bddContext.Identifiants.Update(identifiantAModifier);
                 _bddContext.SaveChanges();
             }
         }
@@ -389,10 +393,14 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
         public void SupprimerCCE(int Id)
         {
             ContactComiteEntreprise cceASupprimer = _bddContext.ContactComiteEntreprises.Find(Id);
-            _bddContext.ContactComiteEntreprises.Remove(cceASupprimer);
-            _bddContext.SaveChanges();
-            SupprimerIdentifiant(cceASupprimer.IdentifiantId);
 
+            if (cceASupprimer != null)
+            {
+                Identifiant identifiantAModifier = _bddContext.Identifiants.Find(ObtenirIdentifiant(cceASupprimer.IdentifiantId));
+                identifiantAModifier.EstCE = false;
+                _bddContext.Identifiants.Update(identifiantAModifier);
+                _bddContext.SaveChanges();
+            }
         }
 
         //Obtenir Entreprise
@@ -426,6 +434,7 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
                     var adresseExistantList = queryAdresseExistant.ToList();
                     Adresse adresseExistante = adresseExistantList.First();
                     entreprise.AdresseId = adresseExistante.Id;
+                    entreprise.EstAboAnnuel = false;
                     _bddContext.Entreprises.Add(entreprise);
                     _bddContext.SaveChanges();
                     return entreprise.Id;
@@ -433,6 +442,7 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
                 else
                 {
                     entreprise.AdresseId = CreerAdresse(adresse);
+                    entreprise.EstAboAnnuel = false;
                     _bddContext.Entreprises.Add(entreprise);
                     _bddContext.SaveChanges();
                     return entreprise.Id;
@@ -455,17 +465,13 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
             List<ContactComiteEntreprise> contactComiteEntreprises = ObtenirCCEsParEntreprise(Id);
             if (entrepriseASupprimer != null)
             {
-                _bddContext.Entreprises.Remove(entrepriseASupprimer);
-
                 foreach (ContactComiteEntreprise contactComiteEntreprise in contactComiteEntreprises)
                 {
                     if (contactComiteEntreprises.Count != 0)
                     {
                         SupprimerCCE(contactComiteEntreprise.Id);
-                        SupprimerIdentifiant(contactComiteEntreprise.IdentifiantId);
                     }
                 }
-                SupprimerAdresse(entrepriseASupprimer.AdresseId);
                 this._bddContext.SaveChanges();
             }
         }

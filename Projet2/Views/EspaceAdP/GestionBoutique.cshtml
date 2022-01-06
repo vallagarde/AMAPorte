@@ -32,9 +32,9 @@
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
                                 <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
-                                <p class="card-text">Stock @article.Stock</p>
+                                <p class="card-text">Stock : @article.Stock</p>
                                 <p class="card-text">Création : @article.ReturnInscriptionDateForDisplayArticle</p>
-                                    @if(@article.DateModification != null)
+                                    @if(@article.DateModification != DateTime.MinValue)
                                     {
                                          <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
                                     }                                  
@@ -63,9 +63,9 @@
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
                                 <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
-                                <p class="card-text">Stock @article.Stock</p>
+                                <p class="card-text">Stock : @article.Stock</p>
                                 <p class="card-text">@article.ReturnInscriptionDateForDisplayArticle</p>
-                                @if(@article.DateModification != null)
+                                @if(@article.DateModification != DateTime.MinValue)
                                     {
                                          <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
                                     } 
@@ -93,9 +93,9 @@
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
                                 <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
-                                <p class="card-text">Stock @article.Stock</p>
+                                <p class="card-text">Stock : @article.Stock</p>
                                 <p class="card-text">@article.ReturnInscriptionDateForDisplayArticle</p>
-                                @if(@article.DateModification != null)
+                                @if(@article.DateModification != DateTime.MinValue)
                                     {
                                          <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
                                     } 

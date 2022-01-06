@@ -1,23 +1,10 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
- 
-}
+
 <div class="container">
-    <div class="main-body">
-
-        <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-                <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-            </ol>
-        </nav>
-        <!-- /Breadcrumb -->
-
+    <div class="main-body" style="margin-top: 80px;">
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
-                <div class="card">
+                <div class="card" style="height: 300px;">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
                             <img src="~/ImageProfils/@Model.AdA.Image" alt="Admin" class="rounded-circle" width="150">
@@ -30,7 +17,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card mt-3">
+                <div class="card mt-3" style="height: 200px;">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">
@@ -44,110 +31,79 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">
-                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
+                                @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdA", @Model.AdA)
                             </h6>
-
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">
                                 @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
                             </h6>
                         </li>
+
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <h6 class="mb-0">
-                                @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdA", @Model.AdA)
+                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
                             </h6>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Nom Complet</h6>
+                <div class="card mb-3" style="height: 300px;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Nom Complet</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Personne.Nom @Model.Personne.Prenom
+                                </div>
+
                             </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Personne.Nom @Model.Personne.Prenom
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Identifiant.AdresseMail
+                                </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Telephone</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Personne.NTelephone
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Adresse</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Adresse.Numero @Model.Adresse.Voie @Model.Adresse.Ville
+                                </div>
+                            </div>
+
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Identifiant.AdresseMail
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Telephone</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Personne.NTelephone
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <h6 class="mb-0">Adresse</h6>
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                @Model.Adresse.Numero @Model.Adresse.Voie @Model.Adresse.Ville
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row gutters-sm">
-                    <div class="col-sm-6 mb-3">
-                        <div class="card h-100">
+                    <div class="col-sm-6 mb-3" style="height: 200px;">
+                        <div class="card h-100" >
                             <div class="card-body">
-                                <h6 class="d-flex align-items-center mb-3">Mes paniers Saisonniers</h6>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0 text-center">
-                                            Gérer le Compte
-                                        </h6>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            @Html.ActionLink("Modifier Informations", "ModificationCompte", "CompteAdA", @Model.AdA)
-                                        </h6>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            <button class="modalButton" id="myBtn">Supprimer Compte</button>
-                                        </h6>
-
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
-                                        </h6>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdA", @Model.AdA)
-                                        </h6>
-                                    </li>
-                                </ul>
+                                <h6 class="d-flex align-items-center mb-3">Mes activités</h6>                                
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3">
+                    <div class="col-sm-6 mb-3" style="height: 200px;">
                         <div class="card h-100">
                             <div class="card-body">
                                 <h6 class="d-flex align-items-center mb-3">Mes Commandes Boutique</h6>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            @Html.ActionLink("Voir l'historique de mes commandes en boutique", "HistoriqueCommandes", "CompteAdA", @Model.AdA)
-                                        </h6>
-                                    </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0">
                                             @Html.ActionLink("Voir mes commandes en cours", "Commandes", "CompteAdA", @Model.AdA)
@@ -156,6 +112,12 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0">
+                                            @Html.ActionLink("Voir l'historique de mes commandes", "HistoriqueCommandes", "CompteAdA", @Model.AdA)
+                                        </h6>
+                                    </li>
+                                   
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0">
                                             @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
                                         </h6>
                                     </li>
@@ -164,36 +126,20 @@
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
+
+                <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+                    <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
+                    @Html.HiddenFor(m => Model.AdA.Id)
+                        <button class="modalButton" type="submit">Je supprime mon compte</button>
+                    </form>
+                </div>
+                </div>
+
         </div>
-
     </div>
 </div>
 
-    <div class = "container">
-  
-        <br />
-        @Html.ActionLink("Mes Producteurs Favoris", "ProducteursFavoris", "CompteAdA", @Model.AdA)
-        <br/>
-        @Html.ActionLink("Mes Articles Favoris", "ArticlesFavoris", "CompteAdA", @Model.AdA)
-        <br/>
-        @Html.ActionLink("Mes Ateliers Favoris", "AteliersFavoris", "CompteAdA", @Model.AdA)
-        <br/>
-        <br/>
-
-    </div>
-
-
-<div id="myModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
-        <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
-        @Html.HiddenFor(m => Model.AdA.Id)
-            <button class="modalButton" type="submit">Je supprime mon compte</button>
-        </form>
-    </div>
-</div>

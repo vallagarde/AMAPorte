@@ -1,34 +1,29 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 
+<div class="container afternav mb-5">
+    <div class="bancustom titrecustom text-center">Nos producteurs</div>
 
+    @foreach (var adp in @Model.ListeComptesAdP)
+    {
+                @*<div >@adp.Id</div>*@
+          
+        <div class=" container-fluid adpcustom">
+            <section class="rejoindrecustom">
+                <article>
+                    <div>
+                        <img src="~/ImageProfils/@adp.Image" alt="" style="border-radius: 0 1rem 1rem 0;">
+                    </div>
+                    <div class="rejoindretext">
+                        <div class="yes">@adp.NomProducteur</div>
+                        <h3> @adp.Personne.Nom @adp.Personne.Prenom</h3>
+                        <p>@adp.Description</p>
+                        <a class="custombtn mt-4" asp-controller="" asp-action="">Découvrir</a>
+                    </div>
 
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h1>Liste des producteurs</h1>
-            <div class="justify-center">
-                <table border="1">
-
-                    @foreach (var adp in @Model.ListeComptesAdP)
-                    {
-                <tr>
-                    <td>@adp.Id</td>
-                    <td>@adp.NomProducteur</td>
-                    <td>@adp.Description</td>
-                    <td>@adp.Personne.Prenom</td>
-                    <td>
-                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Producteur", "Home", new { @Id = @adp.Id })'">
-                                        Voir Producteur
-                                    </button>
-                    </td>
-                </tr>
-                    }
-
-                </table>
-            </div>
+                </article>
+            </section>
         </div>
-    </div>
+    }
+
 </div>
