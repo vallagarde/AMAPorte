@@ -86,19 +86,24 @@ namespace Projet2.Controllers
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
-           
-            if (!viewModel.Identifiant.EstAdA)
+           if(viewModel != null)
             {
-                return View();
+                if (!viewModel.Identifiant.EstAdA)
+                {
+                    return View();
+                }
+                else
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                    hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                    hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                    return View(hvm);
+                }
+
             }
-            else
-            {
-                hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
-                hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
-                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
-                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-                return View(hvm);
-            }           
+            return View();
+
         }
 
         [AllowAnonymous]
