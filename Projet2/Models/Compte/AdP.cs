@@ -56,5 +56,18 @@ namespace Projet2.Models.Compte
             AssortimentPanier = new List<PanierSaisonnier>();
             AdminCommentaire = null;
         }
+        public string ReturnDateInscriptionForDisplay
+        {
+            get
+            {
+                if (this.DateInscription != null)
+                {
+                    return this.DateInscription.ToString("d");
+                }
+                return null;
+            }
+
+        }
+
     }
 }

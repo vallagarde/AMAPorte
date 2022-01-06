@@ -45,6 +45,18 @@ namespace Projet2.Models.Compte
             DateInscription = DateTime.Today;
 
         }
+        public string ReturnDateInscriptionForDisplay
+        {
+            get
+            {
+                if (this.DateInscription != null)
+                {
+                    return this.DateInscription.ToString("d");
+                }
+                return null;
+            }
+
+        }
 
     }
 }

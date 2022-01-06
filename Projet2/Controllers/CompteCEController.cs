@@ -158,7 +158,7 @@ namespace Projet2.Controllers
                 hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
                 hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
                 hvm.Entreprise.EstAboAnnuel = true;
-                cs.ModifierEntreprise(hvm.Entreprise);
+                hvm.Entreprise = cs.ModifierEntreprise(hvm.Entreprise);
                 hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
                 hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
                 hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);

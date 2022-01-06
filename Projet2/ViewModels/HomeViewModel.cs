@@ -57,6 +57,7 @@ namespace Projet2.ViewModels
         //Admin
         public List<AdA> ListeComptesAdA = new List<AdA>();
         public List<AdP> ListeComptesAdP = new List<AdP>();
+        public List<AdP> ListeComptesAdPAValider = new List<AdP>();
         public List<ContactComiteEntreprise> ListeComptesCCEs = new List<ContactComiteEntreprise>();
 
         //Commandes
