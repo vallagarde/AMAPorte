@@ -228,6 +228,7 @@ namespace Projet2.Controllers
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
             hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
             hvm.Commande = panierService.ObtenirCommandesParAdA(hvm.AdA).Where(c => c.Id == CommandeId).FirstOrDefault();
             return View(hvm);
@@ -237,6 +238,7 @@ namespace Projet2.Controllers
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
             hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
             hvm.CommandePanier = lignePanierService.ObtenirCommandesPanierParAdA(hvm.AdA).Where(c => c.Id == commandePanierId).FirstOrDefault();
 
