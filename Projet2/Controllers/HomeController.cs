@@ -150,5 +150,38 @@ namespace Projet2.Controllers
             return RedirectToAction("Index", "Login");
         }
 
+        [Authorize]
+        public IActionResult CommandesUser()
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                CompteServices cs = new CompteServices();
+                HomeViewModel hvm = new HomeViewModel();
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP == true)
+                {
+                    hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("CommandesAPreparer", "EspaceAdP", hvm.AdP);
+                }
+                else if (viewModel.Identifiant.EstAdA == true)
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Commandes", "CompteAdA", hvm.AdA);
+                }
+                else if (viewModel.Identifiant.EstCE == true)
+                {
+                    hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Commandes", "CompteCE", hvm.ContactComiteEntreprise);
+                }
+                else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
+                {
+                    hvm.Identifiant = viewModel.Identifiant;
+                    hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+                    return RedirectToAction("Index", "Admin", hvm.Admin);
+                }
+            }
+            return RedirectToAction("Index", "Login");
+        }
     }
 }

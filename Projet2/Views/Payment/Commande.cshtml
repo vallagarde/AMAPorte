@@ -20,48 +20,62 @@
 
                                 <div id="Box">
                                     <hr />
-                                    <dl class="dl-horizontal justify content-center">
-                                        <dt>
+                                    <div class="row">
+
+                                        <div class="col-6">
                                             N° de Commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.Id
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
-                                            Montant de la transaction :
-                                        </dt>
+                                        <div class="col-6">
+                                            Montant de la Transaction :
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             € @Decimal.Round(Model.PanierBoutique.Total, 2)
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
+                                        <div class="col-6">
                                             Date de commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.DateCommande
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
+                                        <div class="col-6">
                                             Date de Livraison :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.DateLivraison
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
+                                        <div class="col-6">
                                             Etat de la commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.EtatCommande;
-                                        </dd>
+                                        </div>
+                                    </div>
 
-                                    </dl>
+
                                 </div>
                             </div>
                         </div>
@@ -71,4 +85,3 @@
         </div>
     </div>
 </section>
-

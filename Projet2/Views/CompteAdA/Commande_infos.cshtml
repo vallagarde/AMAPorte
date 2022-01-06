@@ -1,16 +1,13 @@
-﻿@model Projet2.ViewModels.HomeViewModel 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model Projet2.ViewModels.HomeViewModel
 
+
+@Html.ActionLink("Retour", "Commandes", "CompteAdA", Model.AdA)
 
 <div class="container mt-5 p-3 rounded cart">
     <div class="row no-gutters">
         <div class="col-md-12">
             <div class="product-details mr-2">
-               
+
 
                 @foreach (Projet2.Models.Boutique.LignePanierBoutique ligne in Model.PanierBoutique.LignePanierBoutiques)
                 {
@@ -18,12 +15,12 @@
                     var prixTTC = Decimal.Round(ligne.Article.PrixTTC, 2);
                     var SousTotal = Decimal.Round(ligne.SousTotal, 2);
 
-                    <form method="post" asp-controller="Boutique" asp-action="ModifierPanier">
+                    <form>
 
                         <div class="card mb-3">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div class="d-flex flex-row align-items-center">
+                                <div class="d-flex justify-content-between ">
+                                    <div class="d-flex flex-row align-items-center p-2">
                                         <div>
                                             <img src="~/ImageArticle/@ligne.Article.Image"
                                                  class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
@@ -33,19 +30,23 @@
                                             <p class="small mb-0">@ligne.Article.Description</p>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-row align-items-center">
-                                        <div style="max-width: 4rem">
-                                            Quantité = @ligne.Quantite  
-                                        </div>
-                                        <div style="width: 80px;">
-                                            <h5 class="mb-0">  € @SousTotal</h5>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-outline-dark flex-shrink-0" type="submit">Modifier</button>
-                                            <input type="hidden" name="Id" value="@ligne.Id" />
-                                        </div>
-
-
+                                    <div class="d-flex flex-col align-items-center m-2">
+                                        <div style="max-width: 10rem">
+                                            Quantité = @ligne.Quantite
+                                            <h5 class="mb-0"> <br/> € @SousTotal</h5>
+                                            @if (@Model.Commande.EstLivre)
+                                        {
+                                            @if(@ligne.AvisId == null)
+                                                    {
+                                                    <p align="center">@Html.ActionLink("Donner votre avis", "ArticleAvis", "Boutique", @ligne)</p>
+                                                    }
+                                                    @if(@ligne.AvisId != null)
+                                                    {
+                                                    <p class="card-text">Votre Avis : @ligne.Avis.Text</p>
+                                                    <p class="card-text">Votre Note : @ligne.Avis.Note </p>                                                    
+                                                    }                                            
+                                        }       
+                                        </div>                                      
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +63,7 @@
             <label for="Total">Total = @Decimal.Round(Model.PanierBoutique.Total, 2) €</label>
             <hr>
 
-           
+
         </div>
     </div>
 </div>

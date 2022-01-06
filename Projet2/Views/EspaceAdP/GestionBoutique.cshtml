@@ -4,13 +4,13 @@
 <div class="shadow-sm p-2 mb-5 welcome">
     <h2>Mon Assortiment en Boutique</h2>
 </div>
-@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+
 <!-- Products -->
 <div class="container">
     
     <div class="row">
         <div class="col-md-2 menu-rigth">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <p>@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)</p>
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
@@ -19,9 +19,11 @@
                 {
                     @if (!@article.EstValide && @article.EstEnAttente)
                     {
+                        var Prix = Decimal.Round(article.Prix, 2);
+                        var PrixTTC = Decimal.Round(article.PrixTTC, 2);
                         <div class="col ">
                         <div class="card h-100">
-                            <h5 class="card-title" color="red">A modifier</h5>
+                            <h5 class="card-title" color="red" align="center">A modifier</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -29,15 +31,15 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
-                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
-                                <p class="card-text">@article.Stock</p>
-                                <p class="card-text">@article.DateInscription</p>
-                                    @if(@article.DateModification != null)
+                                <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
+                                <p class="card-text">Stock : @article.Stock</p>
+                                <p class="card-text">Création : @article.ReturnInscriptionDateForDisplayArticle</p>
+                                    @if(@article.DateModification != DateTime.MinValue)
                                     {
-                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                         <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
                                     }                                  
                                 <p class="card-text">Commentaire : @article.AdminCommentaire</p>
-                                @Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)
+                                <p class="card-text" align="center">@Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)</p>
                             </div>
                         </div>
                         </div>                        
@@ -48,10 +50,11 @@
                 {
                     @if (@article.EstValide)
                     {
-                        <div class="col ">
-                            
+                        var Prix = Decimal.Round(article.Prix, 2);
+                        var PrixTTC = Decimal.Round(article.PrixTTC, 2);
+                        <div class="col ">                           
                         <div class="card h-100">
-                            <h5 class="card-title">En boutique</h5>
+                            <h5 class="card-title" align="center">En boutique</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -59,14 +62,14 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
-                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
-                                <p class="card-text">@article.Stock</p>
-                                <p class="card-text">@article.DateInscription</p>
-                                @if(@article.DateModification != null)
+                                <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
+                                <p class="card-text">Stock : @article.Stock</p>
+                                <p class="card-text">@article.ReturnInscriptionDateForDisplayArticle</p>
+                                @if(@article.DateModification != DateTime.MinValue)
                                     {
-                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                         <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
                                     } 
-                                @Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)
+                                <p class="card-text" align="center">@Html.ActionLink("Modifier", "ArticleModification", "EspaceAdP", @article)</p>
                             </div>
                         </div>
                         </div>                        
@@ -77,10 +80,11 @@
                 {
                     @if (!@article.EstValide && !@article.EstEnAttente)
                     {
-                        
+                        var Prix = Decimal.Round(article.Prix, 2);
+                        var PrixTTC = Decimal.Round(article.PrixTTC, 2);
                         <div class="col ">
                         <div class="card h-100">
-                        <h5 class="card-title"> En attente</h5>
+                        <h5 class="card-title" align="center"> En attente</h5>
                             @{
                                 String filepath = "~/ImageArticle/" + @article.Image;
                             }
@@ -88,12 +92,12 @@
                             <div class="card-body">
                                 <h5 class="card-title">@article.Nom</h5>
                                 <p class="card-text">@article.Description</p>
-                                <p class="card-text">@article.Prix (@article.PrixTTC)</p>
-                                <p class="card-text">@article.Stock</p>
-                                <p class="card-text">@article.DateInscription</p>
-                                @if(@article.DateModification != null)
+                                <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
+                                <p class="card-text">Stock : @article.Stock</p>
+                                <p class="card-text">@article.ReturnInscriptionDateForDisplayArticle</p>
+                                @if(@article.DateModification != DateTime.MinValue)
                                     {
-                                         <p class="card-text">Dernière Modification @article.DateModification</p>
+                                         <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
                                     } 
                             </div>
                         </div>

@@ -19,48 +19,52 @@
 
                                 <div id="Box">
                                     <hr />
-                                    <dl class="dl-horizontal">
-                                        <dt>
+                                    <div class="row">
+
+                                        <div class="col-6">
                                             N° de Commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
-                                            @Model.Commande.Id
-                                        </dd>
+                                        <div class="col-6">
+                                            @Model.LignePanierSaisonnier.Id
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
-                                            Montant de la transaction :
-                                        </dt>
+                                        <div class="col-6">
+                                            Montant de la Transaction :
+                                        </div>
 
-                                        <dd>
-                                            € @Decimal.Round(Model.PanierBoutique.Total, 2)
-                                        </dd>
+                                        <div class="col-6">
+                                            € @Decimal.Round(Model.LignePanierSaisonnier.SousTotal, 2)
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
-                                            Date de commande :
-                                        </dt>
+                                        <div class="col-6">
+                                            Nombre de semaines de Paniers Saisonniers :
+                                        </div>
 
-                                        <dd>
-                                            @Model.Commande.DateCommande
-                                        </dd>
+                                        <div class="col-6">
+                                            @Model.LignePanierSaisonnier.DureeAbonnement Semaines
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
-                                            Date de Livraison :
-                                        </dt>
+                                        <div class="col-6">
+                                            Date de Première Livraison :
+                                        </div>
 
-                                        <dd>
-                                            @Model.Commande.DateLivraison
-                                        </dd>
+                                        <div class="col-6">
+                                            @Model.ProchaineDateLivraison
+                                        </div>
+                                    </div>
+                                    <hr />
 
-                                        <dt>
-                                            Etat de la commande :
-                                        </dt>
-
-                                        <dd>
-                                            @Model.Commande.EtatCommande;
-                                        </dd>
-
-                                    </dl>
+                                  
                                 </div>
                             </div>
                         </div>
@@ -71,56 +75,4 @@
     </div>
 </section>
 
-<div>Recaputilatif commande</div>
-@Html.LabelFor(m => Model.PanierSaisonnier.NomPanier)
-
-<div>Adresse de facturation</div>
-<form onsubmit="return validate()">
-    <input type="checkbox" id="contrat" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">contrat</a>
-    <div>
-    <input type="submit" value="submit" />
-     </div>
-</form>
-
-
-<!-- Modal -->
-<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Mon contrat</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                This is some placeholder content to show the scrolling behavior for modals.
-
-                <br />
-                We use repeated line breaks to demonstrate how content can exceed minimum inner 
-                height, thereby showing inner scrolling.
-
-                <br />
-                When content becomes longer than the predefined max-height of modal, content will 
-                be cropped and scrollable within the modal.
-
-                This is some placeholder content to show the scrolling behavior for modals.
-                <br />
-                We use repeated line breaks to demonstrate how content can exceed minimum inner height, 
-                thereby showing inner scrolling.
-                <br />
-
-                <strong>When content becomes longer than the predefined max-height of modal,
-                content will be cropped and scrollable within the modal.</strong>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">J'ai compris'
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div>
-    @Html.ActionLink("Annuler", "AfficherPaniers", "Panier", new { @class = "btn btn-primary" })
-    @Html.ActionLink("Continuer mon achat", "PaiementPanier", "Payment", new { @class = "card-link" })
-</div>
 

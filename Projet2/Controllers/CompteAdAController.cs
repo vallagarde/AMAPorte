@@ -10,6 +10,7 @@ using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -20,6 +21,7 @@ namespace Projet2.Controllers
         CompteServices cs = new CompteServices();
         PanierService panierService = new PanierService();
         LignePanierService lignePanierService = new LignePanierService();
+        PanierSaisonnierService pss = new PanierSaisonnierService();
         HomeViewModel hvm = new HomeViewModel();
 
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -82,7 +84,21 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult CreationCompte()
         {
-            return View();
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+           
+            if (viewModel.Identifiant == null)
+            {
+                return View();
+            }
+            else
+            {
+                hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                return View(hvm);
+            }           
         }
 
         [AllowAnonymous]
@@ -106,6 +122,7 @@ namespace Projet2.Controllers
                         {
                             AdA ada = new AdA() { EstAdA = true };
                             identifiant.EstAdA = ada.EstAdA;
+                            ada.EstAboAnnuel = false;
 
                             int id = cs.AjouterIdentifiant(identifiant);
 
@@ -128,9 +145,8 @@ namespace Projet2.Controllers
                             hvm.Adresse = adresse;
                             hvm.Identifiant = identifiant;
 
-                            return RedirectToAction("Index", hvm);
+                            return View(hvm);
                         }
-
                     }
                     hvm.Personne = personne;
                     return View(hvm);
@@ -139,6 +155,29 @@ namespace Projet2.Controllers
             hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
             return View(hvm);
         }
+
+            [AllowAnonymous]
+            [HttpPost]
+            public IActionResult Paiement(HomeViewModel hvm)
+            {
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+            if (hvm.AdA == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.AdA.EstAboAnnuel = true;
+                hvm.AdA = cs.ModifierAdA(hvm.AdA);
+                hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                return RedirectToAction("Index", hvm);
+            }
+            }
 
         [HttpGet]
         public IActionResult AjouterImage(AdA ada)
@@ -176,6 +215,9 @@ namespace Projet2.Controllers
 
         public IActionResult Commandes(AdA ada)
         {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
             ada.CommandesBoutiqueEffectues = panierService.ObtenirCommandesParAdA(ada);
             ada.CommandesPanierEffectues = lignePanierService.ObtenirCommandesPanierParAdA(ada);
             hvm.AdA = ada;
@@ -184,15 +226,32 @@ namespace Projet2.Controllers
 
         public IActionResult Commande_infos(int CommandeId)
         {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
+
             Commande commande = panierService.ObtientCommandeParId(CommandeId);
             int panierId = commande.PanierBoutiqueId;
             PanierBoutique panierBoutique = panierService.ObientPanier(panierId);
             commande.PanierBoutique = panierBoutique;
             hvm.PanierBoutique = panierBoutique;
             hvm.Commande= commande;
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+
             return View(hvm);
         }
 
+        public IActionResult CommandePanier_infos(int commandePanierId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
+            hvm.CommandePanier = lignePanierService.ObtenirToutesCommandesPanier().Where(c => c.Id == commandePanierId).FirstOrDefault();
+            hvm.LignePanierSaisonnier = lignePanierService.ObtientLignePanierParId(hvm.CommandePanier.LignePanierSaisonnierId);
+            hvm.PanierSaisonnier = pss.ObtientTousLesPaniers().Where(c => c.Id == hvm.LignePanierSaisonnier.PanierSaisonnierId).FirstOrDefault();
+            hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+            return View(hvm);
+        }
 
 
         public IActionResult HistoriqueCommandes(AdA ada)

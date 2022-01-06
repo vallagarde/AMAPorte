@@ -1,15 +1,14 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
  
 <div class="shadow-sm p-2 mb-5 welcome">
-    <h2>Mes Commandes En Cours</h2>
+<h2>Mes Commandes En Cours</h2>
 </div>
 
-<!-- Products -->
 <div class="container">
-    @Html.ActionLink("Retour", "Index", "CompteAdA", @Model.AdA)
+    
     <div class="row">
         <div class="col-md-2 menu-rigth">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <p>@Html.ActionLink("Retour", "Index", "CompteAdA", @Model.AdA)</p>
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
@@ -20,46 +19,50 @@
                     {
                     var Total = Decimal.Round(commande.PanierBoutique.Total, 2);                   
                         <div class="row ">
-
-                            <div class="card-body">
-                                <h5 class="card-title">Commande Boutique : @commande.Id</h5>
-                                <p class="card-text">@commande.DateCommande</p>
-                                <p class="card-text">@commande.EtatCommande</p>
-                                <p class="card-text">@Total</p>
-                                <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "CompteAdA", new { @CommandeId = commande.Id })'"> voir détails</button>
-                            </div>                       
-
+                            <div class="card h-100">
+                                <div class="card-body">
+                                <h5 class="card-title" align="center">Boutique</h5> 
+                                @{
+                                String filepath = "~/ImageProfils/Default.jpg";
+                                }
+                                <img src="~/ImageArticle/Default.jpg" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px"/>
+                                
+                                    <p class="card-text" align="center"><br/>N° @commande.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commande.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commande.EtatCommande</p>
+                                    <p class="card-text" align="center">@Total €</p>
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "CompteAdA", new { @CommandeId = commande.Id })'"> voir détails</button>
+                                    </div>
+                                </div>  
+                            </div> 
                         </div>
                     }
                 }
-              
-              @* VUE DETAILS A IMPLEMENTER DE LA MEME FACON POUR LES PANIERS CI-DESSOUS *@
-              
+                            
                  @foreach (var commandePanier in @Model.AdA.CommandesPanierEffectues)
                 {
                     @if(commandePanier.EstEnPreparation == true || commandePanier.EstEnLivraison == true || commandePanier.EstARecuperer == true)
                     {
                     var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);                   
                         <div class="row ">
+                                    
+                            <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">Commande Panier : @commandePanier.Id</h5>
-                                    <p class="card-text">@commandePanier.DateCommande</p>
-                                    <p class="card-text">@commandePanier.EtatCommande</p>
-                                    <div class="row ">
-                                    
-                                            <div class="card h-100">
-                                                @{
-                                                String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
-                                                }
-                                                <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
-                                                    <div class="card-body">
-                                                    <p class="card-text">@commandePanier.PanierSaisonnier.NomPanier</p>
-                                                    <p class="card-text">@TotalPanier €</p>
-                                                    </div>
-                                            </div>                                    
-                                    
+                                    <h5 class="card-title" align="center">Panier</h5>                                        
+                                    @{
+                                        String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
+                                    }
+                                    <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commandePanier.EtatCommande</p>
+                                    <p class="card-text" align="center">@TotalPanier €</p>
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "CompteAdA", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
                                     </div>
-                                </div>                       
+                                </div>
+                            </div>                                                                        
                         </div>
                     }
                 }

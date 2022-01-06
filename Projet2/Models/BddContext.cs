@@ -95,7 +95,7 @@ namespace Projet2.Models
                                 Nom = "Dubois",
                                 Prenom = "Jean Marie",
                                 DateNaissance = new DateTime(1964, 05, 01),
-                                NTelephone = 1234567890,
+                                NTelephone = "0234567890",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -107,14 +107,17 @@ namespace Projet2.Models
                                 Ville = "Paris",
                                 CodePostal = 75010,
                             };
-                            AdA adA1 = new AdA();
+                            AdA adA1 = new AdA()
+                            {
+                                EstAboAnnuel = true,
+                            };
                             cs.CreerAdA(personne1, adresse1, adA1);
 
                             Identifiant identifiant2 = new Identifiant()
                             {
                                 AdresseMail = "ada2@gmail.com",
                                 MotDePasse = "test",
-                                EstAdA = true
+                                EstAdA = true,
                             };
 
                             int id2 = cs.AjouterIdentifiant(identifiant2);
@@ -134,9 +137,9 @@ namespace Projet2.Models
                                 Nom = "Michel",
                                 Prenom = "Héloise",
                                 DateNaissance = new DateTime(1990, 06, 15),
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstEnAccord = true,
-                                EstMajeur = true
+                                EstMajeur = true,
 
                             };
                             Adresse adresse2 = new Adresse()
@@ -146,7 +149,10 @@ namespace Projet2.Models
                                 Ville = "Levroux",
                                 CodePostal = 36110,
                             };
-                            AdA adA2 = new AdA();
+                            AdA adA2 = new AdA()
+                            {
+                                EstAboAnnuel = true,
+                            };
                             cs.CreerAdA(personne2, adresse2, adA2);
 
 
@@ -175,7 +181,7 @@ namespace Projet2.Models
                                 Nom = "Marchand",
                                 Prenom = "Thierry",
                                 DateNaissance = new DateTime(1976, 10, 01),
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -195,7 +201,8 @@ namespace Projet2.Models
                                 EstActive = true,
                                 EstEnAttente = false,
                                 EstAdP = true,
-                                Vedette = true
+                                Vedette = true,
+                                EstAboAnnuel = true,
 
                             };
                             cs.CreerAdP(personne3, adresse3, adP1);
@@ -224,7 +231,7 @@ namespace Projet2.Models
                                 Nom = "Dubedout",
                                 Prenom = "Julien ",
                                 DateNaissance = new DateTime(1980, 02, 05),
-                                NTelephone = 1234567890,
+                                NTelephone = "0234567891",
                                 EstEnAccord = true,
                                 EstMajeur = true
 
@@ -244,7 +251,8 @@ namespace Projet2.Models
                                 EstAdP = true,
                                 EstActive = true,
                                 EstEnAttente = false,
-                                Vedette =true
+                                Vedette =true,
+                                EstAboAnnuel = true,
                             };
                             cs.CreerAdP(personne4, adresse4, adP2);
 
@@ -273,7 +281,9 @@ namespace Projet2.Models
                                 NomEntreprise = "Amazon",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true
+                                EstEnAccord = true,
+                                EstAboAnnuel = true,
+                               
                             };
                             Adresse adresse5 = new Adresse()
                             {
@@ -289,7 +299,7 @@ namespace Projet2.Models
                                 Nom = "Duhamel",
                                 Prenom = "André",
                                 AdresseMail = identifiant5.AdresseMail,
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstCE = true
                             };
                             cs.CreerCCE(contactComiteEntreprise1, entreprise1, adresse5);
@@ -318,7 +328,8 @@ namespace Projet2.Models
                                 NomEntreprise = "",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true
+                                EstEnAccord = true,
+                                EstAboAnnuel = true,
                             };
                             Adresse adresse6 = new Adresse()
                             {
@@ -333,7 +344,7 @@ namespace Projet2.Models
                                 Nom = "Normand",
                                 Prenom = "Noël",
                                 AdresseMail = identifiant6.AdresseMail,
-                                NTelephone = 1234567890,
+                                NTelephone = "1234567890",
                                 EstCE = true
                             };
                             cs.CreerCCE(contactComiteEntreprise2, entreprise2, adresse6);
@@ -407,6 +418,7 @@ namespace Projet2.Models
                             AdPId = 2,
                             EstValide = true,
                             EstEnAttente = false,
+                            
                         };
                         pss.CreerPanierSaisonnier(panierSaisonnier3);
 

@@ -24,6 +24,8 @@ namespace Projet2.Controllers
         PanierService panierService = new PanierService();
         LignePanierService lignePanierService = new LignePanierService();
         HomeViewModel hvm = new HomeViewModel();
+
+
         public IActionResult Index(ContactComiteEntreprise contactComiteEntreprise)
         {
 
@@ -78,7 +80,22 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult CreationCompte()
         {
-            return View();
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+
+            if (viewModel.Identifiant == null)
+            {
+                return View();
+            }
+            else
+            {
+                hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                return View(hvm);
+            }
         }
 
         [AllowAnonymous]
@@ -116,13 +133,42 @@ namespace Projet2.Controllers
                         hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
                         hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
                         hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                        if (hvm.Entreprise.EstAboAnnuel)
+                        {
+                            return View("Index", hvm);
+                        }
 
-                        return View("Index", hvm);
+                        else return View(hvm);
                     }
                 }
             }
             hvm.AdresseExistante = cs.TrouverIdentifiant(identifiant);
             return View(hvm);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Paiement(HomeViewModel hvm)
+        {
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+            if (hvm.ContactComiteEntreprise == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                hvm.ContactComiteEntreprise = cs.ObtenirCCEParIdentifiant(viewModel.Identifiant.Id);
+                hvm.Entreprise = cs.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                hvm.Entreprise.EstAboAnnuel = true;
+                hvm.Entreprise = cs.ModifierEntreprise(hvm.Entreprise);
+                hvm.Entreprise.ListeContact = cs.ObtenirCCEsParEntreprise(hvm.Entreprise.Id);
+                hvm.Adresse = cs.ObtenirAdresse(hvm.Entreprise.AdresseId);
+                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.ContactComiteEntreprise.IdentifiantId);
+                return RedirectToAction("Index", hvm);
+            }
         }
 
         public IActionResult Commandes(ContactComiteEntreprise contactComiteEntreprise)

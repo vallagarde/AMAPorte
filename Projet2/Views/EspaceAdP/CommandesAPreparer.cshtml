@@ -4,21 +4,23 @@
     <h2>Mes Commandes A Préparer</h2>
 </div>
 
-<!-- Products -->
 <div class="container">
-    @Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+    
     <div class="row">
         <div class="col-md-2 menu-rigth">
-            <p>Date <script> document.write(new Date().toLocaleDateString()); </script></p>           
+            @Html.HiddenFor(m => @Model.AdP.Id)  
+            <p>@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)</p>  
+            <p>Aujourd'hui : <script> document.write(new Date().toLocaleDateString()); </script></p>           
+            <p>Prochaine Date de Livraison @Model.ReturnDateForDisplayLivraison</p>   
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
-                @Html.HiddenFor(m => @Model.AdP.Id)  
-                <h5>Prochaine Date de Livraison @Model.ReturnDateForDisplayLivraison</h5>
+                
                 @foreach (var commande in @Model.ListeCommandesEnPrep)
                 {
                 var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
                         <div class="row ">
+                            <div class="card h-100">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                     <form method="post" asp-controller="EspaceAdP" asp-action="CommandesAPreparer">
@@ -28,11 +30,14 @@
                                     <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
                                     </form>
                                     <br/>
-                                    Commande @commande.Id
+                                    N° @commande.ReturnNumeroCommandeForDisplay
+                                    <br/>
+                                    Boutique
                                     </h5>
-                                    <p class="card-text">Date de Commande : @commande.DateCommande</p>
+                                    <p class="card-text">Date de Commande : @commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">Date de Livraison : @commande.ReturnDateForDisplayCommande</p>
                                     <p class="card-text">@commande.EtatCommande</p>
+                                    <p class="card-text">Total : @Total €</p>
                                     @if(@commande.AdA != null)
                                     {
                                     <p class="card-text">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
@@ -62,8 +67,8 @@
                                             </div>                                    
                                     }
                                     </div>
-                                    <p class="card-text">Total : @Total €</p>
-
+                                    
+</div>
                                 </div>                       
                         </div>                    
                 }
@@ -72,6 +77,7 @@
                 {
                 var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);   
                         <div class="row ">
+                            <div class="card h-100">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                     <form method="post" asp-controller="EspaceAdP" asp-action="CommandesPanierAPreparer">
@@ -80,10 +86,12 @@
                                     <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
                                     </form>
                                     <br/>
-                                    Commande Panier @commandePanier.Id
+                                    N° @commandePanier.ReturnNumeroCommandeForDisplay
+                                    <br/>
+                                    Panier
                                     </h5>
                                     <p class="card-text">Date de Commande : @commandePanier.DateCommande</p>
-                                    <p class="card-text">Date de Livraison : @commandePanier.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text">Date de Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
                                     <p class="card-text">@commandePanier.EtatCommande</p>
                                     @if(@commandePanier.AdA != null)
                                     {
@@ -95,7 +103,7 @@
                                     <p class="card-text">@commandePanier.Entreprise.NomEntreprise </p>
                                     }
                                     <div class="row ">                                        
-                                            <div class="card h-100">
+                                            
                                                 @{
                                                 String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
                                                 }

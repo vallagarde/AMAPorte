@@ -68,7 +68,7 @@ namespace Projet2.Models.PanierSaisonniers
             }
         }
 
-        public string ReturnDateForDisplayCommande
+        public string ReturnDateLivraisonForDisplayCommande
         {
             get
             {
@@ -78,6 +78,32 @@ namespace Projet2.Models.PanierSaisonniers
                 }
                 return null;
             }
+        }
+
+        public string ReturnDateCommandeForDisplayCommande
+        {
+            get
+            {
+                if (this.DateCommande != null)
+                {
+                    return this.DateCommande.ToString("d");
+                }
+                return null;
+            }
+        }
+
+        public string ReturnNumeroCommandeForDisplay
+        {
+            get
+            {
+                if (this.Id != 0)
+                {
+                    string NumeroCommande = "B" + this.Id;
+                    return NumeroCommande;
+                }
+                return null;
+            }
+
         }
 
     }

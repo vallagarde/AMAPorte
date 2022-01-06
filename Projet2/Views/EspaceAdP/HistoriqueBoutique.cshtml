@@ -4,56 +4,65 @@
     <h2>Historique des Commandes en Boutique</h2>
 </div>
 
-<!-- Products -->
 <div class="container">
-    @Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)
+    
     <div class="row">
         <div class="col-md-2 menu-rigth">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+            <p>@Html.ActionLink("Retour", "Index", "CompteAdP", @Model.AdP)</p>
         </div>
         <div class="col-md-9">
             <div class="row row-cols-1 row-cols-md-4 g-5">
-                @Html.HiddenFor(m => @Model.AdP.Id)  
-                @foreach (var commande in @Model.ListeCommandesLivres)
-                {
-                var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
-                        <div class="row ">
-                                <div class="card-body">
-                                    <h5 class="card-title">Commande @commande.Id</h5>
-                                    <p class="card-text">Date de Commande : @commande.DateCommande</p>
+                
+                            @Html.HiddenFor(m => @Model.AdP.Id)  
+                            @foreach (var commande in @Model.ListeCommandesLivres)
+                            {
+                                var Total = Decimal.Round(commande.PanierBoutique.Total, 2); 
+                                <div class="card h-100">
+                        <div class="card-body">
+                                 
+                                <div class="row ">
+                                 
+                                    <h5 class="card-title">N° @commande.ReturnNumeroCommandeForDisplay</h5>
+                                    <p class="card-text">Date de Commande : @commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">@commande.EtatCommande</p>
+                                    
+                                     <p class="card-text">Total : @Total€</p>
                                     @if(@commande.AdA != null)
                                     {
+                                    <p class="card-text">Adhérent :</p>
                                     <p class="card-text">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
                                     }
                                     @if(@commande.Client != null)
                                     {
+                                    <p class="card-text">Client :</p>
                                     <p class="card-text">@commande.Client.Prenom @commande.Client.Nom </p>
                                     }
                                     @if(@commande.Entreprise != null)
                                     {
+                                    <p class="card-text">Entreprise :</p>
                                     <p class="card-text">@commande.Entreprise.NomEntreprise </p>
                                     }
                                     <div class="row ">
                                     @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
                                     {                                       
-                                            <div class="card h-100">
-                                                    <div class="card-body">
-                                                    <p class="card-text">Id Article @lignePanierBoutique.Article.Id</p>
-                                                    <p class="card-text">@lignePanierBoutique.Quantite x @lignePanierBoutique.Article.Nom</p>
-                                                    @if(@lignePanierBoutique.Avis != null)
-                                                    {
-                                                    <p class="card-text">Note : @lignePanierBoutique.Avis.Note</p>
-                                                    <p class="card-text">Avis : @lignePanierBoutique.Avis.Text</p>
-                                                    }
-                                                    </div>
-                                            </div>                                    
+                                        <div class="card h-50">
+                                        <div class="card-body">
+                                        <p class="card-text">Id Article @lignePanierBoutique.Article.Id</p>
+                                        <p class="card-text">@lignePanierBoutique.Quantite x @lignePanierBoutique.Article.Nom</p>
+                                        @if(@lignePanierBoutique.Avis != null)
+                                        {
+                                        <p class="card-text">Note : @lignePanierBoutique.Avis.Note</p>
+                                        <p class="card-text">Avis : @lignePanierBoutique.Avis.Text</p>
+                                        }                                                    
+                                      </div>                                   
+                                </div>                                         
                                     }
-                                    </div>
-                                    <p class="card-text">Total : @Total€</p>
-                                </div>                       
-                        </div>                    
-                }
+                                    </div>                                   
+                                </div>  
+                                </div>  
+                </div> 
+                            }
+                         
             </div>
         </div>
     </div>   

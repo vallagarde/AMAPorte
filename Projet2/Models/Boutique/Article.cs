@@ -17,7 +17,7 @@ namespace Projet2.Models.Boutique
         public bool EstEnAttente { get; set; }
         public String AdminCommentaire { get; set; }
         public DateTime DateInscription { get; set; }
-        public DateTime? DateModification { get; set; }
+        public DateTime DateModification { get; set; }
 
 
         public int AdPId { get; set; }
@@ -33,6 +33,30 @@ namespace Projet2.Models.Boutique
             EstValide = false;
             EstEnAttente = false;
             DateInscription = DateTime.Now;
+        }
+
+        public string ReturnInscriptionDateForDisplayArticle
+        {
+            get
+            {
+                if (this.DateInscription != DateTime.MinValue)
+                {
+                    return this.DateInscription.ToString("d");
+                }
+                return null;
+            }
+        }
+
+        public string ReturnModificationDateForDisplayArticle
+        {
+            get
+            {
+                if (this.DateModification != DateTime.MinValue)
+                {
+                    return this.DateModification.ToString("d");
+                }
+                return null;
+            }
         }
 
     }

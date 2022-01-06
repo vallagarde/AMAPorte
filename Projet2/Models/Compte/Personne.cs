@@ -25,7 +25,7 @@ namespace Projet2.Models.Compte
         [Display(Name = "Téléphone")]
         [Required(ErrorMessage = "Vous devez insérer un numero de telephone")]
         [RegularExpression(@"\d{10}", ErrorMessage = "Le numéro doit contenir 10 chiffres")]
-        public int NTelephone { get; set; }
+        public string NTelephone { get; set; }
 
         [Display(Name = "J’atteste que j’ai lu et accepté les conditions générales de vente de AMAPorte.")]
         [Required(ErrorMessage = "Il faut accepter les conditions générales.")]
