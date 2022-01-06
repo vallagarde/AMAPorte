@@ -20,49 +20,121 @@
 
                                 <div id="Box">
                                     <hr />
-                                    <dl class="dl-horizontal justify content-center">
-                                        <dt>
+                                    <div class="row">
+
+                                        <div class="col-6">
                                             N° de Commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.Id
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
-                                            Montant de la transaction :
-                                        </dt>
+                                        <div class="col-6">
+                                            Montant de la Transaction :
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             € @Decimal.Round(Model.PanierBoutique.Total, 2)
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
+                                        <div class="col-6">
                                             Date de commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.DateCommande
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
+                                        <div class="col-6">
                                             Date de Livraison :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.DateLivraison
-                                        </dd>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
 
-                                        <dt>
+                                        <div class="col-6">
                                             Etat de la commande :
-                                        </dt>
+                                        </div>
 
-                                        <dd>
+                                        <div class="col-6">
                                             @Model.Commande.EtatCommande;
-                                        </dd>
+                                        </div>
+                                    </div>
 
-                                    </dl>
+
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="notify successbox">
+    <h1>Commande Finalisée</h1><br />
+    <span class="alerticon"><img src="https://i0.wp.com/objectifalpinisme.com/wp-content/uploads/2021/02/pngegg.png?w=750&ssl=1" alt="checkmark" style=" max-height: 50px" /></span><br />
+</div>
+
+<div id="Box">
+    <hr />
+    <dl class="dl-horizontal justify content-center">
+        <dt>
+            N° de Commande :
+        </dt>
+
+        <dd>
+            @Model.Commande.Id
+        </dd>
+
+        <dt>
+            Montant de la transaction :
+        </dt>
+
+        <dd>
+            € @Decimal.Round(Model.PanierBoutique.Total, 2)
+        </dd>
+
+        <dt>
+            Date de commande :
+        </dt>
+
+        <dd>
+            @Model.Commande.DateCommande
+        </dd>
+
+        <dt>
+            Date de Livraison :
+        </dt>
+
+        <dd>
+            @Model.Commande.DateLivraison
+        </dd>
+
+        <dt>
+            Etat de la commande :
+        </dt>
+
+        <dd>
+            @Model.Commande.EtatCommande;
+        </dd>
+
+    </dl>
+</div>
                             </div>
                         </div>
                     </div>
