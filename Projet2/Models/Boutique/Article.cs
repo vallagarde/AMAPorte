@@ -39,7 +39,7 @@ namespace Projet2.Models.Boutique
         {
             get
             {
-                if (this.DateInscription != null)
+                if (this.DateInscription != DateTime.MinValue)
                 {
                     return this.DateInscription.ToString("d");
                 }
@@ -51,7 +51,7 @@ namespace Projet2.Models.Boutique
         {
             get
             {
-                if (this.DateModification != null)
+                if (this.DateModification != DateTime.MinValue)
                 {
                     return this.DateModification.ToString("d");
                 }

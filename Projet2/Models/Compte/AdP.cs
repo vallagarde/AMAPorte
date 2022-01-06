@@ -35,6 +35,8 @@ namespace Projet2.Models.Compte
 
         public virtual List<PanierSaisonnier> AssortimentPanier { get; set; }
 
+        public bool EstAboAnnuel { get; set; }
+
         public bool EstAdP { get; set; }
         public bool EstActive { get; set; }
         public bool EstEnAttente { get; set; }

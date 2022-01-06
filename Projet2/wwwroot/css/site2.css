@@ -277,6 +277,7 @@ section .container .user {
     height: 100%;
     display: flex;
     background: #fff;
+    overflow: hidden;
 }
 
 section .container .user .imgBx 
@@ -351,6 +352,17 @@ section  .container .user .formBx label
     font-weight: 600; 
 }
 
+section .container .user .formBx display {
+    width: 100%;
+    padding: 20px;
+    color: #333;
+    border: none;
+    font-size: 14px;
+    margin: 8px 0;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
 section  .container .user .formBx input[type="submit"]
 {
     max-width: 170px; 
@@ -408,22 +420,27 @@ section  .container .signupBx
     position: relative;
     background: #fff;
     width: 50%;
+    height: 5%;
     justify-content: center;
+    align-content: center;
+    text-align: center;
 }
 
 
 .signupLayout .tabs .nav-item {
     display: inline-block;
-    width: 200px;
-        
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    width: 32%;
 }
 
 .signupLayout .tabs .nav-link {
     justify-content: center;
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
     font-size: 12px;
-    letter-spacing: 1px;
+    letter-spacing: 0.2px;
     background: #fff;
     color: #577eff;
     text-transform: uppercase;
@@ -440,7 +457,8 @@ section  .container .signupBx .formBx {
     align-items: flex-start;
     overflow: auto;
     background: #fff;
-    
+    margin-top: 5%;
+    height: 95%;
 }
 
 
@@ -515,7 +533,7 @@ section  .container .signupBx .formBx {
 }
 
 
-@media (max-width: 991px)
+@media (max-width: 1450px)
 {
     section .form .container {
         max-width: 400px;
@@ -528,7 +546,9 @@ section  .container .signupBx .formBx {
     {
         width: 100%;
     }
-}
+    .signupLayout .tabs {
+        width: 100%;
+    }
 
 
 /* The Modal (background) */

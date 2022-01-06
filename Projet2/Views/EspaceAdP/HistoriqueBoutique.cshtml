@@ -22,7 +22,7 @@
                                  
                                 <div class="row ">
                                  
-                                    <h5 class="card-title">Commande @commande.Id</h5>
+                                    <h5 class="card-title">N° @commande.ReturnNumeroCommandeForDisplay</h5>
                                     <p class="card-text">Date de Commande : @commande.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text">@commande.EtatCommande</p>
                                     
@@ -39,7 +39,7 @@
                                     }
                                     @if(@commande.Entreprise != null)
                                     {
-                                    <p class="card-text">Entreprise : :</p>
+                                    <p class="card-text">Entreprise :</p>
                                     <p class="card-text">@commande.Entreprise.NomEntreprise </p>
                                     }
                                     <div class="row ">
