@@ -168,108 +168,107 @@
                         {
                         <form asp-action="Paiement" asp-controller="CompteAdA" method="post">
                         
-                        <h2>Votre Identifiant </h2>
-                        <table width=100%>
-                            <colgroup>
-                                <col style="width: 25%" align="right">
-                                <col style="width: 75%">
-                             </colgroup>
-                          <tr >
-                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
-                              <th class="signup">@Html.DisplayFor(m => Model.Identifiant.AdresseMail)</th>                               
-                          </tr>
-                        </table>
-
-                        <h2> Vos Données </h2>
-                          <table width=100%>
-                            <colgroup>
-                                <col style="width: 25%" align="right">
-                                <col style="width: 75%">
-                            </colgroup>
-                            <tr>
-                              <th>@Html.LabelFor(m => Model.Personne.Nom)</th>
-                               <th class="signup">@Html.DisplayFor(m => Model.Personne.Nom)</th> 
-                            </tr>
-                            <tr>
-                              <th>@Html.LabelFor(m => Model.Personne.Prenom) </th>
-                              <th class="signup">@Html.DisplayFor(m => Model.Personne.Prenom)</th> 
-                            </tr>
-                            <tr>
-                              <th>@Html.LabelFor(m => Model.Personne.NTelephone) </th>
-                              <th class="signup">@Html.DisplayFor(m => Model.Personne.NTelephone)</th> 
-                            </tr>
-                            </table>
-
-                        <h2> Vos Informations de Paiement </h2>
-                        <table width=100%>
-                            <colgroup>
-                                <col style="width: 25%" align="right">
-                                <col style="width: 75%">
-                            </colgroup>
-                            <tr>
-                              <th>@Html.LabelFor(m => Model.Personne.DateNaissance)</th>
-                              <th class="signup">@Html.DisplayFor(m => Model.ReturnDateForDisplay)</th> 
-                            </tr>
-                           </table>
-                        <table width=100%>
-                        <colgroup>
-                            <col style="width: 25%" align="right">
-                            <col style="width: 15%">
-                            <col style="width: 5%">
-                            <col style="width: 55%">
-                        </colgroup>
-                        <tr>
-                            <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
-                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.Numero)</th> 
-                            <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
-                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.Voie)</th> 
-                        </tr>
-                        <tr>
-                            <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
-                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.CodePostal)</th> 
-                            <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
-                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.Ville)</th> 
-                        </tr>
-                        </table>
-                            <colgroup>
-                                <col style="width: 10%" align="right">
-                                <col style="width: 90%">
-                            </colgroup>
+                                <h2>Votre Identifiant </h2>
                                 <table width=100%>
-                                    <tr align="center">                                       
-                                     <th class="signup">Il vous reste qu'à payer notre frais d'inscription annuelle de 12€</th> 
-                                     </tr>
+                                    <colgroup>
+                                        <col style="width: 25%" align="right">
+                                        <col style="width: 75%">
+                                     </colgroup>
+                                  <tr >
+                                      <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                                      <th class="signup">@Html.DisplayFor(m => Model.Identifiant.AdresseMail)</th>                               
+                                  </tr>
+                                </table>
+
+                                <h2> Vos Données </h2>
+                                  <table width=100%>
+                                    <colgroup>
+                                        <col style="width: 25%" align="right">
+                                        <col style="width: 75%">
+                                    </colgroup>
+                                    <tr>
+                                      <th>@Html.LabelFor(m => Model.Personne.Nom)</th>
+                                       <th class="signup">@Html.DisplayFor(m => Model.Personne.Nom)</th> 
+                                    </tr>
+                                    <tr>
+                                      <th>@Html.LabelFor(m => Model.Personne.Prenom) </th>
+                                      <th class="signup">@Html.DisplayFor(m => Model.Personne.Prenom)</th> 
+                                    </tr>
+                                    <tr>
+                                      <th>@Html.LabelFor(m => Model.Personne.NTelephone) </th>
+                                      <th class="signup">@Html.DisplayFor(m => Model.Personne.NTelephone)</th> 
+                                    </tr>
+                                    </table>
+
+                                <h2> Vos Informations de Paiement </h2>
+                                <table width=100%>
+                                    <colgroup>
+                                        <col style="width: 25%" align="right">
+                                        <col style="width: 75%">
+                                    </colgroup>
+                                    <tr>
+                                      <th>@Html.LabelFor(m => Model.Personne.DateNaissance)</th>
+                                      <th class="signup">@Html.DisplayFor(m => Model.ReturnDateForDisplay)</th> 
+                                    </tr>
+                                   </table>
+                                <table width=100%>
+                                <colgroup>
+                                    <col style="width: 25%" align="right">
+                                    <col style="width: 15%">
+                                    <col style="width: 5%">
+                                    <col style="width: 55%">
+                                </colgroup>
+                                <tr>
+                                    <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
+                                    <th class="signup">@Html.DisplayFor(m => Model.Adresse.Numero)</th> 
+                                    <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
+                                    <th class="signup">@Html.DisplayFor(m => Model.Adresse.Voie)</th> 
+                                </tr>
+                                <tr>
+                                    <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
+                                    <th class="signup">@Html.DisplayFor(m => Model.Adresse.CodePostal)</th> 
+                                    <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
+                                    <th class="signup">@Html.DisplayFor(m => Model.Adresse.Ville)</th> 
+                                </tr>
+                                </table>
+                            
+                                <table width=100%>
+                                    <colgroup>
+                                        <col style="width: 10%" align="right">
+                                        <col style="width: 90%">
+                                    </colgroup>
                                     <tr align="center">
-                                       
-                                        <th>
-                                        <article>
-                                        <script src="//checkout.stripe.com/v2/checkout.js"
-                                            class="stripe-button"
-                                            data-key="@Stripe.Value.PublishableKey"
-                                            data-locale="auto"
-                                            data-description="Abonnement Annuel"
-                                            data-curreny="EUR"
-                                            data-amount="@APayer"></script>
-                                        <script>
-                                          $(function() {
-                                          $(".stripe-button-el").replaceWith('<input type="submit" value="Payer">');
-                                          });
-                                        </script>
-                                        </article>
-                                      </th>                              
+                                        <th class="signup">Il vous reste qu'à payer notre frais d'inscription annuelle de 12€</th>
                                     </tr>
                                     <tr align="center">
-                                      <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>
+
+                                        <th>
+                                            <article>
+                                                <script src="//checkout.stripe.com/v2/checkout.js"
+                                                        class="stripe-button"
+                                                        data-key="@Stripe.Value.PublishableKey"
+                                                        data-locale="auto"
+                                                        data-description="Abonnement Annuel"
+                                                        data-curreny="EUR"
+                                                        data-amount="@APayer"></script>
+                                                <script>$(function () {
+                                                        $(".stripe-button-el").replaceWith('<input type="submit" value="Payer">');
+                                                    });</script>
+                                            </article>
+                                        </th>
+                                    </tr>
+                                    <tr align="center">
+                                        <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>
                                     </tr>
                                 </table>                   
-                            </form>                            
-                        }                    
+                        </form>                            
+                     }                    
                 }
                 
                         
 
                 </div>
-              <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
+              <div class="imgBx"><img src="~/Images/mer.jpg"></div>  
             </div>
             </div>
         
