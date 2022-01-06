@@ -86,6 +86,7 @@ namespace Projet2.Controllers
 
             if (viewModel.Identifiant == null)
             {
+                
                 return View();
             }
             else

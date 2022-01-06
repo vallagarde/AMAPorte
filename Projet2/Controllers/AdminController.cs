@@ -25,18 +25,50 @@ namespace Projet2.Controllers
         private ArticleRessources articleRessources = new ArticleRessources();
         private PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
         private LignePanierService lignePanierService = new LignePanierService();
+
+        
+
+            
+
         public IActionResult Index(Admin admin)
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
             hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
             hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Admin.IdentifiantId);
+            
             if (hvm.Identifiant == null)
             {
                 return View("Error");
             }
             else
             {
+                
+                hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
+                foreach (AdP adpAValider in hvm.ListeComptesAdP)
+                {
+                    if (!adpAValider.EstActive)
+                    {
+                        hvm.ListeComptesAdPAValider.Add(adpAValider);
+                    }
+                }
+                foreach (AdP adp in hvm.ListeComptesAdP)
+                {
+                    foreach (Article article in articleRessources.ObtenirArticleParAdP(adp))
+                    {
+                        if (!article.EstValide)
+                        {
+                            hvm.AdP.Assortiment.Add(article);
+                        }
+                    }
+                    foreach (PanierSaisonnier panierSaisonnier in saisonnierService.ObtenirPanierParAdP(adp))
+                    {
+                        if (!panierSaisonnier.EstValide)
+                        {
+                            hvm.AdP.AssortimentPanier.Add(panierSaisonnier);
+                        }
+                    }
+                }
                 return View(hvm);
             }
         }

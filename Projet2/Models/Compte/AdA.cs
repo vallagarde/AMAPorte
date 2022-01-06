@@ -44,6 +44,18 @@ namespace Projet2.Models.Compte
             ProducteursFavoris = new List<AdP>();
             //AteliersFavoris = new List<Atelier>();
         }
+        public string ReturnDateInscriptionForDisplay
+        {
+            get
+            {
+                if (this.DateInscription != null)
+                {
+                    return this.DateInscription.ToString("d");
+                }
+                return null;
+            }
+
+        }
 
     }
 }
