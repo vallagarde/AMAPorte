@@ -246,14 +246,10 @@ namespace Projet2.Controllers
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
 
-            LignePanierSaisonnier commande = lignePanierService.ObtientLignePanierParId(commandePanierId);
-            int PanierSaisonnierId = commande.PanierSaisonnierId;
-            PanierSaisonnier panierSaisonnier = pss.ObtientTousLesPaniers().Where(c => c.Id == PanierSaisonnierId).FirstOrDefault(); ;
-            commande.PanierSaisonnier = panierSaisonnier;
-            hvm.PanierSaisonnier = panierSaisonnier;
-            hvm.LignePanierSaisonnier = commande;
+            hvm.CommandePanier = lignePanierService.ObtenirToutesCommandesPanier().Where(c => c.Id == commandePanierId).FirstOrDefault();
+            hvm.LignePanierSaisonnier = lignePanierService.ObtientLignePanierParId(hvm.CommandePanier.LignePanierSaisonnierId);
+            hvm.PanierSaisonnier = pss.ObtientTousLesPaniers().Where(c => c.Id == hvm.LignePanierSaisonnier.PanierSaisonnierId).FirstOrDefault();
             hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
-
             return View(hvm);
         }
 
