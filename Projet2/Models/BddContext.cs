@@ -117,7 +117,7 @@ namespace Projet2.Models
                             {
                                 AdresseMail = "ada2@gmail.com",
                                 MotDePasse = "test",
-                                EstAdA = true
+                                EstAdA = true,
                             };
 
                             int id2 = cs.AjouterIdentifiant(identifiant2);
@@ -139,7 +139,7 @@ namespace Projet2.Models
                                 DateNaissance = new DateTime(1990, 06, 15),
                                 NTelephone = "1234567890",
                                 EstEnAccord = true,
-                                EstMajeur = true
+                                EstMajeur = true,
 
                             };
                             Adresse adresse2 = new Adresse()
@@ -202,7 +202,7 @@ namespace Projet2.Models
                                 EstEnAttente = false,
                                 EstAdP = true,
                                 Vedette = true,
-                                EstAboAnnuel = true,s
+                                EstAboAnnuel = true,
 
                             };
                             cs.CreerAdP(personne3, adresse3, adP1);

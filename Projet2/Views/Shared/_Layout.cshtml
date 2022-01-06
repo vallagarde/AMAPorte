@@ -73,26 +73,34 @@
                 <div class="w-100">
                     <div class="navbar-collapse collapse dual-collapse2 flex-sm-row-reverse">
 
-                        <a class="nav-link acustom logincustom" asp-area="" asp-controller="Login" asp-action="Index">Connexion</a>
-                        @*
-                            @if (@Model.Authentifie)
-                            {
-                             <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Deconnexion">Déconnexion</a>
-                            }
-
-                            <div class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Connexion
+                            <a class="nav-link acustom logincustom" id="connexion" background="#fff" asp-area="" asp-controller="Login" asp-action="Index">Connexion</a>
+                        
+                            <div class="nav-item dropdown" id="compteperso">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                    Mon Compte
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Index">Je me connecte</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="EspacePersonnel">Mon Compte</a></li>                                    
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="CommandesUser">Mes Commandes En Cours</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte">Je Crée Mon Compte</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="CompteAdP" asp-action="CreationCompte">Je m'inscrit en tant que Producteur</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Deconnexion">Déconnexion</a></li>
                                 </ul>
                             </div>
-                        *@
+
+                            <div class="nav-item dropdown" id="compteadmin">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                                    Mon Compte
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="EspacePersonnel">Mon Compte</a></li>  
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="GestionEtatCommande">Gestion Commandes</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="GestionDemandesProducteurs">Gestion Demandes AdP</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="GestionComptes">Gestion Comptes</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Deconnexion">Déconnexion</a></li>
+                                </ul>
+                            </div>
+                        
                     </div>
                 </div>
 

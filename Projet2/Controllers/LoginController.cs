@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Projet2.Models.Compte;
 using Projet2.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Projet2.Controllers
 {
@@ -68,7 +69,7 @@ namespace Projet2.Controllers
 
                         if (hvm.AdA != null)
                         {
-                            if (hvm.AdA.Id != 0)
+                            if (hvm.Identifiant.EstAdA)
                             {
                                 if (hvm.AdA.EstAboAnnuel)
                                 {
@@ -91,7 +92,7 @@ namespace Projet2.Controllers
                         
                         if (hvm.AdP != null)
                         {
-                            if (hvm.AdP.Id != 0)
+                            if (hvm.Identifiant.EstAdA)
                             {
                                 if (hvm.AdP.EstAboAnnuel)
                                 {
@@ -112,26 +113,33 @@ namespace Projet2.Controllers
                     
                     else if (hvm.ContactComiteEntreprise != null)
                     {
-                        int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
-                        hvm.Entreprise = cptressource.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
-                        if (hvm.Entreprise.EstAboAnnuel)
+                        if (hvm.Identifiant.EstCE)
                         {
-                            if (panierId != 0)
-                            {
-                                return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
-                            }
 
-                            return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
-                        }
-                        else if (!hvm.Entreprise.EstAboAnnuel)
-                        {
-                            return RedirectToAction("CreationCompte", "CompteCE");
+                            int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+                            hvm.Entreprise = cptressource.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
+                            if (hvm.Entreprise.EstAboAnnuel)
+                            {
+                                if (panierId != 0)
+                                {
+                                    return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                }
+
+                                return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                            }
+                            else if (!hvm.Entreprise.EstAboAnnuel)
+                            {
+                                return RedirectToAction("CreationCompte", "CompteCE");
+                            }
                         }
                     }
                     
                     else if(hvm.Admin.Id != 0) 
                     {
-                        return RedirectToAction("Index", "Admin", hvm.Admin);
+                        if (hvm.Identifiant.EstGCRA || hvm.Identifiant.EstGCCQ || hvm.Identifiant.EstDSI)
+                        {
+                            return RedirectToAction("Index", "Admin", hvm.Admin);
+                        }
                     }
                     else
                     {
@@ -206,7 +214,34 @@ namespace Projet2.Controllers
                 {
                 //Envoie mail à l'adresse mail recu avec un lien vers la modification inclus identifiant Id
                 return RedirectToAction("Index", "Login");
-                }            
+                }           
         }
+
+        public bool UtilisateurEstConnecte()
+        {
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public bool UtilisateurEstAdmin()
+        {
+
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                viewModel.Identifiant = cptressource.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstGCRA || viewModel.Identifiant.EstGCCQ || viewModel.Identifiant.EstDSI)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
