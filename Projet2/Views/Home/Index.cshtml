@@ -7,7 +7,7 @@
 
 
 
-<div class="container-fluid mt-3">
+<div class="container-fluid carouselcustom">
 
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
@@ -52,18 +52,18 @@
 
 <div class="container p-5 ">
 
-    <div class="text-center shadow-lg p-3 mb-5 bg-body rounded">
-        <h1 class="display-4">Bienvenue sur AMAPorte</h1>
-        <p>Pour un commerce biologique accessible</p>
+    <div class="text-center shadow-md p-3 mb-5 bg-body rounded">
+        <h1 class="display-4 ">Bienvenue sur AMAPorte</h1>
+        <p class="yes">Pour un commerce biologique accessible</p>
     </div>
 
 </div>
 
-<div class="container-fluid valeurs">
+<div class="container-fluid">
 
     <section class="light">
         <div class="container py-3">
-            <div class="h1 text-center text-dark" id="pageHeaderTitle">Nos valeurs</div>
+            <div class="titrecustom text-center">Nos valeurs</div>
             <section id="gallery">
                 <div class="container">
                     <div class="row">
@@ -150,87 +150,65 @@
             </section>
         </div>
         </section>
-
         </div>
 
-
-
-        <div class=" container-fluid">
-            <section class="light">
-                <div class="container py-3">
-                    <div class="h1 text-center text-dark" id="pageHeaderTitle">Nos producteurs en vedette</div>
-
-                    @*<div class="containers d-flex align-items-center justify-content-center flex-wrap">*@
-                    @*<div class="row row-cols-sm-1 row-cols-md-2 row-cols-xl-4 g-5">*@
+        <div class=" container-fluid py-3">
+            <section class="">
+                <div class="container d-flex align-items-center justify-content-center flex-wrap py-3">
+                    <div class="titrecustom">Nos producteurs en vedette</div>
 
                     @foreach (Projet2.Models.Compte.AdP adp in Model.ListeComptesAdP)
                     {
+           
+                        <div class=" container-fluid adpcustom">
+                            <section class="rejoindrecustom">
+                                <article>
+                                    <div>
+                                        <img src="~/ImageProfils/@adp.Image" alt="" style="border-radius: 0 1rem 1rem 0;">
+                                    </div>
+                                    <div class="rejoindretext">
+                                        <div class="yes">@adp.NomProducteur</div>
+                                        <p>@adp.Description</p>
+                                        <a class="custombtn mt-4" asp-controller="" asp-action="">Découvrir</a>
+                                    </div>
 
-                        @*<div class="box">
-                        <div class="body">
-                            <div class="imgContainer"> <img src="~/Images/Thierry.png" /></div>
-                            <div class="content d-flex flex-column align-items-center justify-content-center">
-                                <div>
-                                    <h3 class="text-white fs-5">@adp.NomProducteur</h3>
-                                    <p class="fs-6 text-white">@adp.Description</p>
-                                    <a type="button" href="#">Lien vers la page de Thierry</a>
-
-                                </div>
-                            </div>
+                                </article>
+                            </section>
                         </div>
-                    </div>*@
-
-                        <article class="postcard light green">
-                            <a class="postcard__img_link" href="#">
-                                @*<img class="postcard__img" src="https://picsum.photos/500/501" alt="Image Title" />*@ 
-                                <img class="postcard__img" src="@adp.Image"alt="Image AdP" />
-                            </a>
-                            <div class="postcard__text t-dark">
-                                <h1 class="postcard__title green"><a href="#">@adp.NomProducteur</a></h1>
-                                <div class="postcard__subtitle small">
-                                    <time datetime="2020-05-25 12:00:00">
-                                        <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
-                                    </time>
-                                </div>
-                                <div class="postcard__bar"></div>
-                                <div class="postcard__preview-txt">@adp.Description</div>
-                                <ul class="postcard__tagbox">
-                                    <li class="tag__item"><i class="fas fa-tag mr-2"></i>Podcast</li>
-                                    <li class="tag__item"><i class="fas fa-clock mr-2"></i>55 mins.</li>
-                                    <li class="tag__item play green">
-                                        <a href="#"><i class="fas fa-play mr-2"></i>Lien vers la page de @adp.NomProducteur </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </article>
                     }
-                    @*</div>*@
+
                 </div>
                 </section>
         </div>
 
-        <div class=" container-fluid">
-            <section class="light">
-                <div class="container py-3">
-                    <div class="h1 text-center text-dark" id="pageHeaderTitle">Rejoignez nous</div>
-                    <p>Vous desirez vivre cette belle aventure avec nous?</p>
-                    <p>N'hesitez plus!'</p>
-                    <a asp-controller="Login" asp-action="Index">Rejoindre</a>
-                    </div>
-            </section>
-        </div>
 
-        <div class=" container-fluid">
-            <section class="light">
+        <div class=" container-fluid custompart mb-3">
+            <section class="">
                 <div class="container py-3">
-                    <div class="h1 text-center text-dark" id="pageHeaderTitle">Boutique</div>
+                    <div class="titrecustom">Notre Boutique en ligne</div>
  
-                        <p> Des poduits de qualités, finement selectionées par nos soins pour votre plus grand plaisir</p>
-                        <a asp-controller="Boutique" asp-action="AfficherBoutique">Découvrir</a>
+                        <p class="yes">Des produits de qualités, finement selectionnés par nos soins pour votre plus grand plaisir</p>
+                        <a class="custombtn mt-4" asp-controller="Boutique" asp-action="AfficherBoutique">Découvrir</a>
                     </div>
                     </section>
             </div>
 
+        <div class=" container-fluid py-3 mb-3">
+            <section class="light rejoindrecustom">
+                <article>
+                    <div>
+                        <img src="/Images/join1.jpg" alt="" style="border-radius: 0 1rem 1rem 0;">
+                    </div>
+                    <div class="rejoindretext">
+                        <div class="titrecustom">Rejoignez-nous</div>
+                        <p>Vous desirez vivre cette belle aventure avec nous?</p>
+                        <p class="yes">N'hesitez plus!</p>
+                        <a class="custombtn mt-4" asp-controller="CompteAdA" asp-action="CreationCompte">Rejoindre</a>
+                    </div>
+                  
+                </article>
+            </section>
+        </div>
           
                 @*<div class="container-cardscontainer">
                     <div class="container-cardcontainer">

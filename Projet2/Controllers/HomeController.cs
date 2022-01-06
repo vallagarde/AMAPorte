@@ -24,6 +24,11 @@ namespace Projet2.Controllers
             _logger = logger;
         }
 
+        public IActionResult Activite()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             CompteServices csx = new CompteServices();
