@@ -51,12 +51,12 @@
                                         </div>
                                         <div class="ms-3">
                                             <h5>@ligne.Article.Nom</h5>
-                                            <p class="small mb-0">@ligne.Article.Description</p>
+                                            <p class="small mb-0" style="overflow: auto">@ligne.Article.Description</p>
                                         </div>
                                     </div>
                                     <div class="d-flex flex-row align-items-center">
                                         <div style="max-width: 4rem">
-                                            <input type="number" class="form-control" name="quantite" value="@ligne.Quantite" />
+                                            <input type="number" class="form-control" name="quantite" min=0 value="@ligne.Quantite" />
                                         </div>
                                         <div style="width: 80px;">
                                             <h5 class="mb-0"> €@SousTotal</h5>
