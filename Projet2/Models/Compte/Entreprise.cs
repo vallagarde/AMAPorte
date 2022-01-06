@@ -28,7 +28,6 @@ namespace Projet2.Models.Compte
         public virtual List<ContactComiteEntreprise> ListeContact {get; set;}
 
         public bool EstAboAnnuel { get; set; }
-        public bool EstAboSemestre { get; set; }
 
         public virtual List<AdP> ProducteursFavoris { get; set; }
 

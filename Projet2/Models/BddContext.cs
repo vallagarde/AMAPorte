@@ -407,6 +407,7 @@ namespace Projet2.Models
                             AdPId = 2,
                             EstValide = true,
                             EstEnAttente = false,
+                            
                         };
                         pss.CreerPanierSaisonnier(panierSaisonnier3);
 

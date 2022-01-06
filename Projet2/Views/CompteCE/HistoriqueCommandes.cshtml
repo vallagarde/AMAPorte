@@ -25,7 +25,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Boutique</h5>
                                     <p class="card-text">@commande.ReturnDateCommandeForDisplayCommande</p>
-                                    <p class="card-text">N° Commande : @commande.Id</p>
+                                    <p class="card-text">N° @commande.ReturnNumeroCommandeForDisplay</p>
                                     <p class="card-text">@Total €</p>
                                     <div class="row ">
                                     @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
@@ -77,7 +77,7 @@
                                                 <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
                                                     <div class="card-body">
                                                     <h5 class="card-title">Panier</h5>
-                                                    <p class="card-text">N° Commande : @commandePanier.Id</p>
+                                                    <p class="card-text">N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
                                                     <p class="card-text">@commandePanier.ReturnDateCommandeForDisplayCommande</p>                                                    
                                                     <p class="card-text">@commandePanier.LignePanierSaisonnier.Quantite x @commandePanier.PanierSaisonnier.NomPanier</p>
                                                     <p class="card-text">@Total €</p>

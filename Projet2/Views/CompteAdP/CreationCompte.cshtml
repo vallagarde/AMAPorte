@@ -15,13 +15,13 @@
                        <nav class="navbar navbar-expand-lg">
                             <div class="collapse navbar-collapse">
                                     <ul>
-                                        <li class="nav-item" style="width:28%">
+                                        <li class="nav-item">
                                             <a class="nav-link" asp-area="" asp-controller="CompteAdA" asp-action="CreationCompte">Je suis un particulier</a>
                                         </li>
-                                        <li class="nav-item" style="width:28%">
+                                        <li class="nav-item">
                                             <a class="nav-link" asp-area="" asp-controller="CompteCE" asp-action="CreationCompte">Je represente un CE</a>
                                         </li>
-                                        <li class="nav-item" style="width:28%">
+                                        <li class="nav-item">
                                             <a class="nav-link chosen" asp-area="" asp-controller="CompteAdP" asp-action="CreationCompte">Je suis un producteur</a>
                                         </li>
                                     </ul>
@@ -31,7 +31,8 @@
             <div class="user signupBx">
 
                 <div class="formBx">
-
+                @if(@Model == null)
+                        {
                     <form asp-action="CreationCompte" asp-controller="CompteAdP" method="post">
                         <h2>Créez un Identifiant </h2>
                         <table width=100%>
@@ -161,7 +162,114 @@
                                 @Html.ValidationMessageFor(m => Model.Personne.EstEnAccord, "", new { @class = "text-danger" })</th>
                             </tr>
                         </table>
+                             <table width=100%>
+                            <tr align="center">
+                               <th>
+                                <input type="submit" value="Créez votre Compte">                              
+                              </th>                              
+                            </tr>
+                            <tr align="center">
+                              <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>
+                            </tr>
+                        </table>
+                        </form>
+                        } 
+                                      
+                @if(@Model != null)
+                {
+                    @if(@Model.AdP.EstAdP)
+                        {
+                        <form asp-action="Paiement" asp-controller="CompteAdP" method="post">
+                        <h2>Votre Identifiant </h2>
                         <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                             </colgroup>
+                          <tr >
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th class="signup">@Html.DisplayFor(m => Model.Identifiant.AdresseMail)</th>                               
+                          </tr>
+                        </table>
+
+                        <h2> Les Informations sur votre Ferme</h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.AdP.NomProducteur)</th>
+                              <th class="signup">@Html.DisplayFor(m => Model.AdP.NomProducteur)</th> 
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.AdP.Description)</th>
+                              <th class="signup">@Html.DisplayFor(m => Model.AdP.Description)</th> 
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.AdP.Siren)</th>
+                              <th class="signup">@Html.DisplayFor(m => Model.AdP.Siren)</th> 
+                            </table>
+
+
+                        <h2> Vos Données </h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.Nom)</th>
+                               <th class="signup">@Html.DisplayFor(m => Model.Personne.Nom)</th> 
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.Prenom) </th>
+                              <th class="signup">@Html.DisplayFor(m => Model.Personne.Prenom)</th> 
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.NTelephone) </th>
+                              <th class="signup">@Html.DisplayFor(m => Model.Personne.NTelephone)</th> 
+                            </tr>
+                            </table>
+
+                        <h2> Vos Informations de Paiement </h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.DateNaissance)</th>
+                              <th class="signup">@Html.DisplayFor(m => Model.ReturnDateForDisplay)</th> 
+                            </tr>
+                           </table>
+                        <table width=100%>
+                        <colgroup>
+                            <col style="width: 25%" align="right">
+                            <col style="width: 15%">
+                            <col style="width: 5%">
+                            <col style="width: 55%">
+                        </colgroup>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
+                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.Numero)</th> 
+                            <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
+                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.Voie)</th> 
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
+                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.CodePostal)</th> 
+                            <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
+                            <th class="signup">@Html.DisplayFor(m => Model.Adresse.Ville)</th> 
+                        </tr>
+                        </table>
+
+                        <colgroup>
+                            <col style="width: 10%" align="right">
+                            <col style="width: 90%">
+                        </colgroup>
+                        <table width=100%>
+                                    <tr align="center">                                       
+                                     <th class="signup">Il vous reste qu'à payer notre frais d'inscription annuelle de 12€</th> 
+                                     </tr>
                             <tr align="center">
                               <th>
                                 <article>
@@ -174,7 +282,7 @@
                                     data-amount="@APayer"></script>
                                 <script>
                                   $(function() {
-                                  $(".stripe-button-el").replaceWith('<input type="submit" value="Créez votre Compte">');
+                                  $(".stripe-button-el").replaceWith('<input type="submit" value="Payer">');
                                   });
                                 </script>
                                 </article>
@@ -187,6 +295,9 @@
                     
                     <p> </p>                 
                     </form>
+                     }                    
+                }
+
                 </div>
               <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
             </div>

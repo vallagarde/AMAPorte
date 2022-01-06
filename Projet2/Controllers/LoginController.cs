@@ -56,52 +56,79 @@ namespace Projet2.Controllers
                         return Redirect(returnUrl);
 
                     hvm.Identifiant = identifiant;
-                    hvm.Personne = cptressource.ObtenirPersonneParIdentifiant(hvm.Identifiant.Id);           
+                    hvm.Personne = cptressource.ObtenirPersonneParIdentifiant(hvm.Identifiant.Id);
                     hvm.ContactComiteEntreprise = cptressource.ObtenirCCEParIdentifiant(hvm.Identifiant.Id);
                     hvm.Admin = cptressource.ObtenirAdminParIdentifiant(hvm.Identifiant.Id);
+                    
 
                     if (hvm.Personne != null)
                     {
                         hvm.AdA = cptressource.ObtenirAdAParPersonne(hvm.Personne.Id);
                         hvm.AdP = cptressource.ObtenirAdPParPersonne(hvm.Personne.Id);
+
                         if (hvm.AdA != null)
                         {
                             if (hvm.AdA.Id != 0)
                             {
-                                int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
-
-                                if(panierId != 0)
+                                if (hvm.AdA.EstAboAnnuel)
                                 {
-                                return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                    int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+
+                                    if (panierId != 0)
+                                    {
+                                        return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                    }
+                                    return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+
                                 }
-                                return RedirectToAction("Index", "CompteAdA", hvm.AdA);
+                                else if (!hvm.AdA.EstAboAnnuel) 
+                                {
+                                    return RedirectToAction("CreationCompte", "CompteAdA");
+                                }
+                                    
                             }
                         }
+                        
                         if (hvm.AdP != null)
                         {
                             if (hvm.AdP.Id != 0)
                             {
-                                int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
-                                if (panierId != 0)
+                                if (hvm.AdP.EstAboAnnuel)
                                 {
-                                    return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                    int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
+                                    if (panierId != 0)
+                                    {
+                                        return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                                    }
+                                    return RedirectToAction("Index", "CompteAdP", hvm.AdP);
                                 }
-                                return RedirectToAction("Index", "CompteAdP", hvm.AdP);
+                                else if (!hvm.AdP.EstAboAnnuel)
+                                {
+                                    return RedirectToAction("CreationCompte", "CompteAdP");
+                                }
                             }
                         }
                     }
+                    
                     else if (hvm.ContactComiteEntreprise != null)
                     {
                         int panierId = SessionHelper.GetObjectFromJson<int>(HttpContext.Session, "panierId");
-
-                        if (panierId != 0)
-                        {
-                            return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
-                        }
-
                         hvm.Entreprise = cptressource.ObtenirEntreprise(hvm.ContactComiteEntreprise.EntrepriseId);
-                        return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                        if (hvm.Entreprise.EstAboAnnuel)
+                        {
+                            if (panierId != 0)
+                            {
+                                return RedirectToAction("Panier", "Boutique", new { @panierId = panierId });
+                            }
+
+                            return RedirectToAction("Index", "CompteCE", hvm.ContactComiteEntreprise);
+                        }
+                        else if (!hvm.Entreprise.EstAboAnnuel)
+                        {
+                            return RedirectToAction("CreationCompte", "CompteCE");
+                        }
                     }
+                    
                     else if(hvm.Admin.Id != 0) 
                     {
                         return RedirectToAction("Index", "Admin", hvm.Admin);
