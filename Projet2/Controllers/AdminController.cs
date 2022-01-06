@@ -42,10 +42,10 @@ namespace Projet2.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreationCompte(Admin admin)
+        public IActionResult CreationCompte()
         {
-            hvm.Admin = admin;
-            return View(hvm);
+            
+            return View();
         }
 
         [HttpPost]
