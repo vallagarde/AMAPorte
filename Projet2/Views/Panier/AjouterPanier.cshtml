@@ -3,31 +3,44 @@
     ViewData["Title"] = "AjouterPanier";
 }
 
+
 <div class="container afternav">
+    <div class="row">
+        <div class="col-12 text-center"><h1>Ajouter Panier</h1></div>
+    </div>
+
     <form enctype="multipart/form-data" method="post" asp-controller="Panier" asp-action="AjouterPanier">
-        <fieldset>
-            @Html.HiddenFor(m => Model.AdP.Id)
-            <legend>Ajouter un Panier : </legend>
-            @Html.LabelFor(m => Model.PanierSaisonnier.NomPanier)
-            @Html.TextBoxFor(m => Model.PanierSaisonnier.NomPanier)
-            <br />
-            @Html.LabelFor(m => Model.PanierSaisonnier.ProduitsProposes)
-            @Html.TextBoxFor(m => Model.PanierSaisonnier.ProduitsProposes)
-            @Html.ValidationMessageFor(m => Model.PanierSaisonnier.ProduitsProposes)
-            <br />
-            @Html.LabelFor(m => Model.PanierSaisonnier.Description)
-            @Html.TextBoxFor(m => Model.PanierSaisonnier.Description)
-            <br />
-            @Html.LabelFor(m => Model.PanierSaisonnier.Prix)
-            @Html.TextBoxFor(m => Model.PanierSaisonnier.Prix, "{0:n2}") €
-            <br />
-            <input name="fileToUpload" type="file" value="browse" />
-            @*@Html.EditorFor(model => model.Upload.Name, new { htmlAttributes = new { @class = "form-control hidden" } })
-            @Html.ValidationMessageFor(model => model.Upload.Name, "", new { @class = "text-danger" })*@
-        <div>
-            <input type="submit" value="Ajouter" />
+    @Html.HiddenFor(m => Model.AdP.Id)  
+        <div class="row g-3">
+            <div class="col">
+                <label for="NomPanier" class="col-sm-2 col-form-label">Nom</label>
+                <input id="NomPanier" type="text" class="form-control" name="NomPanier">
+            </div>
+            <div class="col">
+                <label for="ProduitsProposes" class="col-sm-2 col-form-label">Nom</label>
+                <input id="ProduitsProposes" type="text" class="form-control" name="ProduitsProposes">
+            </div>
+
         </div>
-        </fieldset>
-        </form>
-        <p>@Html.ActionLink("Retour", "Index", "CompteAdP")</p>
+        <div class="row g-3">
+            <div class="col">
+                <label for="Description" class="col-sm-2 col-form-label">Nom</label>
+                <input id="Description" type="text" class="form-control" name="Description">
+            </div>
+            <div class="col">
+                <label for="Prix" class="col-sm-2 col-form-label">Nom</label>
+                <input id="Prix" type="number" class="form-control" name="Prix">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <input name="fileToUpload" type="file" value="browse" />
+            </div>
+            <div class="col-12">
+                    <button class="btn btn-primary" type="submit" value="Submit">Ajouter</button>
+            </div>
+        </div>
+    </form>
+    <br/><br/>
+     <p>@Html.ActionLink("Retour", "Index", "CompteAdP")</p>
 </div>

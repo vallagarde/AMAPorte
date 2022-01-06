@@ -86,7 +86,7 @@ namespace Projet2.Controllers
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
-           if(viewModel != null)
+           if(viewModel.Identifiant != null)
             {
                 if (!viewModel.Identifiant.EstAdA)
                 {

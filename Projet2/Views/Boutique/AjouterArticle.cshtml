@@ -7,7 +7,7 @@
 
 <div class="container afternav">
     <div class="row">
-        <div class="col-12 text-center"><h1>Ajouter un article</h1></div>
+        <div class="col-12 text-center"><h1>Ajouter Article</h1></div>
     </div>
 
     <form enctype="multipart/form-data" method="post" asp-controller="Boutique" asp-action="AjouterArticle">
@@ -43,18 +43,11 @@
             <div class="col-12">
                 <input name="FileToUpload" type="file" value="browse" />
             </div>
-            <div>File Name:</div>
-
-            <div>
-
-                @Html.EditorFor(model => model.Upload.Name, new { htmlAttributes = new { @class = "form-control" } })
-
-                @Html.ValidationMessageFor(model => model.Upload.Name, "", new { @class = "text-danger" })
-            </div>
             <div class="col-12">
                     <button class="btn btn-primary" type="submit" value="Submit">Ajouter</button>
             </div>
         </div>
     </form>
+    <br/><br/>
      <p>@Html.ActionLink("Retour", "Index", "CompteAdP")</p>
 </div>

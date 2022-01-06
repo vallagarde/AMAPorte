@@ -157,7 +157,7 @@
                               </th>                              
                             </tr>
                             <tr align="center">
-                              <th class="signup">Déjà un Compte ?@Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.AdA.Id)</th>
+                              <th class="signup">Déjà un Compte ?<a asp-area="" asp-controller="Login" asp-action="Index"> Connectez-vous</a></th>
                             </tr>
                         </table>
                         </form>

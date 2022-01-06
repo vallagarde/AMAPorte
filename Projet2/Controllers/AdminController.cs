@@ -27,8 +27,10 @@ namespace Projet2.Controllers
         private LignePanierService lignePanierService = new LignePanierService();
         public IActionResult Index(Admin admin)
         {
-            hvm.Identifiant = cs.ObtenirIdentifiant(admin.IdentifiantId);
-            hvm.Admin = cs.ObtenirAdminParIdentifiant(admin.IdentifiantId);
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Admin.IdentifiantId);
             if (hvm.Identifiant == null)
             {
                 return View("Error");

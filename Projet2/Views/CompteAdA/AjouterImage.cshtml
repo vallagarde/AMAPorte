@@ -1,16 +1,28 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-
-<form enctype="multipart/form-data" method="post" asp-controller="CompteAdA" asp-action="AjouterImage">
-<fieldset>
-    <h2> Image </h2>
-        @Html.HiddenFor(m => Model.AdA.Id)
-        <input name="FileToUpload" type="file" value="browse" />
-</fieldset>
-     <br />
-        <input type="submit" value="Ajouter l'image'" />
-</form>
-    <br /><br />  
-    <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdA", @Model.AdA)
-    </div>
+    <section class="signupLayout">
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx"><img src="~/ImageArticle/pommes.jpg"></div>
+                <div class="formBx">
+                    <form enctype="multipart/form-data" method="post" asp-controller="CompteAdA" asp-action="AjouterImage">
+                        <h2>Choisissez une image</h2>
+                        <table width=100%>
+                            @Html.HiddenFor(m => Model.AdA.Id)
+                                <tr>
+                                  <th class="signup"><input name="FileToUpload" type="file" value="browse" />
+                                 </th>
+                                </tr>                                                              
+                                <tr align="center">
+                                  <th class="signup"><input type="submit" value="Ajouter" /></th>
+                                </tr>
+                                <tr align="center">
+                                  <th class="signup"><a asp-area="" asp-controller="CompteAdA" asp-action="Index">Retour</a></th>
+                                </tr>
+                                                             
+                        </table>               
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>

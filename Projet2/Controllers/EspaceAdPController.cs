@@ -28,19 +28,20 @@ namespace Projet2.Controllers
         private PanierSaisonnierService pss = new PanierSaisonnierService();
         private CalendrierService calendrier = new CalendrierService();
         private HomeViewModel hvm = new HomeViewModel();
-        public IActionResult Index()
-        {
-            return View();
-        }
+        private PanierService panierService = new PanierService();
+        private LignePanierService lignePanierService = new LignePanierService();
 
         //GESTION COMMANDES
         [HttpGet]
         public IActionResult CommandesAPreparer(AdP adp)
         {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
             hvm.AdP = adp;
             hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
             PanierService panierService = new PanierService();
-            List<Commande> commandes = panierService.ObtenirCommandesAdP(adp.Id);
+            List<Commande> commandes = panierService.ObtenirCommandesAdP(hvm.AdP.Id);
             foreach (Commande commande in commandes)
             {
                 if (commande.EstEnPreparation)
@@ -53,7 +54,7 @@ namespace Projet2.Controllers
                 }
             }
             LignePanierService lignePanierService = new LignePanierService();
-            List<CommandePanier> commandesPanier = lignePanierService.ObtenirCommandesPanierAdP(adp.Id);
+            List<CommandePanier> commandesPanier = lignePanierService.ObtenirCommandesPanierAdP(hvm.AdP.Id);
             foreach (CommandePanier commandePanier in commandesPanier)
             {
                 if (commandePanier.EstEnPreparation)
@@ -79,6 +80,26 @@ namespace Projet2.Controllers
              panierService.ChangerEtatCommande(commande.PanierBoutiqueId, commande.EtatCommande);
             }
             return RedirectToAction("CommandesAPreparer", hvm.AdP);
+        }
+        
+
+        public IActionResult Commande_infos(int CommandeId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+            hvm.Commande = panierService.ObtenirCommandesAdP(hvm.AdP.Id).Where(c => c.Id == CommandeId).FirstOrDefault();
+            return View(hvm);
+        }
+
+        public IActionResult CommandePanier_infos(int commandePanierId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.AdP = cs.ObtenirAdPParIdentifiant(viewModel.Identifiant.Id);
+            hvm.CommandePanier = lignePanierService.ObtenirCommandesPanierAdP(hvm.AdP.Id).Where(c => c.Id == commandePanierId).FirstOrDefault();
+
+            return View(hvm);
         }
 
         [HttpPost]
