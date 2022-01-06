@@ -31,6 +31,9 @@ namespace Projet2.Models.Compte
 
         public virtual List<CommandePanier> CommandesPanierEffectues { get; set; }
 
+        public virtual List<LignePanierSaisonnier> LignePanierSaisonniers{ get; set; }
+
+
         public AdA()
         {
             EstAdA = true;

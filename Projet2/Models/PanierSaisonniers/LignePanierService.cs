@@ -24,6 +24,11 @@ namespace Projet2.Models.PanierSaisonniers
             LignePanierSaisonnier panier = _bddContext.LignePanierSaisonniers.Where(c => c.Id == id).FirstOrDefault();
             return panier;
         }
+        public List<LignePanierSaisonnier> ObtientLignePanierParAdA(int id)
+        {
+            List<LignePanierSaisonnier> panier = _bddContext.LignePanierSaisonniers.Where(c => c.AdA.Id == id).ToList();
+            return panier;
+        }
 
         public PanierSaisonnier ObtientPanierParId(int id)
         {
@@ -54,7 +59,7 @@ namespace Projet2.Models.PanierSaisonniers
         public CommandePanier CreerCommande(LignePanierSaisonnier lignePanier)
         {
             PanierSaisonnier panier = ObtientPanierParId(lignePanier.PanierSaisonnierId);
-            CommandePanier commande = new CommandePanier() { LignePanierSaisonnier = lignePanier, PanierSaisonnier = panier, DateCommande = DateTime.Today, Total = lignePanier.SousTotal, AdAId = lignePanier.AdAId, EntrepriseId = lignePanier.EntrepriseId };
+            CommandePanier commande = new CommandePanier() { LignePanierSaisonnier = lignePanier, PanierSaisonnier = panier, DateCommande = DateTime.Today, Total = lignePanier.SousTotal, AdAId = lignePanier.AdAId, EntrepriseId = lignePanier.EntrepriseId , EstEnPreparation = true};
             _bddContext.CommandePaniers.Add(commande);
             _bddContext.SaveChanges();
             return commande;
