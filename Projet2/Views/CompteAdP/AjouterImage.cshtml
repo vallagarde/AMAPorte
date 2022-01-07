@@ -3,16 +3,18 @@
 @{
     
 }
-<form enctype="multipart/form-data" method="post" asp-controller="CompteAdP" asp-action="AjouterImage">
-<fieldset>
-    <h2> Image </h2>
-        @Html.HiddenFor(m => Model.AdP.Id)
-        <input name="FileToUpload" type="file" value="browse" />
-</fieldset>
-     <br />
+<div class="container">
+    <form enctype="multipart/form-data" method="post" asp-controller="CompteAdP" asp-action="AjouterImage">
+        <fieldset>
+            <h2> Image </h2>
+            @Html.HiddenFor(m => Model.AdP.Id)
+            <input name="FileToUpload" type="file" value="browse" />
+        </fieldset>
+        <br />
         <input type="submit" value="Ajouter l'image'" />
-</form>
-    <br /><br />  
+    </form>
+    <br /><br />
     <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdP", @Model.AdP)
+        @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdP", @Model.AdP)
     </div>
+</div>

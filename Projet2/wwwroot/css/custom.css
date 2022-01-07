@@ -4,6 +4,11 @@
     list-style: none;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+}
+
+body {
+    text-decoration: none;
 }
 
 /**, :after, :before {
@@ -43,6 +48,7 @@ i {
 
 .acustom {
     color: #68b430;
+    text-decoration: none;
 }
 
 a.nav-link.acustom:hover {
@@ -138,7 +144,7 @@ a.nav-link.acustom:hover {
 }
 
 .custombtn {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     font-weight: 600;
@@ -148,6 +154,7 @@ a.nav-link.acustom:hover {
     border-radius: 1.5rem;
     color: #fff;
     background-color: #F4941E;
+    text-decoration: none;
 }
     .custombtn:hover {
         background-color: black;
@@ -163,6 +170,12 @@ a.nav-link.acustom:hover {
     background-position: center;
 }
 
+.card-img-bout {
+    position: relative;
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+}
 
 .footercustom {
     
