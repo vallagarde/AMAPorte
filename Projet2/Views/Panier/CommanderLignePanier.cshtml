@@ -6,25 +6,17 @@
 }
 
 
-<div class=" container ">
+<div class=" container text-center mt-4">
 
     @{var SousTotal = Decimal.Round(@Model.LignePanierSaisonnier.SousTotal, 2);
     }
 
     <form method="post" asp-controller="Boutique" asp-action="ModifierPanier">
 
-        <div class="row">
-
-            <div class="col-2"> @Model.PanierSaisonnier.NomPanier</div>
-            <div class="col-2">
-                @Model.LignePanierSaisonnier.Quantite
-                <input type="hidden" name="quantite" value="@Model.LignePanierSaisonnier.Quantite" />
-                <input type="hidden" name="Id" value="@Model.LignePanierSaisonnier.Id" />
-            </div>
-            <div class="col-2">@SousTotal</div>
-        </div>
-
+            <div class="col titrecustom"> @Model.PanierSaisonnier.NomPanier</div>
+        <br>
     </form>
+
     <div>
         @{ decimal Apayer = (decimal)Model.LignePanierSaisonnier.SousTotal;
             decimal APayer = Apayer * 100;
@@ -38,20 +30,20 @@
             <p><input type="submit"></p>
         </form>*@
 
-        <form id="example4" asp-action="Paiement" asp-controller="Panier" method="post" onsubmit="return checkForm(this);">">
+        <form  asp-action="Paiement" asp-controller="Panier" method="post" onsubmit="return checkForm(this);">
             <article>
                 <div>
-                    <label>Prix à payer: @PrixAPayer €</label>
+                    <label class="yes py-2">Prix à payer : @PrixAPayer €</label>
                 </div>
 
-                <div>
+                <div class="py-2">
                     <input type="checkbox" id="field_terms" required name="terms" class="py-2" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">contrat</a>
                 </div>
                 <div>
                     <input type="hidden" name="PanierId" value="@Model.LignePanierSaisonnier.Id" />
                 </div>
 
-                <input type="hidden" name="LignePanierId" value="@Model.LignePanierSaisonnier.Id" />
+                @*<input type="hidden" name="LignePanierId" value="@Model.LignePanierSaisonnier.Id" />*@
 
                 <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="@Stripe.Value.PublishableKey" data-locale="auto" data-description="Paiment" data-amount="@APayer"></script>
             </article>

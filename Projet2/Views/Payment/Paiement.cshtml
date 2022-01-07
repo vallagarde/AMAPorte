@@ -13,10 +13,10 @@
 
 }
 
-<div>
+<div class="container text-center mt-4">
     <form asp-action="Commande" asp-controller="Payment" method="post">
-        <article>
-            <label>Prix à payer: @PrixAPayer €</label>
+        <article class=" my-2">
+            <label class="yes mb-2">Prix à payer : @PrixAPayer €</label>
             <input type="hidden" name="PanierId" value="@Model.PanierBoutique.Id" />
             <script src="//checkout.stripe.com/v2/checkout.js"
                     class="stripe-button"
