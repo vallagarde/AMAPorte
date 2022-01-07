@@ -30,21 +30,27 @@
             decimal APayer = Apayer * 100;
             var PrixAPayer = Decimal.Round(Apayer, 2);
         }
-       
 
-        <form asp-action="Paiement" asp-controller="Panier" method="post" onsubmit="return validate()">
+
+        @*<form id="example4" ...>
+            ...
+            <p><input id="field_terms" type="checkbox" required name="terms"> I accept the <u>Terms and Conditions</u></p>
+            <p><input type="submit"></p>
+        </form>*@
+
+        <form id="example4" asp-action="Paiement" asp-controller="Panier" method="post" onsubmit="return checkForm(this);">">
             <article>
                 <div>
                     <label>Prix à payer: @PrixAPayer €</label>
                 </div>
 
                 <div>
-                    <input type="checkbox" id="contrat" class="py-2" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">contrat</a>
+                    <input type="checkbox" id="field_terms" required name="terms" class="py-2" /> J'ai lu et j'accepte les conditions du <a href="" data-bs-toggle="modal" data-bs-target="#staticBackdrop">contrat</a>
                 </div>
                 <div>
                     <input type="hidden" name="PanierId" value="@Model.LignePanierSaisonnier.Id" />
                 </div>
-              
+
                 <input type="hidden" name="LignePanierId" value="@Model.LignePanierSaisonnier.Id" />
 
                 <script src="//checkout.stripe.com/v2/checkout.js" class="stripe-button" data-key="@Stripe.Value.PublishableKey" data-locale="auto" data-description="Paiment" data-amount="@APayer"></script>
@@ -52,46 +58,93 @@
         </form>
 
 
-    <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Mon contrat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    This is some placeholder content to show the scrolling behavior for modals.
+        <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Contrat panier(s) saisonnier(s)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
 
-                    <br />
-                    We use repeated line breaks to demonstrate how content can exceed minimum inner
-                    height, thereby showing inner scrolling.
+                        Signer ce contrat signifie que vous <strong>respecterez</strong> vos engagements
+                        <br />
+                        <br />
+                        <br />
+                        <strong>L’objet du contrat</strong>
+                        <br />
+                        <br />
+                        Le présent contrat concerne la livraison hebdomadaire par le producteur de panier(s) saisonnier(s) résultant du partage de la récolte de la semaine. Cette récolte est susceptible d’être affectée par les aléas tels que ravageurs, maladies ou intempéries. Chaque panier est payé d’avance par l’adhérent au producteur.
+                        La distribution aura lieu à La manufacture des tabacs, tous les jeudi entre 18h00 et 20h sauf cas exceptionnel qui ferait l’objet d’une information particulière par AMAPorte.
+                        <br />
+                        <br />
+                        <br />
 
-                    <br />
-                    When content becomes longer than the predefined max-height of modal, content will
-                    be cropped and scrollable within the modal.
+                        <strong>La durée du contrat</strong>
+                        <br />
+                        <br />
+                        L’adhérent peut choisir une durée de 13, 26 ou 52 semaines s’il veut marquer plus fortement son soutien au producteur. Le contrat prend fin avec la dernière livraison, à la fin de la période choisie.
+                        <br />
+                        <br />
+                        <br />
 
-                    This is some placeholder content to show the scrolling behavior for modals.
-                    <br />
-                    We use repeated line breaks to demonstrate how content can exceed minimum inner height,
-                    thereby showing inner scrolling.
-                    <br />
+                        <strong>Les engagements réciproques</strong>
+                        <br />
+                        <br />
+                        L’adhérent s’engage à:
+                        <br />
+                        • <strong>Payer</strong>d’avance chaque abonnement panier auquel il aura souscrit
+                        <br />
+                        • <strong>Participer</strong> à l’organisation d’au moins une distribution au cours de l’année.
+                        <br />
+                        • <strong>Venir</strong> chercher sa commande au jour et à l’heure prévus pour la distribution, ou se faire
+                        représenter.
 
-                    <strong>
-                        When content becomes longer than the predefined max-height of modal,
-                        content will be cropped and scrollable within the modal.
-                    </strong>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                        J'ai compris'
-                    </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                            Je signe
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
     </div>
+
+    <script>
+
+        window.addEventListener("DOMContentLoaded", function (e) {
+
+            var myForm = document.getElementById("example4");
+            var checkForm = function (e) {
+         
+          if (!this.terms.checked) {
+              alert("Veuillez accepter les conditions du contrat pour continuer");
+            this.terms.focus();
+            e.preventDefault(); // equivalent to return false
+            return;
+        }
+        };
+
+        // attach the form submit handler
+        myForm.addEventListener("submit", checkForm, false);
+
+        var myCheckbox = document.getElementById("field_terms");
+        var myCheckboxMsg = "Veuillez accepter les conditions du contrat pour continuer";
+
+        // set the starting error message
+        myCheckbox.setCustomValidity(myCheckboxMsg);
+
+        // attach checkbox handler to toggle error message
+        myCheckbox.addEventListener("change", function (e) {
+            this.setCustomValidity(this.validity.valueMissing ? myCheckboxMsg : "");
+        }, false);
+
+      }, false);
+
+    </script>
 
 </div>
 
