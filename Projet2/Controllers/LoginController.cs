@@ -244,8 +244,10 @@ namespace Projet2.Controllers
                 {
                     return true;
                 }
+                return false;
             }
-            return false;
+            
+            else return false;
         }
 
     }
