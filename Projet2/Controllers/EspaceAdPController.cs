@@ -59,7 +59,7 @@ namespace Projet2.Controllers
             {
                 if (commandePanier.EstEnPreparation)
                 {
-                    commandePanier.DateLivraison = calendrier.ObtenirDateLivraisonCommande(commandePanier.Id);
+                    commandePanier.DateLivraison = calendrier.ObtenirDatesLivraisonPanierSaisonnier(commandePanier.Id).FirstOrDefault();
                     if (commandePanier.DateLivraison.Date == hvm.ProchaineDateLivraison.Date)
                     {
                         hvm.ListeCommandesPanierEnPrep.Add(commandePanier);
