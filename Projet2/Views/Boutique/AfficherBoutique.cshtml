@@ -55,7 +55,7 @@
                             <img src="~/ImageArticle/@article.Image" class="card-img-top h-30" alt="..." />
                             <div class="card-body">
                                 <h5 class="card-title text-center" style="max-height: 2em">@article.Nom</h5>
-                                <p class="card-text text-center" style="max-height: 4em">€ @Decimal.Round(article.PrixTTC, 2)</p>
+                                <p class="card-text text-center" style="max-height: 4em"> @Decimal.Round(article.PrixTTC, 2) €</p>
                                 <div class="d-grid gap-2 col-12 mx-auto">
                                     <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Article", "Boutique", new { @Id = article.Id })'">
                                         Voir Article
