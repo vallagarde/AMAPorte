@@ -587,9 +587,9 @@ namespace Projet2.Models
 
                         //Commandes Paniers
 
-                        //BddContext bddContext = new BddContext();
+                        BddContext bddContext = new BddContext();
 
-                        /*LignePanierSaisonnier lignePanierSaisonnier = lignePanierService.CreerLignePanier(1, panierSaisonnier1.Id, 1 * panierSaisonnier1.Prix, 13, adA1.Id, 0);
+                        LignePanierSaisonnier lignePanierSaisonnier = lignePanierService.CreerLignePanier(1, panierSaisonnier1.Id, 1 * panierSaisonnier1.Prix, 13, adA1.Id, 0);
                         CommandePanier commandePanier = lignePanierService.CreerCommande(lignePanierSaisonnier);
                         commandePanier.EstEnLivraison = true; 
                         commandePanier.DateCommande = DateTime.Now;
@@ -609,11 +609,11 @@ namespace Projet2.Models
 
                         LignePanierSaisonnier lignePanierSaisonnier4 = lignePanierService.CreerLignePanier(20, panierSaisonnier3.Id, 20 * panierSaisonnier3.Prix, 52, 0, entreprise1.Id);
                         CommandePanier commandePanier4 = lignePanierService.CreerCommande(lignePanierSaisonnier4);
-                        commandePanier4.EstLivre = true;
+                        commandePanier4.EstEnLivraison = true;
                         commandePanier4.DateCommande = DateTime.Now;
-                        bddContext.CommandePaniers.Update(commandePanier4);*/
+                        bddContext.CommandePaniers.Update(commandePanier4);
 
-                        //bddContext.SaveChanges();
+                        bddContext.SaveChanges();
 
                         //Articles Boutique
 
@@ -731,7 +731,7 @@ namespace Projet2.Models
 
 
                             //Commandes Boutique
-                            /*
+                            
                             PanierBoutique panierBoutique1 = new PanierBoutique()
                             {
                                 Total = 30m
@@ -863,7 +863,7 @@ namespace Projet2.Models
                                 PanierBoutique = panierBoutique1,
                                 DateCommande = DateTime.Now,
                                 AdAId = 1,
-                                EstEnPreparation = true,
+                                EstARecuperer = true,
                             };
                             this.Commande.Add(commande1);
                             this.SaveChanges();
@@ -873,7 +873,7 @@ namespace Projet2.Models
                                 PanierBoutique = panierBoutique2,
                                 DateCommande = DateTime.Now,
                                 AdAId = 1,
-                                EstLivre = true,
+                                EstEnPreparation = true,
                             };
                             this.Commande.Add(commande2);
                             this.SaveChanges();
@@ -906,7 +906,7 @@ namespace Projet2.Models
                             calendrier.AjouterLigneCalendrierPanier(commandePanier2);
                             calendrier.AjouterLigneCalendrierPanier(commandePanier3);
                             calendrier.AjouterLigneCalendrierPanier(commandePanier4);
-                            */
+                            
                         }
                     }
 
