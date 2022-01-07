@@ -11,7 +11,7 @@
                 <div class="small mb-1">Stock: @Model.Article.Stock</div>
                 <h1 class="display-5 fw-bolder">@Model.Article.Nom</h1>
                 <div class="fs-5 mb-5">
-                    <span>€ @Decimal.Round(Model.Article.PrixTTC, 2)</span>
+                    <span> @Decimal.Round(Model.Article.PrixTTC, 2) €</span>
 
                 </div>
                 <p class="lead">@Model.Article.Description</p>
