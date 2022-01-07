@@ -271,8 +271,9 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdA ada)
+        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdA ada, string adressemail)
         {
+
                 
                 hvm.Adresse = cs.ModifierAdresse(adresse);
                 personne.AdresseId = hvm.Adresse.Id;
@@ -287,7 +288,7 @@ namespace Projet2.Controllers
                 viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
                 if (viewModel.Identifiant.EstAdA == true)
                 {
-                    return View("AdACompteInfo", hvm);
+                    return View("Index", hvm);
                 }
                 else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
                 {

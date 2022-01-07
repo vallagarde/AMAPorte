@@ -553,6 +553,7 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
         {
             if (personne.Id != 0)
             {
+
                 _bddContext.Personnes.Update(personne);
                 _bddContext.SaveChanges();
                 return personne;
