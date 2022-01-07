@@ -1,121 +1,144 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
+ 
+
+<div class="shadow-sm p-2 mb-5 welcome">
+    <h2>Demandes Producteurs</h2>
+</div>
+
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-2 menu-rigth">
+            <p>@Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)</p>
+        </div>
+        <div class="col-md-9">
+
+           
+            
+            <h3>Propositions Article</h3>
+
+            @foreach (var adp in @Model.ListeComptesAdP)
+                {
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" align="center">@adp.NomProducteur</h4>                                    
+                                        <h5>@adp.Personne.Nom @adp.Personne.Prenom</h5>
+                                        <h5>@adp.Personne.Identifiant.AdresseMail</h5>
+                                        <h5>Inscription : @adp.DateInscription</h5>
+                                        <h5>Siren : @adp.Siren</h5>
+                                        <h5>Active : @adp.EstActive</h5>
+                     </div>
+                      </div>
+                     <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">                
+                        @foreach (var article in @Model.AdP.Assortiment)
+                        {
+                            @if (!@article.EstValide && !@article.EstEnAttente)
+                            {
+                                var Prix = Decimal.Round(article.Prix, 2);
+                                var PrixTTC = Decimal.Round(article.PrixTTC, 2);
+                                <div class="col ">
+                                <div class="card h-100">
+                                <h5 class="card-title" align="center"> En attente</h5>
+                                    @{
+                                        String filepatharticle = "~/ImageArticle/" + @article.Image;
+                                    }
+                                    <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..."  style="align-content: center; height:100px" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">@article.Nom</h5>
+                                        <p class="card-text">@article.Description</p>
+                                        <p class="card-text">@Prix € (TTC : @PrixTTC €)</p>
+                                        <p class="card-text">Stock : @article.Stock</p>
+                                        <p class="card-text">@article.ReturnInscriptionDateForDisplayArticle</p>
+                                        @if(@article.DateModification != DateTime.MinValue)
+                                            {
+                                                 <p class="card-text">Dernière Modification @article.ReturnModificationDateForDisplayArticle</p>
+                                            } 
+                                        @if(@article.AdminCommentaire != null)
+                                            {
+                                            <p class="card-text">Dernier Commentaire @article.AdminCommentaire</p>   
+                                            }  
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                    @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @article.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                     <p class="card-text"> Commentaire : <input id="article_AdminCommentaire" name="article.AdminCommentaire" type="text" value=" "></p> 
+                                      <br/>
+                                         <p class="card-text">@Html.Label("Etat", "Validé") @Html.RadioButtonFor(m => @article.EstValide, true)</p> 
+                                         <p class="card-text"> @Html.Label("Etat", "Rejeté") @Html.RadioButtonFor(m =>  @article.EstValide, false)</p> 
+                                    <button class="btn btn-primary" type="submit">Soumettre</button>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>                        
+                            }                   
+                        }
+                    </div>  
+                }
 
 
-
-<div class = "container">
-    @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
-    <br/>
-    <div>
-        <p>Commandes En Preparation</p>
-        
-            @if(@Model.ListeComptesAdP.Count != 0)
-            {                                  
+                <h3>Propositions Panier</h3>
                 @foreach (var adp in @Model.ListeComptesAdP)
                 {
-                    <table border="1">
-                        @if(adp.Assortiment.Count != 0 || adp.AssortimentPanier.Count != 0)
-                        {
-                            <tr border="1">
-                                <td>@adp.NomProducteur</td>
-                                <td>@adp.Personne.Nom @adp.Personne.Prenom</td>
-                                <td>@adp.Personne.Identifiant.AdresseMail</td>
-                                <td>@adp.DateInscription</td>
-                                <td>@adp.Siren</td>
-                                <td>@adp.EstActive</td>
-                            </tr>
-                                @foreach(var article in @adp.Assortiment)
-                                {
-                                    @if(@article.EstEnAttente == false && @article.EstValide == false)
+                     <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" align="center">@adp.NomProducteur</h4>
+                                        <h5>@adp.Personne.Nom @adp.Personne.Prenom</h5>
+                                        <h5>@adp.Personne.Identifiant.AdresseMail</h5>
+                                        <h5>Inscription : @adp.DateInscription</h5>
+                                        <h5>Siren : @adp.Siren</h5>
+                                        <h5>Active : @adp.EstActive</h5>
+                     </div>
+                      </div>
+
+            
+            <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">                
+                @foreach (var panierSaisonnier in @Model.AdP.AssortimentPanier)
+                {
+                    @if (!@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
+                    {
+                        var Prix = Decimal.Round(panierSaisonnier.Prix, 2);
+                        <div class="col ">
+                        <div class="card h-100">
+                        <h5 class="card-title" align="center"> En attente</h5>
+                           @{
+                                String filepathpanier = "~/Images/" + @panierSaisonnier.Image;
+                            }
+                            <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="..."  style="align-content: center; height:100px"/>
+                            <div class="card-body">
+                                <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
+                                <p class="card-text">@panierSaisonnier.Description</p>
+                                <p class="card-text">@Prix €</p>
+                                <p class="card-text">Création : @panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p>
+                                @if(@panierSaisonnier.DateModification != DateTime.MinValue)
                                     {
-                                        <table border="1">
-                                            <tr border="1">
-                                            <td>Id @article.Id</td>
-                                            </tr>
-                                            <tr>
-                                                <td>@article.Nom</td>
-                                                <td>@article.Description</td>
-                                                <td>@article.Prix (@article.Prix TTC)</td> 
-                                                <td>@article.Stock</td>  
-                                                <td>@article.DateInscription</td> 
-                                                @if(@article.DateModification != null)
-                                                    {
-                                                        <td>Dernière Modification @article.DateModification</td>   
-                                                    }                                     
-                                                @if(@article.AdminCommentaire != null)
-                                                    {
-                                                        <td>Dernier Commentaire @article.AdminCommentaire</td>   
-                                                    }                                           
-                                             </tr>
-                                         <tr>
-                                             <td>
-                                                <form method="post" asp-controller="Admin" asp-action="GestionDemandesProducteurs">
-                                                @Html.HiddenFor(m => @Model.Admin.Id)
-                                                @Html.HiddenFor(m => @article.Id)
-                                                @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                                                Commentaire : <input id="article_AdminCommentaire" name="article.AdminCommentaire" type="text" value=" ">
-                                                <br/>
-                                               @Html.Label("Etat", "Validé")
-                                               @Html.RadioButtonFor(m => @article.EstValide, true)
-                                                <br/>
-                                               @Html.Label("Etat", "Rejeté")
-                                               @Html.RadioButtonFor(m =>  @article.EstValide, false)
-                                               <br/> 
-                                               <button class="btn btn-primary" type="submit">Soumettre</button>
-                                                </form>
-                                                  </td>
-                                           </tr>                                        
-                                         </table>                           
-                                    }
-                                }
-                                
-                                @foreach(var panierSaisonnier in @adp.AssortimentPanier)
-                                {
-                                    @if(@panierSaisonnier.EstEnAttente == false && @panierSaisonnier.EstValide == false)
-                                    {
-                                    <table border="1">
-                                        <tr border="1">
-                                        <td>Id @panierSaisonnier.Id</td>
-                                        <tr>
-                                            <td>@panierSaisonnier.NomPanier</td>
-                                            <td>@panierSaisonnier.Description</td>
-                                            <td>@panierSaisonnier.Prix</td> 
-                                            <td>@panierSaisonnier.DateInscription</td> 
-                                            @if(@panierSaisonnier.DateModification != null)
-                                                {
-                                                    <td>Dernière Modification @panierSaisonnier.DateModification</td>   
-                                                }                                     
-                                            @if(@panierSaisonnier.AdminCommentaire != null)
+                                         <p class="card-text">Dernière Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>
+                                    } 
+                                @if(@panierSaisonnier.AdminCommentaire != null)
                                             {
-                                                <td>Dernier Commentaire @panierSaisonnier.AdminCommentaire</td>   
-                                            }                                           
-                                        </tr>
-                                     <tr>
-                                     <td>
-                                        <form method="post" asp-controller="Admin" asp-action="GestionDemandesProducteurs">
-                                        @Html.HiddenFor(m => @Model.Admin.Id)
-                                        @Html.HiddenFor(m => @panierSaisonnier.Id)
-                                        @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                                        Commentaire : <input id="panierSaisonnier_AdminCommentaire" name="panierSaisonnier.AdminCommentaire" type="text" value=" ">
-                                        <br/>
-                                       @Html.Label("Etat", "Validé")
-                                       @Html.RadioButtonFor(m => @panierSaisonnier.EstValide, true)
-                                        <br/>
-                                       @Html.Label("Etat", "Rejeté")
-                                       @Html.RadioButtonFor(m =>  @panierSaisonnier.EstValide, false)
-                                       <br/> 
-                                       <button class="btn btn-primary" type="submit">Soumettre</button>
-                                        </form>
-                                          </td>
-                                         </tr>
-                                         </tr>
-                                        </table>                           
-                                    }
+                                            <p class="card-text">Dernier Commentaire @panierSaisonnier.AdminCommentaire</p>   
+                                            }  
+                               </div>
+                                <div align="center">
+                                <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                @Html.HiddenFor(m => @Model.Admin.Id)
+                                @Html.HiddenFor(m => @panierSaisonnier.Id)
+                                @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    <p class="card-text">  Commentaire : <input id="panierSaisonnier_AdminCommentaire" name="panierSaisonnier.AdminCommentaire" type="text" value=" "></p> 
+                                    <br/>
+                                        <p class="card-text">@Html.Label("Etat", "Validé") @Html.RadioButtonFor(m => @panierSaisonnier.EstValide, true)</p> 
+                                        <p class="card-text"> @Html.Label("Etat", "Rejeté") @Html.RadioButtonFor(m =>  @panierSaisonnier.EstValide, false)</p> 
+                                <button class="btn btn-primary" type="submit">Soumettre</button>
+                                </form>
+                                </div>
 
-                                }
-                        }
-                    </table>
-                }            
-           }
-    </div>
-
+                        </div>
+                        </div>                        
+                    }                   
+                }
+            </div>  
+            }
+        </div>
+    </div>   
 </div>

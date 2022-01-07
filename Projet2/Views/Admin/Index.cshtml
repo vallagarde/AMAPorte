@@ -51,8 +51,9 @@
             <div class="col-md-8">
                 <div class="card mb-3" style="height: 300px;">
                         <div class="card-body" style="overflow: auto">
-                            <h2 class="d-flex align-items-center mb-3"> Demandes à valider </h2>  
-                            @if (@Model.ListeComptesAdP.Count != 0)
+                            <h6 class="mb-0" align="right">@Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)</h6> 
+                            <h2 class="d-flex align-items-center mb-3"> Demandes à valider </h2>                                                     
+                        @if (@Model.ListeComptesAdP.Count != 0)
                             {
                             @foreach (var adp in @Model.ListeComptesAdP)
                             {
@@ -102,32 +103,34 @@
                         <div class="card h-100" >
                             <div class="card-body" align="center">
                                 <div class="d-flex flex-column align-items-center text-center">
+                                <h6 class="d-flex align-items-center mb-3" align="right"> <br/>@Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)</h6>
                                 <h5 class="d-flex align-items-center mb-3" align="center">Comptes A Valider</h5> 
-                                <h1 class="d-flex align-items-center mb-3" align="center"><br/>@Model.ListeComptesAdPAValider.Count </h1>
+                                <h1 class="d-flex align-items-center mb-3" align="center">@Model.ListeComptesAdPAValider.Count </h1>                               
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-3" style="height: 200px;">
+                    <div class="col-sm-6 mb-3" style="height: 330px;">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h6 class="d-flex align-items-center mb-3">Gestion AMAPorte</h6>
-                                <ul class="list-group list-group-flush">
+                                <h6 class="d-flex align-items-center mb-3" align="center">@Html.ActionLink("Gestion Etat des Commandes", "GestionEtatCommande", "Admin", @Model.Admin)</h6>
+                                <ul class="list-group list-group-flush">                                   
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0">
-                                            @Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)
-                                        </h6>
-
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            @Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)
+                                            Commandes Boutique<br/>
+                                            En Preparation : @Model.ListeCommandesEnPrep.Count<br/>
+                                            En Cours de Livraison : @Model.ListeCommandesEnCours.Count<br/>
+                                            En Point de Collection : @Model.ListeCommandesARecup.Count<br/>
+                                            Livrées : @Model.ListeCommandesLivres.Count<br/><br/>                                          
                                         </h6>
                                     </li>
-                                   
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0">
-                                            @Html.ActionLink("Gestion Etat des Commandes", "GestionEtatCommande", "Admin", @Model.Admin)
+                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0" >
+                                            Commandes Panier<br/>
+                                            En Preparation : @Model.ListeCommandesPanierEnPrep.Count<br/>
+                                            En Cours de Livraison : @Model.ListeCommandesPanierEnCours.Count<br/>
+                                            En Point de Collection : @Model.ListeCommandesPanierARecup.Count<br/>
+                                            Livrées : @Model.ListeCommandesPanierLivres.Count<br/><br/>
                                         </h6>
                                     </li>
                                 </ul>

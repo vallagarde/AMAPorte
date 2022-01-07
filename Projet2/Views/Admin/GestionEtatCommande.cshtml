@@ -1,435 +1,458 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-<div class = "container">
-    @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
-
-<br/>
-<div>
-    <p>Commandes En Preparation</p>
-    <table border="1">
-        @if(@Model.ListeCommandesEnPrep.Count != 0){                                  
-            @foreach (var commande in @Model.ListeCommandesEnPrep)
-            {
-             <tr border="1">
-                    <td>Commande @commande.Id</td>
-                    <tr>
-                     @if(@commande.AdA != null)
-                            {
-                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                                <td>@commande.AdA.Personne.Prenom</td> 
-                            }
-                            @if(@commande.Client != null)
-                            {
-                                <td>Acheteur : @commande.Client.Nom</td>
-                                <td>@commande.Client.Prenom</td> 
-                            }
-                            @if(@commande.Entreprise != null)
-                            {
-                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
-                            }                     
-             </tr>
-                @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                        {
-                            <tr>
-                                <td>Article : @lignePanierBoutique.Article.Nom</td>
-                                <td>Producteur : @lignePanierBoutique.Article.AdP.NomProducteur</td>
-                            </tr>
-                        }
-                        
-                 <tr>
-                <td>
-                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommande">
-                    @Html.HiddenFor(m => @Model.Admin.Id)
-                    @Html.HiddenFor(m => @Model.Admin.Role)
-                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
-                   @Html.Label("Etat", "En Livraison")
-                   @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnLivraison")
-                 <br/>
-                   @Html.Label("Etat", "A Recuperer")
-                   @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstARecuperer")
-                 <br/>
-                    @Html.Label("Etat", "Cloturé")
-                    @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstLivre")
-                   <br/> 
-                    <button class="btn btn-primary" type="submit">Modifier</button>
-                </form>
-                      </td>
-                     </tr>
-                 </tr>
-            }            
-       }
-       </table>
-       <table border="1">
-        @if(@Model.ListeCommandesPanierEnPrep.Count != 0){                                  
-            @foreach (var commandePanier in @Model.ListeCommandesPanierEnPrep)
-            {
-             <tr border="1">
-                    <td>Commande Panier @commandePanier.Id</td>
-                    <tr>
-                     @if(@commandePanier.AdA != null)
-                            {
-                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
-                                <td>@commandePanier.AdA.Personne.Prenom</td> 
-                            }
-                            @if(@commandePanier.Entreprise != null)
-                            {
-                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
-                            }                     
-                        </tr>
-                            <tr>
-                                <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
-                                <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
-                            </tr>                                                
-                 <tr>
-                <td>
-                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
-                    @Html.HiddenFor(m => @Model.Admin.Id)
-                    @Html.HiddenFor(m => @Model.Admin.Role)
-                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                    @Html.HiddenFor(m => @commandePanier.Id)
-                   @Html.Label("Etat", "En Livraison")
-                   @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnLivraison")
-                 <br/>
-                   @Html.Label("Etat", "A Recuperer")
-                   @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstARecuperer")
-                 <br/>
-                    @Html.Label("Etat", "Cloturé")
-                    @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstLivre")
-                   <br/> 
-                    <button class="btn btn-primary" type="submit">Modifier</button>
-                </form>
-                      </td>
-                     </tr>
-                 </tr>
-            }            
-       }
-       </table>
+<div class="shadow-sm p-2 mb-5 welcome">
+    <h2>Gestion Etat Des Commandes</h2>
 </div>
-<br/>
-<br/>
-<div>
-    <p>Commandes En Livraison</p>
-    <table border="1">
-        @if(@Model.ListeCommandesEnCours.Count != 0){                                  
-            @foreach (var commande in @Model.ListeCommandesEnCours)
-            {
-             <tr border="1">
-                    <td>Commande @commande.Id</td>
-                    <tr>
-                            @if(@commande.AdA != null)
-                            {
-                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                                <td>@commande.AdA.Personne.Prenom</td> 
-                            }
-                            @if(@commande.Client != null)
-                            {
-                                <td>Acheteur : @commande.Client.Nom</td>
-                                <td>@commande.Client.Prenom</td> 
-                            }
-                            @if(@commande.Entreprise != null)
-                            {
-                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
-                            }                                              
-             </tr>
-                @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                        {
-                            <tr>
-                                <td>Article : @lignePanierBoutique.Article.Nom</td>
-                                <td>Producteur : @lignePanierBoutique.Article.AdP.NomProducteur</td>
-                            </tr>
-                        }
-                        
-                 <tr>
-                <td>
-                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommande">
-                    @Html.HiddenFor(m => @Model.Admin.Id)
-                    @Html.HiddenFor(m => @Model.Admin.Role)
-                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
-                    @Html.Label("Etat", "En Preparation")
-                    @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnPreparation")                          
-                <br/> 
-                   @Html.Label("Etat", "A Recuperer")
-                   @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstARecuperer")
-                 <br/>
-                    @Html.Label("Etat", "Cloturé")
-                    @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstLivre")
-                   <br/> 
-                    <button class="btn btn-primary" type="submit">Modifier</button>
-                </form>
-                      </td>
-                     </tr>
-                 </tr>
-            }            
-       }
-       </table>
-       <table border="1">
-        @if(@Model.ListeCommandesPanierEnCours.Count != 0){                                  
-            @foreach (var commandePanier in @Model.ListeCommandesPanierEnCours)
-            {
-             <tr border="1">
-                    <td>Commande Panier @commandePanier.Id</td>
-                    <tr>
-                            @if(@commandePanier.AdA != null)
-                            {
-                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
-                                <td>@commandePanier.AdA.Personne.Prenom</td> 
-                            }                           
-                            @if(@commandePanier.Entreprise != null)
-                            {
-                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
-                            }                                              
-             </tr>
 
-                            <tr>
-                                <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
-                                <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
-                            </tr>
-                        
-                        
-                 <tr>
-                <td>
-                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
-                    @Html.HiddenFor(m => @Model.Admin.Id)
-                    @Html.HiddenFor(m => @Model.Admin.Role)
-                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                    @Html.HiddenFor(m => @commandePanier.Id)
-                    @Html.Label("Etat", "En Preparation")
-                    @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnPreparation")                          
-                <br/> 
-                   @Html.Label("Etat", "A Recuperer")
-                   @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstARecuperer")
-                 <br/>
-                    @Html.Label("Etat", "Cloturé")
-                    @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstLivre")
-                   <br/> 
-                    <button class="btn btn-primary" type="submit">Modifier</button>
-                </form>
-                      </td>
-                     </tr>
-                 </tr>
-            }            
-       }
-       </table>
-</div>
-<br/>
-<br/>
-<div>
-    <p>Commandes A Recuperer</p>
-    <table border="1">
-       @if(@Model.ListeCommandesARecup.Count != 0){                                  
-            @foreach (var commande in @Model.ListeCommandesARecup)
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-2 menu-rigth">
+            @Html.HiddenFor(m => @Model.Admin.Id) 
+            @Html.HiddenFor(m => @Model.Admin.Role) 
+            <p>@Html.ActionLink("Retour", "Index", "Admin", @Model.Admin)</p>  
+            <p>Aujourd'hui : <script> document.write(new Date().toLocaleDateString()); </script></p>           
+            <p>Prochaine Date de Livraison @Model.ReturnDateForDisplayLivraison</p>   
+        </div>
+        <div class="col-md-9">
+            @if (@Model.ListeCommandesEnPrep.Count != 0)
             {
-                 <tr border="1">
-                    <td>Commande @commande.Id</td>
-                    <tr>
-                     @if(@commande.AdA != null)
-                            {
-                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                                <td>@commande.AdA.Personne.Prenom</td> 
-                            }
-                            @if(@commande.Client != null)
-                            {
-                                <td>Acheteur : @commande.Client.Nom</td>
-                                <td>@commande.Client.Prenom</td> 
-                            }
-                            @if(@commande.Entreprise != null)
-                            {
-                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
-                            }                       
-                     </tr>
-                        @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                                {
-                                    <tr>
-                                    <td>Article : @lignePanierBoutique.Article.Nom</td>
-                                    <td>Producteur : @lignePanierBoutique.Article.AdP.NomProducteur</td>
-                                    </tr>
-                                }   
-                                
-                       <tr>
-                      <td>
-                          <form method="post" asp-controller="Admin" asp-action="GestionEtatCommande">
-                           @Html.HiddenFor(m => @Model.Admin.Id)
-                           @Html.HiddenFor(m => @Model.Admin.Role)
-                           @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                           @Html.HiddenFor(m => @commande.PanierBoutiqueId)                           
-                           @Html.Label("Etat", "En Preparation")
-                           @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnPreparation")                          
-                           <br/>
-                           @Html.Label("Etat", "En Livraison")
-                           @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnLivraison")
-                         <br/>
-                            @Html.Label("Etat", "Cloturé")
-                            @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstLivre")
-                            <br/> 
-                            <button class="btn btn-primary" type="submit">Modifier</button>
-                           </form>    
-                     </td>
-                     </tr>
-                 </tr>
-
-            }            
-       }
-    </table>
-     <table border="1">
-       @if(@Model.ListeCommandesPanierARecup.Count != 0){                                  
-            @foreach (var commandePanier in @Model.ListeCommandesPanierARecup)
-            {
-                 <tr border="1">
-                    <td>Commande @commandePanier.Id</td>
-                    <tr>
-                     @if(@commandePanier.AdA != null)
-                            {
-                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
-                                <td>@commandePanier.AdA.Personne.Prenom</td> 
-                            }
-                            
-                            @if(@commandePanier.Entreprise != null)
-                            {
-                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
-                            }                       
-                     </tr>
-                        
-                                    <tr>
-                                    <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
-                                    <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
-                                    </tr>
-                                
-                                
-                       <tr>
-                      <td>
-                          <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
-                           @Html.HiddenFor(m => @Model.Admin.Id)
-                           @Html.HiddenFor(m => @Model.Admin.Role)
-                           @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                           @Html.HiddenFor(m => @commandePanier.Id)                         
-                           @Html.Label("Etat", "En Preparation")
-                           @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnPreparation")                          
-                           <br/>
-                           @Html.Label("Etat", "En Livraison")
-                           @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnLivraison")
-                            <br/>
-                            @Html.Label("Etat", "Cloturé")
-                            @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstLivre")
-                            <br/> 
-                            <button class="btn btn-primary" type="submit">Modifier</button>
-                           </form>    
-                     </td>
-                     </tr>
-                 </tr>
-
-            }            
-       }
-    </table>
-
-</div>
-<br/>
-<br/>
-<div>
-    <p>Commandes Livrés</p>
-    <table border="1">
-       @if(@Model.ListeCommandesLivres.Count != 0){                                  
-            @foreach (var commande in @Model.ListeCommandesLivres)
-            {
-             <tr border="1">
-                    <td>Commande @commande.Id </td>
-                    <tr>
-                     @if(@commande.AdA != null)
-                            {
-                                <td>Acheteur : @commande.AdA.Personne.Nom</td>
-                                <td>@commande.AdA.Personne.Prenom</td> 
-                            }
-                            @if(@commande.Client != null)
-                            {
-                                <td>Acheteur : @commande.Client.Nom</td>
-                                <td>@commande.Client.Prenom</td> 
-                            }
-                            @if(@commande.Entreprise != null)
-                            {
-                                <td>Acheteur : @commande.Entreprise.NomEntreprise</td>
-                            }                     
-                    </tr>
-                @foreach (var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                        {
-                            <tr>
-                            <td>Article : @lignePanierBoutique.Article.Nom</td>
-                            <td>Producteur : @lignePanierBoutique.Article.AdP.NomProducteur</td>
-                            </tr>
-                        }            
-                <tr>
-                      <td>
-                        <form method="post" asp-controller="Admin" asp-action="GestionEtatCommande">
-                        @Html.HiddenFor(m => @Model.Admin.Id)
-                        @Html.HiddenFor(m => @Model.Admin.Role)
-                        @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                        @Html.HiddenFor(m => @commande.PanierBoutiqueId)   
-                        @Html.Label("Etat", "En Preparation")
-                        @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnPreparation")                          
-                        <br/>
-                        @Html.Label("Etat", "En Livraison")
-                       @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstEnLivraison")
-                     <br/>
-                        @Html.Label("Etat", "A Recuperer")
-                        @Html.RadioButtonFor(m => @Model.Commande.EtatCommande, "EstARecuperer")
-
-                        <br/> 
-                            <button class="btn btn-primary" type="submit">Modifier</button>
-                           </form>    
-                     </td>
-                     </tr>
-                </tr>
-            }            
-       }
-       </table>
-        <table border="1">
-       @if(@Model.ListeCommandesPanierLivres.Count != 0){                                  
-            @foreach (var commandePanier in @Model.ListeCommandesPanierLivres)
-            {
-             <tr border="1">
-                    <td>Commande @commandePanier.Id </td>
-                    <tr>
-                     @if(@commandePanier.AdA != null)
-                            {
-                                <td>Acheteur : @commandePanier.AdA.Personne.Nom</td>
-                                <td>@commandePanier.AdA.Personne.Prenom</td> 
-                            }
-                            
-                            @if(@commandePanier.Entreprise != null)
-                            {
-                                <td>Acheteur : @commandePanier.Entreprise.NomEntreprise</td>
-                            }                     
-                    </tr>
+            <h3>Commandes Boutique En Preparation</h3>
+            <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
                 
-                            <tr>
-                            <td>Panier : @commandePanier.PanierSaisonnier.Id @commandePanier.PanierSaisonnier.NomPanier</td>
-                            <td>Producteur : @commandePanier.PanierSaisonnier.AdP.NomProducteur</td>
-                            </tr>                                   
-                <tr>
-                      <td>
-                        <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
-                        @Html.HiddenFor(m => @Model.Admin.Id)
-                        @Html.HiddenFor(m => @Model.Admin.Role)
-                        @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                        @Html.HiddenFor(m => @commandePanier.Id)   
-                        @Html.Label("Etat", "En Preparation")
-                        @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnPreparation")                          
-                        <br/>
-                        @Html.Label("Etat", "En Livraison")
-                       @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstEnLivraison")
-                     <br/>
-                        @Html.Label("Etat", "A Recuperer")
-                        @Html.RadioButtonFor(m => @Model.CommandePanier.EtatCommande, "EstARecuperer")
+                @foreach (var commande in @Model.ListeCommandesEnPrep)
+                {
+                var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
+                        <div class="row ">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Boutique</h5>
+                                     @{
+                                String filepath = "~/ImageProfils/Default.jpg";
+                                }
+                                <img src="~/ImageProfils/Default.jpg" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px"/>
+                                
+                                    <p class="card-text" align="center"><br/>N° @commande.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commande.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commande.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commande.EtatCommande</p>
+                                    <p class="card-text" align="center">@Total €</p>
+                                    @if(@commande.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
+                                    }
+                                    @if(@commande.Client != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Client.Prenom @commande.Client.Nom </p>
+                                    }
+                                    @if(@commande.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "Admin", new { @CommandeId = commande.Id })'"> voir détails</button>                                    
+                                    <br/>
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                    @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.Role)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">En transport</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstARecuperer">Au Point Collection</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstLivre">Livré</button> 
+                                    </form>
+                                   </div>
+                                 </div>
+                            </div>                                
+                        </div>                    
+                    }
+                </div> 
+                }
 
-                        <br/> 
-                            <button class="btn btn-primary" type="submit">Modifier</button>
-                           </form>    
-                     </td>
-                     </tr>
-                </tr>
-            }            
-       }
-       </table>
+                @if (@Model.ListeCommandesPanierEnPrep.Count != 0)
+            {
+                <br/><h3>Commandes Panier En Preparation</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
+                
+                @foreach (var commandePanier in @Model.ListeCommandesPanierEnPrep)
+                {
+                
+                    var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);                   
+                        <div class="row ">
+                                    
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Panier</h5>                                        
+                                    @{
+                                        String filepath = "~/Images/" + @commandePanier.PanierSaisonnier.Image;
+                                    }
+                                    <img src="~/Images/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commandePanier.EtatCommande</p>
+                                    <p class="card-text" align="center">@TotalPanier €</p>                                    
+                                    @if(@commandePanier.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    }
+                                    
+                                    @if(@commandePanier.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commandePanier.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "Admin", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
+                                    <br/>
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                     @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.Role)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    @Html.HiddenFor(m => @commandePanier.Id)
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">En transport</button> 
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstARecuperer">Au Point Collection</button> 
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstLivre">Livré</button> 
+                                    </form>                                                                                              
+                                </div>
+                             </div>
+                        </div>                                                                        
+                    </div>                
+                }
+           </div>
+           }
+           @if (@Model.ListeCommandesEnCours.Count != 0)
+            {
+                <br/><h3>Commandes Boutique En Cours de Livraison</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-5"style="margin-top:15px">
+                
+                @foreach (var commande in @Model.ListeCommandesEnCours)
+                {
+                var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
+                        <div class="row ">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Boutique</h5>
+                                     @{
+                                String filepath = "~/ImageProfils/Default.jpg";
+                                }
+                                <img src="~/ImageProfils/Default.jpg" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px"/>
+                                
+                                    <p class="card-text" align="center"><br/>N° @commande.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commande.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commande.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commande.EtatCommande</p>
+                                    <p class="card-text" align="center">@Total €</p>
+                                    @if(@commande.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
+                                    }
+                                    @if(@commande.Client != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Client.Prenom @commande.Client.Nom </p>
+                                    }
+                                    @if(@commande.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "Admin", new { @CommandeId = commande.Id })'"> voir détails</button>                                    
+                                    <br/>
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                    @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.Role)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnPreparation">En préparation</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstARecuperer">Au Point Collection</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstLivre">Livré</button> 
+                                    </form>
+                                   </div>
+                                 </div>
+                            </div>                                
+                        </div>                    
+                    }
+                </div> 
+}
+                @if (@Model.ListeCommandesPanierEnCours.Count != 0)
+            {
+                <br/><h3>Commandes Panier En Cours de Livraison</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
+                
+                @foreach (var commandePanier in @Model.ListeCommandesPanierEnCours)
+                {
+                
+                    var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);                   
+                        <div class="row ">
+                                    
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Panier</h5>                                        
+                                    @{
+                                        String filepath = "~/Images/" + @commandePanier.PanierSaisonnier.Image;
+                                    }
+                                    <img src="~/Images/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commandePanier.EtatCommande</p>
+                                    <p class="card-text" align="center">@TotalPanier €</p>                                    
+                                    @if(@commandePanier.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    }
+                                    
+                                    @if(@commandePanier.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commandePanier.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "Admin", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
+                                    <br/>
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                     @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.Role)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    @Html.HiddenFor(m => @commandePanier.Id)
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnPreparation">En préparation</button> 
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstARecuperer">Au Point Collection</button> 
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstLivre">Livré</button> 
+                                    </form>                                                                                              
+                                </div>
+                             </div>
+                        </div>                                                                        
+                    </div>                
+                }
+           </div>
+           }
+            @if(@Model.ListeCommandesARecup.Count != 0)
+            {
+                <br/><h3>Commandes Boutique En Point Collection</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-5"style="margin-top:15px">
+                
+                @foreach (var commande in @Model.ListeCommandesARecup)
+                {
+                var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
+                        <div class="row ">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Boutique</h5>
+                                     @{
+                                String filepath = "~/ImageProfils/Default.jpg";
+                                }
+                                <img src="~/ImageProfils/Default.jpg" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px"/>
+                                
+                                    <p class="card-text" align="center"><br/>N° @commande.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commande.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commande.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commande.EtatCommande</p>
+                                    <p class="card-text" align="center">@Total €</p>
+                                    @if(@commande.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
+                                    }
+                                    @if(@commande.Client != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Client.Prenom @commande.Client.Nom </p>
+                                    }
+                                    @if(@commande.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "Admin", new { @CommandeId = commande.Id })'"> voir détails</button>                                    
+                                    <br/>
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                    @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.Role)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnPreparation">En préparation</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">En transport</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstLivre">Livré</button> 
+                                    </form>
+                                   </div>
+                                 </div>
+                            </div>                                
+                        </div>                    
+                    }
+                </div>                
+            }
 
+            @if (@Model.ListeCommandesPanierARecup.Count != 0)
+            {
+                <br/><h3>Commandes Panier En Point Collection</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
+                    
+                    @foreach (var commandePanier in @Model.ListeCommandesPanierARecup)
+                    {
+
+                        var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);
+                        <div class="row ">
+
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Panier</h5>                                        
+                                    @{
+                                        String filepath = "~/Images/" + @commandePanier.PanierSaisonnier.Image;
+                                    }
+                                    <img src="~/Images/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commandePanier.EtatCommande</p>
+                                    <p class="card-text" align="center">@TotalPanier €</p>                                    
+                                    @if (@commandePanier.AdA != null)
+                                    {
+                                        <p class="card-text"  align="center">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    }
+
+                                    @if (@commandePanier.Entreprise != null)
+                                    {
+                                        <p class="card-text"  align="center">@commandePanier.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "Admin", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
+                                        <br/>
+                                    </div>
+                                    <div align="center">
+                                        <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                            @Html.HiddenFor(m => @Model.Admin.Id)
+                                            @Html.HiddenFor(m => @Model.Admin.Role)
+                                            @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                            @Html.HiddenFor(m => @commandePanier.Id)
+                                            <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnPreparation">En préparation</button> 
+                                            <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">En transport</button> 
+                                            <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstLivre">Livré</button> 
+                                        </form>                                                                                              
+                                    </div>
+                                </div>
+                            </div>                                                                        
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (@Model.ListeCommandesLivres.Count != 0)
+            {
+               <br/> <h3>Commandes Boutique Cloturées</h3>
+            <div class="row row-cols-1 row-cols-md-4 g-5"style="margin-top:15px">
+                
+                @foreach (var commande in @Model.ListeCommandesLivres)
+                {
+                var Total = Decimal.Round(commande.PanierBoutique.Total, 2);   
+                        <div class="row ">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Boutique</h5>
+                                     @{
+                                String filepath = "~/ImageProfils/Default.jpg";
+                                }
+                                <img src="~/ImageProfils/Default.jpg" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px"/>
+                                
+                                    <p class="card-text" align="center"><br/>N° @commande.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commande.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commande.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commande.EtatCommande</p>
+                                    <p class="card-text" align="center">@Total €</p>
+                                    @if(@commande.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
+                                    }
+                                    @if(@commande.Client != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Client.Prenom @commande.Client.Nom </p>
+                                    }
+                                    @if(@commande.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "Admin", new { @CommandeId = commande.Id })'"> voir détails</button>                                    
+                                    <br/>
+                                    </div>
+                                    <div align="center">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                    @Html.HiddenFor(m => @Model.Admin.Id)
+                                    @Html.HiddenFor(m => @Model.Admin.Role)
+                                    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                    @Html.HiddenFor(m => @commande.PanierBoutiqueId)
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnPreparation">En préparation</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">En transport</button> 
+                                    <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstARecuperer">Au Point Collection</button> 
+                                    </form>
+                                   </div>
+                                 </div>
+                            </div>                                
+                        </div>                    
+                    }
+                </div> 
+                }
+                @if (@Model.ListeCommandesPanierLivres.Count != 0)
+            {
+                 <br/><h3>Commandes Panier Cloturées</h3>
+                <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
+                   
+                    @foreach (var commandePanier in @Model.ListeCommandesPanierLivres)
+                    {
+
+                        var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);
+                        <div class="row ">
+
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title" align="center">Panier</h5>                                        
+                                    @{
+                                        String filepath = "~/Images/" + @commandePanier.PanierSaisonnier.Image;
+                                    }
+                                    <img src="~/Images/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commandePanier.EtatCommande</p>
+                                    <p class="card-text" align="center">@TotalPanier €</p>                                    
+                                    @if (@commandePanier.AdA != null)
+                                    {
+                                        <p class="card-text"  align="center">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    }
+
+                                    @if (@commandePanier.Entreprise != null)
+                                    {
+                                        <p class="card-text"  align="center">@commandePanier.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "Admin", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
+                                        <br/>
+                                    </div>
+                                    <div align="center">
+                                        <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                            @Html.HiddenFor(m => @Model.Admin.Id)
+                                            @Html.HiddenFor(m => @Model.Admin.Role)
+                                            @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                            @Html.HiddenFor(m => @commandePanier.Id)
+                                            <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnPreparation" >En préparation</button>
+                                            <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison" >En transport</button>
+                                            <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstARecuperer" >Au Point Collection</button>
+                                        </form>                                                                                              
+                                    </div>
+                                </div>
+                            </div>                                                                        
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>   
 </div>
-</div>       
+
+
+
