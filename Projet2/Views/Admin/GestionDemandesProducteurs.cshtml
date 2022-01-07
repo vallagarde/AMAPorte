@@ -19,7 +19,7 @@
 
             @foreach (var adp in @Model.ListeComptesAdP)
                 {
-                    <div class="card">
+                    <div class="card" style="margin-top:30px">
                         <div class="card-body">
                             <h4 class="card-title" align="center">@adp.NomProducteur</h4>                                    
                                         <h5>@adp.Personne.Nom @adp.Personne.Prenom</h5>
@@ -29,7 +29,7 @@
                                         <h5>Active : @adp.EstActive</h5>
                      </div>
                       </div>
-                     <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">                
+                     <div class="row row-cols-1 row-cols-md-4 g-5">                
                         @foreach (var article in @Model.AdP.Assortiment)
                         {
                             @if (!@article.EstValide && !@article.EstEnAttente)
@@ -39,10 +39,6 @@
                                 <div class="col ">
                                 <div class="card h-100">
                                 <h5 class="card-title" align="center"> En attente</h5>
-                                    @{
-                                        String filepatharticle = "~/ImageArticle/" + @article.Image;
-                                    }
-                                    <img src="~/ImageArticle/@article.Image" class="card-img-top" alt="..."  style="align-content: center; height:100px" />
                                     <div class="card-body">
                                         <h5 class="card-title">@article.Nom</h5>
                                         <p class="card-text">@article.Description</p>
@@ -59,7 +55,7 @@
                                             }  
                                     </div>
                                     <div align="center">
-                                    <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                    <form method="post" asp-controller="Admin" asp-action="GestionDemandesProducteurs">
                                     @Html.HiddenFor(m => @Model.Admin.Id)
                                     @Html.HiddenFor(m => @article.Id)
                                     @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
@@ -81,7 +77,7 @@
                 <h3>Propositions Panier</h3>
                 @foreach (var adp in @Model.ListeComptesAdP)
                 {
-                     <div class="card">
+                     <div class="card" style="margin-top:30px">
                         <div class="card-body">
                             <h4 class="card-title" align="center">@adp.NomProducteur</h4>
                                         <h5>@adp.Personne.Nom @adp.Personne.Prenom</h5>
@@ -93,7 +89,7 @@
                       </div>
 
             
-            <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">                
+            <div class="row row-cols-1 row-cols-md-4 g-5">                
                 @foreach (var panierSaisonnier in @Model.AdP.AssortimentPanier)
                 {
                     @if (!@panierSaisonnier.EstValide && !@panierSaisonnier.EstEnAttente)
@@ -102,10 +98,6 @@
                         <div class="col ">
                         <div class="card h-100">
                         <h5 class="card-title" align="center"> En attente</h5>
-                           @{
-                                String filepathpanier = "~/Images/" + @panierSaisonnier.Image;
-                            }
-                            <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="..."  style="align-content: center; height:100px"/>
                             <div class="card-body">
                                 <h5 class="card-title">@panierSaisonnier.NomPanier</h5>
                                 <p class="card-text">@panierSaisonnier.Description</p>
@@ -121,10 +113,10 @@
                                             }  
                                </div>
                                 <div align="center">
-                                <form method="post" asp-controller="Admin" asp-action="GestionEtatCommandePanier">
+                                <form method="post" asp-controller="Admin" asp-action="GestionDemandesProducteursPaniers">
                                 @Html.HiddenFor(m => @Model.Admin.Id)
                                 @Html.HiddenFor(m => @panierSaisonnier.Id)
-                                @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                @Html.HiddenFor(m => @Model.Admin.Role)
                                     <p class="card-text">  Commentaire : <input id="panierSaisonnier_AdminCommentaire" name="panierSaisonnier.AdminCommentaire" type="text" value=" "></p> 
                                     <br/>
                                         <p class="card-text">@Html.Label("Etat", "Validé") @Html.RadioButtonFor(m => @panierSaisonnier.EstValide, true)</p> 
