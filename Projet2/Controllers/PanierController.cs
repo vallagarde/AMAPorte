@@ -28,8 +28,19 @@ namespace Projet2.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+      
         public IActionResult AfficherPaniers()
-        {           
+        {
+            CompteServices cs = new CompteServices();
+            UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            if (viewModel.Authentifie)
+            {
+                viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP || viewModel.Identifiant.EstAdA || viewModel.Identifiant.EstCE || viewModel.Identifiant.EstGCRA || viewModel.Identifiant.EstGCCQ || viewModel.Identifiant.EstDSI)
+                {
+                    hvm.Authentifie = true; ;
+                }
+            }
             hvm.CataloguePanier.PanierSaisonniers = new PanierSaisonnierService().ObtientTousLesPaniers();
             return View(hvm);
         }
