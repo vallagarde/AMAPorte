@@ -44,7 +44,7 @@ namespace Projet2.Models.Calendriers
             {
                 dateDeCommande = dateDeCommande.AddDays(1);
             }
-            Calendrier calendrier = new Calendrier() { CommandeId = commandeId, DateLivraison = dateDeCommande };
+            Calendrier calendrier = new Calendrier() { CommandeId = commandeId, DateLivraison = dateDeCommande.Date };
 
             _bddContext.Calendrier.Add(calendrier);
             _bddContext.SaveChanges();
@@ -80,13 +80,13 @@ namespace Projet2.Models.Calendriers
             }
             int nbSemaine = commandePanier.LignePanierSaisonnier.DureeAbonnement;
 
-            Calendrier calendrier = new Calendrier() { LignePanierSaisonnierId = commandeId , DateLivraison = dateDeCommande };
+            Calendrier calendrier = new Calendrier() { LignePanierSaisonnierId = commandeId , DateLivraison = dateDeCommande.Date };
             _bddContext.Calendrier.Add(calendrier);
 
             for (int i =0; i< nbSemaine; i++)
             {
                 dateDeCommande = dateDeCommande.AddDays(7);
-                Calendrier calendrier2 = new Calendrier() { LignePanierSaisonnierId = commandeId, DateLivraison = dateDeCommande };
+                Calendrier calendrier2 = new Calendrier() { LignePanierSaisonnierId = commandeId, DateLivraison = dateDeCommande.Date };
                 _bddContext.Calendrier.Add(calendrier2);
             }
 

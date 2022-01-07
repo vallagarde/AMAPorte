@@ -675,7 +675,7 @@ namespace Projet2.Models
                                 Stock = 350,
                                 PrixTTC = 5.5m,
                                 Image = "Biere1.jpg",
-                                AdPId = 4
+                                AdPId = 5
                             };
                             int a4 = ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
                             article4 = ar.ObtientTousLesArticles().Where(c => c.Id == a4).FirstOrDefault();
@@ -691,7 +691,7 @@ namespace Projet2.Models
                                 Stock = 2,
                                 PrixTTC = 9.5m,
                                 Image = "Biere2.jpg",
-                                AdPId = 4
+                                AdPId = 5
                             };
                             int a5 = ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
                             article5 = ar.ObtientTousLesArticles().Where(c => c.Id == a5).FirstOrDefault();
