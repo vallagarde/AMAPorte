@@ -59,7 +59,7 @@
                                             <input type="number" class="form-control" name="quantite" min=0 value="@ligne.Quantite" required />
                                         </div>
                                         <div style="width: 80px;">
-                                            <h5 class="mb-0"> €@SousTotal</h5>
+                                            <h5 class="mb-0"> @SousTotal € </h5>
                                         </div>
                                         <div>
                                             <button class="btn btn-outline-dark flex-shrink-0" type="submit">Modifier</button>
@@ -81,7 +81,7 @@
             </div>
             <hr>
 
-            <label for="Total">Total = @Model.PanierBoutique.Total</label>
+            <label for="Total">Total = @Model.PanierBoutique.Total €</label>
             <hr>
 
             <row class="m-2">
