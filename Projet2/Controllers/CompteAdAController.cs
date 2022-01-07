@@ -86,19 +86,24 @@ namespace Projet2.Controllers
         {
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
-           
-            if (viewModel.Identifiant == null)
+           if(viewModel.Identifiant != null)
             {
-                return View();
+                if (!viewModel.Identifiant.EstAdA)
+                {
+                    return View();
+                }
+                else
+                {
+                    hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+                    hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
+                    hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
+                    hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
+                    return View(hvm);
+                }
+
             }
-            else
-            {
-                hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
-                hvm.Personne = cs.ObtenirPersonne(hvm.AdA.PersonneId);
-                hvm.Adresse = cs.ObtenirAdresse(hvm.Personne.AdresseId);
-                hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Personne.IdentifiantId);
-                return View(hvm);
-            }           
+            return View();
+
         }
 
         [AllowAnonymous]
@@ -229,15 +234,8 @@ namespace Projet2.Controllers
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
 
-
-            Commande commande = panierService.ObtientCommandeParId(CommandeId);
-            int panierId = commande.PanierBoutiqueId;
-            PanierBoutique panierBoutique = panierService.ObientPanier(panierId);
-            commande.PanierBoutique = panierBoutique;
-            hvm.PanierBoutique = panierBoutique;
-            hvm.Commande= commande;
             hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
-
+            hvm.Commande = panierService.ObtenirCommandesParAdA(hvm.AdA).Where(c => c.Id == CommandeId).FirstOrDefault();
             return View(hvm);
         }
 
@@ -246,10 +244,9 @@ namespace Projet2.Controllers
             UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
 
-            hvm.CommandePanier = lignePanierService.ObtenirToutesCommandesPanier().Where(c => c.Id == commandePanierId).FirstOrDefault();
-            hvm.LignePanierSaisonnier = lignePanierService.ObtientLignePanierParId(hvm.CommandePanier.LignePanierSaisonnierId);
-            hvm.PanierSaisonnier = pss.ObtientTousLesPaniers().Where(c => c.Id == hvm.LignePanierSaisonnier.PanierSaisonnierId).FirstOrDefault();
             hvm.AdA = cs.ObtenirAdAParIdentifiant(viewModel.Identifiant.Id);
+            hvm.CommandePanier = lignePanierService.ObtenirCommandesPanierParAdA(hvm.AdA).Where(c => c.Id == commandePanierId).FirstOrDefault();
+
             return View(hvm);
         }
 
@@ -274,8 +271,9 @@ namespace Projet2.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdA ada)
+        public IActionResult ModificationCompte(Personne personne, Adresse adresse, AdA ada, string adressemail)
         {
+
                 
                 hvm.Adresse = cs.ModifierAdresse(adresse);
                 personne.AdresseId = hvm.Adresse.Id;
@@ -290,7 +288,7 @@ namespace Projet2.Controllers
                 viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
                 if (viewModel.Identifiant.EstAdA == true)
                 {
-                    return View("AdACompteInfo", hvm);
+                    return View("Index", hvm);
                 }
                 else if ((viewModel.Identifiant.EstGCCQ == true) || (viewModel.Identifiant.EstGCRA == true) || (viewModel.Identifiant.EstDSI == true))
                 {

@@ -22,106 +22,91 @@
                         <div class="row ">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">
+                                    <h5 class="card-title" align="center">Boutique</h5>
+                                     @{
+                                String filepath = "~/ImageProfils/Default.jpg";
+                                }
+                                <img src="~/ImageArticle/Default.jpg" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px"/>
+                                
+                                    <p class="card-text" align="center"><br/>N° @commande.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commande.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commande.ReturnDateForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commande.EtatCommande</p>
+                                    <p class="card-text" align="center">@Total €</p>
+                                    @if(@commande.AdA != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
+                                    }
+                                    @if(@commande.Client != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Client.Prenom @commande.Client.Nom </p>
+                                    }
+                                    @if(@commande.Entreprise != null)
+                                    {
+                                    <p class="card-text"  align="center">@commande.Entreprise.NomEntreprise </p>
+                                    }
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("Commande_infos", "EspaceAdP", new { @CommandeId = commande.Id })'"> voir détails</button>                                    
+                                    <br/>
+                                    </div>
+                                    <div align="center">
                                     <form method="post" asp-controller="EspaceAdP" asp-action="CommandesAPreparer">
                                       @Html.HiddenFor(m => @Model.AdP.Id)
                                       @Html.HiddenFor(m => @commande.PanierBoutiqueId)
                                       @Html.HiddenFor(m => @commande.Id)
                                     <button id="Commande_EtatCommande" name="Commande.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
                                     </form>
-                                    <br/>
-                                    N° @commande.ReturnNumeroCommandeForDisplay
-                                    <br/>
-                                    Boutique
-                                    </h5>
-                                    <p class="card-text">Date de Commande : @commande.ReturnDateCommandeForDisplayCommande</p>
-                                    <p class="card-text">Date de Livraison : @commande.ReturnDateForDisplayCommande</p>
-                                    <p class="card-text">@commande.EtatCommande</p>
-                                    <p class="card-text">Total : @Total €</p>
-                                    @if(@commande.AdA != null)
-                                    {
-                                    <p class="card-text">@commande.AdA.Personne.Prenom @commande.AdA.Personne.Nom </p>
-                                    }
-                                    @if(@commande.Client != null)
-                                    {
-                                    <p class="card-text">@commande.Client.Prenom @commande.Client.Nom </p>
-                                    }
-                                    @if(@commande.Entreprise != null)
-                                    {
-                                    <p class="card-text">@commande.Entreprise.NomEntreprise </p>
-                                    }
-                                    <div class="row ">
-                                    @foreach(var lignePanierBoutique in @commande.PanierBoutique.LignePanierBoutiques)
-                                    {
-                                        
-                                            <div class="card h-100">
-                                                @{
-                                                String filepath = "~/ImageArticle/" + @lignePanierBoutique.Article.Image;
-                                                }
-                                                <img src="~/ImageArticle/@lignePanierBoutique.Article.Image" class="card-img-top" alt="..." />
-                                                    <div class="card-body">
-                                                    <p class="card-text">Id @lignePanierBoutique.Article.Id : @lignePanierBoutique.Article.Nom</p>
-                                                    <p class="card-text">Quantité : @lignePanierBoutique.Quantite</p>
-                                                    <p class="card-text">Stock : @lignePanierBoutique.Article.Stock</p>
-                                                    </div>
-                                            </div>                                    
-                                    }
                                     </div>
-                                    
-</div>
-                                </div>                       
-                        </div>                    
+                        </div>
+            </div>                       
+        </div>                    
                 }
 
                 @foreach (var commandePanier in @Model.ListeCommandesPanierEnPrep)
                 {
-                var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);   
+                    var TotalPanier = Decimal.Round(commandePanier.PanierSaisonnier.Prix, 2);                   
                         <div class="row ">
+                                    
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">
-                                    <form method="post" asp-controller="EspaceAdP" asp-action="CommandesPanierAPreparer">
-                                      @Html.HiddenFor(m => @Model.AdP.Id)
-                                      @Html.HiddenFor(m => @commandePanier.Id)
-                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
-                                    </form>
-                                    <br/>
-                                    N° @commandePanier.ReturnNumeroCommandeForDisplay
-                                    <br/>
-                                    Panier
-                                    </h5>
-                                    <p class="card-text">Date de Commande : @commandePanier.DateCommande</p>
-                                    <p class="card-text">Date de Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
-                                    <p class="card-text">@commandePanier.EtatCommande</p>
+                                    <h5 class="card-title" align="center">Panier</h5>                                        
+                                    @{
+                                        String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
+                                    }
+                                    <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
+                                    <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
+                                    <p class="card-text" align="center">Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
+                                    <p class="card-text" align="center">@commandePanier.EtatCommande</p>
+                                    <p class="card-text" align="center">@TotalPanier €</p>                                    
                                     @if(@commandePanier.AdA != null)
                                     {
-                                    <p class="card-text">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
+                                    <p class="card-text"  align="center">@commandePanier.AdA.Personne.Prenom @commandePanier.AdA.Personne.Nom </p>
                                     }
                                     
                                     @if(@commandePanier.Entreprise != null)
                                     {
-                                    <p class="card-text">@commandePanier.Entreprise.NomEntreprise </p>
+                                    <p class="card-text"  align="center">@commandePanier.Entreprise.NomEntreprise </p>
                                     }
-                                    <div class="row ">                                        
-                                            
-                                                @{
-                                                String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
-                                                }
-                                                <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." />
-                                                    <div class="card-body">
-                                                    <p class="card-text">Id @commandePanier.PanierSaisonnier.Id : @commandePanier.PanierSaisonnier.NomPanier</p>
-                                                    <p class="card-text">Quantité : @commandePanier.LignePanierSaisonnier.Quantite</p>
-                                                    <p class="card-text">Prix : @TotalPanier €</p>
-                                                    </div>
-                                            </div>                                    
-                                    
+                                    <div align="center">
+                                    <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommandePanier_infos", "EspaceAdP", new { @CommandePanierId = commandePanier.Id })'"> voir détails</button>
+                                    <br/>
                                     </div>
-                                    
-
-                                </div>                       
-                        </div>                    
+                                    <div align="center">
+                                    <form method="post" asp-controller="EspaceAdP" asp-action="CommandesPanierAPreparer">
+                                      @Html.HiddenFor(m => @Model.AdP.Id)
+                                      @Html.HiddenFor(m => @commandePanier.Id)
+                                    <button id="CommandePanier_EtatCommande" name="CommandePanier.EtatCommande" class="btn btn-primary" type="submit" value="EstEnLivraison">Mettre en Livraison</button>                                     
+                                    </form>                                                                                              
+                                </div>
+                             </div>
+                        </div>                                                                        
+                    </div>                
                 }
             </div>
         </div>
     </div>   
 </div>
+
+
+

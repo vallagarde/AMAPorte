@@ -30,6 +30,9 @@ namespace Projet2.Models.Compte
 
         public virtual List<CommandePanier> CommandesPanierEffectues { get; set; }
 
+        public virtual List<LignePanierSaisonnier> LignePanierSaisonniers{ get; set; }
+
+
         public AdA()
         {
             EstAdA = true;
@@ -40,6 +43,18 @@ namespace Projet2.Models.Compte
             ArticlesFavoris = new List<Article>();
             ProducteursFavoris = new List<AdP>();
             //AteliersFavoris = new List<Atelier>();
+        }
+        public string ReturnDateInscriptionForDisplay
+        {
+            get
+            {
+                if (this.DateInscription != null)
+                {
+                    return this.DateInscription.ToString("d");
+                }
+                return null;
+            }
+
         }
 
     }

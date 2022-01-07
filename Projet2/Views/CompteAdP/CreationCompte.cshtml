@@ -41,9 +41,9 @@
                                 <col style="width: 75%">
                              </colgroup>
                           <tr >
-                              <th>@Html.LabelFor(m => m.Identifiant.AdresseMail)</th>
-                              <th>@Html.TextBoxFor(m => m.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
-                                  @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail) 
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th>@Html.TextBoxFor(m => Model.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.AdresseMail) 
                                 @if(@Model != null)
                                 {
                                     @if(@Model.AdresseExistante == true)
@@ -55,9 +55,9 @@
                               </th>
                           </tr>
                           <tr>
-                              <th>@Html.LabelFor(m => m.Identifiant.MotDePasse)</th>
-                              <th>@Html.PasswordFor(m => m.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
-                                  @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)</th>
+                              <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>
+                              <th>@Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.MotDePasse)</th>
                          </tr>
                         </table>
 

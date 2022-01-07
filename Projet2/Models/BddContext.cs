@@ -104,8 +104,8 @@ namespace Projet2.Models
                             {
                                 Numero = 110,
                                 Voie = "Rue de la République",
-                                Ville = "Paris",
-                                CodePostal = 75010,
+                                Ville = "Morlaix",
+                                CodePostal = 29600,
                             };
                             AdA adA1 = new AdA()
                             {
@@ -146,8 +146,8 @@ namespace Projet2.Models
                             {
                                 Numero = 64,
                                 Voie = "Rue des Petits Ecureuils",
-                                Ville = "Levroux",
-                                CodePostal = 36110,
+                                Ville = "Morlaix",
+                                CodePostal = 29600,
                             };
                             AdA adA2 = new AdA()
                             {
@@ -159,8 +159,8 @@ namespace Projet2.Models
                             //AdPs
                             Identifiant identifiant3 = new Identifiant()
                             {
-                                AdresseMail = "adp1@gmail.com",
-                                MotDePasse = "test",
+                                AdresseMail = "apiculteurdesma@gmail.com",
+                                MotDePasse = "mdptest",
                                 EstAdP = true
                             };
 
@@ -190,27 +190,27 @@ namespace Projet2.Models
                             {
                                 Numero = 15,
                                 Voie = "Avenue des Fruits",
-                                Ville = "Brion",
-                                CodePostal = 36110,
+                                Ville = "Pleybert Christ",
+                                CodePostal = 29410,
                             };
                             AdP adP1 = new AdP()
                             {
                                 Siren = 987654321,
-                                NomProducteur = "Les Terres du Ruisseau",
-                                Description = "L'harmonie entre l'homme et la nature.",
+                                NomProducteur = "Ferme de Treverlan",
+                                Description = "Nos ruches sont situées dans les Monts d’Arrée pour la plupart et nos abeilles butinent les fleurs sauvages : bruyère, ronce, châtaignier….",
                                 EstActive = true,
                                 EstEnAttente = false,
                                 EstAdP = true,
                                 Vedette = true,
-                                EstAboAnnuel = true,
+                                EstAboAnnuel = true
 
                             };
                             cs.CreerAdP(personne3, adresse3, adP1);
 
                             Identifiant identifiant4 = new Identifiant()
                             {
-                                AdresseMail = "adp2@gmail.com",
-                                MotDePasse = "test",
+                                AdresseMail = "cosqueroufarm@gmail.com",
+                                MotDePasse = "mdptest",
                                 EstAdP = true
                             };
 
@@ -228,7 +228,7 @@ namespace Projet2.Models
                             Personne personne4 = new Personne()
                             {
                                 Identifiant = identifiant4,
-                                Nom = "Dubedout",
+                                Nom = "Cabioch'",
                                 Prenom = "Julien ",
                                 DateNaissance = new DateTime(1980, 02, 05),
                                 NTelephone = "0234567891",
@@ -239,29 +239,178 @@ namespace Projet2.Models
                             Adresse adresse4 = new Adresse()
                             {
                                 Numero = 23,
-                                Voie = "La Garenne",
-                                Ville = "Levroux",
-                                CodePostal = 36110,
+                                Voie = "Avenue des Fruits",
+
+                                Ville = "Morlaix",
+                                CodePostal = 29600,
                             };
                             AdP adP2 = new AdP()
                             {
                                 Siren = 987654322,
-                                NomProducteur = "La Ferme de la Haute Vallée",
-                                Description = "Des Bretons, du bon produit...",
+                                NomProducteur = "La ferme de Cosquerou",
+                                Description = "Des produits maraichers nobles en serre et en pleine terre ",
                                 EstAdP = true,
                                 EstActive = true,
                                 EstEnAttente = false,
                                 Vedette =true,
-                                EstAboAnnuel = true,
+                                EstAboAnnuel = true
                             };
                             cs.CreerAdP(personne4, adresse4, adP2);
 
+                        Identifiant identifiant8 = new Identifiant()
+                        {
+                            AdresseMail = "bertevash@gmail.com",
+                            MotDePasse = "mdptest",
+                            EstAdP = true
+                        };
 
-                            //CCE
+                        int id8 = cs.AjouterIdentifiant(identifiant8);
+
+                        var userClaims8 = new List<Claim>()
+                                        {
+                                            new Claim(ClaimTypes.Name, id2.ToString()),
+                                        };
+
+                        var ClaimIdentity8 = new ClaimsIdentity(userClaims8, "User Identity");
+
+                        var userPrincipal8 = new ClaimsPrincipal(new[] { ClaimIdentity8 });
+
+                        Personne personne8 = new Personne()
+                        {
+                            Identifiant = identifiant8,
+                            Nom = "Bertevas'",
+                            Prenom = "Jean ",
+                            DateNaissance = new DateTime(1980, 02, 05),
+                            NTelephone = "0234567891",
+                            EstEnAccord = true,
+                            EstMajeur = true
+
+                        };
+                        Adresse adresse8 = new Adresse()
+                        {
+                            Numero = 23,
+                            Ville = "Henvic",
+                            Voie = "Kerandrez",
+                            CodePostal = 29600,
+                        };
+                        AdP adP3 = new AdP()
+                        {
+                            Siren = 987654322,
+                            NomProducteur = "EARL Bertevas",
+                            Description = "Culture de légumes, de melons, de racines et de tubercules ",
+                            EstAdP = true,
+                            EstActive = true,
+                            EstEnAttente = false,
+                            Vedette = true,
+                            EstAboAnnuel = true
+                        };
+                        cs.CreerAdP(personne8, adresse8, adP3);
+
+                        Identifiant identifiant9 = new Identifiant()
+                        {
+                            AdresseMail = "ven@gmail.com",
+                            MotDePasse = "mdptest",
+                            EstAdP = true
+                        };
+
+                        int id9 = cs.AjouterIdentifiant(identifiant9);
+
+                        var userClaims9 = new List<Claim>()
+                                        {
+                                            new Claim(ClaimTypes.Name, id2.ToString()),
+                                        };
+
+                        var ClaimIdentity9 = new ClaimsIdentity(userClaims9, "User Identity");
+
+                        var userPrincipal9 = new ClaimsPrincipal(new[] { ClaimIdentity9 });
+
+                        Personne personne9 = new Personne()
+                        {
+                            Identifiant = identifiant9,
+                            Nom = "Ven",
+                            Prenom = "David",
+                            DateNaissance = new DateTime(1980, 02, 05),
+                            NTelephone = "0234567891",
+                            EstEnAccord = true,
+                            EstMajeur = true
+
+                        };
+                        Adresse adresse9 = new Adresse()
+                        {
+                            Numero = 7,
+                            Ville = "Carantec",
+                            Voie = "Chem Varquez",
+                            CodePostal = 29660,
+                        };
+                        AdP adP4 = new AdP()
+                        {
+                            Siren = 987654322,
+                            NomProducteur = "Penn A Lann",
+                            Description = "Ostréiculteurs depuis 50 ans ",
+                            EstAdP = true,
+                            EstActive = true,
+                            EstEnAttente = false,
+                            Vedette = true,
+                            EstAboAnnuel = true
+                        };
+                        cs.CreerAdP(personne9, adresse9, adP4);
+
+
+                        Identifiant identifiant10 = new Identifiant()
+                        {
+                            AdresseMail = "bertevash@gmail.com",
+                            MotDePasse = "mdptest",
+                            EstAdP = true
+                        };
+
+                        int id10 = cs.AjouterIdentifiant(identifiant10);
+
+                        var userClaims10 = new List<Claim>()
+                                        {
+                                            new Claim(ClaimTypes.Name, id2.ToString()),
+                                        };
+
+                        var ClaimIdentity10 = new ClaimsIdentity(userClaims10, "User Identity");
+
+                        var userPrincipal10 = new ClaimsPrincipal(new[] { ClaimIdentity10 });
+
+                        Personne personne10 = new Personne()
+                        {
+                            Identifiant = identifiant10,
+                            Nom = "David",
+                            Prenom = "Susana",
+                            DateNaissance = new DateTime(1980, 02, 05),
+                            NTelephone = "0234567891",
+                            EstEnAccord = true,
+                            EstMajeur = true
+
+                        };
+                        Adresse adresse10 = new Adresse()
+                        {
+                            Numero = 7,
+                            Ville = "Morlaix",
+                            Voie = "Bis Rpe St Nicolas",
+                            CodePostal = 29600,
+                        };
+                        AdP adP5 = new AdP()
+                        {
+                            Siren = 987654322,
+                            NomProducteur = "Bleizi Du",
+                            Description = "Toutes nos bières se distinguent par leur esprit celte avec un goût légèrement tourbé qui rappelle les Monts d'Arrée, l’Irlande et l’Écosse.Grâce à notre savoir - faire artisanal et notre expérience de plus de 10 ans, nous brassons dans un esprit de protection de l'environnement en utilisant des produits bio. Tous nos malts, houblons et sucre de canne sont certifiés AB. ",
+                            EstAdP = true,
+                            EstActive = true,
+                            EstEnAttente = false,
+                            Vedette = true,
+                            EstAboAnnuel = true
+                        };
+                        cs.CreerAdP(personne10, adresse10, adP5);
+
+
+                        //CCE
                             Identifiant identifiant5 = new Identifiant()
                             {
-                                AdresseMail = "ce1@gmail.com",
-                                MotDePasse = "test",
+                                AdresseMail = "coperl@gmail.com",
+                                MotDePasse = "mdptest",
                                 EstCE = true
                             };
 
@@ -278,26 +427,25 @@ namespace Projet2.Models
 
                             Entreprise entreprise1 = new Entreprise()
                             {
-                                NomEntreprise = "Amazon",
+                                NomEntreprise = "coperl",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true,
                                 EstAboAnnuel = true,
-                               
+                                EstEnAccord = true,                             
                             };
                             Adresse adresse5 = new Adresse()
                             {
                                 Numero = 34,
                                 Voie = "La Croix Chevalier",
-                                Ville = "Vineuil",
-                                CodePostal = 36110,
+                                Ville = "Lamballe",
+                                CodePostal = 22400
                             };
 
                             ContactComiteEntreprise contactComiteEntreprise1 = new ContactComiteEntreprise()
                             {
                                 Identifiant = identifiant5,
-                                Nom = "Duhamel",
-                                Prenom = "André",
+                                Nom = "Salathe",
+                                Prenom = "Vincent",
                                 AdresseMail = identifiant5.AdresseMail,
                                 NTelephone = "1234567890",
                                 EstCE = true
@@ -307,7 +455,7 @@ namespace Projet2.Models
 
                             Identifiant identifiant6 = new Identifiant()
                             {
-                                AdresseMail = "ce2@gmail.com",
+                                AdresseMail = "smeta@gmail.com",
                                 MotDePasse = "test",
                                 EstCE = true
                             };
@@ -325,18 +473,18 @@ namespace Projet2.Models
 
                             Entreprise entreprise2 = new Entreprise()
                             {
-                                NomEntreprise = "",
+                                NomEntreprise = "SerreMeta",
                                 NombreUtilisateur = 20,
                                 Siren = 123456789,
-                                EstEnAccord = true,
                                 EstAboAnnuel = true,
+                                EstEnAccord = true,
                             };
                             Adresse adresse6 = new Adresse()
                             {
                                 Numero = 23,
                                 Voie = "La Garenne",
-                                Ville = "Levroux",
-                                CodePostal = 36110,
+                                Ville = "Morlaix",
+                                CodePostal = 29600,
                             };
                             ContactComiteEntreprise contactComiteEntreprise2 = new ContactComiteEntreprise()
                             {
@@ -352,8 +500,8 @@ namespace Projet2.Models
                             //Admin
                             Identifiant identifiant7 = new Identifiant()
                             {
-                                AdresseMail = "admin@gmail.com",
-                                MotDePasse = "test",
+                                AdresseMail = "jeyanc@gmail.com",
+                                MotDePasse = "mdptest",
                                 EstGCCQ = true
                             };
 
@@ -382,12 +530,12 @@ namespace Projet2.Models
                         PanierSaisonnier panierSaisonnier1 = new PanierSaisonnier()
                         {
 
-                            NomPanier = "Panier Fruits Thierry",
-                            ProduitsProposes = "Pommes, Poires, Bananes, Melon",
-                            Description = "Beaux fruits de saison. Mjam.",
-                            Prix = 45.9m,
-                            Image = "pommes.jpg",
-                            AdPId = 1,
+                            NomPanier = "Panier Fruité",
+                            ProduitsProposes = "Pommes, Clémentine, Chataigne, Poire",
+                            Description = "Beaux fruits de saison.",
+                            Prix = 11m,
+                            Image = "fruits.jpg",
+                            AdPId = 2,
                             EstValide = true,
                             EstEnAttente = false,
                         };
@@ -396,12 +544,12 @@ namespace Projet2.Models
                         PanierSaisonnier panierSaisonnier2 = new PanierSaisonnier()
                         {
 
-                            NomPanier = "Panier Legumes Thierry",
-                            ProduitsProposes = "Poireaux, Carottes, Tomates, Poivrons",
-                            Description = "C'est bon",
-                            Prix = 45.9m,
-                            Image = "onion.jpg",
-                            AdPId = 1,
+                            NomPanier = "Panier Légumes du Léon",
+                            ProduitsProposes = "Citrouilles, Poivron, Topinambour, Pomme de terre",
+                            Description = "Panier de légumes poussé en pleine terre",
+                            Prix = 14.00m,
+                            Image = "Panier1.jpg",
+                            AdPId = 3,
                             EstValide = true,
                             EstEnAttente = false,
                         };
@@ -410,12 +558,12 @@ namespace Projet2.Models
                         PanierSaisonnier panierSaisonnier3 = new PanierSaisonnier()
                         {
 
-                            NomPanier = "Panier Legumes Julien",
-                            ProduitsProposes = "Poireaux, Carottes, Tomates, Poivrons",
-                            Description = "C'est bon",
-                            Prix = 40.9m,
-                            Image = "onion.jpg",
-                            AdPId = 2,
+                            NomPanier = "Panier Huitres",
+                            ProduitsProposes = "huitres",
+                            Description = "Bouriche d'huitre creuses de la baie de Morlaix",
+                            Prix = 12.90m,
+                            Image = "huitres.jpg",
+                            AdPId = 5,
                             EstValide = true,
                             EstEnAttente = false,
                             
@@ -425,12 +573,12 @@ namespace Projet2.Models
                         PanierSaisonnier panierSaisonnier4 = new PanierSaisonnier()
                         {
 
-                            NomPanier = "Panier Fruits Julien",
-                            ProduitsProposes = "Pommes, Poires, Bananes, Melon",
-                            Description = "Poireaux, Carottes, Tomates, Poivrons",
-                            Prix = 40.9m,
-                            Image = "pommes.jpg",
-                            AdPId = 2,
+                            NomPanier = "Panier Légumes d'hiver",
+                            ProduitsProposes = "Courge, Cresson, Carotte, Oignons, Brocoli",
+                            Description = "Légumes et assaisonnements d'hiver",
+                            Prix = 14.90m,
+                            Image = "Panier2.jpg",
+                            AdPId = 3,
                             EstValide = true,
                             EstEnAttente = false,
                         };
@@ -461,7 +609,7 @@ namespace Projet2.Models
 
                         LignePanierSaisonnier lignePanierSaisonnier4 = lignePanierService.CreerLignePanier(20, panierSaisonnier3.Id, 20 * panierSaisonnier3.Prix, 52, 0, entreprise1.Id);
                         CommandePanier commandePanier4 = lignePanierService.CreerCommande(lignePanierSaisonnier4);
-                        commandePanier4.EstLivre = true;
+                        commandePanier4.EstEnLivraison = true;
                         commandePanier4.DateCommande = DateTime.Now;
                         bddContext.CommandePaniers.Update(commandePanier4);
 
@@ -473,12 +621,12 @@ namespace Projet2.Models
                         {
                             Article article = new Article()
                             {
-                                Nom = "Miel",
-                                Description = "Miels de crus, pollen frais, gelée royale, propolis.",
+                                Nom = "Miel de bruyère",
+                                Description = "500 mL. Il fait parti des miels aux goûts très forts et très prononcés comme le Miel de châtaignier. Sa consistance gélatineuse le rend particulièrement difficile à extraire et nécessite l'usage d'une picoteuse (appareil formé d'aiguille permettant d'émulsionner le miel avant le passage à l' extracteur)",
                                 Prix = 5.9m,
-                                Stock = 5,
+                                Stock = 200,
                                 PrixTTC = 7.5m,
-                                Image = "onion.jpg",
+                                Image = "Miel1.jpg",
                                 AdPId = 1
                             };
                             int a = ar.CreerArticle(article.Nom, article.Description, (int)article.Prix, article.Stock, (int)article.PrixTTC, article.Image, article.AdPId);
@@ -490,12 +638,12 @@ namespace Projet2.Models
                             Article article2 = new Article()
                             {
                                 Nom = "Confiture de Framboises",
-                                Description = "Somptueuse, estivale et parfumée.",
+                                Description = "C'est dans les vieux pots...",
                                 Prix = 4.9m,
-                                Stock = 3,
+                                Stock = 200,
                                 PrixTTC = 6.5m,
-                                Image = "pommes.jpg",
-                                AdPId = 1
+                                Image = "Confiture1.jpg",
+                                AdPId = 2
                             };
                             int a2 = ar.CreerArticle(article2.Nom, article2.Description, (int)article2.Prix, article2.Stock, (int)article2.PrixTTC, article2.Image, article2.AdPId);
                             article2 = ar.ObtientTousLesArticles().Where(c => c.Id == a2).FirstOrDefault();
@@ -505,12 +653,12 @@ namespace Projet2.Models
 
                             Article article3 = new Article()
                             {
-                                Nom = "Miel",
-                                Description = "Miels de crus, pollen frais, gelée royale, propolis.",
+                                Nom = "Miel toutes fleurs",
+                                Description = "500 mL. Sombre à l'état liquide. Sa couleur légèrement est ambrée à rougeâtre.",
                                 Prix = 7.9m,
-                                Stock = 2,
+                                Stock = 200,
                                 PrixTTC = 9.5m,
-                                Image = "onion.jpg",
+                                Image = "Miel2.jpg",
                                 AdPId = 1
                             };
                             int a3 = ar.CreerArticle(article3.Nom, article3.Description, (int)article3.Prix, article3.Stock, (int)article3.PrixTTC, article3.Image, article3.AdPId);
@@ -521,13 +669,13 @@ namespace Projet2.Models
 
                             Article article4 = new Article()
                             {
-                                Nom = "Confiture de Framboises",
-                                Description = "Somptueuse, estivale et parfumée.",
+                                Nom = "Bière rousse",
+                                Description = "50 cL. Somptueuse, estivale et parfumée.",
                                 Prix = 2.9m,
-                                Stock = 6,
+                                Stock = 350,
                                 PrixTTC = 5.5m,
-                                Image = "pommes.jpg",
-                                AdPId = 1
+                                Image = "Biere1.jpg",
+                                AdPId = 5
                             };
                             int a4 = ar.CreerArticle(article4.Nom, article4.Description, (int)article4.Prix, article4.Stock, (int)article4.PrixTTC, article4.Image, article4.AdPId);
                             article4 = ar.ObtientTousLesArticles().Where(c => c.Id == a4).FirstOrDefault();
@@ -537,13 +685,13 @@ namespace Projet2.Models
 
                             Article article5 = new Article()
                             {
-                                Nom = "Miel",
-                                Description = "Miels de crus, pollen frais, gelée royale, propolis.",
+                                Nom = "Bière IPA",
+                                Description = "50 cL. Douce amertume",
                                 Prix = 7.9m,
                                 Stock = 2,
                                 PrixTTC = 9.5m,
-                                Image = "onion.jpg",
-                                AdPId = 2,
+                                Image = "Biere2.jpg",
+                                AdPId = 5
                             };
                             int a5 = ar.CreerArticle(article5.Nom, article5.Description, (int)article5.Prix, article5.Stock, (int)article5.PrixTTC, article5.Image, article5.AdPId);
                             article5 = ar.ObtientTousLesArticles().Where(c => c.Id == a5).FirstOrDefault();
@@ -553,12 +701,12 @@ namespace Projet2.Models
 
                             Article article6 = new Article()
                             {
-                                Nom = "Confiture de Framboises",
-                                Description = "Somptueuse, estivale et parfumée.",
+                                Nom = "Pommes",
+                                Description = "500g. Pink Lady",
                                 Prix = 2.9m,
-                                Stock = 6,
+                                Stock = 150,
                                 PrixTTC = 5.5m,
-                                Image = "pommes.jpg",
+                                Image = "Pomme2.jpg",
                                 AdPId = 2,                  
 
                             };
@@ -570,40 +718,20 @@ namespace Projet2.Models
 
                             Article article7 = new Article()
                             {
-                                Nom = "Confiture de Framboises",
-                                Description = "Somptueuse, estivale et parfumée.",
+                                Nom = "Oignons",
+                                Description = "Botte oignons blanc de Roscoff",
                                 Prix = 2.9m,
                                 Stock = 6,
                                 PrixTTC = 5.5m,
-                                Image = "pommes.jpg",
-                                AdPId = 1,
+                                Image = "onion.jpg",
+                                AdPId = 3,
 
                             };
-                            int a7 = ar.CreerArticle(article7.Nom, article7.Description, (int)article7.Prix, article7.Stock, (int)article7.PrixTTC, article7.Image, article7.AdPId);
-                            article7 = ar.ObtientTousLesArticles().Where(c => c.Id == a7).FirstOrDefault();
-                            article7.EstEnAttente = false;
-                            article7.EstValide = true;
-                            ar.ValidationArticle(article7);
 
-                            Article article8 = new Article()
-                            {
-                                Nom = "Confiture de Framboises",
-                                Description = "Somptueuse, estivale et parfumée.",
-                                Prix = 2.9m,
-                                Stock = 6,
-                                PrixTTC = 5.5m,
-                                Image = "pommes.jpg",
-                                AdPId = 2,
-                            };
-                            int a8 = ar.CreerArticle(article8.Nom, article8.Description, (int)article8.Prix, article8.Stock, (int)article8.PrixTTC, article8.Image, article8.AdPId);
-                            article8 = ar.ObtientTousLesArticles().Where(c => c.Id == a8).FirstOrDefault();
-                            article8.EstEnAttente = false;
-                            article8.EstValide = true;
-                            ar.ValidationArticle(article8);
 
 
                             //Commandes Boutique
-
+                            
                             PanierBoutique panierBoutique1 = new PanierBoutique()
                             {
                                 Total = 30m
@@ -713,7 +841,7 @@ namespace Projet2.Models
                             };
                             this.LignePanierBoutique.Add(LignePanierBoutique8);
                             this.SaveChanges();
-
+                            
 
                             Client client = new Client()
                             {
@@ -735,7 +863,7 @@ namespace Projet2.Models
                                 PanierBoutique = panierBoutique1,
                                 DateCommande = DateTime.Now,
                                 AdAId = 1,
-                                EstEnPreparation = true,
+                                EstARecuperer = true,
                             };
                             this.Commande.Add(commande1);
                             this.SaveChanges();
@@ -745,7 +873,7 @@ namespace Projet2.Models
                                 PanierBoutique = panierBoutique2,
                                 DateCommande = DateTime.Now,
                                 AdAId = 1,
-                                EstLivre = true,
+                                EstEnPreparation = true,
                             };
                             this.Commande.Add(commande2);
                             this.SaveChanges();
@@ -778,6 +906,7 @@ namespace Projet2.Models
                             calendrier.AjouterLigneCalendrierPanier(commandePanier2);
                             calendrier.AjouterLigneCalendrierPanier(commandePanier3);
                             calendrier.AjouterLigneCalendrierPanier(commandePanier4);
+                            
                         }
                     }
 

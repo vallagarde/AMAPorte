@@ -1,40 +1,158 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-    Mon Compte : 
-        <br/>
-        DSI : @Model.Admin.EstDSI
-        <br/>
-        GCCQ : @Model.Admin.EstGCCQ
-        <br/>
-        GCRA : @Model.Admin.EstGCRA
-        <br/>
-        Identifiant : @Model.Identifiant.AdresseMail
-        <br/>
-        <br/>
-        @Html.ActionLink("Gestion Etat des Commandes", "GestionEtatCommande", "Admin", @Model.Admin)
-        <br/>
-        @Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)
-        <br/>
-        @Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)
-        <br/>
-        @Html.ActionLink("Modifier Compte", "ModificationCompte", "Admin", @Model.Admin)
-        <br/>
-         <button class="modalButton" id="myBtn">Supprimer Compte</button>
-        <br/>
-        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
-        <br/>
-        @Html.ActionLink("Retour sur la page principale", "Index", "Home", @Model.Admin)
-        <br/>
-        @Html.ActionLink("Creation Nouveau Compte Admin", "CreationCompte", "Admin", @Model.Admin)
+<div class="container">
+    <div class="main-body" style="margin-top: 80px;">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card" style="height: 300px;">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <h4>@Model.Identifiant.AdresseMail</h4>
+                            <div class="mt-3">
+                                <h5>Mon Role</h5>
+                                <p class="text-secondary mb-1">DSI : @Model.Admin.EstDSI</p>
+                                 <p class="text-secondary mb-1">GCCQ : @Model.Admin.EstGCCQ</p>
+                                 <p class="text-secondary mb-1">GCRA : @Model.Admin.EstGCRA</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3" style="height: 200px;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                Gérer le Compte
+                            </h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                @Html.ActionLink("Modifier Compte", "ModificationCompte", "Admin", @Model.Admin)
+                            </h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                @Html.ActionLink("Creation Nouveau Compte Admin", "CreationCompte", "Admin", @Model.Admin)
+                            </h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+                            </h6>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
+                            </h6>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3" style="height: 300px;">
+                        <div class="card-body" style="overflow: auto">
+                            <h6 class="mb-0" align="right">@Html.ActionLink("Gestion Demandes Producteurs", "GestionDemandesProducteurs", "Admin", @Model.Admin)</h6> 
+                            <h2 class="d-flex align-items-center mb-3"> Demandes à valider </h2>                                                     
+                        @if (@Model.ListeComptesAdP.Count != 0)
+                            {
+                            @foreach (var adp in @Model.ListeComptesAdP)
+                            {
+                                @if (adp.Assortiment.Count != 0 || adp.AssortimentPanier.Count != 0)
+                                {
+                                                                                  
+                                            @foreach(var article in @adp.Assortiment)
+                                            {
+                                                @if(@article.EstEnAttente == false && @article.EstValide == false)
+                                                {
+                                                    <div>
+                                                        <h5>@adp.NomProducteur (@adp.Siren)</h5>
+                                                        <p>@article.Nom</p>
+                                                        <p>Création @article.ReturnInscriptionDateForDisplayArticle</p>
+                                                        @if(@article.DateModification != null)
+                                                        {
+                                                            <p>Modification @article.ReturnModificationDateForDisplayArticle</p>   
+                                                        }                                     
+                                                    </div>
+                                                }
+                                            }
+                                            @foreach(var panierSaisonnier in @adp.AssortimentPanier)
+                                            {
+                                                @if(@panierSaisonnier.EstEnAttente == false && @panierSaisonnier.EstValide == false)
+                                                {
+                                                    <div>
+                                                        <h5>@adp.NomProducteur (@adp.Siren)</h5>
+                                                       <p>@panierSaisonnier.NomPanier</p>
+                                                       <p>@panierSaisonnier.ReturnInscriptionDateForDisplayPanier</p> 
+                                                        @if(@panierSaisonnier.DateModification != null)
+                                                            {
+                                                                <p>Modification @panierSaisonnier.ReturnModificationDateForDisplayPanier</p>   
+                                                            }                                     
+                                                        
+                                                   </div>
+                                                }
+                                            }
+                                                                          
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-6 mb-3" style="height: 200px;">
+                        <div class="card h-100" >
+                            <div class="card-body" align="center">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                <h6 class="d-flex align-items-center mb-3" align="right"> <br/>@Html.ActionLink("Gestion Comptes AMAPorte", "GestionComptes", "Admin", @Model.Admin)</h6>
+                                <h5 class="d-flex align-items-center mb-3" align="center">Comptes A Valider</h5> 
+                                <h1 class="d-flex align-items-center mb-3" align="center">@Model.ListeComptesAdPAValider.Count </h1>                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3" style="height: 330px;">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="d-flex align-items-center mb-3" align="center">@Html.ActionLink("Gestion Etat des Commandes", "GestionEtatCommande", "Admin", @Model.Admin)</h6>
+                                <ul class="list-group list-group-flush">                                   
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0">
+                                            Commandes Boutique<br/>
+                                            En Preparation : @Model.ListeCommandesEnPrep.Count<br/>
+                                            En Cours de Livraison : @Model.ListeCommandesEnCours.Count<br/>
+                                            En Point de Collection : @Model.ListeCommandesARecup.Count<br/>
+                                            Livrées : @Model.ListeCommandesLivres.Count<br/><br/>                                          
+                                        </h6>
+                                    </li>
+                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0" >
+                                            Commandes Panier<br/>
+                                            En Preparation : @Model.ListeCommandesPanierEnPrep.Count<br/>
+                                            En Cours de Livraison : @Model.ListeCommandesPanierEnCours.Count<br/>
+                                            En Point de Collection : @Model.ListeCommandesPanierARecup.Count<br/>
+                                            Livrées : @Model.ListeCommandesPanierLivres.Count<br/><br/>
+                                        </h6>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+                    <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
+                    @Html.HiddenFor(m => Model.AdA.Id)
+                        <button class="modalButton" type="submit">Je supprime mon compte</button>
+                    </form>
+                </div>
+                </div>
+
+        </div>
+    </div>
+</div>
 
 
-        <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
-            <form align="center" method="post" asp-controller="Admin" asp-action="SuppressionCompte" class="form-container">
-            @Html.HiddenFor(m => Model.Admin.Id)
-             <button class="modalButton" type="submit">Je supprime mon compte</button>
-            </form>
-        </div>
-        </div>

@@ -7,6 +7,7 @@ using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace Projet2.Controllers
@@ -25,25 +26,96 @@ namespace Projet2.Controllers
         private ArticleRessources articleRessources = new ArticleRessources();
         private PanierSaisonnierService saisonnierService = new PanierSaisonnierService();
         private LignePanierService lignePanierService = new LignePanierService();
+
+        
+
+            
+
         public IActionResult Index(Admin admin)
         {
-            hvm.Identifiant = cs.ObtenirIdentifiant(admin.IdentifiantId);
-            hvm.Admin = cs.ObtenirAdminParIdentifiant(admin.IdentifiantId);
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+            hvm.Identifiant = cs.ObtenirIdentifiant(hvm.Admin.IdentifiantId);
+            
             if (hvm.Identifiant == null)
             {
                 return View("Error");
             }
             else
             {
+                
+                hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
+                foreach (AdP adpAValider in hvm.ListeComptesAdP)
+                {
+                    if (!adpAValider.EstActive)
+                    {
+                        hvm.ListeComptesAdPAValider.Add(adpAValider);
+                    }
+                }
+                foreach (AdP adp in hvm.ListeComptesAdP)
+                {
+                    foreach (Article article in articleRessources.ObtenirArticleParAdP(adp))
+                    {
+                        if (!article.EstValide)
+                        {
+                            hvm.AdP.Assortiment.Add(article);
+                        }
+                    }
+                    foreach (PanierSaisonnier panierSaisonnier in saisonnierService.ObtenirPanierParAdP(adp))
+                    {
+                        if (!panierSaisonnier.EstValide)
+                        {
+                            hvm.AdP.AssortimentPanier.Add(panierSaisonnier);
+                        }
+                    }
+                }
+
+                List<Commande> commandes = panierService.ObtenirToutesCommandes();
+
+                foreach (Commande commande in commandes)
+                {
+                    if (commande.EstEnPreparation)
+                    {
+                        hvm.ListeCommandesEnPrep.Add(commande);
+                    }
+                    else if (commande.EstEnLivraison)
+                    {
+                        hvm.ListeCommandesEnCours.Add(commande);
+                    }
+                    else if (commande.EstARecuperer)
+                    {
+                        hvm.ListeCommandesARecup.Add(commande);
+                    }
+                    else hvm.ListeCommandesLivres.Add(commande);
+                }
+
+                List<CommandePanier> commandesPanier = lignePanierService.ObtenirToutesCommandesPanier();
+                foreach (CommandePanier commandePanier in commandesPanier)
+                {
+                    if (commandePanier.EstEnPreparation)
+                    {
+                        hvm.ListeCommandesPanierEnPrep.Add(commandePanier);
+                    }
+                    else if (commandePanier.EstEnLivraison)
+                    {
+                        hvm.ListeCommandesPanierEnCours.Add(commandePanier);
+                    }
+                    else if (commandePanier.EstARecuperer)
+                    {
+                        hvm.ListeCommandesPanierARecup.Add(commandePanier);
+                    }
+                    else hvm.ListeCommandesPanierLivres.Add(commandePanier);
+                }
                 return View(hvm);
             }
         }
 
         [HttpGet]
-        public IActionResult CreationCompte(Admin admin)
+        public IActionResult CreationCompte()
         {
-            hvm.Admin = admin;
-            return View(hvm);
+            
+            return View();
         }
 
         [HttpPost]
@@ -85,7 +157,8 @@ namespace Projet2.Controllers
         public IActionResult GestionEtatCommande(Admin admin)
         {
             hvm.Admin = admin;
-            
+            hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
+
             List<Commande> commandes = panierService.ObtenirToutesCommandes();
             
             foreach (Commande commande in commandes)
@@ -148,10 +221,29 @@ namespace Projet2.Controllers
             return RedirectToAction("GestionEtatCommande", hvm.Admin);
         }
 
-        
+        public IActionResult Commande_infos(int CommandeId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+            hvm.Commande = panierService.ObtenirToutesCommandes().Where(c => c.Id == CommandeId).FirstOrDefault();
+            return View(hvm);
+        }
+
+        public IActionResult CommandePanier_infos(int commandePanierId)
+        {
+            UtilisateurViewModel viewModel = new UtilisateurViewModel() { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
+            viewModel.Identifiant = cs.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+            hvm.Admin = cs.ObtenirAdminParIdentifiant(viewModel.Identifiant.Id);
+            hvm.CommandePanier = lignePanierService.ObtenirToutesCommandesPanier().Where(c => c.Id == commandePanierId).FirstOrDefault();
+            return View(hvm);
+        }
+
+
         [HttpGet]
         public IActionResult GestionDemandesProducteurs(Admin admin)
         {
+            hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
             hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
             foreach (AdP adp in hvm.ListeComptesAdP)
             {                         

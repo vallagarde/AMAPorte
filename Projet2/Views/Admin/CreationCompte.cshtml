@@ -1,43 +1,73 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-   
-<h1>Formulaire Creation Admin : </h1>
-    @using (Html.BeginForm())
-    {
-        
-<fieldset>
-    <h2> Identifiant </h2>
-    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.AdresseMail) :
-        @Html.TextBoxFor(m => Model.Identifiant.AdresseMail)
-        @Html.ValidationMessageFor(m => m.Identifiant.AdresseMail)
-         @if(@Model.AdresseExistante == true)
-            {
-            <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
-            }
-    <br />
-        @Html.LabelFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"}) :
-        @Html.PasswordFor(m => Model.Identifiant.MotDePasse, new { style="color:black", @class="ma-css"})
-        @Html.ValidationMessageFor(m => m.Identifiant.MotDePasse)
-    <br />
-    <h2> Admin </h2>
-    <br />
-        @Html.Label("Role", "Creer Un Compte DSI")
-        @Html.RadioButtonFor(m => @Model.Admin.Role, "DSI")
-     <br />
-        @Html.Label("Role", "Creer Un Compte GCCQ")
-        @Html.RadioButtonFor(m => @Model.Admin.Role, "GCCQ")
-     <br />
-        @Html.Label("Role", "Creer Un Compte GCRA")
-        @Html.RadioButtonFor(m => @Model.Admin.Role, "GCRA")
-     <br />
-</fieldset>
-     <br />
-        <input type="submit" value="Créer"/>
-    }
-    <br /><br />  
-    <div>
-    @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-    @Html.ActionLink("Retour", "Index", "Admin", @Model.Admin)
-    </div>
 
+
+<section class="signupLayout">
+        <div class="container" style="min-height: 400px">               
+            <div class="user signupBx" > 
+                <div class="formBx" style="margin-top: 0px; height: 100%">
+                        <form asp-action="CreationCompte" asp-controller="Admin" method="post"> 
+                        @Html.HiddenFor(m => Model.Admin.Id)
+                        @Html.HiddenFor(m => Model.Identifiant.Id)
+                        @Html.HiddenFor(m => Model.Admin.Role)
+
+                        <h2>Créez un Identifiant</h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                             <tr >
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th>@Html.TextBoxFor(m => Model.Identifiant.AdresseMail, new {placeholder="vous@mail.com"})
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.AdresseMail, "", new { @class = "text-danger" }) </th>
+                                  @if(@Model != null)  
+                                  {
+                                      @if(@Model.AdresseExistante == true)
+                                        {
+                                        <br/><p class="text-danger">"Cet adresse mail est déjà utilisé"</p><br/>
+                                        }
+                                  } 
+                                  
+                          </tr>
+                          <tr>
+                              <th>@Html.LabelFor(m => Model.Identifiant.MotDePasse)</th>
+                              <th>@Html.PasswordFor(m => Model.Identifiant.MotDePasse, new {placeholder="Mot de Passe"})
+                                  @Html.ValidationMessageFor(m => Model.Identifiant.MotDePasse)</th>
+                         </tr>     
+                        </table>
+                        <br/>
+                        <h2>Choisissez un Role</h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.RadioButtonFor(m => @Model.Admin.Role, "DSI") </th>
+                              <th>@Html.Label("Role", "Creer Un Compte DSI")</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.RadioButtonFor(m => @Model.Admin.Role, "GCCQ")</th>
+                              <th>@Html.Label("Role", "Creer Un Compte GCCQ") </th>
+                            </tr>
+                            <tr>
+                              <th>@Html.RadioButtonFor(m => @Model.Admin.Role, "GCRA")</th>
+                              <th>@Html.Label("Role", "Creer Un Compte GCRA") </th>
+                            </tr>
+                           </table>
+                         <table width=100%>
+                            <tr align="center">
+                               <th>
+                                <input type="submit" value="Créez un Compte">                              
+                              </th>                              
+                            </tr>
+                            <tr align="center">
+                              <th class="signup"><a asp-area="" asp-controller="Admin" asp-action="Index"> Retour sur Mon Compte</a></th>
+                            </tr>
+                        </table>
+                        </form>
+                </div>
+              <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
+            </div>
+            </div>
+        
+    </section>

@@ -1,74 +1,142 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-@{
-    
-}
 
-<div class="container">
-    <h1>Modifier Mon Compte</h1>
+<section class="signupLayout">
+        <div class="container" height="min-800px">
+            <div class="user signupBx">
+                <div class="formBx" style="margin-top: 0px; height: 100%">
+                    <form asp-action="ModificationCompte" asp-controller="CompteAdP" method="post">
+                        @Html.HiddenFor(m => Model.AdP.Id)
+                        @Html.HiddenFor(m => Model.AdP.EstActive)
+                        @Html.HiddenFor(m => Model.AdP.EstEnAttente)
+                        @Html.HiddenFor(m => Model.AdP.PersonneId)
+                        @Html.HiddenFor(m => Model.Identifiant.EstAdP)
+                        @Html.HiddenFor(m => Model.Personne.Id)
+                        @Html.HiddenFor(m => Model.Personne.IdentifiantId)
+                        @Html.HiddenFor(m => Model.Identifiant.Id)
+                        @Html.HiddenFor(m => Model.Adresse.Id)
+                        <h2> Votre Identifiant </h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                             </colgroup>
+                          <tr >
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th class="signup" >@Html.DisplayFor(m => Model.Identifiant.AdresseMail)</th> 
+                              </tr> 
+                              </table>
+                              <table width="100%">
+                              <tr align="center">
+                              <th class="signup" >@Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.AdP.Id)</th>
+                               </tr> 
 
-    @using (Html.BeginForm())
-    {
-        <fieldset>
-            <h2> Identifiant </h2>
-            @Html.HiddenFor(m => Model.AdP.Id)
-            @Html.HiddenFor(m => Model.AdP.EstActive)
-            @Html.HiddenFor(m => Model.AdP.EstEnAttente)
-            @Html.HiddenFor(m => Model.AdP.PersonneId)
-            @Html.HiddenFor(m => Model.Identifiant.EstAdP)
-            @Html.HiddenFor(m => Model.Personne.Id)
-            @Html.HiddenFor(m => Model.Personne.IdentifiantId)
-            @Html.HiddenFor(m => Model.Identifiant.Id)
-            @Html.HiddenFor(m => Model.Adresse.Id)
-            <br />
-            @Model.Identifiant.AdresseMail
-            <br />
-            @Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.AdP.Id)
-            <br />
-            <h2>  Mes Données sur la Production </h2>
-            <br />
-            @Html.LabelFor(m => Model.AdP.NomProducteur) :
-            @Html.TextBoxFor(m => Model.AdP.NomProducteur)
-            <br />
-            @Html.LabelFor(m => Model.AdP.Description) :
-            @Html.TextBoxFor(m => Model.AdP.Description)
-            <br />
-            @Html.LabelFor(m => Model.AdP.Siren) :
-            @Html.TextBoxFor(m => Model.AdP.Siren)
-            <br />
-            <h2> Mes Données personnelles </h2>
-            <br />
-            @Html.LabelFor(m => Model.Personne.Nom) :
-            @Html.TextBoxFor(m => Model.Personne.Nom)
-            <br />
-            @Html.LabelFor(m => Model.Personne.Prenom) :
-            @Html.TextBoxFor(m => Model.Personne.Prenom)
-            <br />
-            @Html.LabelFor(m => Model.Personne.DateNaissance) :
-            @Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date" })
-            <br />
-            @Html.LabelFor(m => Model.Personne.NTelephone) :
-            @Html.TextBoxFor(m => Model.Personne.NTelephone)
-            <br />
-            @Html.LabelFor(m => Model.Adresse.Numero) :
-            @Html.TextBoxFor(m => Model.Adresse.Numero)
-            <br />
-            @Html.LabelFor(m => Model.Adresse.Voie) :
-            @Html.TextBoxFor(m => Model.Adresse.Voie)
-            <br />
-            @Html.LabelFor(m => Model.Adresse.CodePostal) :
-            @Html.TextBoxFor(m => Model.Adresse.CodePostal)
-            <br />
-            @Html.LabelFor(m => Model.Adresse.Ville) :
-            @Html.TextBoxFor(m => Model.Adresse.Ville)
-            <br />
-        </fieldset>
-        <br />
-        <input type="submit" value="Modification" />
-    }
+                        </table>
+                        <br/>
+                        <h2> Les Informations sur votre Ferme</h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.AdP.NomProducteur)</th>
+                              <th>@Html.TextBoxFor(m => Model.AdP.NomProducteur,  new {placeholder="Nom de la Production"})
+                              @Html.ValidationMessageFor(m => Model.AdP.NomProducteur, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.AdP.Description)</th>
+                              <th>@Html.TextBoxFor(m => Model.AdP.Description, new {placeholder="Ecrivez quelques mots sur votre production"})
+                              @Html.ValidationMessageFor(m => Model.AdP.Description, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.AdP.Siren)</th>
+                              <th>@Html.TextBoxFor(m => Model.AdP.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})
+                              @Html.ValidationMessageFor(m => Model.AdP.Siren, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            </table>
 
-    <br /><br />
-    <div>
-        @Html.ActionLink("Retour sur le Compte", "Index", "CompteAdP", @Model.AdP)
-    </div>
-    </div>
+
+                        <h2> Vos Données </h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.Nom)</th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.Nom, new {placeholder="Nom de Famille"})
+                              @Html.ValidationMessageFor(m => Model.Personne.Nom, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.Prenom) </th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.Prenom, new {placeholder="Prénom"})
+                              @Html.ValidationMessageFor(m => Model.Personne.Prenom, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.NTelephone) </th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.NTelephone, new {placeholder="Numéro Téléphone"})
+                              @Html.ValidationMessageFor(m => Model.Personne.NTelephone, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            </table>
+
+                        <h2> Vos Informations de Paiement </h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Personne.DateNaissance)</th>
+                              <th>@Html.TextBoxFor(m => Model.Personne.DateNaissance, "{0:yyyy-MM-dd}", new { @type = "date", placeholder="Date de Naissance"})
+                                     @if(@Model!= null)
+                                        {
+                                            @if(@Model.Personne.EstMajeur == false)
+                                            {
+                                            <br/><p>"Vous ne pouvez pas créer un compte AMAPorte si vous n'êtes pas majeur."</p><br/>
+                                            }
+                                        }
+                              </th>
+                            </tr>
+                           </table>
+                        <table width=100%>
+                        <colgroup>
+                            <col style="width: 25%" align="right">
+                            <col style="width: 15%">
+                            <col style="width: 5%">
+                            <col style="width: 55%">
+                        </colgroup>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Numero, "", new { @class = "text-danger" })</th>
+                            <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Voie, "", new { @class = "text-danger" })</th>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)
+                            @Html.ValidationMessageFor(m => Model.Adresse.CodePostal, "", new { @class = "text-danger" })</th>
+                            <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Ville, "", new { @class = "text-danger" })</th>
+                        </tr>
+                        </table>
+                             <table width=100%>
+                            <tr align="center">
+                               <th>
+                                <input type="submit" value="Modifier">                              
+                              </th>                              
+                            </tr>
+                            <tr align="center">
+                              <th class="signup"><a asp-area="" asp-controller="CompteAdP" asp-action="Index"> Retour sur Mon Compte</a></th>
+                            </tr>
+                        </table>
+                        </form>            
+                </div>
+              <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
+            </div>
+        </div>
+    </section>
+

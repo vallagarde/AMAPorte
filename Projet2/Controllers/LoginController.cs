@@ -92,7 +92,7 @@ namespace Projet2.Controllers
                         
                         if (hvm.AdP != null)
                         {
-                            if (hvm.Identifiant.EstAdA)
+                            if (hvm.Identifiant.EstAdP)
                             {
                                 if (hvm.AdP.EstAboAnnuel)
                                 {
@@ -223,7 +223,12 @@ namespace Projet2.Controllers
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };
             if (viewModel.Authentifie)
             {
-                return true;
+                viewModel.Identifiant = cptressource.ObtenirIdentifiant(HttpContext.User.Identity.Name);
+                if (viewModel.Identifiant.EstAdP || viewModel.Identifiant.EstAdA || viewModel.Identifiant.EstCE)
+                {
+                    return true;
+                }
+                return false;
             }
             else return false;
         }

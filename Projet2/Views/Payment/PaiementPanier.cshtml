@@ -14,10 +14,15 @@
             <label>Amount: @Model.PanierSaisonnier.Prix</label>
             <script src="//checkout.stripe.com/v2/checkout.js"
                     class="stripe-button"
+                    data-currency="EUR"
                     data-key="@Stripe.Value.PublishableKey"
                     data-locale="auto"
                     data-description="Paiment"
                     data-amount="@Model.PanierSaisonnier.Prix"></script>
+            <script>$(function () {
+                    $(".stripe-button-el").replaceWith('<input type="submit" value="Payer">');
+                });</script>
         </article>
+
     </form>
 </div>

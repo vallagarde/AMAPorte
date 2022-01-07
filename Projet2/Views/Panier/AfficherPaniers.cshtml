@@ -19,20 +19,20 @@
                         @{
                             String filepath = "~/ImagesPaniers/" + @panierSaisonnier.Image;
                         }
-                        <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="...">
+                        <img src="~/Images/@panierSaisonnier.Image" class="card-img-top" alt="..." style="height: 200px ">
                         <div class="card-body">
                             <h5 class="card-title text-center">@panierSaisonnier.NomPanier</h5>
                             <h6 class="card-title text-center">@panierSaisonnier.AdP.NomProducteur</h6>
                             <p class="card-text text-center">@panierSaisonnier.Description</p>
-                            <p class="card-text text-center">@Decimal.Round(panierSaisonnier.Prix, 2)</p>
-                            <div class="row d-flex justify-content-center">
+                            <p class="card-text text-center">@Decimal.Round(panierSaisonnier.Prix, 2) €/ Semaines</p>
+                            @*<div class="row d-flex justify-content-center">
                                 <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPanier", "Panier", new { @Id = panierSaisonnier.Id })'">
                                     Commander 1 panier
                                 </button>
-                            </div>
+                            </div>*@
                             <div class="row d-flex justify-content-center">
                                 <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPaniers", "Panier", new { @Id = panierSaisonnier.Id })'">
-                                    Commander plusieurs paniers
+                                    Commander ce panier
                                 </button>
                             </div>
 

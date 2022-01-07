@@ -86,6 +86,7 @@ namespace Projet2.Controllers
 
             if (viewModel.Identifiant == null)
             {
+                
                 return View();
             }
             else
@@ -117,7 +118,7 @@ namespace Projet2.Controllers
                     {
                         if (personne.EstEnAccord == true)
                         {
-                            adp = new AdP() { EstAdP = true };
+                            adp.EstAdP = true;
                             identifiant.EstAdP = adp.EstAdP;
                             adp.EstAboAnnuel = false;
 

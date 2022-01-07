@@ -5,7 +5,7 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="~/ImageArticle/@Model.PanierSaisonnier.Image" alt="..." /></div>
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="~/Images/@Model.PanierSaisonnier.Image" alt="..." /></div>
             <div class="col-md-6">
                 <div class="small mb-1">Producteur: @Model.PanierSaisonnier.AdP.NomProducteur</div>
                 <h1 class="display-5 fw-bolder">@Model.PanierSaisonnier.NomPanier</h1>
@@ -31,8 +31,8 @@
                         </div>
 
                         <div class="col">
-                            <label for="quantite" class="col-sm-2 col-form-label">Quantite</label>
-                            <input id="quantite" type="number" class="form-control" name="quantite">
+                            <label for="quantite" class="col-sm-2 col-form-label">Quantite (Astuce: Compter 1 panier pour une famille de 3-4 personnes)</label>
+                            <input id="quantite" type="number" class="form-control" min=0 name="quantite" value="1">
                             <input type="hidden" name="id" value="@Model.PanierSaisonnier.Id">
                         </div>
                         <button class="btn btn-outline-dark flex-shrink-0" type="submit">

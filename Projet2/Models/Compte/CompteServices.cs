@@ -434,7 +434,6 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
                     var adresseExistantList = queryAdresseExistant.ToList();
                     Adresse adresseExistante = adresseExistantList.First();
                     entreprise.AdresseId = adresseExistante.Id;
-                    entreprise.EstAboAnnuel = false;
                     _bddContext.Entreprises.Add(entreprise);
                     _bddContext.SaveChanges();
                     return entreprise.Id;
@@ -442,7 +441,6 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
                 else
                 {
                     entreprise.AdresseId = CreerAdresse(adresse);
-                    entreprise.EstAboAnnuel = false;
                     _bddContext.Entreprises.Add(entreprise);
                     _bddContext.SaveChanges();
                     return entreprise.Id;
@@ -555,6 +553,7 @@ public List<ContactComiteEntreprise> ObtenirTousLesCCEs()
         {
             if (personne.Id != 0)
             {
+
                 _bddContext.Personnes.Update(personne);
                 _bddContext.SaveChanges();
                 return personne;

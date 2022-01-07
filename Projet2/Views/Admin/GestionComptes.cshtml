@@ -1,148 +1,166 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
-@{
 
-}
-<div class = "container">
-    @Html.ActionLink("Retour sur mon compte", "Index", "Admin", @Model.Admin)
-
-<br/>
-    <div>
-        <p>Comptes AdA </p>
-        <table border="1">
-            @if(@Model.ListeComptesAdA.Count != 0){
-                @foreach (var adA in @Model.ListeComptesAdA)
-                    {
-                        @if (@adA.Personne.Identifiant.EstAdA)
-                            {
-                            <tr>
-                            <td>@adA.Id</td>
-                            <td>@adA.Personne.Nom</td>
-                            <td>@adA.Personne.Prenom</td>
-                            <td>@adA.Personne.Identifiant.AdresseMail</td>
-                            <td>
-                                @Html.ActionLink("Modifier", "ModificationCompte", "CompteAdA", new { @id = adA.Id }),
-                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
-                                    <div id="myModal" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close">&times;</span>
-                                            <p align="center">Supprimer Compte @adA.Id : @adA.Personne.Prenom @adA.Personne.Nom ?</p>
-                                            <form align="center" method="post" asp-controller="CompteAdA" asp-action="SuppressionCompte" class="form-container">
-                                            @Html.HiddenFor(m => adA.Id)
-                                                <button class="modalButton" type="submit">Suppression</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                            </td>
-                        </tr>
-                        }  
-           
-                    }                   
-                }               
-           </table>
-    </div>
-
-<div>
-    <p>Comptes AdP </p>
-    <table border="1">
-        @if(@Model.ListeComptesAdP.Count != 0){
-                
-                    @foreach (var adP in @Model.ListeComptesAdP)
-                    {
-                        @if (@adP.Personne.Identifiant.EstAdP)
-                {
-                        <tr>
-                            <td>Active : @adP.EstActive</td>
-                            <td>En Attente : @adP.EstEnAttente</td>
-                            <td>@adP.Id</td>
-                            <td>@adP.Personne.Nom</td>
-                            <td>@adP.Personne.Prenom</td>
-                            <td>@adP.Personne.Identifiant.AdresseMail</td>
-                            <td>
-                                @Html.ActionLink("Modifier", "ModificationCompte", "CompteAdP", new { @id = adP.Id }),
-                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
-                                <div id="myModal" class="modal">
-                                    <div class="modal-content">
-                                        <span class="close">&times;</span>
-                                        <p align="center">Supprimer Compte @adP.Id : @adP.Personne.Prenom @adP.Personne.Nom ?</p>
-                                        <form align="center" method="post" asp-controller="CompteAdP" asp-action="SuppressionCompte" class="form-container">
-                                            @Html.HiddenFor(m => adP.Id)
-                                            <button class="modalButton" type="submit">Suppression</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        @if (!@adP.EstEnAttente)
-                        {
-                            <tr>
-                                <td>                
-                                    <form method="post" asp-controller="Admin" asp-action="GestionComptes">
-                                        @Html.HiddenFor(m => @Model.Admin.Id)
-                                        @Html.HiddenFor(m => @adP.Id)
-                                        @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
-                                        Commentaire : @Html.TextBoxFor(m => @adP.AdminCommentaire, new{value=""})
-                                        @if (adP.EstActive)
-                                        {
-                                            <br/>
-                                            @Html.Label("Etat", "Rejeté")
-                                            @Html.RadioButtonFor(m =>  @adP.EstActive, false)
-                                            <br/>
-                                        }
-                                        @if (!adP.EstActive)
-                                        {
-                                            <br/>
-                                            @Html.Label("Etat", "Rejeté")
-                                            @Html.RadioButtonFor(m =>  @adP.EstActive, false)
-                                            <br/>
-                                            @Html.Label("Etat", "Validé")
-                                            @Html.RadioButtonFor(m => @adP.EstActive, true)
-                                            <br/>
-                                        }
-                                        <button class="btn btn-primary" type="submit">Soumettre</button>
-                                    </form>
-
-                                </td>
-                            </tr>
-                        }
-                    }  
-           }
-       }
-       </table>
+<div class="shadow-sm p-2 mb-5 welcome">
+    <h2>Comptes AMAPorte</h2>
 </div>
 
-    <div>
-        <p>Comptes CCEs </p>
-        <table border="1">
-            @if(@Model.ListeComptesCCEs.Count != 0){
-                
-                @foreach (var contactComiteEntreprise in @Model.ListeComptesCCEs)
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-2 menu-rigth">
+            @Html.HiddenFor(m => @Model.Admin.Id)  
+            @Html.HiddenFor(m => @Model.Admin.Role)  
+            <p>@Html.ActionLink("Retour", "Index", "Admin", @Model.Admin)</p>  
+            <p>Aujourd'hui : <script> document.write(new Date().toLocaleDateString()); </script></p>           
+        </div>
+        <div class="col-md-9">
+            <div class="row row-cols-1 row-cols-md-4 g-5">
+                @if (@Model.ListeComptesAdP.Count != 0)
                 {
-                    @if (@contactComiteEntreprise.Identifiant.EstCE)
+                    @foreach (var adP in @Model.ListeComptesAdP)
                     {
-                            <tr>
-                                <td>@contactComiteEntreprise.Id</td>
-                            <td>@contactComiteEntreprise.Nom</td>
-                            <td>@contactComiteEntreprise.Prenom</td>
-                            <td>@contactComiteEntreprise.AdresseMail</td>
-                            <td>@contactComiteEntreprise.Entreprise.NomEntreprise</td>
-                            <td>
-                                @Html.ActionLink("Modifier", "ModificationCompte", "CompteCE", new { @id = contactComiteEntreprise.Id }),
-                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
-                                    <div id="myModal" class="modal">
-                                        <div class="modal-content">
-                                            <span class="close">&times;</span>
-                                            <p align="center">Supprimer Compte @contactComiteEntreprise.Id : @contactComiteEntreprise.Prenom @contactComiteEntreprise.Nom ?</p>
-                                            <form align="center" method="post" asp-controller="CompteCE" asp-action="SuppressionCompte" class="form-container">
-                                            @Html.HiddenFor(m => contactComiteEntreprise.Id)
-                                             <button class="modalButton" type="submit">Suppression</button>
-                                            </form>
+                        if (@adP.Personne.Identifiant.EstAdP)
+                            {
+                            <div class="row ">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title" align="center">AdP</h5>
+                                        @{
+                                            String filepath = "~/ImageProfils/" + @adP.Image;
+                                        }
+                                        <img src="~/ImageProfils/@adP.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />   
+
+                                        <p class="card-text" align="center"><br/>N° @adP.Id</p>
+                                        @if (@adP.EstActive)
+                                        {
+                                        <p class="card-text" align="center"><br/>Compte activé</p>
+                                        }
+                                        @if (@adP.EstEnAttente)
+                                        {
+                                         <p class="card-text" align="center"><br/>Compte en Attente de Modification</p>   
+                                        }
+                                        @if (!@adP.EstActive)
+                                        {
+                                        <p class="card-text" align="center"><br/>Compte déactivé</p>
+                                        }
+                                        <p class="card-text" align="center">@adP.Personne.Prenom @adP.Personne.Nom </p>
+                                        <p class="card-text" align="center">@adP.Personne.Identifiant.AdresseMail</p>
+                                        <p class="card-text" align="center">@adP.ReturnDateInscriptionForDisplay</p>
+                                        <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("ModificationCompte", "CompteAdP", new { @id = adP.Id })'"> Modifier</button>  
                                         </div>
+                                        <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("SuppressionCompte", "CompteAdP", new { @id = adP.Id })'"> Supprimer</button>  
+                                        </div>                     
+                                        @if (@adP.EstAboAnnuel)
+                                        {
+                                            <p class="card-text"  align="center">Frais d'inscription payé</p>
+                                        }
+                                        <div align="center">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <form method="post" asp-controller="Admin" asp-action="GestionComptes">
+                                                @Html.HiddenFor(m => @Model.Admin.Id)
+                                                @Html.HiddenFor(m => @adP.Id)
+                                                @Html.HiddenFor(m => @Model.Admin.IdentifiantId)
+                                                <p class="card-text" align="center" style="overflow:auto; width:90%">Commentaire @Html.TextAreaFor(m => @adP.AdminCommentaire, new{value=""})</p>
+                                                @if (adP.EstActive)
+                                                {
+                                               <p class="card-text" align="center">@Html.Label("Etat", "Rejeté") @Html.RadioButtonFor(m =>  @adP.EstActive, false)  </p>
+                                                }
+                                                @if (!adP.EstActive)
+                                                {
+                                                    <p class="card-text" align="center"> @Html.Label("Etat", "Validé") @Html.RadioButtonFor(m => @adP.EstActive, true)</p>
+                                                }
+                                                <button class="btn btn-primary" type="submit">Modifier</button>
+                                                </form>
+                                            </div> 
+                                            </div> 
+                                            </div> 
                                     </div>
-                            </td>
-                        </tr>
-                }  
-               }
-           }
-           </table>
-    </div>
-</div>       
+                                </div>                       
+                            </div>
+                            }
+                        }   
+                    }
+             </div>
+            <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
+                @if (@Model.ListeComptesAdA.Count != 0)
+                {
+                    @foreach (var adA in @Model.ListeComptesAdA)
+                    {
+                        if (@adA.Personne.Identifiant.EstAdA)
+                            {
+                            <div class="row ">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title" align="center">AdA</h5>
+                                        @{
+                                            String filepath = "~/ImageProfils/" + @adA.Image;
+                                        }
+                                        <img src="~/ImageProfils/@adA.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />   
+
+                                        <p class="card-text" align="center"><br/>N° @adA.Id</p>
+                                        <p class="card-text" align="center">@adA.Personne.Prenom @adA.Personne.Nom </p>
+                                        <p class="card-text" align="center">@adA.Personne.Identifiant.AdresseMail</p>
+                                        <p class="card-text" align="center">@adA.ReturnDateInscriptionForDisplay</p>
+                                        <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("ModificationCompte", "CompteAdA", new { @id = adA.Id })'"> Modifier</button>  
+                                        </div>
+                                        <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("SuppressionCompte", "CompteAdA", new { @id = adA.Id })'"> Supprimer</button>  
+                                        </div>                     
+                                        @if (@adA.EstAboAnnuel)
+                                        {
+                                            <p class="card-text"  align="center">Frais d'inscription payé</p>
+                                        }
+                                                                               
+                                    </div>
+                                </div>                       
+                            </div>
+                            }
+                        }   
+                    }
+            </div>
+        <div class="row row-cols-1 row-cols-md-4 g-5" style="margin-top:15px">
+                @if (@Model.ListeComptesCCEs.Count != 0)
+                {
+                    @foreach (var contactComiteEntreprise in @Model.ListeComptesCCEs)
+                    {
+                        if (@contactComiteEntreprise.Identifiant.EstCE)
+                            {
+                            <div class="row ">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title" align="center">CE</h5>
+                                        <h5 class="card-title" align="center">@contactComiteEntreprise.Entreprise.NomEntreprise</h5>
+                                        <p class="card-text" align="center"><br/>N° @contactComiteEntreprise.Id</p>
+                                        <p class="card-text" align="center">@contactComiteEntreprise.Prenom @contactComiteEntreprise.Nom </p>
+                                        <p class="card-text" align="center">@contactComiteEntreprise.Identifiant.AdresseMail</p>
+                                        <p class="card-text" align="center">@contactComiteEntreprise.ReturnDateInscriptionForDisplay</p>
+                                        <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("ModificationCompte", "CompteAdA", new { @id = contactComiteEntreprise.Id })'"> Modifier</button>  
+                                        </div>
+                                        <div align="center">
+                                        <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("SuppressionCompte", "CompteAdA", new { @id = contactComiteEntreprise.Id })'"> Supprimer</button>  
+                                        </div>                     
+                                        @if (@contactComiteEntreprise.Entreprise.EstAboAnnuel)
+                                        {
+                                            <p class="card-text"  align="center">Frais d'inscription payé</p>
+                                        }
+                                                                               
+                                    </div>
+                                </div>                       
+                            </div>
+                            }
+                        }   
+                    }
+                </div>
+        </div>
+</div>
+
+</div>
+
+
+
+

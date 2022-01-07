@@ -1,66 +1,117 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-       
-    
-<h1>Modifier Mon Compte</h1>
+<section class="signupLayout">
+        <div class="container" height="min-800px">
+            <div class="user signupBx" > 
+                <div class="formBx" style="margin-top: 0px; height: 100%">
+                    <form asp-action="ModificationCompte" asp-controller="CompteCE" method="post"> 
+                        @Html.HiddenFor(m => Model.ContactComiteEntreprise.Id)
+                        @Html.HiddenFor(m => Model.Identifiant.EstCE)
+                        @Html.HiddenFor(m => Model.Entreprise.Id)
+                        @Html.HiddenFor(m => Model.Identifiant.Id)
+                        @Html.HiddenFor(m => Model.Adresse.Id)
+                        <h2>Votre Identifiant </h2>
+                        <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                             </colgroup>
+                          <tr >
+                              <th>@Html.LabelFor(m => Model.Identifiant.AdresseMail)</th>
+                              <th class="signup" >@Html.DisplayFor(m => Model.Identifiant.AdresseMail)</th> 
+                              </tr> 
+                              </table>
+                              <table width="100%">
+                              <tr align="center">
+                              <th class="signup" >@Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.ContactComiteEntreprise.Id)</th>
+                               </tr>
+                        </table>
+                        <br/>
+                        <h2> Les Informations sur votre Entreprise</h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Entreprise.NomEntreprise)</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NomEntreprise,  new {placeholder="Nom de l'Entreprise"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.NomEntreprise, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.Entreprise.NombreUtilisateur)</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.NombreUtilisateur, new {placeholder="Nombre des collaborateurs bénéficiant de ce service"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.NombreUtilisateur, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th> @Html.LabelFor(m => Model.Entreprise.Siren)</th>
+                              <th>@Html.TextBoxFor(m => Model.Entreprise.Siren, new {placeholder="Numéro SIREN de 9 chiffres"})
+                              @Html.ValidationMessageFor(m => Model.Entreprise.Siren, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            </table>
+                        <h2> Vos Données </h2>
+                          <table width=100%>
+                            <colgroup>
+                                <col style="width: 25%" align="right">
+                                <col style="width: 75%">
+                            </colgroup>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.Nom)</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Nom, new {placeholder="Nom de Famille"})
+                              @Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.Nom, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.Prenom)</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.Prenom, new {placeholder="Prénom"})
+                              @Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.Prenom, "", new { @class = "text-danger" })</th>
+                            </tr>
+                            <tr>
+                              <th>@Html.LabelFor(m => Model.ContactComiteEntreprise.NTelephone)</th>
+                              <th>@Html.TextBoxFor(m => Model.ContactComiteEntreprise.NTelephone, new { placeholder="Numéro Téléphone"})</th> @*, required = "required", pattern = @"\d{10}" *@
+                              <th>@Html.ValidationMessageFor(m => Model.ContactComiteEntreprise.NTelephone, "", new { @class = "error" })</th>
 
-    @using (Html.BeginForm())
-    {
-<fieldset>
-    <h2> Identifiant </h2>
-        @Html.HiddenFor(m => Model.ContactComiteEntreprise.Id)
-        @Html.HiddenFor(m => Model.Identifiant.EstCE)
-        @Html.HiddenFor(m => Model.Entreprise.Id)
-        @Html.HiddenFor(m => Model.Identifiant.Id)
-        @Html.HiddenFor(m => Model.Adresse.Id)
-    <br />
-        @Model.Identifiant.AdresseMail
-    <br />
-        @Html.ActionLink("Modifier mon Identifiant", "ModificationIdentifiant", "Login", @Model.Identifiant, @Model.ContactComiteEntreprise.Id)
-    <br />
-    <h2> Mes Données </h2>
-    <br />
-        @Html.LabelFor(m => Model.ContactComiteEntreprise.Nom) :
-        @Html.TextBoxFor(m => Model.ContactComiteEntreprise.Nom)
-    <br />
-        @Html.LabelFor(m => Model.ContactComiteEntreprise.Prenom) :
-        @Html.TextBoxFor(m => Model.ContactComiteEntreprise.Prenom)
-    <br />
-        @Html.LabelFor(m => Model.ContactComiteEntreprise.NTelephone) :
-        @Html.TextBoxFor(m => Model.ContactComiteEntreprise.NTelephone)
-    <br />
-    <br />
-    <h2> Entreprise </h2>
-    <br />
-        @Html.LabelFor(m => Model.Entreprise.NomEntreprise) :
-        @Html.TextBoxFor(m => Model.Entreprise.NomEntreprise)
-    <br />
-        @Html.LabelFor(m => Model.Entreprise.NombreUtilisateur) :
-        @Html.TextBoxFor(m => Model.Entreprise.NombreUtilisateur)
-    <br />
-        @Html.LabelFor(m => Model.Entreprise.Siren) :
-        @Html.TextBoxFor(m => Model.Entreprise.Siren)
-    <br />
-    <h2> Adresse</h2>
-    <br />
-        @Html.LabelFor(m => Model.Adresse.Numero) :
-        @Html.TextBoxFor(m => Model.Adresse.Numero)
-     <br />
-        @Html.LabelFor(m => Model.Adresse.Voie) :
-        @Html.TextBoxFor(m => Model.Adresse.Voie)
-     <br />
-        @Html.LabelFor(m => Model.Adresse.CodePostal) :
-        @Html.TextBoxFor(m => Model.Adresse.CodePostal)   
-     <br />
-        @Html.LabelFor(m => Model.Adresse.Ville) :
-        @Html.TextBoxFor(m => Model.Adresse.Ville)
-     <br />
-</fieldset>
-     <br />
-        <input type="submit" value="Modification"/>
-    }
-    <br /><br />  
-    <div>
-    @Html.ActionLink("Retour sur le Compte", "Index", "CompteCE", @Model.ContactComiteEntreprise)
-    </div>
+                            </tr>
+                            </table>
 
+                        <h2> Vos Informations de Paiement </h2>
+                        <h2 class="signup"> (Adresse de l'Entreprise) </h2>
+                        <table width=100%>
+                        <colgroup>
+                            <col style="width: 25%" align="right">
+                            <col style="width: 15%">
+                            <col style="width: 5%">
+                            <col style="width: 55%">
+                        </colgroup>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.Numero)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Numero)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Numero, "", new { @class = "text-danger" })</th>
+                            <th>@Html.LabelFor(m => Model.Adresse.Voie)</th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Voie)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Voie, "", new { @class = "text-danger" })</th>
+                        </tr>
+                        <tr>
+                            <th>@Html.LabelFor(m => Model.Adresse.CodePostal) </th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.CodePostal)
+                            @Html.ValidationMessageFor(m => Model.Adresse.CodePostal, "", new { @class = "text-danger" })</th>
+                            <th>@Html.LabelFor(m => Model.Adresse.Ville) </th>
+                            <th>@Html.TextBoxFor(m => Model.Adresse.Ville)
+                            @Html.ValidationMessageFor(m => Model.Adresse.Ville, "", new { @class = "text-danger" })</th>
+                        </tr>
+                        </table>
+                         <table width=100%>
+                            <tr align="center">
+                               <th>
+                                <input type="submit" value="Modifier">                              
+                              </th>                              
+                            </tr>
+                            <tr align="center">
+                              <th class="signup"><a asp-area="" asp-controller="CompteCE" asp-action="Index"> Retour sur Mon Compte</a></th>
+                            </tr>
+                        </table>
+                        </form>
+                </div>
+              <div class="imgBx"><img src="~/ImageArticle/mer.jpg"></div>  
+            </div>
+        </div>
+    </section>
