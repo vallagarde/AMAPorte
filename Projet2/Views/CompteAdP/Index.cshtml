@@ -1,75 +1,123 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
-    <div class="container">
-        <img src="~/ImageProfils/@Model.AdP.Image" width="80" height="80">
-        Bonjour @Model.Personne.Prenom        
-        <br />
-        <br />
+<div class="container">
 
-        @if (!@Model.AdP.EstActive && !@Model.AdP.EstEnAttente)
-        {
-        <h2>Votre Compte est en attente de validation</h2>
-        <p>Vous pouvez ajouter des articles, paniers et ateliers dès sa validation.</p>
-        }
 
-        @if (!@Model.AdP.EstActive && @Model.AdP.EstEnAttente)
-        {
-        <h2>Votre Compte a été rejeté</h2>
-        @if(@Model.AdP.AdminCommentaire != null)
-        {
-           <p>Vous avez recu une demande de modification : @Model.AdP.AdminCommentaire</p>
-           <p>Cliquez ici pour modifier votre compte : @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)</p>
-        }
-        @if (@Model.AdP.AdminCommentaire == null)
-        {
-            <p>Votre compte va être supprimer dans 10 jours. N'hésitez pas à nous contacter.</p>
-        }
-        }
+    <div class="main-body" style="margin-top: 80px;">
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card" style="">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
 
-        @if (@Model.AdP.EstActive)
-        {
-        <br/>
-         @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
-        <br/>
-        <p>Gestion de la Boutique</p>
-        @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
-        <br/>
-        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)       
-        <br/>
-        @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
-        <br/>
-        <br />
-        <br />
-        <p>Gestion des Paniers Saissoniers</p>
-        <br />
-        @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Gerer mes Paniers", "GestionPanier", "EspaceAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Historique des Commandes Panier", "HistoriquePaniers", "EspaceAdP", @Model.AdP)
-        <br/>
-        <br />
-        <br />
-        <p>Gestion des Ateliers</p>
-        <br />
-        <p>Bientôt vous allez pouvoir proposer des ateliers !</p>
-        @*
-        @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Gerer mes Ateliers", "GestionAtelier", "EspaceAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
-        <br/>  
-        *@
-        }
-       
-        <br/>
-        @Html.ActionLink("Gerer Mon Compte", "AdPCompteInfo", "CompteAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdP", @Model.AdP)
-        <br/>
-        @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
-        <br/>
+                            <img src="~/ImageProfils/@Model.AdP.Image" class="rounded-circle" width="150">
+                            Bienvenue @Model.Personne.Prenom
+                            div class="mt-3">
+                            <h4>@Model.AdP.NomProducteur</h4>
+                            <div class="text-secondary mb-1">Producteur</div>
+                            <div class="text-muted font-size-sm">@Model.Adresse.Numero @Model.Adresse.Voie @Model.Adresse.Ville </div>
+
+                            @Html.ActionLink("Gerer Mon Compte", "AdPCompteInfo", "CompteAdP", @Model.AdP)
+                            <br />
+                            @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdP", @Model.AdP)
+                            <br />
+                            @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+                            <br />
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (!@Model.AdP.EstActive && !@Model.AdP.EstEnAttente)
+            {
+                <h2>Votre Compte est en attente de validation</h2>
+                <p>Vous pouvez ajouter des articles, paniers et ateliers dès sa validation.</p>
+            }
+
+            @if (!@Model.AdP.EstActive && @Model.AdP.EstEnAttente)
+            {
+                <h2>Votre Compte a été rejeté</h2>
+                @if (@Model.AdP.AdminCommentaire != null)
+                {
+                    <p>Vous avez recu une demande de modification : @Model.AdP.AdminCommentaire</p>
+                    <p>Cliquez ici pour modifier votre compte : @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)</p>
+                }
+                @if (@Model.AdP.AdminCommentaire == null)
+                {
+                    <p>Votre compte va être supprimer dans 10 jours. N'hésitez pas à nous contacter.</p>
+                }
+            }
+
+            <div class="col-md-8 mb-3">
+                <div class="card mt-3" style="height: 200px;">
+                    <ul class="list-group list-group-flush">
+                        @if (@Model.AdP.EstActive)
+                        {
+                            <div class="card" style="height: 300px;">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <br />
+                                        @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="height: 300px;">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <p>Gestion de la Boutique</p>
+                                        @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
+                                        <br />
+                                        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
+                                        <br />
+                                        @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="height: 300px;">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <p>Gestion des Paniers Saissoniers</p>
+                                        <br />
+                                        @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
+                                        <br />
+                                        @Html.ActionLink("Gerer mes Paniers", "GestionPanier", "EspaceAdP", @Model.AdP)
+                                        <br />
+                                        @Html.ActionLink("Historique des Commandes Panier", "HistoriquePaniers", "EspaceAdP", @Model.AdP)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="height: 300px;">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                        <p>Gestion des Ateliers</p>
+                                        <br />
+                                        <p>Bientôt vous allez pouvoir proposer des ateliers !</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            @*
+                        @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
+                        <br/>
+                        @Html.ActionLink("Gerer mes Ateliers", "GestionAtelier", "EspaceAdP", @Model.AdP)
+                        <br/>
+                        @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
+                        <br/>
+                        @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
+                        <br/>
+                            *@
+                        }
+
+                       
+                </div>
+                </div>
+            </div>
+        </div>
     </div>
+   
