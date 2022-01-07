@@ -11,6 +11,11 @@ body {
     text-decoration: none;
 }
 
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
 /**, :after, :before {
     -webkit-box-sizing: inherit;
     box-sizing: inherit;
@@ -178,9 +183,8 @@ a.nav-link.acustom:hover {
 }
 
 .footercustom {
-    
     /*height: 100px;*/
-    background-color: #000000;
+    background-color: #68b430;
 }
 
 
