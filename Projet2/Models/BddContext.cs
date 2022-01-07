@@ -586,7 +586,7 @@ namespace Projet2.Models
 
 
                         //Commandes Paniers
-
+                        /*
                         BddContext bddContext = new BddContext();
 
                         LignePanierSaisonnier lignePanierSaisonnier = lignePanierService.CreerLignePanier(1, panierSaisonnier1.Id, 1 * panierSaisonnier1.Prix, 13, adA1.Id, 0);
@@ -614,7 +614,7 @@ namespace Projet2.Models
                         bddContext.CommandePaniers.Update(commandePanier4);
 
                         bddContext.SaveChanges();
-
+                        */
                         //Articles Boutique
 
                         using (ArticleRessources ar = new ArticleRessources())
@@ -731,7 +731,7 @@ namespace Projet2.Models
 
 
                             //Commandes Boutique
-                            
+                            /*
                             PanierBoutique panierBoutique1 = new PanierBoutique()
                             {
                                 Total = 30m
@@ -906,7 +906,7 @@ namespace Projet2.Models
                             calendrier.AjouterLigneCalendrierPanier(commandePanier2);
                             calendrier.AjouterLigneCalendrierPanier(commandePanier3);
                             calendrier.AjouterLigneCalendrierPanier(commandePanier4);
-                            
+                            */
                         }
                     }
 
