@@ -60,7 +60,7 @@ namespace Projet2.Models.Calendriers
 
         public DateTime ObtenirProchaineDateDeLivraison()
         {
-            DateTime dateTime = DateTime.Today;
+            DateTime dateTime = new DateTime().ToLocalTime();
 
             while (dateTime.DayOfWeek != DayOfWeek.Wednesday)
             {
