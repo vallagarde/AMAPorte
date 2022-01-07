@@ -55,7 +55,7 @@ namespace Projet2.Controllers
             {
                 dateDeCommande = dateDeCommande.AddDays(1);
             }
-            commande.DateLivraison = dateDeCommande;
+            commande.DateLivraison = dateDeCommande.Date;
             
 
             UtilisateurViewModel viewModel = new UtilisateurViewModel { Authentifie = SessionHelper.GetObjectFromJson<bool>(HttpContext.Session, "authentification") };

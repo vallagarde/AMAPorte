@@ -71,9 +71,9 @@
                                 <div class="card-body">
                                     <h5 class="card-title" align="center">Panier</h5>                                        
                                     @{
-                                        String filepath = "~/ImageArticle/" + @commandePanier.PanierSaisonnier.Image;
+                                        String filepath = "~/Images/" + @commandePanier.PanierSaisonnier.Image;
                                     }
-                                    <img src="~/ImageArticle/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
+                                    <img src="~/Images/@commandePanier.PanierSaisonnier.Image" class="card-img-top" alt="..." style="width: 100%; align-content: center; height:100px" />                                       
                                     <p class="card-text" align="center"> <br/> N° @commandePanier.ReturnNumeroCommandeForDisplay</p>
                                     <p class="card-text" align="center">@commandePanier.ReturnDateCommandeForDisplayCommande</p>
                                     <p class="card-text" align="center">Livraison : @commandePanier.ReturnDateLivraisonForDisplayCommande</p>
