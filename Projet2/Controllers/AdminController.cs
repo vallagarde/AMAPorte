@@ -273,11 +273,20 @@ namespace Projet2.Controllers
         [HttpPost]
         public IActionResult GestionDemandesProducteurs(Admin admin, Article article, PanierSaisonnier panierSaisonnier)
         {
-            if(article != null)
+            if(article.Id != null)
             {
                 articleRessources.ValidationArticle(article);
                 //message à producteur ?
             }
+
+            hvm.Admin = admin;
+            return RedirectToAction("GestionDemandesProducteurs", hvm.Admin);
+        }
+
+        [HttpPost]
+        public IActionResult GestionDemandesProducteursPaniers(Admin admin, PanierSaisonnier panierSaisonnier)
+        {
+
             if (panierSaisonnier != null)
             {
                 saisonnierService.ValidationPanier(panierSaisonnier);
