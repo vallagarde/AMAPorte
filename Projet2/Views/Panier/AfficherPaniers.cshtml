@@ -30,11 +30,16 @@
                                     Commander 1 panier
                                 </button>
                             </div>*@
-                            <div class="row d-flex justify-content-center">
-                                <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPaniers", "Panier", new { @Id = panierSaisonnier.Id })'">
-                                    Commander ce panier
-                                </button>
+
+                            @if (@Model.Authentifie)
+                            {
+                                <div class="row d-flex justify-content-center" >
+                            <button  class="btn btn-outline-dark flex-shrink-0" type="button" onclick="location.href='@Url.Action("CommanderPaniers", "Panier", new { @Id = panierSaisonnier.Id })'">
+                                Commander ce panier
+                            </button>
                             </div>
+                                
+                            }
 
                         </div>
                     </div>
