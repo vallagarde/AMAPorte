@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Projet2.Helpers;
 using Projet2.Models.Boutique;
+using Projet2.Models.Calendriers;
 using Projet2.Models.Compte;
 using Projet2.Models.PanierSaisonniers;
 using Projet2.ViewModels;
@@ -157,7 +158,8 @@ namespace Projet2.Controllers
         public IActionResult GestionEtatCommande(Admin admin)
         {
             hvm.Admin = admin;
-            hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
+            CalendrierService calendrierService = new CalendrierService();
+            hvm.ProchaineDateLivraison = calendrierService.ObtenirProchaineDateDeLivraison();
 
             List<Commande> commandes = panierService.ObtenirToutesCommandes();
             
@@ -243,7 +245,8 @@ namespace Projet2.Controllers
         [HttpGet]
         public IActionResult GestionDemandesProducteurs(Admin admin)
         {
-            hvm.ProchaineDateLivraison = calendrier.ObtenirProchaineDateDeLivraison();
+            CalendrierService calendrierService = new CalendrierService();
+            hvm.ProchaineDateLivraison = calendrierService.ObtenirProchaineDateDeLivraison();
             hvm.ListeComptesAdP = cs.ObtenirTousLesAdPs();
             foreach (AdP adp in hvm.ListeComptesAdP)
             {                         

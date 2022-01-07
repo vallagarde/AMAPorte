@@ -1,123 +1,270 @@
 ﻿@model Projet2.ViewModels.HomeViewModel
 
 <div class="container">
-
-
     <div class="main-body" style="margin-top: 80px;">
         <div class="row gutters-sm">
             <div class="col-md-4 mb-3">
-                <div class="card" style="">
+                <div class="card" style="height: 350px;">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-
-                            <img src="~/ImageProfils/@Model.AdP.Image" class="rounded-circle" width="150">
-                            Bienvenue @Model.Personne.Prenom
-                            div class="mt-3">
-                            <h4>@Model.AdP.NomProducteur</h4>
-                            <div class="text-secondary mb-1">Producteur</div>
-                            <div class="text-muted font-size-sm">@Model.Adresse.Numero @Model.Adresse.Voie @Model.Adresse.Ville </div>
-
-                            @Html.ActionLink("Gerer Mon Compte", "AdPCompteInfo", "CompteAdP", @Model.AdP)
-                            <br />
-                            @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdP", @Model.AdP)
-                            <br />
-                            @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
-                            <br />
-
-
+                            <img src="~/ImageProfils/@Model.AdP.Image" alt="Admin" class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>@Model.AdP.NomProducteur</h4>
+                                <h4>@Model.Personne.Nom @Model.Personne.Prenom</h4>
+                                <p class="text-secondary mb-1">Adhérent</p>
+                                <p class="text-muted font-size-sm">@Model.Adresse.Numero @Model.Adresse.Voie @Model.Adresse.Ville </p>
+ 
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="card mt-3" style="height: 200px;">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                Gérer le Compte
+                            </h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)
+                            </h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                @Html.ActionLink("Photo Profil", "AjouterImage", "CompteAdP", @Model.AdP)
+                            </h6>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                @Html.ActionLink("Déconnexion", "Deconnexion", "Login")
+                            </h6>
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <h6 class="mb-0">
+                                <button class="modalButton" id="myBtn">Supprimer Compte</button>
+                            </h6>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <div class="col-md-8">
+                <div class="card mb-3" style="height: 350px;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">@Model.AdP.NomProducteur</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.AdP.Description
+                                </div>
 
-            @if (!@Model.AdP.EstActive && !@Model.AdP.EstEnAttente)
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Numéro SIREN</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.AdP.Siren
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Nom Complet</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Personne.Nom @Model.Personne.Prenom
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Email</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Identifiant.AdresseMail
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Telephone</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Personne.NTelephone
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Adresse</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    @Model.Adresse.Numero @Model.Adresse.Voie @Model.Adresse.Ville
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+
+                @if (!@Model.AdP.EstActive && !@Model.AdP.EstEnAttente)
             {
-                <h2>Votre Compte est en attente de validation</h2>
-                <p>Vous pouvez ajouter des articles, paniers et ateliers dès sa validation.</p>
+                <div class="row gutters-sm">
+                    <div class="col-sm-6 mb-3" style="height: 200px;">
+                        <div class="card h-100" >
+                            <div class="card-body">
+                               <h2>Votre Compte est en attente de validation</h2>
+                                <p>Vous pouvez ajouter des articles, paniers et ateliers dès sa validation.</p>                              
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                
             }
-
             @if (!@Model.AdP.EstActive && @Model.AdP.EstEnAttente)
             {
                 <h2>Votre Compte a été rejeté</h2>
                 @if (@Model.AdP.AdminCommentaire != null)
                 {
-                    <p>Vous avez recu une demande de modification : @Model.AdP.AdminCommentaire</p>
-                    <p>Cliquez ici pour modifier votre compte : @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)</p>
+                    <div class="row gutters-sm">
+                    <div class="col-sm-6 mb-3" style="height: 200px;">
+                        <div class="card h-100" >
+                            <div class="card-body">
+                               <p>Vous avez recu une demande de modification : @Model.AdP.AdminCommentaire</p>
+                                <p>Cliquez ici pour modifier votre compte : @Html.ActionLink("Modifier Compte", "ModificationCompte", "CompteAdP", @Model.AdP)</p>                          
+                            </div>
+                        </div>
+                    </div>
+
+                  </div> 
                 }
                 @if (@Model.AdP.AdminCommentaire == null)
                 {
-                    <p>Votre compte va être supprimer dans 10 jours. N'hésitez pas à nous contacter.</p>
+                    <div class="row gutters-sm">
+                    <div class="col-sm-6 mb-3" style="height: 200px;">
+                        <div class="card h-100" >
+                            <div class="card-body">
+                                <p>Votre compte va être supprimer dans 10 jours. N'hésitez pas à nous contacter.</p>
+                                </div>
+                        </div>
+                    </div>
+                   </div> 
                 }
             }
-
-            <div class="col-md-8 mb-3">
-                <div class="card mt-3" style="height: 200px;">
-                    <ul class="list-group list-group-flush">
-                        @if (@Model.AdP.EstActive)
+             @if (@Model.AdP.EstActive)
                         {
-                            <div class="card" style="height: 300px;">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <br />
-                                        @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
-                                        <br />
+
+                            <div class="row gutters-sm">
+                                <div class="col-sm-6 mb-3" style="height: 200px;">
+                                    <div class="card h-100" >
+                                        <div class="card-body">
+                                            <h6 class="d-flex align-items-center mb-3">Boutique</h6>  
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <div>
+                                                    <h6 class="mb-0">
+                                                        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
+                                                    </h6>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6 class="mb-0">
+                                                        @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
+                                                    </h6>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6 class="mb-0">
+                                                        @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
+                                                    </h6>
+                                                </li> 
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card" style="height: 300px;">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <p>Gestion de la Boutique</p>
-                                        @Html.ActionLink("Ajouter un Article dans la boutique", "AjouterArticle", "Boutique", @Model.AdP.Id)
-                                        <br />
-                                        @Html.ActionLink("Gerer mes Articles en Boutique", "GestionBoutique", "EspaceAdP", @Model.AdP)
-                                        <br />
-                                        @Html.ActionLink("Historique des Commandes en Boutique", "HistoriqueBoutique", "EspaceAdP", @Model.AdP)
+                                <div class="col-sm-6 mb-3" style="height: 200px;">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h6 class="d-flex align-items-center mb-3">Paniers</h6>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <div>
+                                                    <h6 class="mb-0">
+                                                       @Html.ActionLink("Gerer mes Paniers", "GestionPanier", "EspaceAdP", @Model.AdP)
+                                                    </h6>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6 class="mb-0">
+                                                       @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
+                                                    </h6>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6 class="mb-0">
+                                                       @Html.ActionLink("Historique des Commandes Panier", "HistoriquePaniers", "EspaceAdP", @Model.AdP)
+                                                    </h6>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card" style="height: 300px;">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <p>Gestion des Paniers Saissoniers</p>
-                                        <br />
-                                        @Html.ActionLink("Ajouter un Panier Saissonier", "AjouterPanier", "Panier", @Model.AdP)
-                                        <br />
-                                        @Html.ActionLink("Gerer mes Paniers", "GestionPanier", "EspaceAdP", @Model.AdP)
-                                        <br />
-                                        @Html.ActionLink("Historique des Commandes Panier", "HistoriquePaniers", "EspaceAdP", @Model.AdP)
+                            </div>   
+                            
+                            
+                            <div class="row gutters-sm">                               
+                                <div class="col-sm-6 mb-3" style="height: 200px;">
+                                    <div class="card h-100">
+                                        <div class="card-body" align="center">
+                                            <div class="d-flex flex-column align-items-center text-center">
+                                            <h6 class="d-flex align-items-center mb-3">Gestion Commandes</h6>                                            
+                                                    <h6 class="mb-0">
+                                                       @Html.ActionLink("Commandes A Preparer", "CommandesAPreparer", "EspaceAdP", @Model.AdP)
+                                                    </h6>                                                    
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="card" style="height: 300px;">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <p>Gestion des Ateliers</p>
-                                        <br />
-                                        <p>Bientôt vous allez pouvoir proposer des ateliers !</p>
-
+                                <div class="col-sm-6 mb-3" style="height: 200px;">
+                                    <div class="card h-100" >
+                                        <div class="card-body" align="center">
+                                            <div class="d-flex flex-column align-items-center text-center">
+                                            <h6 class="d-flex align-items-center mb-3">Activités</h6>  
+                                            <h6>Bientôt vous allez pouvoir proposer des ateliers !</h6>
+                                            @*
+                                            @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
+                                            <br/>
+                                            @Html.ActionLink("Gerer mes Ateliers", "GestionAtelier", "EspaceAdP", @Model.AdP)
+                                            <br/>
+                                            @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
+                                            <br/>
+                                            @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
+                                            <br/>
+                                                *@
+                                        </div>
+                                     </div>
                                     </div>
                                 </div>
-                            </div>
-                            @*
-                        @Html.ActionLink("Creer un Atelier", "???", "???Atelier", @Model.AdP)
-                        <br/>
-                        @Html.ActionLink("Gerer mes Ateliers", "GestionAtelier", "EspaceAdP", @Model.AdP)
-                        <br/>
-                        @Html.ActionLink("Ateliers A Venir", "AteliersAVenir", "EspaceAdP", @Model.AdP)
-                        <br/>
-                        @Html.ActionLink("Historique des Ateliers", "HistoriqueAteliers", "EspaceAdP", @Model.AdP)
-                        <br/>
-                            *@
-                        }
-
-                       
-                </div>
-                </div>
+                            </div> 
+            }
             </div>
+
+
+                <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p align="center">We are sad to see you go. Are you sure you want to delete your account ?</p>
+                    <form align="center" method="post" asp-controller="CompteAdP" asp-action="SuppressionCompte" class="form-container">
+                    @Html.HiddenFor(m => Model.AdP.Id)
+                        <button class="modalButton" type="submit">Je supprime mon compte</button>
+                    </form>
+                </div>
+                </div>
+                
         </div>
     </div>
-   
+</div>
+
