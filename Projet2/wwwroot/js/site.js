@@ -39,24 +39,25 @@ $(document).ready(function () {
                 $("#compteperso").show();
                 $("#compteadmin").hide();
                 $("#connexion").hide();
-                $(document).ready(function () {
-                    $.ajax({
-                        url: "/Login/UtilisateurEstAdmin",
-                        type: 'GET',
-                        success: function (res) {
-                            if (res == true) {
-                                $("#compteperso").hide();
-                                $("#connexion").hide();
-                                $("#compteadmin").show();
-                            }
-                        }
-                    });
-                });
             }
             else {
                 $("#compteperso").hide();
                 $("#compteadmin").hide();
                 $("#connexion").show();
+            }
+        }
+    });
+});
+
+$(document).ready(function () {
+    $.ajax({
+        url: "/Login/UtilisateurEstAdmin",
+        type: 'GET',
+        success: function (res) {            
+            if (res == true) {
+                $("#compteperso").hide();
+                $("#connexion").hide();
+                $("#compteadmin").show();
             }
         }
     });
